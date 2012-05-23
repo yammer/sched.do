@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+ruby "1.9.3"
+
 gem 'rails', '3.2.3'
 
 # Gems used only for assets and not required
@@ -20,7 +22,8 @@ gem 'flutie'
 gem 'bourbon'
 
 group :development do
-  gem "heroku"
+  gem 'heroku'
+  gem 'bundler', '>= 1.2.0.pre'
 end
 
 group :development, :test do

@@ -198,6 +198,7 @@ PLATFORMS
 DEPENDENCIES
   bourbon
   bourne
+  bundler (>= 1.2.0.pre)
   capybara-webkit (~> 0.12.0)
   coffee-rails (~> 3.2.1)
   database_cleaner

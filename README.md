@@ -1,7 +1,7 @@
-Rails app
+Sched.do
 =========
 
-This is a Rails 3.1 app running on Ruby 1.9.2 and deployed to Heroku's Cedar
+This is a Rails 3.2 app running on Ruby 1.9.3 and deployed to Heroku's Cedar
 stack. It has an RSpec and Turnip test suite which should be run before
 committing to the master branch.
 
@@ -18,6 +18,10 @@ commands like `git up` and `git down` for a clean git history.
 Clone the app:
 
     git clone git@github.com:thoughtbot/sched-do.git
+
+Install Bundler 1.2.0.pre or higher:
+
+    gem install bundler --pre
 
 Set up the app:
 
