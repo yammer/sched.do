@@ -12,8 +12,12 @@ $serif: Georgia,serif;
 // Type size
 $body-font: 16px;
 $h1-size: 2em;
+
+// Ratio used in generating relative size and bottom margin of H tags based on $h1-size
 $ratio: .8;
 
+//Line height
+$lh: 1.1em;
 
 //colors:
 

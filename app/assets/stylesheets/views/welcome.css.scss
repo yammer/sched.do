@@ -1,12 +1,20 @@
-div.logo {
-  @include fill-parent();
-  text-align: center;
-}
+body.welcome {
 
-div.sign-in {
-  @extend div.logo;
+  header {
+    background: #eee;
+    padding: 50px;
+    margin-top: 200px;
+    div.logo {
+      @include fill-parent();
+      text-align: center;
+    }
 
-  a {
-    display: block;
+    div.sign-in {
+      @extend div.logo;
+
+      a {
+        display: block;
+      }
+    }
   }
 }

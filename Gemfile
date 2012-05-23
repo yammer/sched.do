@@ -20,6 +20,7 @@ gem 'paperclip', '~> 3.0.4'
 gem 'formtastic'
 gem 'flutie'
 gem 'bourbon'
+gem 'jquery-rails'
 
 group :development do
   gem 'heroku'
