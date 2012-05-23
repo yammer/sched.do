@@ -13,13 +13,6 @@
   <%= csrf_meta_tags %>
 </head>
 <body class="<%= body_class %>">
-  <%# <div id="header"> %>
-    <%# <% if signed_in? -%>
-    <%#   <%= link_to "Sign out", sign_out_path, :method => :delete %1> %>
-    <%# <% else -%>
-    <%#   <%= link_to "Sign in", sign_in_path %1> %>
-    <%# <% end -%>
-  <%# </div> %>
   <%= render 'shared/flashes' -%>
   <%= yield %>
   <%= render 'shared/javascript' %>
