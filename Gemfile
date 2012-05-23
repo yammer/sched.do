@@ -25,6 +25,7 @@ gem 'jquery-rails'
 group :development do
   gem 'heroku'
   gem 'bundler', '>= 1.2.0.pre'
+  gem 'pry'
 end
 
 group :development, :test do
