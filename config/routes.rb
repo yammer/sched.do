@@ -1,6 +1,4 @@
 SchedDo::Application.routes.draw do
-  root :to => 'Clearance::Sessions#new'
-
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
