@@ -8,6 +8,3 @@ test: &test
   <<: *default
   database: sched-do_test
   min_messages: warning
-
-cucumber:
-  <<: *test
