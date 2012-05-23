@@ -21,6 +21,8 @@ gem 'formtastic'
 gem 'flutie'
 gem 'bourbon'
 gem 'jquery-rails'
+gem 'omniauth', '~> 1.0'
+gem 'omniauth-oauth2'
 
 group :development do
   gem 'heroku'
