@@ -85,6 +85,9 @@ GEM
     hike (1.2.1)
     i18n (0.6.0)
     journey (1.0.3)
+    jquery-rails (2.0.2)
+      railties (>= 3.2.0, < 5.0)
+      thor (~> 0.14)
     json (1.7.3)
     launchy (2.1.0)
       addressable (~> 2.2.6)
@@ -208,6 +211,7 @@ DEPENDENCIES
   formtastic
   heroku
   high_voltage
+  jquery-rails
   launchy
   paperclip (~> 3.0.4)
   pg

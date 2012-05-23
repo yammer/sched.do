@@ -1,0 +1,12 @@
+div.logo {
+  @include fill-parent();
+  text-align: center;
+}
+
+div.sign-in {
+  @extend div.logo;
+
+  a {
+    display: block;
+  }
+}

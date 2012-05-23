@@ -1,0 +1,15 @@
+h1, h2, h3, h4, h5 {
+}
+
+h1 {
+  font-size: $h1-size;
+  margin-bottom: $h1-size/6;
+}
+
+@for $i from 2 through 6 {
+  h#{$i} {
+    font-size: $h1-size * $ratio;
+    margin-bottom: ($h1-size/6) * $ratio;
+    $ratio: $ratio * .9;
+  }
+}

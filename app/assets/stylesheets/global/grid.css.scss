@@ -1,0 +1,61 @@
+@function calculate-width($column-count) {
+  @return ($column-count * $column-width)+(($column-count - 1)* $gutter-width);
+}
+
+@mixin columns($columns, $container-columns: $grid-columns, $display: inline) {
+  $container-width: calculate-width($container-columns);
+  $width: calculate-width($columns);
+  width: percentage($width / $container-width);
+
+  @if $display == table-cell {
+    display: table-cell;
+    padding-right: percentage($gutter-width / $container-width);
+
+    &:last-child {
+      padding-right: 0;
+    }
+  }
+
+  @else {
+    display: inline;
+    float: left;
+    margin-right: percentage($gutter-width / $container-width);
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+@mixin row($display: block) {
+  @extend .clearfix;
+  @if $display == table {
+    display: table;
+  }
+  @else {
+    display: block;
+  }
+}
+
+@mixin fill-parent() {
+  width: 100%;
+  @include box-sizing(border-box);
+}
+
+@mixin flatten-column() {
+  @include row();
+}
+
+.clearfix {
+  *zoom:1;
+
+  &:before, &:after {
+    content:"";
+    display:table;
+  }
+
+  &:after {
+    clear:both;
+  }
+}
+

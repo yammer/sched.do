@@ -9,9 +9,18 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
- *= require_tree .
 */
 
 
 @import 'flutie';
 @import 'bourbon';
+@import 'global/mixins';
+@import 'global/variables';
+@import 'global/grid';
+@import 'global/typography';
+@import 'global/base';
+@import 'global/forms';
+
+
+//Views
+@import 'views/welcome';
