@@ -5,6 +5,10 @@ This is a Rails 3.1 app running on Ruby 1.9.2 and deployed to Heroku's Cedar
 stack. It has an RSpec and Turnip test suite which should be run before
 committing to the master branch.
 
+Please remember that this will be open-sourced at some point, so don't commit
+any passwords or API keys. Those should go in config variables like
+`ENV['API_KEY']`.
+
 Laptop setup
 ------------
 
