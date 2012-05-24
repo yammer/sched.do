@@ -5,5 +5,14 @@
 require File.expand_path('../config/application', __FILE__)
 
 SchedDo::Application.load_tasks
+
+if defined?(RSpec)
+  desc "Run acceptance specs"
+  RSpec::Core::RakeTask.new(:acceptance) do |t|
+    t.pattern = 'spec/acceptance/**/*.feature'
+  end
+end
+
+
 task(:default).clear
-task :default => [:spec]
+task :default => [:spec, :acceptance]
