@@ -1,32 +1,24 @@
 var welcomeHeader = $('#js-welcome-header');
 
 $(document).ready(function() {
-  if (window.innerHeight > 480) {
-    setTopMargin();
-  }
-
-  var headerPosition = welcomeHeader.offset().top;
-  $('#learn-more').click(function(){
-    $('html, body').animate({scrollTop:headerPosition}, 'slow');
-    welcomeHeader.css('margin-bottom', '300px');
-    return false;
-  });
+   setMarginHeights();
 });
 
 $(window).resize(function() {
-    if (window.innerHeight > 480) {
-      setTopMargin();
-    }
+   setMarginHeights();
 });
 
-var setTopMargin = function() {
-  var steps = $('section.steps');
-  var headerMargins = (window.innerHeight - welcomeHeader.height()) / 2;
+// Function that sets the top-margin and the height of the steps
+var setMarginHeights = function() {
 
-  welcomeHeader.css({
-    'margin-top': headerMargins,
-    'margin-bottom': headerMargins
-  });
+  var steps = $('section.steps li');
+  var height = window.innerHeight;
+  var welcomeHeader = $('#js-welcome-header');
+  var headerMargin = (window.innerHeight - welcomeHeader.height()) / 2;
 
-  steps.css('margin-bottom', headerMargins);
+  if (height > 480) {
+    welcomeHeader.css('margin-top', headerMargin);
+  }
+
+  steps.css('height', headerMargin*0.6);
 };

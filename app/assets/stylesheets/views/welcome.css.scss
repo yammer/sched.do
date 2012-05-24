@@ -18,8 +18,9 @@ body.welcome {
   }
 
   section.steps {
-    padding: 0 10px;
     margin-top: 50px;
+    width: 100%;
+    @include box-sizing(border-box);
 
     ul {
       text-align: center;
@@ -29,9 +30,10 @@ body.welcome {
         @include border-radius(3px);
         @include clearfix();
         display: block;
-        height: 200px;
-        vertical-align: middle;
+        margin: 10px auto;
         margin-bottom: 10px;
+        min-height: 200px;
+        vertical-align: middle;
       }
     }
   }
