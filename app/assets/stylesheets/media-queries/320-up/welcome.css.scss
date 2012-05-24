@@ -1,0 +1,17 @@
+body.welcome {
+
+  section.steps {
+    ul {
+      li {
+        width: 20%;
+        display: inline-block;
+        margin-right: 3%;
+
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+    }
+  }
+}
+

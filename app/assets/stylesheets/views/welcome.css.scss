@@ -1,9 +1,8 @@
 body.welcome {
-
   header {
     background: #eee;
-    padding: 50px;
-    margin-top: 200px;
+    padding: 50px 10px;
+
     div.logo {
       @include fill-parent();
       text-align: center;
@@ -14,6 +13,25 @@ body.welcome {
 
       a {
         display: block;
+      }
+    }
+  }
+
+  section.steps {
+    padding: 0 10px;
+    margin-top: 50px;
+
+    ul {
+      text-align: center;
+
+      li {
+        border: 1px solid #000;
+        @include border-radius(3px);
+        @include clearfix();
+        display: block;
+        height: 200px;
+        vertical-align: middle;
+        margin-bottom: 10px;
       }
     }
   }
