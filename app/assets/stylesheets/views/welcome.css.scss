@@ -30,6 +30,7 @@ body.welcome {
         @include border-radius(3px);
         @include clearfix();
         display: block;
+        visibility: hidden;
         margin: 10px auto;
         margin-bottom: 10px;
         min-height: 200px;
