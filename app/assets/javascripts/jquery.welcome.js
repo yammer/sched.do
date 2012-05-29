@@ -9,7 +9,7 @@ $(document).ready(function() {
     $('.steps li:first-child').css('visibility', 'visible');
   });
 
-  // Shows a step after the user scrolls past the previosu one
+  // Shows a step after the user scrolls past the previous one
   steps.waypoint(function() {
     $(this).next('li').css('visibility', 'visible');
   }, {

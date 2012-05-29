@@ -14,12 +14,12 @@
 
 @import 'flutie';
 @import 'bourbon';
-@import 'global/mixins';
-@import 'global/variables';
-@import 'global/grid';
-@import 'global/typography';
-@import 'global/base';
-@import 'global/forms';
+@import 'base/mixins';
+@import 'base/variables';
+@import 'base/grid';
+@import 'base/typography';
+@import 'base/base';
+@import 'base/forms';
 
 
 //Views
