@@ -14,9 +14,11 @@
   <%= csrf_meta_tags %>
 </head>
 <body class="<%= body_class %>">
-
+  <%= render 'shared/navbar' -%>
   <%= render 'shared/flashes' -%>
-  <%= yield %>
+  <div class="main">
+    <%= yield %>
+  </div>
   <%= render 'shared/javascript' %>
 </body>
 </html>
