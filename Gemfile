@@ -27,12 +27,12 @@ gem 'omniauth-oauth2'
 group :development do
   gem 'heroku'
   gem 'bundler', '>= 1.2.0.pre'
-  gem 'pry'
 end
 
 group :development, :test do
   gem "rspec-rails", "~> 2.9.0"
   gem "sham_rack"
+  gem 'pry'
 end
 
 group :test do
