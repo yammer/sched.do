@@ -26,12 +26,13 @@ describe User, 'validations' do
   context 'encrypted_access_token' do
     it 'encrypts access_token before validation on create' do
       access_token = 'abc123'
-      user = build(:user, access_token: access_token)
+      salt = 'salt'
+      expected_encrypted_access_token = Encrypter.new(access_token, salt).encrypt
+      user = build(:user, access_token: access_token, salt: salt)
 
       user.encrypted_access_token.should be_blank
       user.save
-      user.encrypted_access_token.should be_present
-      # user.encrypted_access_token.should == expected_password
+      user.encrypted_access_token.should == expected_encrypted_access_token
     end
 
     it 'validates presence of encrypted_access_token' do
