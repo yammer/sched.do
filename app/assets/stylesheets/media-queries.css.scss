@@ -3,10 +3,6 @@
 @import 'base/variables';
 @import 'base/grid';
 
-
-// //Views
-// @import 'views/welcome';
-
 @media only screen and (min-width: 321px) {
   @import 'media-queries/320-up/base';
   @import 'media-queries/320-up/welcome';
