@@ -18,5 +18,6 @@ class EventsController < ApplicationController
 
   def show
     @event = Event.find(params[:id])
+    @suggestions = @event.suggestions
   end
 end
