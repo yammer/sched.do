@@ -1,6 +1,7 @@
 class EventsController < ApplicationController
   def new
     @event = Event.new
+    @suggestion = @event.suggestions.build
   end
 
   def create

@@ -1,1 +1,6 @@
 <%= @event.name %>
+<ul class="times">
+  <% @event.suggestions.each do |suggestion| %>
+    <li><%= l suggestion.time %></li>
+  <% end %>
+</ul>
