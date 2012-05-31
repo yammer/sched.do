@@ -7,7 +7,7 @@ class Encrypter
   end
 
   def encrypt
-    Digest::SHA1.hexdigest(salted_string).encode('UTF-8')
+    Digest::SHA1.hexdigest(salted_string)
   end
 
   private

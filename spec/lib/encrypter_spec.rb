@@ -6,7 +6,7 @@ describe Encrypter, '#encrypt' do
     salt = 'salt'
     encrypter = Encrypter.new(string, salt)
     salted_string = "--#{salt}--#{string}--"
-    expected_hash = Digest::SHA1.hexdigest(salted_string).encode('UTF-8')
+    expected_hash = Digest::SHA1.hexdigest(salted_string)
     encrypter.encrypt.should == expected_hash
   end
 end
