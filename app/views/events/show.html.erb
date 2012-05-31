@@ -3,4 +3,5 @@
   <% @suggestions.each do |suggestion| %>
     <li><%= l suggestion.time %></li>
   <% end %>
+  <%= link_to 'Edit event', edit_event_path(@event) %>
 </ul>

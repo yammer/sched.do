@@ -20,4 +20,20 @@ class EventsController < ApplicationController
     @event = Event.find(params[:id])
     @suggestions = @event.suggestions
   end
+
+  def edit
+    @event = Event.find(params[:id])
+  end
+
+  def update
+    event = Event.find(params[:id])
+    if event.update_attributes(params[:event])
+      flash[:success] = 'Event successfully updated.'
+      redirect_to event
+    else
+      @event = event
+      flash[:failure] = 'Please check the errors and try again.'
+      render :edit
+    end
+  end
 end
