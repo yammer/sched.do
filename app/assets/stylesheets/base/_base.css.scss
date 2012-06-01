@@ -3,8 +3,34 @@ body {
   font-size: 16px;
 
   header {
-    @include background-image(linear-gradient($bg-color, darken($bg-color, 5%)));
+    @include background-image(linear-gradient(#fff, darken($bg-color, 3%)));
     border-bottom: 1px solid darken($bg-color, 20%);
     @include box-shadow(inset 0 -1px 0px #fff);
+    overflow: hidden;
+    padding: 15px 0;
+
+    img {
+      margin: 0;
+    }
+
+    div.logo {
+      float: left;
+    }
+
+    nav {
+      float: right;
+      padding-top: 7px;
+
+      ul {
+        margin: 0;
+        li {
+          vertical-align: middle;
+
+          a, a:link, a:visited {
+            @extend .button;
+          }
+        }
+      }
+    }
   }
 }

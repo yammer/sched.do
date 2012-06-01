@@ -1,0 +1,21 @@
+@mixin button($color: $bg-color) {
+  @include background-image(linear-gradient(lighten($color, 10%), darken($color, 5%)));
+  border: 1px solid darken($color, 20%);
+  padding: 0.5em 1.2em;
+  text-decoration: none;
+  @include border-radius(3px);
+  @include box-shadow(0 1px 0px #fff, inset 0 1px 0px lighten($color, 20%));
+
+  // Label styles
+  color: darken($color,40%);
+  text-decoration: none;
+  text-shadow: 0 1px 0px lighten($color, 20%);
+
+  &:hover {
+    @include background-image(linear-gradient(lighten($color, 10%), darken($color, 2%)));
+  }
+
+  &:active {
+    @include background-image(linear-gradient(darken($color, 5%), lighten($color, 10%)));
+  }
+}

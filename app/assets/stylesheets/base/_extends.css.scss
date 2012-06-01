@@ -8,3 +8,7 @@ div.wrapper {
     color: #fff;
   }
 }
+
+.button {
+  @include button();
+}
