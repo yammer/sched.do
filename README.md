@@ -31,6 +31,21 @@ Set up the app:
     rake db:create
     rake db:migrate
 
+Edit your .env file:
+
+    cp sample.env .env
+    vi .env # Real CONSUMER_KEY value etc. are in Trajectory
+
+Run the server with foreman:
+
+    foreman start -p 300
+
+We use foreman because foreman picks up on the `.env` file.
+
+Go to the server:
+
+    http://localhost:3000
+
 Running tests
 -------------
 
