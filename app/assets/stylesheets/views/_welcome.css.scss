@@ -18,6 +18,8 @@ body.welcome {
         color: darken($bg-color, 25%);
         font-weight: normal;
         font-family: $bariol-light;
+        text-shadow: 0 1px 0 #fff;
+        font-variant: normal;
       }
 
       p#learn-more {
@@ -39,6 +41,8 @@ body.welcome {
           margin: 20px auto;
           font-size: 1.6em;
           padding: 1em;
+          letter-spacing: 0.05em;
+          font-weight: bold;
         }
       }
     }

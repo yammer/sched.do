@@ -1,10 +1,8 @@
-@mixin button {
+@mixin button($weight: normal) {
+  @include border-radius(3px);
+  font-family: $bariol;
   padding: 0.5em 1.2em;
   text-decoration: none;
-  font-family: $bariol;
-  @include border-radius(3px);
-  text-decoration: none;
-  font-weight: bold;
 }
 
 @mixin button-color($color: $bg-color) {

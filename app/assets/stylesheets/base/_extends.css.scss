@@ -4,7 +4,19 @@
 }
 
 .orange-button {
-  @include button-color(#EC6E4D);
+  @include button-color($orange);
   color: #fff;
-  text-shadow: 0 -1px 0 darken(#EC6E4D, 40%);
+  text-shadow: 0 -1px 0 darken($orange, 40%);
+}
+
+.sheet {
+  max-width: 100%;
+  @include background-image(linear-gradient(top, darken($bg-color, 5%), $bg-color 1%, #fff 20%));
+  border: 1px solid darken($bg-color, 10%);
+  border-top: none;
+  @include box-shadow(0 4px 5px darken($bg-color, 1%));
+  margin: 0 auto;
+  margin-top: -20px;
+  max-width: $max-width/1.5;
+  padding: 5%;
 }
