@@ -4,4 +4,9 @@ class Suggestion < ActiveRecord::Base
   attr_accessible :description
 
   belongs_to :event
+  has_many :votes
+
+  def vote_count
+    votes.select(&:persisted?).size
+  end
 end

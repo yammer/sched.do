@@ -14,3 +14,7 @@ end
 step 'I should be redirected to the new event page' do
   page.should have_content "Create a New Event"
 end
+
+step 'I sign out' do
+  sign_out
+end

@@ -22,9 +22,6 @@ step 'I should see a presence error on the suggestion field' do
   expect_error_on_field_with_data_role("can't be blank", 'suggestion')
 end
 
-step 'I created an event named :event_name with a suggestion of :suggestion' do |event_name, suggestion|
-  visit root_path
-  fill_in 'event_name', with: event_name
-  find_field_by_data_role('suggestion').set(suggestion)
-  click_button 'Create event'
+step 'I create(d) an event named :event_name with a suggestion of :suggestion' do |event_name, suggestion|
+  create_event(event_name, suggestion)
 end
