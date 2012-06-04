@@ -17,6 +17,13 @@ body.welcome {
       h2 {
         color: darken($bg-color, 25%);
         font-weight: normal;
+        font-family: $bariol-light;
+      }
+
+      p#learn-more {
+        @extend h2;
+        color: darken($bg-color, 35%);
+        font-size: 1.2em;
       }
     }
 

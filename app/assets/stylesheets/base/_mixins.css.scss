@@ -4,6 +4,7 @@
   font-family: $bariol;
   @include border-radius(3px);
   text-decoration: none;
+  font-weight: bold;
 }
 
 @mixin button-color($color: $bg-color) {
