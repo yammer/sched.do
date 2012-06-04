@@ -1,23 +1,9 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8" />
-  <meta name="ROBOTS" content="NOODP" />
-  <title><%= page_title %></title>
-
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <%= stylesheet_link_tag :application , media: 'screen only' %>
-
-  <link href='http://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
-
-  <%= csrf_meta_tags %>
-</head>
-<body class="<%= body_class %>">
+<% content_for :content do %>
   <%= render 'shared/navbar' -%>
-  <%= render 'shared/flashes' -%>
-  <div class="main">
+
+  <div class="main-content">
     <%= yield %>
   </div>
-  <%= render 'shared/javascript' %>
-</body>
-</html>
+<% end %>
+
+<%= render file: 'layouts/application' %>

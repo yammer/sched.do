@@ -1,8 +1,13 @@
 body {
   header {
-    div.wrapper {
+    div.header-content {
       max-width: $max-width;
       margin: 0 auto;
     }
+  }
+
+  div.main-content {
+    max-width: $max-width;
+    margin: 0 auto;
   }
 }

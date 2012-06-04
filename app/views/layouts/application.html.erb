@@ -1,21 +1,22 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8" />
-  <meta name="ROBOTS" content="NOODP" />
-  <title><%= page_title %></title>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="ROBOTS" content="NOODP" />
+    <title><%= page_title %></title>
 
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <%= stylesheet_link_tag :application , media: 'screen only' %>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= stylesheet_link_tag :application , media: 'screen only' %>
+    <%= stylesheet_link_tag 'media-queries', media: '(min-width:321px)' %>
 
-  <link href='http://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
 
-  <%= csrf_meta_tags %>
-</head>
-<body class="<%= body_class %>">
+    <%= csrf_meta_tags %>
+  </head>
+  <body class="<%= body_class %>">
 
-  <%= render 'shared/flashes' -%>
-  <%= yield %>
-  <%= render 'shared/javascript' %>
-</body>
+    <%= render 'shared/flashes' -%>
+    <%= content_for?(:content) ? yield(:content) : yield %>
+    <%= render 'shared/javascript' %>
+  </body>
 </html>

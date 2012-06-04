@@ -1,14 +1,3 @@
-div.wrapper {
-  @include box-sizing(border-box);
-  padding: 0 20px;
-  width: 100%;
-
-  &:-moz-selection, &:selection {
-    background: $green;
-    color: #fff;
-  }
-}
-
 .button {
   @include button();
 }

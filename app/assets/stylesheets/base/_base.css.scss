@@ -1,13 +1,17 @@
 body {
   line-height: $lh;
-  font-size: 16px;
+  font-size: 16px
+}
 
-  header {
-    @include background-image(linear-gradient(#fff, darken($bg-color, 3%)));
-    border-bottom: 1px solid darken($bg-color, 20%);
-    @include box-shadow(inset 0 -1px 0px #fff);
-    overflow: hidden;
-    padding: 15px 0;
+header {
+  @include background-image(linear-gradient(#fff, darken($bg-color, 2%)));
+  border-bottom: 1px solid darken($bg-color, 20%);
+  @include box-shadow(inset 0 -1px 0px #fff);
+  overflow: hidden;
+  padding: 15px 0;
+
+  div.header-content {
+    padding: 0 10px;
 
     img {
       margin: 0;
@@ -33,4 +37,8 @@ body {
       }
     }
   }
+}
+
+div.main-content {
+  padding: 20px 10px;
 }
