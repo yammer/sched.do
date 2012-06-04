@@ -3,6 +3,10 @@ body {
   font-size: 16px
 }
 
+img {
+  max-width: 100%;
+}
+
 header {
   @include background-image(linear-gradient(#fff, darken($bg-color, 2%)));
   border-bottom: 1px solid darken($bg-color, 20%);

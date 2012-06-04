@@ -1,11 +1,23 @@
 body.welcome {
   div.welcome {
-    background: #eee;
+    @include background-image(linear-gradient(#fff, darken($bg-color, 2%)));
+    border-bottom: 1px solid darken($bg-color, 20%);
+    border-top: 1px solid darken($bg-color, 8%);
+    @include box-shadow(inset 0 -1px 0px #fff);
     padding: 50px 10px;
 
     div.logo {
       @include fill-parent();
       text-align: center;
+
+      h1 {
+        margin-bottom: -10px;
+      }
+
+      h2 {
+        color: darken($bg-color, 25%);
+        font-weight: normal;
+      }
     }
 
     div.sign-in {
@@ -13,6 +25,14 @@ body.welcome {
 
       a {
         display: block;
+
+        &.sign-in {
+          @extend .button;
+          @extend .orange-button;
+          margin: 20px auto;
+          font-size: 1.6em;
+          padding: 1em;
+        }
       }
     }
   }
