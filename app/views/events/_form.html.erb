@@ -1,8 +1,8 @@
 <%= semantic_form_for(@event) do |f| %>
   <%= f.inputs do %>
-    <%= f.input :name %>
+    <%= f.input :name, label: false, placeholder: "Event name" %>
     <%= f.semantic_fields_for(:suggestions, @suggestion) do |suggestion_form| %>
-      <%= suggestion_form.input :time, as: :string, hint: 'Dec 30 2012, 8:30pm' %>
+      <%= suggestion_form.input :time, as: :string, hint: 'Dec 30 2012, 8:30pm', label: false, placeholder: "Time and Date" %>
     <% end %>
   <% end %>
   <%= f.actions do %>

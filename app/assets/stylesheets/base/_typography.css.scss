@@ -9,16 +9,16 @@
     font-style: normal;
 }
 
-@font-face {
-    font-family: 'Bariol Light';
-    src: url('/fonts/bariol/bariol_light-webfont.eot');
-    src: url('/fonts/bariol/bariol_light-webfont.eot?#iefix') format('embedded-opentype'),
-         url('/fonts/bariol/bariol_light-webfont.woff') format('woff'),
-         url('/fonts/bariol/bariol_light-webfont.ttf') format('truetype'),
-         url('/fonts/bariol/bariol_light-webfont.svg#BariolRegularRegular') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
+// @font-face {
+//     font-family: 'Bariol Light';
+//     src: url('/fonts/bariol/bariol_light-webfont.eot');
+//     src: url('/fonts/bariol/bariol_light-webfont.eot?#iefix') format('embedded-opentype'),
+//          url('/fonts/bariol/bariol_light-webfont.woff') format('woff'),
+//          url('/fonts/bariol/bariol_light-webfont.ttf') format('truetype'),
+//          url('/fonts/bariol/bariol_light-webfont.svg#BariolRegularRegular') format('svg');
+//     font-weight: normal;
+//     font-style: normal;
+// }
 
 @font-face {
     font-family: 'Bariol';
@@ -37,6 +37,7 @@ h1, h2, h3, h4, h5 {
   font-weight: normal;
   color: darken($bg-color, 30%);
   font-variant: small-caps;
+  letter-spacing: 0.04em;
 }
 
 

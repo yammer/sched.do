@@ -3,11 +3,10 @@ $grid-columns: 12;
 $gutter-width: 2%;
 $column-width: (100% - ($gutter-width * ($grid-columns - 1))) / $grid-columns;
 
-$max-width: 1200px; // Change to 100% for a completely fluid layout. Also, keep this in mind when changing the pixel value of max-width http://ejohn.org/blog/sub-pixel-problems-in-css/
+$max-width: 1000px; // Change to 100% for a completely fluid layout. Also, keep this in mind when changing the pixel value of max-width http://ejohn.org/blog/sub-pixel-problems-in-css/
 
 // Fonts
 $bariol: 'Bariol', Helvetica, sans-serif;
-$bariol-light: 'Bariol Light', Helvetica, sans-serif;
 $sans: 'Open Sans',Verdana, Helvetica, Arial, sans-serif;
 $serif: Georgia,serif;
 
@@ -23,7 +22,8 @@ $lh: 1.1em;
 
 //colors:
 $bg-color: #f6fbfc;
-$green: #bbd2ca;
+$blue: #30AADE;
 $orange: #EC6E4D;
+$placeholder-color: darken($bg-color, 20%);
 
 // $placeholder-color: darken($$$, 10%);

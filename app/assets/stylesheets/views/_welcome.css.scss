@@ -15,11 +15,12 @@ body.welcome {
       }
 
       h2 {
-        color: darken($bg-color, 25%);
+        color: darken($bg-color, 16%);
         font-weight: normal;
-        font-family: $bariol-light;
+        font-family: $bariol;
         text-shadow: 0 1px 0 #fff;
         font-variant: normal;
+        line-height: 1em;
       }
 
       p#learn-more {
@@ -38,7 +39,7 @@ body.welcome {
         &.sign-in {
           @extend .button;
           @extend .orange-button;
-          margin: 20px auto;
+          margin: 40px auto 20px auto;
           font-size: 1.6em;
           padding: 1em;
           letter-spacing: 0.05em;
