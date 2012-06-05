@@ -1,15 +1,15 @@
 step 'I vote for :suggestion_description' do |suggestion_description|
-  suggestion = Suggestion.find_by_description!(suggestion_description)
+  vote_for(suggestion_description)
+end
 
-  within '.suggestions' do
-    find(".vote[data-id='#{suggestion.id}'] input[name='commit']").click
-  end
+step 'I vote for :suggestion_description again' do |suggestion_description|
+  vote_for(suggestion_description)
 end
 
 step 'I should see that that :suggestion_description has :number vote(s)' do |suggestion_description, number|
-  suggestion = Suggestion.find_by_description!(suggestion_description)
+  assert_vote_count(suggestion_description, number)
+end
 
-  within '.suggestions' do
-    find(".vote-count[data-id='#{suggestion.id}']").text.strip.should == number.to_s
-  end
+step 'I should see that that :suggestion_description still has :number vote(s)' do |suggestion_description, number|
+  assert_vote_count(suggestion_description, number)
 end

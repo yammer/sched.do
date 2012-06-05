@@ -7,6 +7,7 @@ FactoryGirl.define do
 
   factory :vote do
     suggestion
+    user
   end
 
   factory :suggestion do

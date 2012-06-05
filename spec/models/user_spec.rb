@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe User, 'validations' do
+  it { should have_many(:votes) }
+
   it { should validate_presence_of(:access_token) }
   it { should validate_presence_of(:name) }
   it { should validate_presence_of(:yammer_user_id) }
