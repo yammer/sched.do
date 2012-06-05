@@ -23,7 +23,6 @@ gem 'bourbon'
 gem 'jquery-rails'
 gem 'omniauth', '~> 1.0'
 gem 'omniauth-oauth2'
-gem 'validates_timeliness', '~> 3.0.2'
 
 group :development do
   gem 'heroku'

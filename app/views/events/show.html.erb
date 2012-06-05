@@ -1,7 +1,7 @@
 <%= @event.name %>
-<ul class="times">
+<ul class="suggestions">
   <% @suggestions.each do |suggestion| %>
-    <li><%= l suggestion.time %></li>
+    <li><%= suggestion.description %></li>
   <% end %>
   <%= link_to 'Edit event', edit_event_path(@event) %>
 </ul>

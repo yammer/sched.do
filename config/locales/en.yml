@@ -2,6 +2,3 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
-  time:
-    formats:
-      default: "%b %d, %Y %I:%M %P"

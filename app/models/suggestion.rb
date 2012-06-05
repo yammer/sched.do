@@ -1,8 +1,7 @@
 class Suggestion < ActiveRecord::Base
-  validates :time, presence: true
-  validates_datetime :time, after: :now, after_message: "must be in the future"
+  validates :description, presence: true
 
-  attr_accessible :time
+  attr_accessible :description
 
   belongs_to :event
 end

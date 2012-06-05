@@ -1,5 +1,5 @@
-step 'I should see a suggested time of :time' do |time|
-  within '.times' do
-    page.should have_content time
+step 'I should see a suggestion of :suggestion' do |suggestion|
+  within '.suggestions' do
+    page.should have_content suggestion
   end
 end
