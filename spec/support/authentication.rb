@@ -12,7 +12,11 @@ module TurnipAuthenticationHelpers
 
   def sign_in
     visit root_path
-    click_link "Sign in with Yammer"
+    click_link 'Sign in with Yammer'
+  end
+
+  def sign_out
+    click_link 'Sign out'
   end
 end
 

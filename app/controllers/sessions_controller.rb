@@ -9,6 +9,12 @@ class SessionsController < ApplicationController
     redirect_to new_event_path
   end
 
+  def destroy
+    @current_user = nil
+    cookies[:encrypted_access_token] = nil
+    redirect_to root_path
+  end
+
   private
 
   def auth

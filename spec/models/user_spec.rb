@@ -46,3 +46,16 @@ describe User, 'validations' do
     end
   end
 end
+
+describe User, '#able_to_edit?' do
+  it 'returns true if the user created the event' do
+    event = create(:event)
+    user = event.user
+    event.user.should be_able_to_edit(event)
+  end
+
+  it 'returns false if the user did not create the event' do
+    event = create(:event)
+    build(:user).should_not be_able_to_edit(event)
+  end
+end

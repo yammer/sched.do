@@ -1,0 +1,17 @@
+<li class="suggestion">
+  <aside>
+    <div class="vote-count" data-id="<%= suggestion.id %>">
+      <%= suggestion.vote_count %>
+    </div>
+
+    <div class="vote" data-id="<%= suggestion.id %>">
+      <%= semantic_form_for suggestion.votes.build do |f| %>
+        <%= f.input :suggestion_id, as: :hidden, input_html: { value: suggestion.id } %>
+        <%= f.action :submit, button_html: { value: "✔" } %>
+      <% end %>
+    </div>
+  </aside>
+  <div class="description">
+    <%= suggestion.description %>
+  </div>
+</li>

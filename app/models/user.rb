@@ -15,6 +15,10 @@ class User < ActiveRecord::Base
     set_encrypted_access_token
   end
 
+  def able_to_edit?(event)
+    event.user == self
+  end
+
   private
 
   def set_salt_if_necessary

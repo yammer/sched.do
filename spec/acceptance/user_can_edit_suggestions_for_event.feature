@@ -16,3 +16,10 @@ Feature: User can edit suggestions for event
     And I suggest an empty string
     And I press "Update event"
     Then I should see that the event was not successfully updated
+
+  Scenario: User tries to edit an event that they did not create
+    Given I am signed in
+    And I created an event named "Clown party" with a suggestion of "lunch"
+    When I sign in as a different user
+    And I view the "Clown party" event
+    Then I should not see an edit link

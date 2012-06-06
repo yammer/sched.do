@@ -11,10 +11,11 @@ step 'I am signed in' do
   sign_in
 end
 
-step 'I should be redirected to the new event page' do
-  page.should have_content "Create a New Event"
+step 'I sign in as a different user' do
+  sign_out
+  sign_in
 end
 
-step 'I sign out' do
-  sign_out
+step 'I should be redirected to the new event page' do
+  page.should have_content "Create a New Event"
 end

@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
 
   hide_action :current_user=
+  helper_method :current_user
 
   def current_user=(user)
     @current_user = user
