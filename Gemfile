@@ -23,6 +23,7 @@ gem 'bourbon'
 gem 'jquery-rails'
 gem 'omniauth', '~> 1.0'
 gem 'omniauth-oauth2'
+gem 'airbrake', '~> 3.1.0'
 
 group :development do
   gem 'heroku'

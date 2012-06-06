@@ -29,6 +29,9 @@ GEM
       i18n (~> 0.6)
       multi_json (~> 1.0)
     addressable (2.2.8)
+    airbrake (3.1.0)
+      activesupport
+      builder
     arel (3.0.2)
     bourbon (2.1.0)
       sass (>= 3.1)
@@ -221,6 +224,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  airbrake (~> 3.1.0)
   bourbon
   bourne
   bundler (>= 1.2.0.pre)
