@@ -1,3 +1,46 @@
 div.new-event {
   @extend .sheet;
+
+  ul.suggestions {
+    margin: 5% 0;
+
+    li.suggestion {
+      list-style: none;
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+
+      div {
+        display: inline-block;
+      }
+
+      div.vote-count {
+        padding: 0.4em 0.6em;
+        margin-right: 10px;
+        border: 1px solid darken($bg-color, 10%);
+        width: 1.6em;
+        background: $bg-color;
+        text-align: center;
+        font-size: 0.7em;
+        @include border-radius(30px);
+      }
+
+      div.vote {
+        margin-right: 10px;
+
+        input[type="submit"] {
+          padding: 0.4em 0.8em;
+          font-size: 0.8em;
+          @extend .button;
+
+          &:hover {
+            @extend .orange-button;
+          }
+        }
+      }
+
+      div.description {
+        font-size: 1em;
+      }
+    }
+  }
 }

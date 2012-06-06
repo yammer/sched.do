@@ -1,19 +1,28 @@
-<%= @event.name %>
-<ul class="suggestions">
-  <% @suggestions.each do |suggestion| %>
-    <li>
-      <%= suggestion.description %>
-      <div class="vote" data-id="<%= suggestion.id %>">
-        <%= semantic_form_for suggestion.votes.build do |f| %>
-          <%= f.input :suggestion_id, as: :hidden, input_html: { value: suggestion.id } %>
-          <%= f.action :submit, button_html: { value: "Vote for this" } %>
-        <% end %>
-      </div>
+<div class="show-event">
+  <h2 class="event-name">
+    <%= @event.name %>
+    <%= link_to 'Edit event', edit_event_path(@event), class: "edit-button" %>
+  </h2>
+  <ul class="suggestions">
+    <% @suggestions.each do |suggestion| %>
+      <li class="suggestion">
 
-      <p class="vote-count" data-id="<%= suggestion.id %>">
+        <div class="vote-count" data-id="<%= suggestion.id %>">
         <%= suggestion.vote_count %>
-      </p>
-    </li>
-  <% end %>
-  <%= link_to 'Edit event', edit_event_path(@event) %>
-</ul>
+        </div>
+
+        <div class="vote" data-id="<%= suggestion.id %>">
+          <%= semantic_form_for suggestion.votes.build do |f| %>
+            <%= f.input :suggestion_id, as: :hidden, input_html: { value: suggestion.id } %>
+            <%= f.action :submit, button_html: { value: "✔" } %>
+          <% end %>
+        </div>
+
+        <div class="description">
+        <%= suggestion.description %>
+        </div>
+
+      </li>
+    <% end %>
+  </ul>
+</div>

@@ -27,9 +27,14 @@ form {
   input[type="submit"] {
     @extend .button;
     @extend .orange-button;
-    padding-top: 15px;
-    padding-bottom: 15px;
-    font-size: 1.5em;
+    font-size: 1em;
+
+    &.cta {
+      padding-top: 15px;
+      padding-bottom: 15px;
+      font-size: 1.5em;
+    }
+
   }
 
   textarea, button,
