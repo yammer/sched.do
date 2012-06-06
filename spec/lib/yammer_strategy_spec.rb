@@ -17,9 +17,10 @@ describe OmniAuth::Strategies::Yammer do
 
   it 'sets the correct info' do
     subject.stubs(raw_info: yammer_raw_info)
+    subject.stubs(access_token: stub(token: 'abc123'))
     subject.info[:name].should == 'Henry Smith'
     subject.info[:email].should == 'henry@example.com'
-    subject.info.should have_key(:access_token)
+    subject.info[:access_token].should == 'abc123'
   end
 
   def app

@@ -1,13 +1,13 @@
 module TurnipAuthenticationHelpers
   def create_yammer_account
-    OmniAuth.config.mock_auth[:yammer] = {
-      provider: 'yammer',
-      uid: '12345',
+    OmniAuth.config.mock_auth[:yammer].merge!({
+      uid: generate(:yammer_uid),
       info: {
-        name: 'Jim Bob',
-        email: 'jimbob@example.com'
+        name: generate(:yammer_user_name),
+        email: generate(:email),
+        access_token: OpenStruct.new(token: generate(:yammer_token))
       }
-    }
+    })
   end
 
   def sign_in
@@ -27,6 +27,6 @@ module AuthenticationHelpers
 end
 
 RSpec.configure do |c|
-  c.include TurnipAuthenticationHelpers
+  c.include TurnipAuthenticationHelpers, type: :request
   c.include AuthenticationHelpers
 end

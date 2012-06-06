@@ -19,7 +19,7 @@ module OmniAuth
         {
           name: raw_info['full_name'],
           email: primary_email,
-          access_token: access_token
+          access_token: access_token.token
         }
       end
 
@@ -29,15 +29,21 @@ module OmniAuth
         }
       end
 
-      private
-
-      def raw_info
-        @raw_info ||= access_token.params['user']
+      def build_access_token
+        access_token = super
+        token = YammerAccessToken.new(access_token.token).real_token
+        @access_token = ::OAuth2::AccessToken.new(client, token, access_token.params)
       end
 
-      def primary_email
-        raw_info['contact']['email_addresses'].detect{|address| address['type'] == 'primary'}['address']
-      end
+    private
+
+    def raw_info
+      @raw_info ||= access_token.params['user']
+    end
+
+    def primary_email
+      raw_info['contact']['email_addresses'].detect{|address| address['type'] == 'primary'}['address']
     end
   end
+end
 end

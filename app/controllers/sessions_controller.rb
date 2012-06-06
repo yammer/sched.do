@@ -1,6 +1,6 @@
 class SessionsController < ApplicationController
   def create
-    user = User.new(name: auth[:info][:name], access_token: 'abc')
+    user = User.new(name: auth[:info][:name], access_token: auth[:info][:access_token])
     user.yammer_user_id = yammer_user_id
     user.save!
     cookies[:encrypted_access_token] = user.encrypted_access_token
