@@ -1,4 +1,6 @@
 class SessionsController < ApplicationController
+  skip_before_filter :require_login, only: :create
+
   def create
     user = User.new(name: auth[:info][:name], access_token: auth[:info][:access_token])
     user.yammer_user_id = yammer_user_id

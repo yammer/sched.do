@@ -1,5 +1,32 @@
 require 'spec_helper'
 
+describe EventsController, 'authentication' do
+  it 'requires login for #new' do
+    get :new
+    should deny_access
+  end
+
+  it 'requires login for #create' do
+    post :create
+    should deny_access
+  end
+
+  it 'requires login for #show' do
+    get :show
+    should deny_access
+  end
+
+  it 'requires login for #edit' do
+    get :edit
+    should deny_access
+  end
+
+  it 'requires login for #update' do
+    put :update
+    should deny_access
+  end
+end
+
 describe EventsController, '#edit' do
   context 'with the user who created the event' do
     it 'is successful' do
