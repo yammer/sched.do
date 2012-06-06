@@ -1,13 +1,13 @@
 <div class="show-event">
-  <h2 class="event-name">
+  <h1 class="event-name">
     <%= @event.name %>
-    <%= link_to 'Edit event', edit_event_path(@event), class: "edit-button" %>
-  </h2>
+  </h1>
+  <%= link_to 'Edit', edit_event_path(@event), class: "edit-button" %>
   <ul class="suggestions">
     <% @suggestions.each do |suggestion| %>
       <li class="suggestion">
 
-        <div class="vote-count" data-id="<%= suggestion.id %>">
+      <aside>  <div class="vote-count" data-id="<%= suggestion.id %>">
         <%= suggestion.vote_count %>
         </div>
 
@@ -17,7 +17,7 @@
             <%= f.action :submit, button_html: { value: "✔" } %>
           <% end %>
         </div>
-
+</aside>
         <div class="description">
         <%= suggestion.description %>
         </div>

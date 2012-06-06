@@ -33,12 +33,16 @@
 
 
 h1, h2, h3, h4, h5 {
+  color: darken($bg-color, 40%);
   font-family: $bariol;
-  // font-weight: normal;
-  text-transform: lowercase;
-  color: darken($bg-color, 30%);
   font-variant: small-caps;
   letter-spacing: 0.04em;
+  text-shadow: 0 1px 0 #fff;
+  text-transform: lowercase;
+
+  a, a:link {
+    text-decoration: none;
+  }
 }
 
 

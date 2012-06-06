@@ -8,25 +8,9 @@ div.show-event {
 }
 
 div.show-event {
-  @extend .sheet;
 
   ul.suggestions {
-    margin-top: 20px;
-
-    li.suggestion {
-
-      div {
-      }
-
-      div.vote-count {
-      }
-
-      div.vote {
-      }
-
-      div.description {
-      }
-    }
+    margin-top: 10px;
   }
 }
 
