@@ -5,6 +5,11 @@ FactoryGirl.define do
     sequence(:yammer_user_id) { |n| n }
   end
 
+  factory :event do
+    name 'Clown party'
+    user
+  end
+
   factory :vote do
     suggestion
     user
@@ -13,9 +18,5 @@ FactoryGirl.define do
   factory :suggestion do
     description 'A pretty good suggestion.'
     event
-  end
-
-  factory :event do
-    name 'Clown party'
   end
 end

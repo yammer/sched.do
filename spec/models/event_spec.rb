@@ -1,8 +1,11 @@
 require 'spec_helper'
 
 describe Event do
-  it { should validate_presence_of(:name) }
   it { should have_many(:suggestions) }
+  it { should belong_to(:user) }
+
+  it { should validate_presence_of(:name) }
+  it { should validate_presence_of(:user_id) }
 
   it { should allow_mass_assignment_of(:suggestion) }
   it { should allow_mass_assignment_of(:suggestions_attributes) }

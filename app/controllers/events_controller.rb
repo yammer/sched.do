@@ -1,11 +1,16 @@
 class EventsController < ApplicationController
+  rescue_from ActiveRecord::RecordNotFound do |exception|
+    flash[:error] = 'Sorry, you are not authorized to view that event.'
+    redirect_to root_path
+  end
+
   def new
-    @event = Event.new
+    @event = current_user.events.build
     @suggestion = @event.suggestions.build
   end
 
   def create
-    event = Event.new(params[:event])
+    event = current_user.events.new(params[:event])
     if event.save
       flash[:success] = "Event successfully created."
       redirect_to event
@@ -22,11 +27,11 @@ class EventsController < ApplicationController
   end
 
   def edit
-    @event = Event.find(params[:id])
+    @event = current_user.events.find(params[:id])
   end
 
   def update
-    event = Event.find(params[:id])
+    event = current_user.events.find(params[:id])
     if event.update_attributes(params[:event])
       flash[:success] = 'Event successfully updated.'
       redirect_to event

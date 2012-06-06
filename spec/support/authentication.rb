@@ -1,4 +1,4 @@
-module AuthenticationHelpers
+module TurnipAuthenticationHelpers
   def create_yammer_account
     OmniAuth.config.mock_auth[:yammer] = {
       provider: 'yammer',
@@ -16,6 +16,13 @@ module AuthenticationHelpers
   end
 end
 
+module AuthenticationHelpers
+  def sign_in_as(user)
+    @controller.current_user = user
+  end
+end
+
 RSpec.configure do |c|
+  c.include TurnipAuthenticationHelpers
   c.include AuthenticationHelpers
 end

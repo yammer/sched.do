@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   attr_accessible :access_token, :encrypted_access_token, :name
 
+  has_many :events
   has_many :votes
 
   validates :access_token, presence: true

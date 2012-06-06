@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe User, 'validations' do
+  it { should have_many(:events) }
   it { should have_many(:votes) }
 
   it { should validate_presence_of(:access_token) }
