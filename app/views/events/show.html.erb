@@ -2,7 +2,7 @@
   <h1 class="event-name">
     <%= @event.name %>
   </h1>
-  <%= link_to 'Edit', edit_event_path(@event), class: "edit-button" %>
+  <%= link_to 'Edit event', edit_event_path(@event), class: "edit-button" %>
   <ul class="suggestions">
     <% @suggestions.each do |suggestion| %>
       <li class="suggestion">
