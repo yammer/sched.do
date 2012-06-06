@@ -1,0 +1,74 @@
+div.show-event {
+  @extend .sheet;
+
+  h1.event-name {
+    display: inline-block;
+    font-size: 1.6em;
+  }
+
+  a.edit-button {
+    @extend .button;
+    @extend .orange-button;
+    display: inline-block;
+    font-size: 0.9em;
+    font-weight: bold;
+    margin-left: 5px;
+    padding: 0.2em 1em;
+    vertical-align: text-bottom;
+  }
+
+  ul.suggestions {
+    margin: 5% 0;
+
+    li.suggestion {
+      border-bottom: 1px solid darken($bg-color, 5%);
+      list-style: none;
+      padding: 10px 0;
+
+      div {
+        display: inline-block;
+      }
+
+      aside {
+        width: auto;
+        max-width: 10%;
+        display: inline-block;
+        text-align: center;
+
+        div.vote-count {
+          background: $bg-color;
+          border: 1px solid darken($bg-color, 10%);
+          @include border-radius(30px);
+          font-size: 0.7em;
+          margin-bottom: 8px;
+          padding: 0.4em 0.6em;
+          text-align: center;
+          width: 1.6em;
+        }
+
+        div.vote {
+
+          input[type="submit"] {
+            @extend .button;
+            font-size: 0.8em;
+            padding: 0.4em 0.8em;
+            @include transition(none);
+
+            &:hover {
+              @extend .orange-button;
+            }
+          }
+      } }
+
+      div.description {
+        color: darken($bg-color, 38%);
+        display: inline-block;
+        font-size: 1.2em;
+        vertical-align: top;
+        margin-left: 12px;
+        width: 83%;
+      }
+    }
+  }
+}
+
