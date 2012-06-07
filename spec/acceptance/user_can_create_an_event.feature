@@ -20,3 +20,8 @@ Feature: User can create an event
     Given I am signed in
     When I try to create an event with invalid data
     Then I should see multiple suggestions
+
+  Scenario: User sees event link after creating event
+    Given I am signed in
+    When I create an event
+    Then I should see a link to that event

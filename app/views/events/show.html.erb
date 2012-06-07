@@ -5,6 +5,10 @@
   <% if current_user.able_to_edit?(@event) %>
     <%= link_to 'Edit', edit_event_path(@event), class: "edit-button" %>
   <% end %>
+  <p>
+    Share this link with your friends to have them vote on it: 
+    <%= link_to event_url(@event), event_url(@event) %>
+  </p>
   <ul class="suggestions">
     <% @suggestions.each do |suggestion| %>
       <%= render partial: 'suggestion', object: suggestion %>

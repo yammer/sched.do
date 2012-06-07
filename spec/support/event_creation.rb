@@ -1,5 +1,5 @@
 module EventCreation
-  def create_event(name, suggestions)
+  def create_event(name = 'Potluck', suggestions = %w(meatloaf))
     suggestions = Array.wrap(suggestions)
     visit root_path
     fields = find_fields_by_data_role('suggestion')

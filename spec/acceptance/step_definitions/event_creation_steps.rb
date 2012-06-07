@@ -46,10 +46,10 @@ step 'I create an event with the following suggestions:' do |table|
   create_event('Clown party', suggestions)
 end
 
-step 'I try to create an event with invalid data' do
-  create_event('', [])
+step 'I create an event' do
+  create_event
 end
 
-step 'I should see multiple suggestions' do
-  all('input[data-role=suggestion]').size.should be > 1
+step 'I try to create an event with invalid data' do
+  create_event('', [])
 end

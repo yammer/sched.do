@@ -29,3 +29,11 @@ step 'I should see an event with the following suggestions in order:' do |table|
     end
   end
 end
+
+step 'I should see multiple suggestions' do
+  all('input[data-role=suggestion]').size.should be > 1
+end
+
+step 'I should see a link to that event' do
+  page.should have_content event_url(Event.order('id').last)
+end
