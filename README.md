@@ -1,6 +1,15 @@
 Sched.do
 =========
 
+Create events. Have your friends vote on them. See what times work for
+everybody.
+
+This app will show off Yammer integration such as messaging your friends,
+messaging groups, and open graph integration.
+
+Infrastructure
+--------------
+
 This is a Rails 3.2 app running on Ruby 1.9.3 and deployed to Heroku's Cedar
 stack. It has an RSpec and Turnip test suite which should be run before
 committing to the master branch.
