@@ -33,7 +33,7 @@ div.success {
   @include notice-style($success);
 }
 
-#flash-failure {
+#flash-error {
   @extend div.error;
 }
 #flash-notice {
