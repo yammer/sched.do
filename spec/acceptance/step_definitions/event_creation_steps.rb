@@ -15,7 +15,7 @@ step 'I submit the create event form' do
 end
 
 step 'I should see that the event was successfully created' do
-  find('#flash_success').should have_content 'Event successfully created.'
+  find('#flash-success').should have_content 'Event successfully created.'
 end
 
 step 'I should see a presence error on the suggestion field' do
