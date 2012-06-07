@@ -20,10 +20,15 @@ $ratio: .8;
 //Line height
 $lh: 1.1em;
 
-//colors:
+// colors:
 $bg-color: #f6fbfc;
 $blue: #30AADE;
 $orange: #EC6E4D;
 $placeholder-color: darken($bg-color, 20%);
+
+// Flash colors
+$notice:#fff3e5;
+$success:#EDF8E7;
+$error:lighten($orange, 33%);
 
 // $placeholder-color: darken($$$, 10%);

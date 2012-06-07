@@ -1,11 +1,11 @@
 div.flash {
   width: 100%;
-  max-width: $max-width;
+  max-width: $max-width*0.97;
   margin: 0 auto;
 }
 
 
-div.error, div.notice, div.success, #flash-failure, #flash-success, #flash-notice {
+div.error, div.notice, div.success {
   border: 1px solid #ddd;
   border-top: none;
   @include border-radius(0 0 3px 3px);
@@ -14,38 +14,31 @@ div.error, div.notice, div.success, #flash-failure, #flash-success, #flash-notic
   z-index: 0;
   opacity: 0;
   width: 100%;
-  max-width: $max-width;
+  max-width: $max-width*0.97;
   @include box-sizing(border-box);
-  @include animation(slide-down 4s 0s 1 ease forwards);
+  @include box-shadow(0 1px 3px rgba(0,0,0,0.15));
+  @include animation(slide-down 3s 0s 1 ease forwards);
   text-align: center;
 }
 
-div.error, #flash-failure {
-  background: #FBE3E4;
-  border-color: #FBC2C4;
-  color: #D12F19;
+div.error {
+  @include notice-style($error);
 }
 
-div.error a, #flash-failure a {
-  color: #D12F19;
+div.notice {
+  @include notice-style($notice);
 }
 
-div.notice, #flash-notice {
-  background: #FFF6BF;
-  border-color: #FFD324;
-  color: #817134;
+div.success {
+  @include notice-style($success);
 }
 
-div.notice a, #flash-notice a {
-  color: #817134;
+#flash-failure {
+  @extend div.error;
 }
-
-div.success, #flash-success {
-  background: #E6EFC2;
-  border-color: #C6D880;
-  color: #529214;
+#flash-notice {
+  @extend div.notice;
 }
-
-div.success a, #flash-success a {
-  color: #529214;
+#flash-success {
+  @extend div.success;
 }

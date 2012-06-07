@@ -22,3 +22,15 @@
     @include background-image(linear-gradient(darken($color, 5%), lighten($color, 10%)));
   }
 }
+
+@mixin notice-style($color) {
+  @include background-image(linear-gradient(darken($color, 10%), lighten($color, 2%) 5%, darken($color, 3%), lighten($color, 1%) 99%));
+  border-color: darken($color, 20%);
+  color: desaturate(darken($color, 45%), 10%);
+  text-shadow: 0 1px 0 lighten($color, 20%);
+  font-size: 1.1em;
+
+  a {
+    color: darken($color, 45%);
+  }
+}
