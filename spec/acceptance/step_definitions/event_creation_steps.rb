@@ -27,7 +27,17 @@ step 'I create(d) an event named :event_name with a suggestion of :suggestion' d
 end
 
 step 'someone created an event named :event_name with a suggestion of :suggestion' do |event_name, suggestion|
+  create_yammer_account
+  sign_in
   create_event(event_name, suggestion)
+  sign_out
+end
+
+step 'someone created an event named :event_name with the following suggestions:' do |event_name, table|
+  suggestions = table.raw.map(&:first)
+  create_yammer_account
+  sign_in
+  create_event(event_name, suggestions)
   sign_out
 end
 
