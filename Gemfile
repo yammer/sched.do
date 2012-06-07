@@ -28,6 +28,7 @@ gem 'airbrake', '~> 3.1.0'
 group :development do
   gem 'heroku'
   gem 'bundler', '>= 1.2.0.pre'
+  gem 'foreman', '~> 0.46.0'
 end
 
 group :development, :test do
