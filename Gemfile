@@ -38,13 +38,13 @@ group :development, :test do
 end
 
 group :test do
-  gem 'turnip', '~> 0.3.1'
+  gem 'turnip', '~> 1.0.0'
   gem "capybara-webkit", "~> 0.12.0"
-  gem "factory_girl_rails"
+  gem "factory_girl_rails", "~> 3.0"
   gem "bourne"
   gem "database_cleaner"
   gem "timecop"
-  gem "shoulda-matchers"
+  gem "shoulda-matchers", "~> 1.1.0"
   gem "launchy"
   gem "email_spec"
 end
