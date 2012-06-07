@@ -6,6 +6,6 @@ OmniAuth.config.mock_auth[:yammer] = {
   info: {
     name: FactoryGirl.generate(:yammer_user_name),
     email: FactoryGirl.generate(:email),
-    access_token: OpenStruct.new(token: FactoryGirl.generate(:yammer_token))
+    access_token: FactoryGirl.generate(:yammer_token)
   }
 }

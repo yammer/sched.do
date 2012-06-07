@@ -5,7 +5,7 @@ module TurnipAuthenticationHelpers
       info: {
         name: generate(:yammer_user_name),
         email: generate(:email),
-        access_token: OpenStruct.new(token: generate(:yammer_token))
+        access_token: generate(:yammer_token)
       }
     })
   end
@@ -23,6 +23,10 @@ end
 module AuthenticationHelpers
   def sign_in_as(user)
     @controller.current_user = user
+  end
+
+  def sign_out
+    click_link 'Sign out'
   end
 end
 
