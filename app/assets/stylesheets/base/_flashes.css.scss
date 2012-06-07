@@ -1,0 +1,51 @@
+div.flash {
+  width: 100%;
+  max-width: $max-width;
+  margin: 0 auto;
+}
+
+
+div.error, div.notice, div.success, #flash-failure, #flash-success, #flash-notice {
+  border: 1px solid #ddd;
+  border-top: none;
+  @include border-radius(0 0 3px 3px);
+  padding: .75em;
+  position: fixed;
+  z-index: 0;
+  opacity: 0;
+  width: 100%;
+  max-width: $max-width;
+  @include box-sizing(border-box);
+  @include animation(slide-down 4s 0s 1 ease forwards);
+  text-align: center;
+}
+
+div.error, #flash-failure {
+  background: #FBE3E4;
+  border-color: #FBC2C4;
+  color: #D12F19;
+}
+
+div.error a, #flash-failure a {
+  color: #D12F19;
+}
+
+div.notice, #flash-notice {
+  background: #FFF6BF;
+  border-color: #FFD324;
+  color: #817134;
+}
+
+div.notice a, #flash-notice a {
+  color: #817134;
+}
+
+div.success, #flash-success {
+  background: #E6EFC2;
+  border-color: #C6D880;
+  color: #529214;
+}
+
+div.success a, #flash-success a {
+  color: #529214;
+}

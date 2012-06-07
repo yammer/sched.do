@@ -14,8 +14,6 @@
     <%= csrf_meta_tags %>
   </head>
   <body class="<%= body_class %>">
-
-    <%= render 'shared/flashes' -%>
     <%= content_for?(:content) ? yield(:content) : yield %>
     <%= render 'shared/javascript' %>
   </body>
