@@ -1,7 +1,7 @@
 <%= semantic_form_for(@event) do |f| %>
   <%= f.inputs do %>
     <%= f.input :name, label: false, placeholder: "Event name" %>
-    <%= f.semantic_fields_for(:suggestions, @suggestion) do |suggestion_form| %>
+    <%= f.semantic_fields_for(:suggestions, @suggestions) do |suggestion_form| %>
       <%= suggestion_form.input :description, as: :string, hint: 'Lunch', label: false, placeholder: "Suggestion",
             input_html: { 'data-role' => 'suggestion' } %>
     <% end %>

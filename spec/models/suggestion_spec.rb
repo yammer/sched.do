@@ -7,6 +7,7 @@ describe Suggestion do
   it { should have_many :votes }
 
   it { should allow_mass_assignment_of(:description) }
+  it { should allow_mass_assignment_of(:event) }
 end
 
 describe Suggestion, '#vote_count' do

@@ -6,17 +6,22 @@ class EventsController < ApplicationController
 
   def new
     @event = current_user.events.build
-    @suggestion = @event.suggestions.build
+    populate_suggestions_for(@event)
+    @suggestions = @event.suggestions
   end
 
   def create
     event = current_user.events.new(params[:event])
+    event.suggestions = event.suggestions.select(&:valid?)
+
     if event.save
       flash[:success] = "Event successfully created."
       redirect_to event
     else
-      @event = event
       flash[:error] = "Please complete all required fields."
+      @event = event
+      populate_suggestions_for(@event)
+      @suggestions = event.suggestions
       render :new
     end
   end
@@ -40,5 +45,11 @@ class EventsController < ApplicationController
       flash[:failure] = 'Please check the errors and try again.'
       render :edit
     end
+  end
+
+  private
+
+  def populate_suggestions_for(event)
+    5.times { event.suggestions.build }
   end
 end

@@ -1,8 +1,15 @@
 module EventCreation
-  def create_event(name, suggestion)
+  def create_event(name, suggestions)
+    suggestions = Array.wrap(suggestions)
     visit root_path
+    fields = find_fields_by_data_role('suggestion')
+    if fields.size < suggestions.size
+      raise "Too many suggestions: #{suggestions.size} suggestions for only #{fields.size} fields!"
+    end
     fill_in 'event_name', with: name
-    find_field_by_data_role('suggestion').set(suggestion)
+    suggestions.each_with_index do |suggestion, i|
+      fields[i].set(suggestion)
+    end
     click_button 'Create event'
   end
 end

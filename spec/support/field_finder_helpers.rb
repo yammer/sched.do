@@ -7,6 +7,10 @@ module FieldFinderHelpers
     Field.new(data_role, page).find_by_data_role
   end
 
+  def find_fields_by_data_role(data_role)
+    Field.new(data_role, page).find_all_by_data_role
+  end
+
   private
 
   class Field
@@ -16,14 +20,20 @@ module FieldFinderHelpers
     end
 
     def find_by_field_name
-      with_error_message(%{Cannot find field with name "#{@field_name_or_data_role}"}) do
+      with_error_message(error_message_for_missing_field_name) do
         @page.find_field(@field_name_or_data_role)
       end
     end
 
     def find_by_data_role
-      with_error_message(%{Cannot find field with data-role "#{@field_name_or_data_role}"}) do
+      with_error_message(error_message_for_missing_data_role) do
         @page.find("input[data-role='#{@field_name_or_data_role}']")
+      end
+    end
+
+    def find_all_by_data_role
+      with_error_message(error_message_for_missing_data_role) do
+        @page.all("input[data-role='#{@field_name_or_data_role}']")
       end
     end
 
@@ -35,6 +45,14 @@ module FieldFinderHelpers
       rescue Capybara::ElementNotFound => e
         raise e.class, message
       end
+    end
+
+    def error_message_for_missing_data_role
+      %{Cannot find field with data-role "#{@field_name_or_data_role}"}
+    end
+
+    def error_message_for_missing_field_name
+      %{Cannot find field with name "#{@field_name_or_data_role}"}
     end
   end
 end

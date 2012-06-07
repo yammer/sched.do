@@ -25,3 +25,21 @@ end
 step 'I create(d) an event named :event_name with a suggestion of :suggestion' do |event_name, suggestion|
   create_event(event_name, suggestion)
 end
+
+step 'someone created an event named :event_name with a suggestion of :suggestion' do |event_name, suggestion|
+  create_event(event_name, suggestion)
+  sign_out
+end
+
+step 'I create an event with the following suggestions:' do |table|
+  suggestions = table.raw.map(&:first)
+  create_event('Clown party', suggestions)
+end
+
+step 'I try to create an event with invalid data' do
+  create_event('', [])
+end
+
+step 'I should see multiple suggestions' do
+  all('input[data-role=suggestion]').size.should be > 1
+end

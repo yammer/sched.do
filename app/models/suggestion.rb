@@ -1,7 +1,7 @@
 class Suggestion < ActiveRecord::Base
   validates :description, presence: true
 
-  attr_accessible :description
+  attr_accessible :description, :event
 
   belongs_to :event
   has_many :votes
