@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby "1.9.3"
+ruby '1.9.3'
 
 gem 'rails', '3.2.3'
 
@@ -32,21 +32,21 @@ group :development do
 end
 
 group :development, :test do
-  gem "rspec-rails", "~> 2.9.0"
-  gem "sham_rack"
+  gem 'rspec-rails', '~> 2.9.0'
+  gem 'sham_rack'
   gem 'pry'
 end
 
 group :test do
   gem 'turnip', '~> 1.0.0'
-  gem "capybara-webkit", "~> 0.12.0"
-  gem "factory_girl_rails", "~> 3.0"
-  gem "bourne"
-  gem "database_cleaner"
-  gem "timecop"
-  gem "shoulda-matchers", "~> 1.1.0"
-  gem "launchy"
-  gem "email_spec"
+  gem 'capybara-webkit', '~> 0.12.0'
+  gem 'factory_girl_rails', '~> 3.0'
+  gem 'bourne'
+  gem 'database_cleaner'
+  gem 'timecop'
+  gem 'shoulda-matchers', '~> 1.1.0'
+  gem 'launchy'
+  gem 'email_spec'
 end
 
 group :staging, :production do
