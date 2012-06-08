@@ -48,7 +48,7 @@ Edit your .env file:
 
 Run the server with foreman:
 
-    foreman start -p 300
+    foreman start -p 3000
 
 We use foreman because foreman picks up on the `.env` file.
 
@@ -78,8 +78,7 @@ Development process
 
 To run the app in development mode, use Foreman.
 
-    gem install foreman
-    foreman start
+    foreman start -p 3000
 
 It will pick up on the Procfile and use Thin as the app server instead of
 Webrick, which will also be used by Heroku's Cedar stack.
