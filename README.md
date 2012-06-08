@@ -28,6 +28,7 @@ Clone the app:
 Set up the Heroku remote:
 
     git remote add staging git@heroku.com:scheddo-staging.git
+    git remote add production git@heroku.com:scheddo-prod.git
 
 Install Bundler 1.2.0.pre or higher:
 
