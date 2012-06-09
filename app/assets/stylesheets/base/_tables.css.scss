@@ -1,0 +1,126 @@
+table {
+  margin-bottom: 0;
+
+  tr, th, td {
+    white-space: nowrap;
+  }
+
+  th {
+    font-weight: bold;
+  }
+
+  td, th {
+    padding: 1.2em;
+    text-align: left;
+    border: 0;
+  }
+}
+div.table-wrapper {
+
+  position: relative;
+
+  div {
+    &.pinned {
+      position: absolute;
+      left: 0;
+      top: 5em;
+      background: #fff;
+      width: $table-width-mobile;
+      overflow: hidden;
+      overflow-x: scroll;
+      border: 1px solid darken($bg-color, 20%);
+      @include box-sizing(border-box);
+
+      &:after {
+        background: red;
+        width: 20px;
+        position: fixed;
+        content: 'gggg';
+        height: inherit;
+        top: 0;
+        left: 0;
+      }
+
+      table {
+        tr {
+          border-bottom: 1px solid darken($bg-color, 20%);
+          @include background-image(linear-gradient(#fff, $bg-color));
+          text-shadow: 0 1px 0 #fff;
+
+          &:last-child {
+            border-bottom: 0;
+          }
+        }
+      }
+    }
+
+    &.search-box {
+      @include background-image(linear-gradient(#fff, darken($bg-color, 2%)));
+      @include box-sizing(border-box);
+      @include border-radius(4px 0 0 0);
+      border: 1px solid darken($bg-color, 20%);
+      @include box-shadow(inset 0 -1px 0px #fff);
+      left: 0;
+      padding: 1em;
+      position: absolute;
+      top: 0;
+      width: $table-width-mobile;
+    }
+
+    &.scrollable {
+      border: 1px solid darken($bg-color, 20%);
+      overflow: scroll;
+      overflow-y: hidden;
+      @include box-sizing(border-box);
+      @include border-radius(4px 4px 0 0);
+      table {
+        margin-left: $table-width-mobile - 1;
+
+        tr {
+          border-bottom:1px solid darken($bg-color, 20%) ;
+
+          &:last-child {
+            border:0;
+          }
+        }
+
+        td {
+          padding: 0;
+          height: 3.45em;
+
+          &#voted {
+            @include background-image(linear-gradient(lighten($orange, 10%), darken($orange, 5%)));
+            @include box-sizing(border-box);
+            @include box-shadow(inset 0 1px 10px darken($orange, 30%));
+            text-align: center;
+            color: #fff;
+          }
+
+          &:nth-child(even) {
+            background: $bg-color;
+          }
+        }
+
+        th {
+          border-right:1px solid darken($bg-color, 20%);
+          &:last-child {
+            border: 0;
+          }
+        }
+
+        th {
+          text-shadow: 0 1px 0 #fff;
+          @include background-image(linear-gradient(#fff, darken($bg-color, 2%)));
+          border-bottom: 1px solid darken($bg-color, 20%);
+          height: 2.6em;
+
+          &:nth-child(even) {
+            @include background-image(linear-gradient($bg-color, darken($bg-color, 6%)));
+          }
+        }
+      }
+    }
+  }
+}
+
+
