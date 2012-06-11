@@ -40,10 +40,6 @@ div.table-wrapper {
           &:last-child {
             border-bottom: 0;
           }
-
-          td {
-            min-height: 5em;
-          }
         }
       }
     }
@@ -93,14 +89,14 @@ div.table-wrapper {
         td {
           padding: 0;
           height: 3.45em;
-          @include box-sizing(border-box);
 
           &#voted {
             background: lighten($orange, 7%);
-            @include box-shadow(inset 0 1px 0px lighten($orange, 20%));
             // border: 1px solid $orange;
-            text-align: center;
+            @include box-shadow(inset 0 1px 0px lighten($orange, 20%));
+            @include box-sizing(border-box);
             color: #fff;
+            text-align: center;
 
             img {
               width: 24px;
