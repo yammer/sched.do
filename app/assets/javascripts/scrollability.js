@@ -639,7 +639,7 @@ function generateCSSKeyframes(animator, keyframes, name, time, offset) {
 
     lines.push('}');
 
-    return lines.join('\n');    
+    return lines.join('\n');
 }
 
 function setTouched(target) {
@@ -656,7 +656,7 @@ function setTouched(target) {
 function releaseTouched(touched) {
     for (var i = 0; i < touched.length; ++i) {
         var n = touched[i];
-        n.className = n.className.replace('touched', '');
+        n.className = n.className.replace(' touched', '');
     }
 }
 
@@ -693,9 +693,9 @@ function createXDirection(node) {
         viewport: parent.offsetWidth,
         bounce: parent.offsetWidth * kBounceLimit,
         constrained: true,
-        
+
         filter: function(x, y) {
-            return x; 
+            return x;
         },
 
         disable: function (x, y, startX, startY) {

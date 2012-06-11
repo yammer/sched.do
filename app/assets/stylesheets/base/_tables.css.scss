@@ -29,6 +29,7 @@ div.table-wrapper {
       overflow-x: scroll;
       border: 1px solid darken($bg-color, 20%);
       @include box-sizing(border-box);
+      @include user-select();
 
       table {
         tr {
@@ -38,6 +39,10 @@ div.table-wrapper {
 
           &:last-child {
             border-bottom: 0;
+          }
+
+          td {
+            min-height: 5em;
           }
         }
       }
@@ -63,6 +68,9 @@ div.table-wrapper {
       @include box-sizing(border-box);
       @include border-radius(0 4px 0 0);
       margin-left: $table-width-mobile - 1;
+      cursor: -webkit-grab;
+      @include user-select();
+
 
       table {
         @include box-shadow(0 0 20px darken($bg-color, 15%));
@@ -74,22 +82,37 @@ div.table-wrapper {
             border:0;
           }
 
+          &.first-row {
+            td#voted {
+              @include box-shadow(inset 0 1px 2px darken($orange, 10%));
+            }
+          }
+
         }
 
         td {
           padding: 0;
           height: 3.45em;
+          @include box-sizing(border-box);
 
           &#voted {
-            @include background-image(linear-gradient(lighten($orange, 10%), darken($orange, 5%)));
-            @include box-sizing(border-box);
-            @include box-shadow(inset 0 1px 10px darken($orange, 30%));
+            background: lighten($orange, 7%);
+            @include box-shadow(inset 0 1px 0px lighten($orange, 20%));
+            // border: 1px solid $orange;
             text-align: center;
             color: #fff;
+
+            img {
+              width: 24px;
+            }
           }
 
           &:nth-child(even) {
-            background: $bg-color;
+            background: rgba(229, 248, 252, 0.5);
+          }
+
+          img {
+            margin: 0;
           }
         }
 
@@ -113,18 +136,17 @@ div.table-wrapper {
   }
 }
 
-::-webkit-scrollbar {
-  width: 6px;
-  position: fixed;
+::-webkit-scrollbar:horizontal {
+  display: none;
 }
 
-::-webkit-scrollbar-track {
-  background: lighten($bg-color, 1%);
-  border-top: 1px solid darken($bg-color, 5%);
-}
+// ::-webkit-scrollbar-track {
+//   background: lighten($bg-color, 1%);
+//   border-top: 1px solid darken($bg-color, 5%);
+// }
 
-::-webkit-scrollbar-thumb {
-    background: darken($bg-color, 5%);
-  border-top: 1px solid darken($bg-color, 9%);
-}
+// ::-webkit-scrollbar-thumb {
+//     background: darken($bg-color, 5%);
+//   border-top: 1px solid darken($bg-color, 9%);
+// }
 
