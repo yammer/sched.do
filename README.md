@@ -23,9 +23,9 @@ Laptop setup
 
 Clone the app:
 
-    git clone git@github.com:thoughtbot/sched-do.git
+    git clone git@github.com:yammer/sched.do.git
 
-Set up the Heroku remote:
+Set up the Heroku remotes:
 
     git remote add staging git@heroku.com:scheddo-staging.git
     git remote add production git@heroku.com:scheddo-prod.git
