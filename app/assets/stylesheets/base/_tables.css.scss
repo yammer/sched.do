@@ -16,11 +16,10 @@ table {
   }
 }
 div.table-wrapper {
-
   position: relative;
 
   div {
-    &.pinned {
+    &.participants {
       position: absolute;
       left: 0;
       top: 5em;
@@ -30,16 +29,6 @@ div.table-wrapper {
       overflow-x: scroll;
       border: 1px solid darken($bg-color, 20%);
       @include box-sizing(border-box);
-
-      &:after {
-        background: red;
-        width: 20px;
-        position: fixed;
-        content: 'gggg';
-        height: inherit;
-        top: 0;
-        left: 0;
-      }
 
       table {
         tr {
@@ -67,14 +56,16 @@ div.table-wrapper {
       width: $table-width-mobile;
     }
 
-    &.scrollable {
+    &.options {
       border: 1px solid darken($bg-color, 20%);
       overflow: scroll;
       overflow-y: hidden;
       @include box-sizing(border-box);
-      @include border-radius(4px 4px 0 0);
+      @include border-radius(0 4px 0 0);
+      margin-left: $table-width-mobile - 1;
+
       table {
-        margin-left: $table-width-mobile - 1;
+        @include box-shadow(0 0 20px darken($bg-color, 15%));
 
         tr {
           border-bottom:1px solid darken($bg-color, 20%) ;
@@ -82,6 +73,7 @@ div.table-wrapper {
           &:last-child {
             border:0;
           }
+
         }
 
         td {
@@ -102,17 +94,15 @@ div.table-wrapper {
         }
 
         th {
+          @include background-image(linear-gradient(#fff, darken($bg-color, 2%)));
+          border-bottom: 1px solid darken($bg-color, 20%);
           border-right:1px solid darken($bg-color, 20%);
+          height: 2.6em;
+          text-shadow: 0 1px 0 #fff;
+
           &:last-child {
             border: 0;
           }
-        }
-
-        th {
-          text-shadow: 0 1px 0 #fff;
-          @include background-image(linear-gradient(#fff, darken($bg-color, 2%)));
-          border-bottom: 1px solid darken($bg-color, 20%);
-          height: 2.6em;
 
           &:nth-child(even) {
             @include background-image(linear-gradient($bg-color, darken($bg-color, 6%)));
@@ -123,4 +113,18 @@ div.table-wrapper {
   }
 }
 
+::-webkit-scrollbar {
+  width: 6px;
+  position: fixed;
+}
+
+::-webkit-scrollbar-track {
+  background: lighten($bg-color, 1%);
+  border-top: 1px solid darken($bg-color, 5%);
+}
+
+::-webkit-scrollbar-thumb {
+    background: darken($bg-color, 5%);
+  border-top: 1px solid darken($bg-color, 9%);
+}
 
