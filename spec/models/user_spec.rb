@@ -59,3 +59,18 @@ describe User, '#able_to_edit?' do
     build(:user).should_not be_able_to_edit(event)
   end
 end
+
+describe User, '#vote_for_suggestion' do
+  it 'returns the users vote for the given suggestion if the user has one' do
+    user = create(:user)
+    suggestion = create(:suggestion)
+    vote = create(:vote, user: user, suggestion: suggestion)
+    user.vote_for_suggestion(suggestion.id).should == vote
+  end
+
+  it 'returns nil if the user has not voted on the suggestion' do
+    user = create(:user)
+    suggestion = create(:suggestion)
+    user.vote_for_suggestion(suggestion.id).should be_nil
+  end
+end
