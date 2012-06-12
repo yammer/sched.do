@@ -40,6 +40,10 @@ div.table-wrapper {
           &:last-child {
             border-bottom: 0;
           }
+
+          td {
+            color: darken($bg-color, 35%);
+          }
         }
       }
     }
@@ -111,6 +115,7 @@ div.table-wrapper {
           border-right:1px solid darken($bg-color, 20%);
           height: 2.6em;
           text-shadow: 0 1px 0 #fff;
+          font-family: $bariol;
 
           &:last-child {
             border: 0;
@@ -128,14 +133,3 @@ div.table-wrapper {
 ::-webkit-scrollbar:horizontal {
   display: none;
 }
-
-// ::-webkit-scrollbar-track {
-//   background: lighten($bg-color, 1%);
-//   border-top: 1px solid darken($bg-color, 5%);
-// }
-
-// ::-webkit-scrollbar-thumb {
-//     background: darken($bg-color, 5%);
-//   border-top: 1px solid darken($bg-color, 9%);
-// }
-

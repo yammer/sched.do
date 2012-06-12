@@ -1,0 +1,15 @@
+div.invitation-message {
+  @include row();
+
+  textarea {
+    @include columns(7);
+  }
+
+  div.meta {
+    @include columns(5);
+    input[type="url"], input[type="submit"] {
+      @include fill-parent();
+    }
+
+  }
+}

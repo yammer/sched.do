@@ -28,7 +28,7 @@
 }
 
 @mixin row($display: block) {
-  @extend .clearfix;
+  @include clearfix();
   @if $display == table {
     display: table;
   }
@@ -45,17 +45,3 @@
 @mixin flatten-column() {
   @include row();
 }
-
-.clearfix {
-  *zoom:1;
-
-  &:before, &:after {
-    content:"";
-    display:table;
-  }
-
-  &:after {
-    clear:both;
-  }
-}
-
