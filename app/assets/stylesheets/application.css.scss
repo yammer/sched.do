@@ -25,6 +25,10 @@
 @import 'base/animations';
 @import 'base/tables';
 
+//jQuery-UI
+@import 'jquery-ui/base';
+@import 'jquery-ui/datepicker';
+
 //Views
 @import 'views/welcome';
 @import 'views/events/new', 'views/events/show', 'views/events/edit';
