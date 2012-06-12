@@ -5,7 +5,6 @@
     </div>
 
     <div class="vote" data-id="<%= suggestion.id %>">
-      <% vote_for_suggestion = current_user.vote_for_suggestion(suggestion.id) %>
       <% if vote_for_suggestion %>
         <%= semantic_form_for vote_for_suggestion, html: { method: :delete } do |f| %>
           <%= f.input :suggestion_id, as: :hidden, input_html: { value: suggestion.id } %>
