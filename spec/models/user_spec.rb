@@ -65,12 +65,12 @@ describe User, '#vote_for_suggestion' do
     user = create(:user)
     suggestion = create(:suggestion)
     vote = create(:vote, user: user, suggestion: suggestion)
-    user.vote_for_suggestion(suggestion.id).should == vote
+    user.vote_for_suggestion(suggestion).should == vote
   end
 
   it 'returns nil if the user has not voted on the suggestion' do
     user = create(:user)
     suggestion = create(:suggestion)
-    user.vote_for_suggestion(suggestion.id).should be_nil
+    user.vote_for_suggestion(suggestion).should be_nil
   end
 end

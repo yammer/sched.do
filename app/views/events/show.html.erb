@@ -12,7 +12,7 @@
   <ul class="suggestions">
     <% @suggestions.each do |suggestion| %>
       <%= render partial: 'suggestion', object: suggestion,
-          locals: { vote_for_suggestion: current_user.vote_for_suggestion(suggestion.id) } %>
+          locals: { vote_for_suggestion: current_user.vote_for_suggestion(suggestion) } %>
     <% end %>
   </ul>
 </div>

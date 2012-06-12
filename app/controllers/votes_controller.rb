@@ -5,9 +5,9 @@ class VotesController < ApplicationController
   end
 
   def destroy
-    vote = current_user.vote_for_suggestion(params[:vote][:suggestion_id])
-    event = vote.event
+    suggestion = Suggestion.find(params[:vote][:suggestion_id])
+    vote = current_user.vote_for_suggestion(suggestion)
     vote.destroy
-    redirect_to event
+    redirect_to suggestion.event
   end
 end
