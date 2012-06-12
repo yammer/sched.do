@@ -7,13 +7,13 @@ Feature: Invitees can vote on suggestions
     When I vote for "lunch"
     Then I should see that that "lunch" has 1 vote
 
-  Scenario: Invitee cannot vote for a suggestion more than once
+  Scenario: Invitee can undo their vote for a suggestion
     Given I am signed in
     And I created an event named "Clown party" with a suggestion of "lunch"
     When I vote for "lunch"
     Then I should see that that "lunch" has 1 vote
-    When I vote for "lunch" again
-    Then I should see that that "lunch" still has 1 vote
+    When I unvote for "lunch"
+    Then I should see that that "lunch" has 0 votes
 
   Scenario: Invitee can vote for suggestions for different events
     Given I am signed in

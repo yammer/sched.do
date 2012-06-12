@@ -3,7 +3,7 @@ SchedDo::Application.routes.draw do
   get '/sign_out' => 'sessions#destroy', as: 'sign_out'
 
   resources :events, only: [:new, :create, :show, :edit, :update]
-  resources :votes, only: [:create]
+  resources :votes, only: [:create, :destroy]
   resources :invitations, only: [:show]
 
   root to: "welcome#index"

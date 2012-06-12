@@ -19,6 +19,10 @@ class User < ActiveRecord::Base
     event.user == self
   end
 
+  def vote_for_suggestion(suggestion_id)
+    votes.find_by_suggestion_id(suggestion_id)
+  end
+
   private
 
   def set_salt_if_necessary
