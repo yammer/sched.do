@@ -3,9 +3,10 @@ module EventCreation
     suggestions = Array.wrap(suggestions)
     visit root_path
     fields = find_fields_by_data_role('suggestion')
-    if fields.size < suggestions.size
-      raise "Too many suggestions: #{suggestions.size} suggestions for only #{fields.size} fields!"
+    (suggestions.size - fields.size).times do
+      click_link 'Add Another Suggestion'
     end
+    fields = find_fields_by_data_role('suggestion')
     fill_in 'event_name', with: name
     suggestions.each_with_index do |suggestion, i|
       fields[i].set(suggestion)

@@ -53,3 +53,29 @@ end
 step 'I try to create an event with invalid data' do
   create_event('', [])
 end
+
+step 'I add another suggestion field' do
+  page.should have_css('.suggestions > .nested-fields')
+  click_link 'Add Another Suggestion'
+end
+
+step 'I visit the new event page' do
+  visit root_path
+end
+
+step 'I fill out the event form with the following suggestions:' do |table|
+  suggestions = table.raw.map(&:first)
+  fields = find_fields_by_data_role('suggestion')
+  suggestions.each_with_index do |suggestion, i|
+    fields[i].set(suggestion)
+  end
+end
+
+step 'I remove the first suggestion' do
+  click_link 'Remove Suggestion'
+end
+
+step 'I sign in and fill in the event name' do
+  step 'I am signed in'
+  step "I fill in the event name with 'something'"
+end

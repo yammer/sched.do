@@ -51,6 +51,7 @@ GEM
     childprocess (0.3.2)
       ffi (~> 1.0.6)
     cocaine (0.2.1)
+    cocoon (1.0.22)
     coderay (1.0.5)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
@@ -231,6 +232,7 @@ DEPENDENCIES
   bourne
   bundler (>= 1.2.0.pre)
   capybara-webkit (~> 0.12.0)
+  cocoon
   coffee-rails (~> 3.2.1)
   database_cleaner
   email_spec

@@ -50,6 +50,6 @@ class EventsController < ApplicationController
   private
 
   def populate_suggestions_for(event)
-    5.times { event.suggestions.build }
+    2.times { event.suggestions.build }
   end
 end
