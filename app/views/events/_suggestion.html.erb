@@ -4,19 +4,21 @@
       <%= suggestion.vote_count %>
     </div>
 
-    <div class="vote" data-id="<%= suggestion.id %>">
       <% if vote_for_suggestion %>
-        <%= semantic_form_for vote_for_suggestion, html: { method: :delete } do |f| %>
-          <%= f.input :suggestion_id, as: :hidden, input_html: { value: suggestion.id } %>
-          <%= f.action :submit, button_html: { value: "✔" } %>
-        <% end %>
+        <div class="vote undo-vote" data-id="<%= suggestion.id %>">
+          <%= semantic_form_for vote_for_suggestion, html: { method: :delete } do |f| %>
+            <%= f.input :suggestion_id, as: :hidden, input_html: { value: suggestion.id } %>
+            <%= f.action :submit, button_html: { value: "✔" } %>
+          <% end %>
+        </div>
       <% else %>
-        <%= semantic_form_for suggestion.votes.build do |f| %>
-          <%= f.input :suggestion_id, as: :hidden, input_html: { value: suggestion.id } %>
-          <%= f.action :submit, button_html: { value: "✔" } %>
-        <% end %>
+        <div class="vote" data-id="<%= suggestion.id %>">
+          <%= semantic_form_for suggestion.votes.build do |f| %>
+            <%= f.input :suggestion_id, as: :hidden, input_html: { value: suggestion.id } %>
+            <%= f.action :submit, button_html: { value: "✔" } %>
+          <% end %>
+        </div>
       <% end %>
-    </div>
   </aside>
   <div class="description">
     <%= suggestion.description %>
