@@ -1,25 +1,54 @@
 .ui-datepicker {
-  width: 17em;
-  padding: .2em .2em 0;
+  width: 14em;
+  padding: 1em;
+  @include box-sizing(border-box);
   display: none;
   .ui-datepicker-header {
+    border: 1px solid #000;
+    @include border-radius(3px);
+    @include background-image(linear-gradient(#333, #444));
+    @include box-shadow(0 1px 0 #666);
     position: relative;
-    padding: .2em 0; }
+    padding: .2em 0;
+    margin-top: 0.2em;
+  }
   .ui-datepicker-prev, .ui-datepicker-next {
+    @include background-image(linear-gradient(#555, #444));
+    border: 1px solid #000;
+    @include border-radius(3px);
+    @include box-shadow(inset 0 1px 0 #999);
+    font-size: 0.7em;
+    height: 1.9rem;
     position: absolute;
+    text-align: center;
+    text-decoration: none;
+    text-shadow: 0 -1px 0 #000;
     top: 2px;
-    width: 1.8em;
-    height: 1.8em; }
+    width: 1.9rem;
+    cursor: pointer;
+
+    span {
+      padding-top: 0.1em;
+    }
+
+  }
+
   .ui-datepicker-prev-hover, .ui-datepicker-next-hover {
-    top: 1px; }
+    @include background-image(linear-gradient(#666, #444));
+    @include box-shadow(inset 0 1px 0 #aaa);
+  }
+
   .ui-datepicker-prev {
-    left: 2px; }
+    left: 3px;
+  }
+
   .ui-datepicker-next {
-    right: 2px; }
-  .ui-datepicker-prev-hover {
-    left: 1px; }
-  .ui-datepicker-next-hover {
-    right: 1px; }
+    right: 3px;
+    span {
+      padding-left: 0.4em;
+    }
+  }
+
   .ui-datepicker-prev span, .ui-datepicker-next span {
     display: block;
     position: absolute;
@@ -46,8 +75,8 @@
     margin: 0 0 .4em; }
   th {
     padding: .7em .3em;
-    text-align: center;
-    font-weight: bold;
+    text-align: right;
+    font-weight: normal;
     border: 0; }
   td {
     border: 0;
@@ -131,4 +160,40 @@
   .ui-datepicker-group-last .ui-datepicker-header, .ui-datepicker-group-middle .ui-datepicker-header {
     border-right-width: 0;
     border-left-width: 1px; } }
+
+.ui-timepicker-div {
+  padding: 1em;
+  margin-top: 1em;
+  @include border-radius(4px);
+  @include box-shadow(0 1px 0 #222, 0 -1px 0 #333);
+  background: rgba(0,0,0,0.1);
+  border: 1px solid #111;
+
+  dl {
+    dt {
+      font-weight: normal;
+      font-size: 0.9em;
+      color: #ddd;
+      text-shadow: 0 -1px 0 #000;
+      &.ui-tpicker-time-label {
+      }
+    }
+  }
+  .ui-widget-header {
+    margin-bottom: 8px; }
+  dl {
+    text-align: left;
+    dt {
+      height: 25px;
+      margin-bottom: -25px; }
+    dd {
+      margin: 0 10px 10px 65px; } }
+  td {
+    font-size: 90%; } }
+
+.ui-tpicker-grid-label {
+  background: none;
+  border: none;
+  margin: 0;
+  padding: 0; }
 
