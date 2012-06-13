@@ -125,4 +125,36 @@ form {
     border: none;
     font-size: 1.5em;
     color: $orange;
-} }
+  }
+}
+
+.custom-select {
+  position: relative;
+  display: inline-block;
+  @include fill-parent();
+
+  select {
+    @include background-image(linear-gradient(#333, #222));
+    border: 1px solid #000;
+    @include box-shadow(inset 0 1px 0 #555, 0 1px 0 #333);
+    color: #bbb;
+    display: inline-block;
+    @include fill-parent();
+    text-align: center;
+    line-height: 1.2em;
+    outline: none;
+    padding: 0.35em 1em;
+    text-shadow:0 -1px 0 #000;
+    -webkit-appearance: none;
+
+    &:focus {
+      @include background-image(linear-gradient($orange,darken($orange, 15%)));
+      color: #fff;
+      border: 1px solid darken($bg-color, 90%);
+      @include box-shadow(inset 0 1px 0 lighten($orange, 15%), 0 1px 0 #333);
+    }
+  }
+}
+
+.no-pointer-events .custom-select:after {
+content: none; }

@@ -509,7 +509,7 @@ timezoneText: 'Time Zone'
           }
         });
 
-        this.timezone_select = $tp.find('#ui_tpicker_timezone_'+ dp_id).append('<select></select>').find("select");
+        this.timezone_select = $tp.find('#ui_tpicker_timezone_'+ dp_id).append('<label class="custom-select"><select></select></label>').find("select");
         $.fn.append.apply(this.timezone_select,
             $.map(o.timezoneList, function(val, idx) {
               return $("<option />")

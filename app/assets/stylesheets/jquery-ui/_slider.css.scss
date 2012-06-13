@@ -4,9 +4,27 @@
   .ui-slider-handle {
     position: absolute;
     z-index: 2;
-    width: 1.2em;
-    height: 1.2em;
-    cursor: default; }
+    width: 12px;
+    // margin-top: 1px;
+    cursor: pointer;
+    height: 12px;
+    @include border-radius(10px);
+    @include background-image(linear-gradient(#444, #333, #444));
+    @include box-shadow(0 0 2px #000);
+    border: 1px solid #000;
+    outline: none;
+
+    &.ui-state-hover {
+      @include background-image(linear-gradient(#555, #444, #555));
+    }
+
+    &.ui-state-active {
+      @include background-image(linear-gradient(#fff, darken($bg-color, 20%)));
+      border: 1px solid darken($bg-color, 70%);
+      @include box-shadow(none);
+    }
+  }
+
   .ui-slider-range {
     position: absolute;
     z-index: 1;
@@ -16,7 +34,10 @@
     background-position: 0 0; } }
 
 .ui-slider-horizontal {
-  height: .8em;
+  height: 3px;
+  @include box-shadow(0 1px 0 #555);
+  background: $orange;
+
   .ui-slider-handle {
     top: -0.3em;
     margin-left: -0.6em; }

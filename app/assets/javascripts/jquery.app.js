@@ -4,7 +4,7 @@ $(document).ready(function() {
     prevText: "◀",
     showTimezone: true,
     addSliderAccess: true,
-    sliderAccessArgs: { touchonly: false },
+    sliderAccessArgs: { touchonly: true },
     timezoneList: [
       { value: '-1100', label: '-11h NUT' },
       { value: '-1000', label: '-10h HST' },
@@ -33,4 +33,6 @@ $(document).ready(function() {
       { value: '+1300', label: '+13h NZDT' }
     ]
   });
+
+  $('.custom-select select').append('content');
 });

@@ -75,7 +75,7 @@
     margin: 0 0 .4em; }
   th {
     padding: .7em .3em;
-    text-align: right;
+    text-align: center;
     font-weight: normal;
     border: 0; }
   td {
@@ -84,7 +84,7 @@
     span, a {
       display: block;
       padding: .2em;
-      text-align: right;
+      text-align: center;
       text-decoration: none; } }
   .ui-datepicker-buttonpane {
     background-image: none;
@@ -165,31 +165,53 @@
   padding: 1em;
   margin-top: 1em;
   @include border-radius(4px);
-  @include box-shadow(0 1px 0 #222, 0 -1px 0 #333);
+  @include box-shadow(0 1px 0 #222, 0 -2px 0 #343434);
   background: rgba(0,0,0,0.1);
   border: 1px solid #111;
 
   dl {
     dt {
+      width: 33%;
       font-weight: normal;
       font-size: 0.9em;
       color: #ddd;
       text-shadow: 0 -1px 0 #000;
-      &.ui-tpicker-time-label {
+
+       &.ui-tpicker-time-label ,&.ui-tpicker-hour-label,  &.ui-tpicker-minute-label,  &.ui-tpicker-timezone-label {
+        display: inline-block;
+       }
+    }
+
+    dd {
+      width: 65%;
+
+      &.ui-tpicker-time ,&.ui-tpicker-hour,  &.ui-tpicker-minute,  &.ui-tpicker-timezone {
+        display: inline-block;
+      }
+
+      &.ui-tpicker-time {
+        @include background-image(linear-gradient(#fff, darken($bg-color, 10%)));
+        border: 1px solid #fff;
+        border: none;
+        @include border-radius(3px);
+        @include box-shadow(0 0 2px #000);
+        color: darken($bg-color, 50%);
+        font-size: 0.9em;
+        padding: 0.3em 0;
+        font-weight: normal;
+        text-align: center;
+        text-shadow: 0 1px 0 #fff;
+      }
+
+      &.ui-tpicker-minute {
+        padding-bottom: 5px;
       }
     }
   }
+
   .ui-widget-header {
     margin-bottom: 8px; }
-  dl {
-    text-align: left;
-    dt {
-      height: 25px;
-      margin-bottom: -25px; }
-    dd {
-      margin: 0 10px 10px 65px; } }
-  td {
-    font-size: 90%; } }
+}
 
 .ui-tpicker-grid-label {
   background: none;
