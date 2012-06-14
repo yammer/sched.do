@@ -103,7 +103,6 @@
     text-decoration: none; } }
 
 .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active {
-  border: none;
   @include background-image(linear-gradient($orange,darken($orange, 15%)));
   color: #fff;
   border: 1px solid darken($bg-color, 90%);

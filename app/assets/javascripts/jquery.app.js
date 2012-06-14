@@ -12,7 +12,6 @@ $(document).ready(function() {
     timezone: '',
     showTimezone: true,
     addSliderAccess: true,
-    sliderAccessArgs: { touchonly: true },
     timezoneList: [
       { value: 'NUT', label: '-11h NUT' },
       { value: 'HST', label: '-10h HST' },
@@ -42,4 +41,5 @@ $(document).ready(function() {
       { value: 'NZDT', label: '+13h NZDT' }
     ]
   });
+
 });

@@ -167,9 +167,10 @@
   padding-bottom: 0;
   margin-top: 1em;
   @include border-radius(4px);
-  @include box-shadow(0 1px 0 #333, 0 -1px 0 #333);
-  // background: rgba(255,255,255,0.1);
-  background: #2B2B2B;
+  @include box-shadow(0 1px 0 #282828, 0 -1px 0 #383838, inset 0 1px 10px #222);
+  background: rgba(255,255,255,0.1);
+  // background: #2B2B2B;
+  // @include background-image(linear-gradient(#fff, darken($bg-color, 10%)));
 
   border: 1px solid #111;
 
@@ -181,9 +182,12 @@
       color: #ddd;
       text-shadow: 0 -1px 0 #000;
 
-       &.ui-tpicker-time-label ,&.ui-tpicker-hour-label,  &.ui-tpicker-minute-label,  &.ui-tpicker-timezone-label {
+       &.ui-tpicker-hour-label,  &.ui-tpicker-minute-label,  &.ui-tpicker-timezone-label {
         display: inline-block;
        }
+       &.ui-tpicker-time-label {
+        display: none;
+      }
     }
 
     dd {
@@ -192,6 +196,12 @@
       &.ui-tpicker-time ,&.ui-tpicker-hour,  &.ui-tpicker-minute,  &.ui-tpicker-timezone {
         display: inline-block;
       }
+      &.ui-tpicker-time {
+        width: 100%;
+        margin-left: 0;
+      }
+
+
 
       &.ui-tpicker-time {
         @include background-image(linear-gradient(#fff, darken($bg-color, 10%)));
@@ -209,6 +219,9 @@
 
       &.ui-tpicker-minute {
         padding-bottom: 5px;
+      }
+      &.ui-tpicker-hour {
+        padding-top: 20px;
       }
     }
   }

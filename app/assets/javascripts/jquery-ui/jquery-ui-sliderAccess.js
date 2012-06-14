@@ -16,10 +16,10 @@
 
   return $(this).each(function(i,obj){
     var $t = $(this),
-         o = $.extend({},{ 
+         o = $.extend({},{
            where: 'after',
-         step: $t.slider('option','step'), 
-         upIcon: 'ui-icon-plus', 
+         step: $t.slider('option','step'),
+         upIcon: 'ui-icon-plus',
          downIcon: 'ui-icon-minus',
          text: false,
          upText: '+',
@@ -34,8 +34,8 @@
 
   $buttons.children('button').each(function(j, jobj){
     var $jt = $(this);
-    $jt.button({ 
-      text: o.text, 
+    $jt.button({
+      text: o.text,
       icons: { primary: $jt.data('icon') }
     })
     .click(function(e){
@@ -56,7 +56,8 @@
     });
   });
 
-  // before or after					
+  // before or after
+
   $t[o.where]($buttons);
 
   if(o.buttonset){
@@ -66,13 +67,17 @@
   }
 
   // adjust the width so we don't break the original layout
-  var bOuterWidth = $buttons.css({
-    marginLeft: (o.where == 'after'? 10:0), 
-      marginRight: (o.where == 'before'? 10:0)
-  }).outerWidth(true) + 5;
-  var tOuterWidth = $t.outerWidth(true);
-  $t.css('display','inline-block').width(tOuterWidth-bOuterWidth);
-  });		
+
+  // var bOuterWidth = $buttons.css({
+  //   marginLeft: (o.where == 'after'? 10:0),
+  //     marginRight: (o.where == 'before'? 10:0)
+  // }).outerWidth(true) + 5;
+  // var tOuterWidth = $t.outerWidth(true);
+  // $t.css('display','inline-block').width(tOuterWidth-bOuterWidth);
+
+  // Hide sliders
+  $("dl dd[class*=ui-tpicker] div.ui-slider").hide();
+  });
     }
   });
 
