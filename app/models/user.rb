@@ -15,6 +15,13 @@ class User < ActiveRecord::Base
     set_encrypted_access_token
   end
 
+  def self.create_from_params(params)
+    new(name: params[:info][:name], access_token: params[:info][:access_token]).tap do |user|
+      user.yammer_user_id = params[:uid]
+      user.save!
+    end
+  end
+
   def able_to_edit?(event)
     event.user == self
   end

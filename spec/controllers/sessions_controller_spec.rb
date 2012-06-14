@@ -7,12 +7,12 @@ describe SessionsController, '#create' do
     should_not deny_access
   end
 
-  it 'should not create a new user if one exists' do
+  it 'does not create a new user if one exists' do
     stub_omniauth_env
     post :create
     post :destroy
     post :create
-    User.all.should have(1).item
+    User.count.should == 1
   end
 
   private

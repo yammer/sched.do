@@ -21,18 +21,11 @@ class SessionsController < ApplicationController
     request.env['omniauth.auth']
   end
 
-  def yammer_user_id
-    auth[:uid]
+  def find_or_create_user
+    find_user || User.create_from_params(auth)
   end
 
-  def find_or_create_user
-    user = User.find_by_access_token(auth[:info][:access_token])
-    unless user
-      user = User.new(name: auth[:info][:name], access_token: auth[:info][:access_token])
-      user.yammer_user_id = yammer_user_id
-      user.save!
-      user
-    end
-    user
+  def find_user
+    User.find_by_access_token(auth[:info][:access_token])
   end
 end
