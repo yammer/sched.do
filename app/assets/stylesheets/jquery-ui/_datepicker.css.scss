@@ -87,6 +87,7 @@
       text-align: center;
       text-decoration: none; } }
   .ui-datepicker-buttonpane {
+    display: none;
     background-image: none;
     margin: .7em 0 0 0;
     padding: 0 .2em;
@@ -163,10 +164,13 @@
 
 .ui-timepicker-div {
   padding: 1em;
+  padding-bottom: 0;
   margin-top: 1em;
   @include border-radius(4px);
-  @include box-shadow(0 1px 0 #222, 0 -2px 0 #343434);
-  background: rgba(0,0,0,0.1);
+  @include box-shadow(0 1px 0 #333, 0 -1px 0 #333);
+  // background: rgba(255,255,255,0.1);
+  background: #2B2B2B;
+
   border: 1px solid #111;
 
   dl {
@@ -191,10 +195,10 @@
 
       &.ui-tpicker-time {
         @include background-image(linear-gradient(#fff, darken($bg-color, 10%)));
-        border: 1px solid #fff;
-        border: none;
+        border: 1px solid #000;
+        @include box-sizing(border-box);
         @include border-radius(3px);
-        @include box-shadow(0 0 2px #000);
+        @include box-shadow(0 1px 0 #555);
         color: darken($bg-color, 50%);
         font-size: 0.9em;
         padding: 0.3em 0;

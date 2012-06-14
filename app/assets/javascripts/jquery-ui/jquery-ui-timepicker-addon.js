@@ -2,12 +2,6 @@
  * jQuery timepicker addon
  * By: Trent Richardson [http://trentrichardson.com]
  * Version 1.0.0
- * Last Modified: 02/05/2012
- *
- * Copyright 2012 Trent Richardson
- * Dual licensed under the MIT and GPL licenses.
- * http://trentrichardson.com/Impromptu/GPL-LICENSE.txt
- * http://trentrichardson.com/Impromptu/MIT-LICENSE.txt
  */
 
 (function($) {
@@ -29,19 +23,19 @@
     this.regional = []; // Available regional settings, indexed by language code
     this.regional[''] = { // Default regional settings
       currentText: 'Now',
-closeText: 'Done',
-ampm: false,
-amNames: ['AM', 'A'],
-pmNames: ['PM', 'P'],
-timeFormat: 'hh:mm tt',
-timeSuffix: '',
-timeOnlyTitle: 'Choose Time',
-timeText: 'Time',
-hourText: 'Hour',
-minuteText: 'Minute',
-secondText: 'Second',
-millisecText: 'Millisecond',
-timezoneText: 'Time Zone'
+    closeText: 'Done',
+    ampm: false,
+    amNames: ['AM', 'A'],
+    pmNames: ['PM', 'P'],
+    timeFormat: 'hh:mm tt',
+    timeSuffix: '',
+    timeOnlyTitle: 'Choose Time',
+    timeText: 'Time',
+    hourText: 'Hour',
+    minuteText: 'Minute',
+    secondText: 'Second',
+    millisecText: 'Millisecond',
+    timezoneText: 'Time Zone'
     };
     this._defaults = { // Global defaults for all the datetime picker instances
       showButtonPanel: true,
@@ -120,14 +114,14 @@ timezoneText: 'Time Zone'
     /* Override the default settings for all instances of the time picker.
        @param  settings  object - the new settings to use as defaults (anonymous object)
        @return the manager object */
+
     setDefaults: function(settings) {
       extendRemove(this._defaults, settings || {});
       return this;
     },
 
-    //########################################################################
     // Create a new Timepicker instance
-    //########################################################################
+
     _newInst: function($input, o) {
       var tp_inst = new Timepicker(),
       inlineSettings = {};
@@ -175,6 +169,7 @@ timezoneText: 'Time Zone'
         tp_inst._defaults.timezoneList = timezoneList;
       }
 
+      tp_inst.timezone = tp_inst._defaults.timezone;
       tp_inst.hour = tp_inst._defaults.hour;
       tp_inst.minute = tp_inst._defaults.minute;
       tp_inst.second = tp_inst._defaults.second;
@@ -208,9 +203,8 @@ timezoneText: 'Time Zone'
       return tp_inst;
     },
 
-    //########################################################################
     // add our sliders to the calendar
-    //########################################################################
+
     _addTimePicker: function(dp_inst) {
       var currDT = (this.$altInput && this._defaults.altFieldTimeOnly) ?
         this.$input.val() + ' ' + this.$altInput.val() :
@@ -221,9 +215,8 @@ timezoneText: 'Time Zone'
       this._injectTimePicker();
     },
 
-    //########################################################################
     // parse the time string from input value or _setTime
-    //########################################################################
+
     _parseTime: function(timeString, withDate) {
       var regstr = this._defaults.timeFormat.toString()
         .replace(/h{1,2}/ig, '(\\d?\\d)')
@@ -272,19 +265,20 @@ timezoneText: 'Time Zone'
         if (order.m !== -1) this.minute = Number(treg[order.m]);
         if (order.s !== -1) this.second = Number(treg[order.s]);
         if (order.l !== -1) this.millisec = Number(treg[order.l]);
+
         if (order.z !== -1 && treg[order.z] !== undefined) {
           var tz = treg[order.z].toUpperCase();
           switch (tz.length) {
-            case 1:	// Z
+            case 1: // Z
               tz = this._defaults.timezoneIso8609 ? 'Z' : '+0000';
               break;
-            case 5:	// +hhmm
+            case 5: // +hhmm
               if (this._defaults.timezoneIso8609)
                 tz = tz.substring(1) == '0000'
                   ? 'Z'
                   : tz.substring(0, 3) + ':' + tz.substring(3);
               break;
-            case 6:	// +hh:mm
+            case 6: // +hh:mm
               if (!this._defaults.timezoneIso8609)
                 tz = tz == 'Z' || tz.substring(1) == '00:00'
                   ? '+0000'
@@ -302,9 +296,9 @@ timezoneText: 'Time Zone'
       return false;
     },
 
-    //########################################################################
+
     // pattern for standard and localized AM/PM markers
-    //########################################################################
+
     _getPatternAmpm: function() {
       var markers = [],
       o = this._defaults;
@@ -316,9 +310,9 @@ timezoneText: 'Time Zone'
       return '(' + markers.join('|') + ')?';
     },
 
-    //########################################################################
+
     // figure out position of time elements.. cause js cant do named captures
-    //########################################################################
+
     _getFormatPositions: function() {
       var finds = this._defaults.timeFormat.toLowerCase().match(/(h{1,2}|m{1,2}|s{1,2}|l{1}|t{1,2}|z)/g),
       orders = { h: -1, m: -1, s: -1, l: -1, t: -1, z: -1 };
@@ -331,9 +325,9 @@ timezoneText: 'Time Zone'
       return orders;
     },
 
-    //########################################################################
+
     // generate and inject html for timepicker into ui datepicker
-    //########################################################################
+
     _injectTimePicker: function() {
       var $dp = this.inst.dpDiv,
       o = this._defaults,
@@ -661,10 +655,10 @@ timezoneText: 'Time Zone'
       }
     },
 
-    //########################################################################
+
     // This function tries to limit the ability to go outside the
     // min/max date range
-    //########################################################################
+
     _limitMinMaxDateTime: function(dp_inst, adjustSliders){
       var o = this._defaults,
       dp_date = new Date(dp_inst.selectedYear, dp_inst.selectedMonth, dp_inst.selectedDay);
@@ -769,10 +763,10 @@ timezoneText: 'Time Zone'
     },
 
 
-    //########################################################################
+
     // when a slider moves, set the internal time...
     // on time change is also called when the time is updated in the text field
-    //########################################################################
+
     _onTimeChange: function() {
       var hour   = (this.hour_slider) ? this.hour_slider.slider('value') : false,
       minute = (this.minute_slider) ? this.minute_slider.slider('value') : false,
@@ -823,10 +817,10 @@ timezoneText: 'Time Zone'
       if (hasChanged) this._updateDateTime();
     },
 
-    //########################################################################
+
     // call custom onSelect.
     // bind to sliders slidestop, and grid click.
-    //########################################################################
+
     _onSelectHandler: function() {
       var onSelect = this._defaults.onSelect;
       var inputEl = this.$input ? this.$input[0] : null;
@@ -835,9 +829,9 @@ timezoneText: 'Time Zone'
       }
     },
 
-    //########################################################################
+
     // left for any backwards compatibility
-    //########################################################################
+
     _formatTime: function(time, format) {
       time = time || { hour: this.hour, minute: this.minute, second: this.second, millisec: this.millisec, ampm: this.ampm, timezone: this.timezone };
       var tmptime = (format || this._defaults.timeFormat).toString();
@@ -848,9 +842,9 @@ timezoneText: 'Time Zone'
       else this.formattedTime = tmptime;
     },
 
-    //########################################################################
+
     // update our input with the new date time..
-    //########################################################################
+
     _updateDateTime: function(dp_inst) {
       dp_inst = this.inst || dp_inst;
       var dt = $.datepicker._daylightSavingAdjust(new Date(dp_inst.selectedYear, dp_inst.selectedMonth, dp_inst.selectedDay)),
@@ -888,9 +882,9 @@ timezoneText: 'Time Zone'
     });
 
   $.fn.extend({
-    //########################################################################
+
     // shorthand just to use timepicker..
-    //########################################################################
+
     timepicker: function(o) {
       o = o || {};
       var tmp_args = arguments;
@@ -902,9 +896,9 @@ timezoneText: 'Time Zone'
       });
     },
 
-    //########################################################################
+
     // extend timepicker to datepicker
-    //########################################################################
+
     datetimepicker: function(o) {
       o = o || {};
       tmp_args = arguments;
@@ -926,12 +920,12 @@ timezoneText: 'Time Zone'
     }
   });
 
-  //########################################################################
+
   // format the time all pretty...
   // format = string format of the time
   // time = a {}, not a Date() for timezones
   // options = essentially the regional[].. amNames, pmNames, ampm
-  //########################################################################
+
   $.datepicker.formatTime = function(format, time, options) {
     options = options || {};
     options = $.extend($.timepicker._defaults, options);
@@ -974,10 +968,10 @@ timezoneText: 'Time Zone'
     return tmptime;
   };
 
-  //########################################################################
+
   // the bad hack :/ override datepicker so it doesnt close on select
   // inspired: http://stackoverflow.com/questions/1252512/jquery-datepicker-prevent-closing-picker-when-clicking-a-date/1762378#1762378
-  //########################################################################
+
   $.datepicker._base_selectDate = $.datepicker._selectDate;
   $.datepicker._selectDate = function (id, dateStr) {
     var inst = this._getInst($(id)[0]),
@@ -995,10 +989,9 @@ timezoneText: 'Time Zone'
     else this._base_selectDate(id, dateStr);
   };
 
-  //#############################################################################################
   // second bad hack :/ override datepicker so it triggers an event when changing the input field
   // and does not redraw the datepicker on every selectDate event
-  //#############################################################################################
+
   $.datepicker._base_updateDatepicker = $.datepicker._updateDatepicker;
   $.datepicker._updateDatepicker = function(inst) {
 
@@ -1021,9 +1014,9 @@ timezoneText: 'Time Zone'
     }
   };
 
-  //#######################################################################################
+
   // third bad hack :/ override datepicker so it allows spaces and colon in the input field
-  //#######################################################################################
+
   $.datepicker._base_doKeyPress = $.datepicker._doKeyPress;
   $.datepicker._doKeyPress = function(event) {
     var inst = $.datepicker._getInst(event.target),
@@ -1056,9 +1049,9 @@ timezoneText: 'Time Zone'
     return $.datepicker._base_doKeyPress(event);
   };
 
-  //#######################################################################################
+
   // Override key up event to sync manual input changes.
-  //#######################################################################################
+
   $.datepicker._base_doKeyUp = $.datepicker._doKeyUp;
   $.datepicker._doKeyUp = function (event) {
     var inst = $.datepicker._getInst(event.target),
@@ -1078,9 +1071,9 @@ timezoneText: 'Time Zone'
     return $.datepicker._base_doKeyUp(event);
   };
 
-  //#######################################################################################
+
   // override "Today" button to also grab the time.
-  //#######################################################################################
+
   $.datepicker._base_gotoToday = $.datepicker._gotoToday;
   $.datepicker._gotoToday = function(id) {
     var inst = this._getInst($(id)[0]),
@@ -1102,9 +1095,9 @@ timezoneText: 'Time Zone'
     $( '.ui-datepicker-today', $dp).click();
   };
 
-  //#######################################################################################
+
   // Disable & enable the Time in the datetimepicker
-  //#######################################################################################
+
   $.datepicker._disableTimepickerDatepicker = function(target, date, withDate) {
     var inst = this._getInst(target),
         tp_inst = this._get(inst, 'timepicker');
@@ -1126,9 +1119,9 @@ timezoneText: 'Time Zone'
     }
   };
 
-  //#######################################################################################
+
   // Create our own set time function
-  //#######################################################################################
+
   $.datepicker._setTime = function(inst, date) {
     var tp_inst = this._get(inst, 'timepicker');
     if (tp_inst) {
@@ -1162,9 +1155,9 @@ timezoneText: 'Time Zone'
     }
   };
 
-  //#######################################################################################
+
   // Create new public method to set only time, callable as $().datepicker('setTime', date)
-  //#######################################################################################
+
   $.datepicker._setTimeDatepicker = function(target, date, withDate) {
     var inst = this._getInst(target),
         tp_inst = this._get(inst, 'timepicker');
@@ -1186,9 +1179,9 @@ timezoneText: 'Time Zone'
 
   };
 
-  //#######################################################################################
+
   // override setDate() to allow setting time too within Date object
-  //#######################################################################################
+
   $.datepicker._base_setDateDatepicker = $.datepicker._setDateDatepicker;
   $.datepicker._setDateDatepicker = function(target, date) {
     var inst = this._getInst(target),
@@ -1199,9 +1192,9 @@ timezoneText: 'Time Zone'
     this._setTimeDatepicker(target, tp_date, true);
   };
 
-  //#######################################################################################
+
   // override getDate() to allow getting time too within Date object
-  //#######################################################################################
+
   $.datepicker._base_getDateDatepicker = $.datepicker._getDateDatepicker;
   $.datepicker._getDateDatepicker = function(target, noDefault) {
     var inst = this._getInst(target),
@@ -1216,10 +1209,10 @@ timezoneText: 'Time Zone'
     return this._base_getDateDatepicker(target, noDefault);
   };
 
-  //#######################################################################################
+
   // override parseDate() because UI 1.8.14 throws an error about "Extra characters"
   // An option in datapicker to ignore extra format characters would be nicer.
-  //#######################################################################################
+
   $.datepicker._base_parseDate = $.datepicker.parseDate;
   $.datepicker.parseDate = function(format, value, settings) {
     var date;
@@ -1239,9 +1232,9 @@ timezoneText: 'Time Zone'
     return date;
   };
 
-  //#######################################################################################
+
   // override formatDate to set date with time to the input
-  //#######################################################################################
+
   $.datepicker._base_formatDate = $.datepicker._formatDate;
   $.datepicker._formatDate = function(inst, day, month, year){
     var tp_inst = this._get(inst, 'timepicker');
@@ -1252,9 +1245,9 @@ timezoneText: 'Time Zone'
     return this._base_formatDate(inst);
   };
 
-  //#######################################################################################
+
   // override options setter to add time to maxDate(Time) and minDate(Time). MaxDate
-  //#######################################################################################
+
   $.datepicker._base_optionDatepicker = $.datepicker._optionDatepicker;
   $.datepicker._optionDatepicker = function(target, name, value) {
     var inst = this._getInst(target),
@@ -1301,9 +1294,9 @@ timezoneText: 'Time Zone'
     return this._base_optionDatepicker(target, name, value);
   };
 
-  //#######################################################################################
+
   // jQuery extend now ignores nulls!
-  //#######################################################################################
+
   function extendRemove(target, props) {
     $.extend(target, props);
     for (var name in props)

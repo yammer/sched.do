@@ -9,13 +9,13 @@
     cursor: pointer;
     height: 12px;
     @include border-radius(10px);
-    @include background-image(linear-gradient(#444, #333, #444));
+    @include background-image(linear-gradient(lighten($orange, 5%), darken($orange, 15%), $orange));
     @include box-shadow(0 0 2px #000);
-    border: 1px solid #000;
+    border: 1px solid darken($orange, 40%);
     outline: none;
 
     &.ui-state-hover {
-      @include background-image(linear-gradient(#555, #444, #555));
+      @include background-image(linear-gradient(lighten($orange, 10%), darken($orange, 5%), $orange));
     }
 
     &.ui-state-active {
@@ -36,7 +36,8 @@
 .ui-slider-horizontal {
   height: 3px;
   @include box-shadow(0 1px 0 #555);
-  background: $orange;
+  background: #555;
+  @include background-image(linear-gradient(#333, #222));
 
   .ui-slider-handle {
     top: -0.3em;
