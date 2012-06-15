@@ -15,6 +15,15 @@ describe SessionsController, '#create' do
     User.count.should == 1
   end
 
+  it 'signs out a guest when a yammer user signs in' do
+    session[:name] = 'Joe Schmoe'
+    session[:email] = 'joe@example.com'
+    stub_omniauth_env
+    post :create
+    session[:name].should be_nil
+    session[:email].should be_nil
+  end
+
   private
 
   def stub_omniauth_env

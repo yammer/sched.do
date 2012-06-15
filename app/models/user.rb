@@ -30,6 +30,10 @@ class User < ActiveRecord::Base
     votes.find_by_suggestion_id(suggestion.id)
   end
 
+  def guest?
+    false
+  end
+
   private
 
   def set_salt_if_necessary

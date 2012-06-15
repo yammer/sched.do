@@ -1,9 +1,10 @@
 class SessionsController < ApplicationController
-  skip_before_filter :require_login, only: :create
+  skip_before_filter :require_yammer_login, only: :create
 
   def create
     user = find_or_create_user
     cookies[:encrypted_access_token] = user.encrypted_access_token
+    log_out_guest
 
     flash[:success] = "You have successfully signed in."
     redirect_to new_event_path
@@ -27,5 +28,10 @@ class SessionsController < ApplicationController
 
   def find_user
     User.find_by_access_token(auth[:info][:access_token])
+  end
+
+  def log_out_guest
+    session[:name] = nil
+    session[:email] = nil
   end
 end

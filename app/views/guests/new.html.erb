@@ -1,0 +1,11 @@
+<div class="sign-in">
+  <%= link_to "Sign in with Yammer", "/auth/yammer", class: "sign-in",  id: "sign-in" %>
+</div>
+
+or enter your name and email to begin voting
+
+<%= form_tag guests_path, id: 'new_guest' do %>
+  <%= text_field_tag :name, nil, placeholder: 'Name' %>
+  <%= text_field_tag :email, nil, placeholder: 'Email' %>
+  <%= submit_tag 'Begin Voting' %>
+<% end %>

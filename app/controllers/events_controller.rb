@@ -4,6 +4,9 @@ class EventsController < ApplicationController
     redirect_to root_path
   end
 
+  skip_before_filter :require_yammer_login, only: :show
+  before_filter :require_guest_or_yammer_login, only: :show
+
   def new
     @event = current_user.events.build
     @suggestions = populate_suggestions_for(@event)

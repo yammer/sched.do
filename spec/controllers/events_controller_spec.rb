@@ -13,7 +13,7 @@ describe EventsController, 'authentication' do
 
   it 'requires login for #show' do
     get :show
-    should deny_access
+    should redirect_to new_guest_url
   end
 
   it 'requires login for #edit' do
