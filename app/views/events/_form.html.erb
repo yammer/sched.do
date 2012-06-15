@@ -1,12 +1,12 @@
 <%= semantic_form_for(@event) do |f| %>
   <%= f.inputs do %>
     <%= f.input :name, label: false, placeholder: "Event name" %>
-    <div class='suggestions'>
+    <div class="suggestions">
       <%= f.semantic_fields_for(:suggestions, @suggestions) do |suggestion_form| %>
         <%= render 'suggestion_fields', f: suggestion_form %>
       <% end %>
     </div>
-    <%= link_to_add_association 'Add Another Suggestion', f, :suggestions,
+    <%= link_to_add_association '+ Add suggestion', f, :suggestions,
           'data-association-insertion-node' => '.suggestions',
           'data-association-insertion-method' => :append %>
   <% end %>

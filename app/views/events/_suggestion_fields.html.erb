@@ -1,5 +1,5 @@
-<div class='nested-fields'>
-  <%= f.input :description, as: :string, hint: 'Lunch', label: false, placeholder: "Suggestion",
+<div class="nested-fields">
+  <%= f.input :description, as: :string, label: false, placeholder: "Suggestion",
         input_html: { 'data-role' => 'suggestion' } %>
-  <%= link_to_remove_association 'Remove Suggestion', f %>
+  <%= link_to_remove_association '╳', f %>
 </div>

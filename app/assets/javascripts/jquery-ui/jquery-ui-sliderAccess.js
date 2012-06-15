@@ -66,19 +66,9 @@
     $buttons.eq(1).addClass('ui-corner-right');
   }
 
-  // adjust the width so we don't break the original layout
-
-  // var bOuterWidth = $buttons.css({
-  //   marginLeft: (o.where == 'after'? 10:0),
-  //     marginRight: (o.where == 'before'? 10:0)
-  // }).outerWidth(true) + 5;
-  // var tOuterWidth = $t.outerWidth(true);
-  // $t.css('display','inline-block').width(tOuterWidth-bOuterWidth);
-
   // Hide sliders
   $("dl dd[class*=ui-tpicker] div.ui-slider").hide();
-  });
-    }
+  }); }
   });
 
 })(jQuery);

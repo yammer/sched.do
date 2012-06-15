@@ -1,3 +1,78 @@
 div.new-event {
   @extend .sheet;
+
+  div.suggestions {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid darken($bg-color, 5%);
+  }
+
+  a.add-suggestion {
+    background: lighten($success, 1%);
+    border: 1px dashed darken($success, 30%);
+    @include border-radius(5px);
+    color: desaturate(darken($success, 35%), 10%);
+    display: block;
+    @include fill-parent();
+    margin: 0 auto;
+    padding: 12px 10px;
+    text-decoration: none;
+
+    &:hover {
+      background: darken($success, 2%);
+    }
+  }
+
+  a.add_fields { // Cocoon class
+    @extend a.add-suggestion;
+  }
+
+  div.nested-fields  {
+    position: relative;
+    @include animation(slide-up 1s 0 1);
+
+    &.animated {
+      @include animation(slide-up 1s 0 1);
+    }
+
+    a.remove-suggestion {
+      @include animation(slide-right 1s);
+      @include background-image(linear-gradient(lighten($orange, 20%), $orange));
+      border: 1px solid lighten($orange, 5%);
+      @include border-radius(20px);
+      @include box-shadow(inset 0 1px 0 lighten($orange, 30%), 0 1px 4px darken($bg-color, 20%));
+      color: #fff;
+      font-size: 0.9em;
+      padding: 2px 3px;
+      position: absolute;
+      right: -5px;
+      text-decoration: none;
+      text-shadow: 0 -1px 0 darken($orange, 20%);
+      top:-7px;
+      vertical-align: bottom;
+
+      &:hover {
+        @include background-image(linear-gradient(lighten($orange, 10%), darken($orange, 5%)));
+      }
+    }
+
+    &.deleted-suggestion {
+      @include animation(hinge 2s 0 1 ease both);
+      z-index: 99;
+
+      input {
+        @include box-shadow(1px 0 2px darken($bg-color, 20%));
+      }
+
+      a.remove-suggestion {
+        display: none;
+      }
+    }
+
+    a.remove_fields { // Cocoon class
+      @extend a.remove-suggestion;
+    }
+  }
 }
+
+
