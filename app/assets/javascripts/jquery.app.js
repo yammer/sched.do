@@ -50,48 +50,18 @@ $(document).ready(function() {
 
   datepicker();
 
-  //Prevent default datepicker positioning behavior on top nodes (always display below)
   $.extend($.datepicker,{_checkOffset:function(inst,offset,isFixed){return offset}});
+  var forms = $('form[id*=new_event], form[id*="edit_event"]');
 
-  $('form[id*=new_event], form[id*="edit_event"]').bind('insertion-callback', function(){
+  forms.bind('insertion-callback', function(){
     datepicker();
 
     // Animate new nodes
-    var forms = $(this);
     var lastNode =  forms.find('div.nested-fields:last');
     lastNode.addClass('animated');
 
     // Focus new nodes
     lastNode.find('input').delay(1000).queue(function() { $(this).focus(); })
-
-
-    // Restore default positioning behavior in lower nodes
-    var position = forms.find('div.nested-fields').index(lastNode);
-    if (position >= 4) {
-      $.extend($.datepicker,{_checkOffset:function(inst,offset,isFixed)
-       {
-         // Original code from jQuery UI
-          var dpWidth = inst.dpDiv.outerWidth();
-          var dpHeight = inst.dpDiv.outerHeight();
-          var inputWidth = inst.input ? inst.input.outerWidth() : 0;
-          var inputHeight = inst.input ? inst.input.outerHeight() : 0;
-          var viewWidth = document.documentElement.clientWidth + $(document).scrollLeft();
-          var viewHeight = document.documentElement.clientHeight + $(document).scrollTop();
-
-          offset.left -= (this._get(inst, 'isRTL') ? (dpWidth - inputWidth) : 0);
-          offset.left -= (isFixed && offset.left == inst.input.offset().left) ? $(document).scrollLeft() : 0;
-          offset.top -= (isFixed && offset.top == (inst.input.offset().top + inputHeight)) ? $(document).scrollTop() : 0;
-
-          offset.left -= Math.min(offset.left, (offset.left + dpWidth > viewWidth && viewWidth > dpWidth) ?
-              Math.abs(offset.left + dpWidth - viewWidth) : 0);
-          offset.top -= Math.min(offset.top, (offset.top + dpHeight > viewHeight && viewHeight > dpHeight) ?
-              Math.abs(dpHeight + inputHeight) : 0);
-
-          return offset;
-        }
-      });
-    };
-
   });
 
 });
