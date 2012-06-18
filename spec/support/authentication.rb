@@ -7,6 +7,14 @@ module TurnipAuthenticationHelpers
   def sign_out
     click_link 'Sign out'
   end
+
+  def fill_in_guest_info
+    within '#new_guest' do
+      fill_in 'guest_name', with: 'Joe Schmoe'
+      fill_in 'guest_email', with: 'joe@example.com'
+      click_button 'Begin Voting'
+    end
+  end
 end
 
 module AuthenticationHelpers

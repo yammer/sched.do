@@ -1,6 +1,12 @@
 class VotesController < ApplicationController
+  skip_before_filter :require_yammer_login
+  before_filter :require_guest_or_yammer_login
+
   def create
-    vote = current_user.votes.create(params[:vote])
+    vote = Vote.new(params[:vote])
+    user_vote = current_user.build_user_vote
+    user_vote.vote = vote
+    user_vote.save
     redirect_to vote.event
   end
 

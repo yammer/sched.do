@@ -1,13 +1,13 @@
-Feature: Invitees can vote on suggestions
+Feature: Users can vote on suggestions
 
-  Scenario: Invitee votes for a single suggestion
+  Scenario: User votes for a single suggestion
     Given I am signed in
     And I created an event named "Clown party" with a suggestion of "lunch"
     Then I should see that that "lunch" has 0 votes
     When I vote for "lunch"
     Then I should see that that "lunch" has 1 vote
 
-  Scenario: Invitee can undo their vote for a suggestion
+  Scenario: User can undo their vote for a suggestion
     Given I am signed in
     And I created an event named "Clown party" with a suggestion of "lunch"
     When I vote for "lunch"
@@ -15,7 +15,7 @@ Feature: Invitees can vote on suggestions
     When I unvote for "lunch"
     Then I should see that that "lunch" has 0 votes
 
-  Scenario: Invitee can vote for suggestions for different events
+  Scenario: User can vote for suggestions for different events
     Given I am signed in
     When I create an event named "Clown party" with a suggestion of "lunch"
     And I vote for "lunch"
@@ -24,7 +24,7 @@ Feature: Invitees can vote on suggestions
     And I vote for "dinner"
     Then I should see that that "dinner" has 1 vote
 
-  Scenario: Invitee votes for multiple suggestions
+  Scenario: User votes for multiple suggestions
     Given someone created an event named "Clown party" with the following suggestions:
       | lunch  |
       | dinner |

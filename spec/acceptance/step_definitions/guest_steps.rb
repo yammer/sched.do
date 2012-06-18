@@ -4,9 +4,5 @@ step 'I should be prompted to login or enter my name and email' do
 end
 
 step 'I enter my name and email' do
-  within '#new_guest' do
-    fill_in 'name', with: 'Joe Schmoe'
-    fill_in 'email', with: 'joe@example.com'
-    click_button 'Begin Voting'
-  end
+  fill_in_guest_info
 end

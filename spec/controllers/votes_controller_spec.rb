@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe VotesController, 'authentication' do
-  it 'requires login for #create' do
+  it 'requires yammer or guest login for #create' do
     post :create
-    should deny_access
+    should redirect_to(new_guest_url)
   end
 end

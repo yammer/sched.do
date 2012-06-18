@@ -2,7 +2,8 @@ require 'spec_helper'
 
 describe User, 'validations' do
   it { should have_many(:events) }
-  it { should have_many(:votes) }
+  it { should have_many(:user_votes) }
+  it { should have_many(:votes).through(:user_votes) }
 
   it { should validate_presence_of(:access_token) }
   it { should validate_presence_of(:name) }
@@ -71,10 +72,11 @@ describe User, '#able_to_edit?' do
 end
 
 describe User, '#vote_for_suggestion' do
-  it 'returns the users vote for the given suggestion if the user has one' do
+  it "returns the user's vote for the given suggestion if the user has one" do
     user = create(:user)
     suggestion = create(:suggestion)
-    vote = create(:vote, user: user, suggestion: suggestion)
+    user_vote = create(:user_vote, user: user)
+    vote = create(:vote, votable: user_vote, suggestion: suggestion)
     user.vote_for_suggestion(suggestion).should == vote
   end
 
@@ -82,5 +84,20 @@ describe User, '#vote_for_suggestion' do
     user = create(:user)
     suggestion = create(:suggestion)
     user.vote_for_suggestion(suggestion).should be_nil
+  end
+end
+
+describe User, '#guest?' do
+  it 'should always return false' do
+    user = create(:user)
+    user.guest?.should == false
+  end
+end
+
+describe User, '#build_user_vote' do
+  it 'returns a new UserVote instance with the correct user_id' do
+    user = create(:user)
+    user_vote = user.build_user_vote
+    user_vote.user_id.should == user.id
   end
 end

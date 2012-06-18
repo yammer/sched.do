@@ -2,10 +2,14 @@
   <%= link_to "Sign in with Yammer", "/auth/yammer", class: "sign-in",  id: "sign-in" %>
 </div>
 
-or enter your name and email to begin voting
+<p>or enter your name and email to begin voting</p>
 
-<%= form_tag guests_path, id: 'new_guest' do %>
-  <%= text_field_tag :name, nil, placeholder: 'Name' %>
-  <%= text_field_tag :email, nil, placeholder: 'Email' %>
-  <%= submit_tag 'Begin Voting' %>
+<%= semantic_form_for @guest do |f| %>
+  <%= f.inputs do %>
+    <%= f.text_field :name, label: false, placeholder: 'Name' %>
+    <%= f.text_field :email, label: false, placeholder: 'Email' %>
+  <% end %>
+  <%= f.actions do %>
+    <%= f.action :submit, label: 'Begin Voting', button_html: { class: "cta" } %>
+  <% end %>
 <% end %>

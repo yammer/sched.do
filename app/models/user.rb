@@ -2,7 +2,8 @@ class User < ActiveRecord::Base
   attr_accessible :access_token, :encrypted_access_token, :name
 
   has_many :events
-  has_many :votes
+  has_many :user_votes
+  has_many :votes, through: :user_votes
 
   validates :access_token, presence: true
   validates :encrypted_access_token, presence: true
@@ -32,6 +33,10 @@ class User < ActiveRecord::Base
 
   def guest?
     false
+  end
+
+  def build_user_vote
+    user_votes.new
   end
 
   private

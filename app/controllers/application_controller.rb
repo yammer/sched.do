@@ -19,7 +19,7 @@ class ApplicationController < ActionController::Base
   def current_user
     @current_user ||= User.find_by_encrypted_access_token(cookies[:encrypted_access_token])
     if session[:name] && session[:email]
-      @current_user ||= Guest.new(session[:name], session[:email])
+      @current_user ||= Guest.new(name: session[:name], email: session[:email])
     end
     @current_user
   end

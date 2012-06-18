@@ -10,6 +10,10 @@ FactoryGirl.define do
     sequence(:yammer_user_id) { |n| n.to_s }
   end
 
+  factory :guest do
+    initialize_with { new(name: 'Bruce Wayne', email: generate(:email)) }
+  end
+
   factory :event do
     name 'Clown party'
     user
@@ -17,7 +21,16 @@ FactoryGirl.define do
 
   factory :vote do
     suggestion
+    association :votable, factory: :user_vote
+  end
+
+  factory :user_vote do
     user
+  end
+
+  factory :guest_vote do
+    name 'Bruce Wayne'
+    email
   end
 
   factory :suggestion do
