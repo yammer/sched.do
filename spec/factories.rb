@@ -7,7 +7,7 @@ FactoryGirl.define do
   factory :user do
     name 'Joe'
     sequence(:access_token) { |n| "abc12#{n}" }
-    sequence(:yammer_user_id) { |n| n }
+    sequence(:yammer_user_id) { |n| n.to_s }
   end
 
   factory :event do
@@ -23,5 +23,14 @@ FactoryGirl.define do
   factory :suggestion do
     description 'A pretty good suggestion.'
     event
+  end
+
+  factory :invitation do
+    name 'Bob Invite'
+    event
+
+    factory :invitation_with_user do
+      user
+    end
   end
 end

@@ -58,12 +58,29 @@ end
 
 describe EventsController, '#update' do
   context 'with the user who created the event' do
-    it 'is successful' do
-      user = create(:user)
-      event = create(:event, user: user)
+    let!(:event) { create(:event) }
+    let!(:user) { event.user }
+
+    before do
       sign_in_as(user)
+    end
+
+    it 'is successful' do
       put :update, id: event.id
       response.should redirect_to(event)
+    end
+
+    it 'accepts nested attributes for invitations' do
+      invitations_attributes = { '0' => { name: "John Smith" } }
+      put :update, id: event.id, event: { invitations_attributes: invitations_attributes }
+      response.should redirect_to(event)
+      Invitation.count.should == 1
+    end
+
+    it 'ignores blank invitations' do
+      invitations_attributes = { '0' => { 'name' => 'Gabe Berke-Williams' }, '1' => { 'name' => '' }}
+      put :update, id: event.id, event: { invitations_attributes: invitations_attributes }
+      Invitation.count.should == 1
     end
   end
 

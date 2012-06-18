@@ -3,10 +3,20 @@
     <%= @event.name %>
   </h1>
   <% if current_user.able_to_edit?(@event) %>
-    <%= link_to 'Edit', edit_event_path(@event), class: "edit-button" %>
+    <%= link_to 'Edit event or invite people', edit_event_path(@event), class: "edit-button" %>
   <% end %>
+  <div id="invitees">
+    <p>Invitees</p>
+    <ul>
+      <% @event.invitees.each do |invitee| %>
+        <li>
+          <%= invitee.name %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
   <p>
-    Share this link with your friends to have them vote on it: 
+    Share this link with your friends to have them vote on it:
     <%= link_to event_url(@event), event_url(@event) %>
   </p>
   <ul class="suggestions">

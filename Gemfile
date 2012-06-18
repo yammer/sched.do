@@ -25,6 +25,7 @@ gem 'jquery-rails'
 gem 'omniauth', '~> 1.0'
 gem 'omniauth-oauth2', '~> 1.0.2'
 gem 'airbrake', '~> 3.1.0'
+gem 'underscore-rails', '~> 1.3.1'
 
 group :development do
   gem 'heroku'
@@ -36,6 +37,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 2.9.0'
   gem 'sham_rack'
   gem 'pry'
+  gem 'evergreen', require: 'evergreen/rails'
 end
 
 group :test do

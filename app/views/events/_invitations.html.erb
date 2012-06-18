@@ -1,0 +1,26 @@
+<%= f.semantic_fields_for(:invitations, html: { id: 'invitations'}) do |invitation_form| %>
+  <%= invitation_form.inputs do %>
+    <%= invitation_form.input :name, label: "Invite someone", required: false,
+          input_html: { 'data-role' => 'invitation_name' }  %>
+    <%= invitation_form.input :yammer_user_id, as: :hidden, input_html: { 'data-role' => 'yammer_user_id' } %>
+    <div class="invitation-autocomplete-suggestions"></div>
+  <% end %>
+<% end %>
+<% content_for :javascript do %>
+  <%= javascript_tag do %>
+    $("input[data-role='invitation_name']").autocomplete({
+      minLength: 3,
+      appendTo: '.invitation-autocomplete-suggestions',
+      select: function(event, ui) {
+        var target = event.target;
+        var yammerUserId = ui.item.yammerUserId;
+        var $yammerUserIdField = $(target).closest('fieldset.inputs').find('[data-role="yammer_user_id"]');
+        $yammerUserIdField.prop('value', yammerUserId);
+      },
+      source: function(request, response) {
+        var term = request.term;
+        YammerApi.autocomplete.get(term, response);
+      }
+    });
+  <% end %>
+<% end %>

@@ -6,8 +6,7 @@ class EventsController < ApplicationController
 
   def new
     @event = current_user.events.build
-    populate_suggestions_for(@event)
-    @suggestions = @event.suggestions
+    @suggestions = populate_suggestions_for(@event)
   end
 
   def create
@@ -20,8 +19,7 @@ class EventsController < ApplicationController
     else
       flash[:error] = "Please complete all required fields."
       @event = event
-      populate_suggestions_for(@event)
-      @suggestions = event.suggestions
+      @suggestions = populate_suggestions_for(@event)
       render :new
     end
   end
@@ -33,15 +31,20 @@ class EventsController < ApplicationController
 
   def edit
     @event = current_user.events.find(params[:id])
+    @invitations = populate_invitations_for(@event)
   end
 
   def update
     event = current_user.events.find(params[:id])
-    if event.update_attributes(params[:event])
+    event.attributes = params[:event]
+    event.invitations = event.invitations.select(&:valid?)
+
+    if event.save
       flash[:success] = 'Event successfully updated.'
       redirect_to event
     else
       @event = event
+      @invitations = populate_invitations_for(@event)
       flash[:failure] = 'Please check the errors and try again.'
       render :edit
     end
@@ -51,5 +54,10 @@ class EventsController < ApplicationController
 
   def populate_suggestions_for(event)
     2.times { event.suggestions.build }
+    event.suggestions
+  end
+
+  def populate_invitations_for(event)
+    event.invitations.build
   end
 end

@@ -50,6 +50,10 @@ step 'I create an event' do
   create_event
 end
 
+step 'I create an event named :event_name' do |event_name|
+  create_event(event_name)
+end
+
 step 'I try to create an event with invalid data' do
   create_event('', [])
 end

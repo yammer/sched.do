@@ -15,4 +15,4 @@ end
 
 
 task(:default).clear
-task :default => [:spec, :acceptance]
+task :default => [:spec, :acceptance, 'spec:javascripts']

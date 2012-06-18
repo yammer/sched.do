@@ -1,6 +1,9 @@
 class InvitationsController < ApplicationController
   layout 'events'
-  def show
 
+  def show
+  end
+
+  def create
   end
 end
