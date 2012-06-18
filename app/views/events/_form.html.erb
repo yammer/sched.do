@@ -6,7 +6,7 @@
         <%= render 'suggestion_fields', f: suggestion_form %>
       <% end %>
     </div>
-    <%= link_to_add_association '+ Add suggestion', f, :suggestions,
+    <%= link_to_add_association 'Add Another Suggestion', f, :suggestions,
           'data-association-insertion-node' => '.suggestions',
           'data-association-insertion-method' => :append %>
   <% end %>
