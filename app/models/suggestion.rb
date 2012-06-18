@@ -4,7 +4,7 @@ class Suggestion < ActiveRecord::Base
   attr_accessible :description, :event
 
   belongs_to :event
-  has_many :votes
+  has_many :votes, dependent: :destroy
 
   def vote_count
     votes.select(&:persisted?).size

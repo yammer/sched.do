@@ -7,5 +7,6 @@ class Event < ActiveRecord::Base
   validates :name, presence: true
   validates :user_id, presence: true
 
-  accepts_nested_attributes_for :suggestions
+  accepts_nested_attributes_for :suggestions, reject_if: :all_blank,
+                                              allow_destroy: true
 end

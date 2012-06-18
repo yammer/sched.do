@@ -4,7 +4,7 @@ describe Suggestion do
   it { should validate_presence_of(:description) }
 
   it { should belong_to :event }
-  it { should have_many :votes }
+  it { should have_many(:votes).dependent(:destroy) }
 
   it { should allow_mass_assignment_of(:description) }
   it { should allow_mass_assignment_of(:event) }
