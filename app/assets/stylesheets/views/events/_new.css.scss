@@ -29,14 +29,12 @@ div.new-event {
 
   div.nested-fields  {
     position: relative;
-    @include animation(slide-up 1s 0 1);
 
     &.animated {
       @include animation(slide-up 1s 0 1);
     }
 
     a.remove-suggestion {
-      @include animation(slide-right 1s);
       @include background-image(linear-gradient(lighten($orange, 20%), $orange));
       border: 1px solid lighten($orange, 5%);
       @include border-radius(20px);

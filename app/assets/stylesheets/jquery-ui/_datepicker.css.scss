@@ -169,8 +169,6 @@
   @include border-radius(4px);
   @include box-shadow(0 1px 0 #282828, 0 -1px 0 #383838, inset 0 1px 10px #222);
   background: rgba(255,255,255,0.1);
-  // background: #2B2B2B;
-  // @include background-image(linear-gradient(#fff, darken($bg-color, 10%)));
 
   border: 1px solid #111;
 
