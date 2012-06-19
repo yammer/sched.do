@@ -76,6 +76,6 @@ step 'I remove the first suggestion' do
 end
 
 step 'I sign in and fill in the event name' do
-  step 'I am signed in'
-  step "I fill in the event name with 'something'"
+  sign_in
+  fill_in 'event_name', with: 'something'
 end

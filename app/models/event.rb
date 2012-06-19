@@ -8,5 +8,5 @@ class Event < ActiveRecord::Base
   validates :user_id, presence: true
 
   accepts_nested_attributes_for :suggestions, reject_if: :all_blank,
-                                              allow_destroy: true
+    allow_destroy: true
 end
