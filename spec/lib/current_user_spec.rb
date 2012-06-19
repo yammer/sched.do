@@ -19,7 +19,9 @@ describe CurrentUser, '.find' do
     guest.email.should == email
   end
 
-  it 'returns nil if a Guest or User cannot be found' do
-    CurrentUser.find('invalid', nil, nil).should be_nil
+  it 'returns a null user if a Guest or User cannot be found' do
+    result = CurrentUser.find('invalid', nil, nil)
+    result.should_not be_guest
+    result.should_not be_yammer_user
   end
 end

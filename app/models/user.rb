@@ -35,6 +35,10 @@ class User < ActiveRecord::Base
     false
   end
 
+  def yammer_user?
+    true
+  end
+
   def build_user_vote
     user_votes.new
   end

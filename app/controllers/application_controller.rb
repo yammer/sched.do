@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
   private
 
   def signed_in?
-    current_user.present? && !current_user.guest?
+    current_user.yammer_user?
   end
 
   def current_user
@@ -21,7 +21,7 @@ class ApplicationController < ActionController::Base
   end
 
   def require_yammer_login
-    if current_user.blank? || current_user.guest?
+    unless current_user.yammer_user?
       redirect_to root_path
     end
   end

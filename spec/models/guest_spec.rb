@@ -14,8 +14,13 @@ end
 
 describe Guest, '#guest?' do
   it 'always returns true' do
-    guest = build(:guest)
-    guest.guest?.should == true
+    build(:guest).should be_guest
+  end
+end
+
+describe User, '#yammer_user?' do
+  it 'always returns false' do
+    build(:guest).should_not be_yammer_user
   end
 end
 

@@ -88,9 +88,14 @@ describe User, '#vote_for_suggestion' do
 end
 
 describe User, '#guest?' do
-  it 'should always return false' do
-    user = create(:user)
-    user.guest?.should == false
+  it 'always returns false' do
+    build(:user).should_not be_guest
+  end
+end
+
+describe User, '#yammer_user?' do
+  it 'always returns true' do
+    build(:user).should be_yammer_user
   end
 end
 

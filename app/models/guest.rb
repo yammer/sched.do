@@ -22,6 +22,10 @@ class Guest
     true
   end
 
+  def yammer_user?
+    false
+  end
+
   def able_to_edit?(event)
     false
   end

@@ -6,7 +6,7 @@ class CurrentUser
   end
 
   def find
-    user || guest || nil
+    user || guest || null_user
   end
 
   def self.find(token, name, email)
@@ -23,5 +23,9 @@ class CurrentUser
     if @name && @email
       Guest.new(name: @name, email: @email)
     end
+  end
+
+  def null_user
+    NullUser.new
   end
 end
