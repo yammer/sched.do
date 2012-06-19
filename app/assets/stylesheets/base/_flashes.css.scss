@@ -10,7 +10,7 @@ div.error, div.notice, div.success {
   border-top: none;
   @include border-radius(0 0 3px 3px);
   padding: .75em;
-  position: fixed;
+  position: absolute;
   z-index: 0;
   opacity: 0;
   width: 100%;
@@ -33,7 +33,7 @@ div.success {
   @include notice-style($success);
 }
 
-#flash-error {
+#flash-error, #flash-failure {
   @extend div.error;
 }
 #flash-notice {
