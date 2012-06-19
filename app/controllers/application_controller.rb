@@ -17,11 +17,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_user
-    @current_user ||= User.find_by_encrypted_access_token(cookies[:encrypted_access_token])
-    if session[:name] && session[:email]
-      @current_user ||= Guest.new(name: session[:name], email: session[:email])
-    end
-    @current_user
+    @current_user ||= CurrentUser.find(cookies[:encrypted_access_token], session[:name], session[:email])
   end
 
   def require_yammer_login
