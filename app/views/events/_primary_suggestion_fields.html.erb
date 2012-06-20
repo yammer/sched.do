@@ -4,4 +4,8 @@
   <%= f.input :secondary, as: :string, label: false, placeholder: "what time?",
         input_html: { 'data-role' => 'secondary-suggestion' } %>
   <%= link_to_remove_association 'Remove Suggestion', f %>
+  <%= link_to_add_association 'Add Another Time', f.parent_builder, :suggestions,
+        partial: 'secondary_suggestion_fields',
+        'data-association-insertion-node' => 'this',
+        'data-association-insertion-method' => :before %>
 </div>

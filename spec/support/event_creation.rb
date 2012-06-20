@@ -32,7 +32,7 @@ module EventCreation
   def add_enough_fields_for_suggestions(suggestions)
     fields = find_suggestion_fields
     (suggestions.size - fields.size).times do
-      click_link 'Add Another Suggestion'
+      click_link 'Add Another Day'
     end
     find_suggestion_fields
   end

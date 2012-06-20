@@ -63,7 +63,7 @@ end
 
 step 'I add another suggestion field' do
   page.should have_css('.suggestions > .nested-fields')
-  click_link 'Add Another Suggestion'
+  click_link 'Add Another Day'
 end
 
 step 'I visit the new event page' do

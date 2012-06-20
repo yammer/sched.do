@@ -34,6 +34,10 @@ div.new-event {
       @include animation(slide-up 1s 0 1);
     }
 
+    &.secondary [data-role='primary-suggestion'] {
+      display: none;
+    }
+
     a.remove-suggestion {
       @include background-image(url('/images/delete-icon.svg'), linear-gradient(lighten($orange, 20%), $orange));
       background-repeat: no-repeat;
