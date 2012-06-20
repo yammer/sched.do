@@ -1,4 +1,6 @@
 class GuestsController < ApplicationController
+  layout 'events'
+
   skip_before_filter :require_yammer_login
 
   def new
