@@ -1,12 +1,13 @@
 require 'spec_helper'
 
 describe Suggestion do
-  it { should validate_presence_of(:description) }
+  it { should validate_presence_of(:primary) }
 
   it { should belong_to :event }
   it { should have_many(:votes).dependent(:destroy) }
 
-  it { should allow_mass_assignment_of(:description) }
+  it { should allow_mass_assignment_of(:primary) }
+  it { should allow_mass_assignment_of(:secondary) }
   it { should allow_mass_assignment_of(:event) }
 end
 

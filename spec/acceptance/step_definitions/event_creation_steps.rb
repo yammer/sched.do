@@ -3,11 +3,11 @@ step 'I fill in the event name with :value' do |value|
 end
 
 step 'I suggest :suggestion' do |suggestion|
-  find_field_by_data_role('suggestion').set(suggestion)
+  find_field_by_data_role('primary-suggestion').set(suggestion)
 end
 
 step 'I suggest an empty string' do
-  find_field_by_data_role('suggestion').set('')
+  find_field_by_data_role('primary-suggestion').set('')
 end
 
 step 'I submit the create event form' do
@@ -46,8 +46,7 @@ step 'someone created an event named :event_name with the following suggestions:
 end
 
 step 'I create an event with the following suggestions:' do |table|
-  suggestions = table.raw.map(&:first)
-  create_event('Clown party', suggestions)
+  create_event('Clown party', table.raw)
 end
 
 step 'I create an event' do
@@ -72,11 +71,9 @@ step 'I visit the new event page' do
 end
 
 step 'I fill out the event form with the following suggestions:' do |table|
-  suggestions = table.raw.map(&:first)
-  fields = find_fields_by_data_role('suggestion')
-  suggestions.each_with_index do |suggestion, i|
-    fields[i].set(suggestion)
-  end
+  suggestions = table.raw
+  fields = add_enough_fields_for_suggestions(suggestions)
+  fill_in_fields_with_suggestions(fields, suggestions)
 end
 
 step 'I remove the first suggestion' do

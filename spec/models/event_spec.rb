@@ -17,7 +17,7 @@ describe Event do
 
   it 'rejects blank suggestions' do
     nested_attributes_options = Event.nested_attributes_options[:suggestions]
-    nested_attributes_options[:reject_if].call({ description: '' }).should be_true
+    nested_attributes_options[:reject_if].call({ primary: '' }).should be_true
   end
 end
 

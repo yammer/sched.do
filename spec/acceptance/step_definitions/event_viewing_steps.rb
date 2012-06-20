@@ -22,16 +22,19 @@ step 'I should see an event named :event_name with a suggestion of :suggestion' 
 end
 
 step 'I should see an event with the following suggestions in order:' do |table|
-  suggestions = table.raw.map(&:first)
+  suggestions = table.raw
   within '.suggestions' do
     all('.description').each_with_index do |element, i|
-      element.should have_content suggestions[i]
+      element.should have_content suggestions[i][0]
+      if suggestions[i][1]
+        element.should have_content suggestions[i][1]
+      end
     end
   end
 end
 
 step 'I should see multiple suggestions' do
-  all('input[data-role=suggestion]').size.should be > 1
+  all("input[data-role='primary-suggestion']").size.should be > 1
 end
 
 step 'I should see a link to that event' do

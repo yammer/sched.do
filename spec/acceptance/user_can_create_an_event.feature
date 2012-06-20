@@ -9,13 +9,17 @@ Feature: User can create an event
   Scenario: User creates event with multiple suggestions
     Given I am signed in
     When I create an event with the following suggestions:
-      | breakfast |
-      | lunch     |
-      | dinner    |
+      | breakfast |           |
+      | lunch     | chipotle  |
+      | lunch     | boloco    |
+      | lunch     | moes      |
+      | dinner    |           |
     Then I should see an event with the following suggestions in order:
-      | breakfast |
-      | lunch     |
-      | dinner    |
+      | breakfast |           |
+      | lunch     | chipotle  |
+      | lunch     | boloco    |
+      | lunch     | moes      |
+      | dinner    |           |
 
   @javascript
   Scenario: User adds an additional suggestion field

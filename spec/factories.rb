@@ -44,7 +44,7 @@ FactoryGirl.define do
   end
 
   factory :suggestion do
-    description 'A pretty good suggestion.'
+    primary 'A pretty good suggestion.'
     event
   end
 
