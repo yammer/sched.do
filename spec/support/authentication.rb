@@ -15,6 +15,13 @@ module TurnipAuthenticationHelpers
       click_button 'Begin Voting'
     end
   end
+
+  def as_random_user
+    create_yammer_account
+    sign_in
+    yield
+    sign_out
+  end
 end
 
 module AuthenticationHelpers

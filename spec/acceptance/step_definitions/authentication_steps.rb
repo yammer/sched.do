@@ -29,3 +29,7 @@ step 'I am signed in as a guest' do
   visit new_guest_path
   fill_in_guest_info
 end
+
+step 'I should not see a sign out button' do
+  page.should have_no_content 'Sign out'
+end
