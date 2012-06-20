@@ -10,8 +10,7 @@ require 'turnip/capybara'
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
 Capybara.javascript_driver = :webkit
-DatabaseCleaner.strategy = :transaction
-DatabaseCleaner.clean
+DatabaseCleaner.strategy = :truncation
 
 RSpec.configure do |config|
   config.mock_with :mocha
@@ -26,4 +25,10 @@ RSpec.configure do |config|
   # automatically. This will be the default behavior in future versions of
   # rspec-rails.
   config.infer_base_class_for_anonymous_controllers = false
+
+  # Clean before acceptance tests are run, otherwise JS scenarios leave records
+  # in the database.
+  config.before(:each, type: :request) do
+    DatabaseCleaner.clean
+  end
 end
