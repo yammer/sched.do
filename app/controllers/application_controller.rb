@@ -32,4 +32,8 @@ class ApplicationController < ActionController::Base
       redirect_to new_guest_url
     end
   end
+
+  def previous_page
+    session[:return_to] || root_url
+  end
 end

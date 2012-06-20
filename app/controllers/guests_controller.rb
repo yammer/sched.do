@@ -6,8 +6,18 @@ class GuestsController < ApplicationController
   end
 
   def create
+    log_in_guest
+    return_to_previous_page
+  end
+
+  private
+
+  def log_in_guest
     session[:name] = params[:guest][:name]
     session[:email] = params[:guest][:email]
-    redirect_to(session[:return_to] || root_url)
+  end
+
+  def return_to_previous_page
+    redirect_to previous_page
   end
 end
