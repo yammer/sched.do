@@ -12,6 +12,7 @@ class SessionsController < ApplicationController
 
   def destroy
     @current_user = nil
+    log_out_guest
     cookies[:encrypted_access_token] = nil
     redirect_to root_path
   end
