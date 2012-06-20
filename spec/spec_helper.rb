@@ -10,6 +10,8 @@ require 'turnip/capybara'
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
 Capybara.javascript_driver = :webkit
+DatabaseCleaner.strategy = :transaction
+DatabaseCleaner.clean
 
 RSpec.configure do |config|
   config.mock_with :mocha
