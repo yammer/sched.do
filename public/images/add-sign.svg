@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="16px" height="16px" viewBox="0 0 16 16" style="enable-background:new 0 0 16 16;" xml:space="preserve">
+<g>
+	<defs>
+		<filter id="Adobe_OpacityMaskFilter" filterUnits="userSpaceOnUse" x="-76" y="-203" width="204" height="204">
+			
+				<feColorMatrix  type="matrix" values="-1 0 0 0 1  0 -1 0 0 1  0 0 -1 0 1  0 0 0 1 0" color-interpolation-filters="sRGB" result="source"/>
+		</filter>
+	</defs>
+	<mask maskUnits="userSpaceOnUse" x="-76" y="-203" width="204" height="204" id="SVGID_1_">
+		<g style="filter:url(#Adobe_OpacityMaskFilter);">
+			
+				<image style="overflow:visible;" width="425" height="425" xlink:href="23603767B3876A01.jpg"  transform="matrix(0.48 0 0 0.48 -76 -203)">
+			</image>
+		</g>
+	</mask>
+	<g style="opacity:0.3;mask:url(#SVGID_1_);">
+	</g>
+</g>
+<path style="fill:#FFFFFF;" d="M8,1C4.134,1,1,4.134,1,8s3.134,7,7,7s7-3.134,7-7S11.866,1,8,1z M12,9H9v3H7V9H4V7h3V4h2v3h3V9z"/>
+</svg>
