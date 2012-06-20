@@ -30,6 +30,25 @@ div.new-event {
   div.nested-fields  {
     position: relative;
 
+    &.primary {
+      padding: 1em;
+      background: $bg-color;
+      margin-bottom: 20px;
+      @include row();
+
+      input {
+        @include box-shadow(0 1px 0 #fff);
+      }
+
+      div.date {
+        @include columns(6);
+      }
+      div.times {
+        @include columns(6);
+      }
+
+    }
+
     &.animated {
       @include animation(slide-up 1s 0 1);
     }
@@ -52,11 +71,11 @@ div.new-event {
       font-size: 0.9em;
       padding: 2px 3px;
       position: absolute;
-      right: -5px;
+      right: -10px;
       text-decoration: none;
       text-shadow: 0 -1px 0 darken($orange, 20%);
       width: 16px;
-      top:-7px;
+      top:-10px;
       vertical-align: bottom;
 
       &:hover {
