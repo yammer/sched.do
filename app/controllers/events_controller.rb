@@ -21,8 +21,8 @@ class EventsController < ApplicationController
       redirect_to event
     else
       flash[:error] = "Please complete all required fields."
-      @event = event
-      @suggestions = populate_suggestions_for(@event)
+      @event = current_user.events.new(params[:event])
+      @suggestions = event.suggestions
       render :new
     end
   end
