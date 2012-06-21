@@ -6,7 +6,7 @@
     <% end %>
     <div class="suggestions">
       <%= f.semantic_fields_for(:suggestions, @suggestions) do |suggestion_form| %>
-        <%= render 'suggestion_fields', f: suggestion_form %>
+        <%= render 'primary_suggestion_fields', f: suggestion_form %>
       <% end %>
     </div>
     <%= link_to_add_association 'Add Another Day', f, :suggestions,
