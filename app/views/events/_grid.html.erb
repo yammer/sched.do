@@ -11,7 +11,12 @@
           <% @event.invitees.each do |invitee| %>
             <tr>
               <% @suggestions.each do |suggestion| %>
-                <td></th>
+                <td>
+                </td>
+                <%# If user has voted for this suggestion, display: %>
+                <%# <td id="voted"> %>
+                <%#   <img src="/images/checkmark.png" alt="" /> %>
+                <%# <td> %>
               <% end %>
             </tr>
           <% end %>
