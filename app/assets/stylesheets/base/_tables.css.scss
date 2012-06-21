@@ -102,7 +102,7 @@ div.table-wrapper {
           }
 
           &:nth-child(even) {
-            background: rgba(229, 248, 252, 0.5);
+            background: darken($success, 13%);
           }
 
           img {
