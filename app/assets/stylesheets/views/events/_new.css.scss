@@ -1,6 +1,11 @@
 div.new-event {
   @extend .sheet;
 
+  // #event_name {
+  //   font-size: 1.6em;
+  //   font-family: $bariol-light;
+  // }
+
   div.suggestions {
     margin-top: 15px;
     padding-top: 15px;
@@ -38,15 +43,24 @@ div.new-event {
       @include border-radius(4px);
       margin-bottom: 20px;
 
-      div.date {
-      }
 
       div.times {
         margin-top: 15px;
         padding-top: 15px;
         border-top: 1px dashed darken($bg-color, 10%);
-      }
 
+        a.add_fields {
+          background: transparent;
+          border: 1px dashed lighten($blue, 30%);
+          color: desaturate(lighten($blue, 20%), 10%);
+          text-shadow: 0 1px 0 #fff;
+
+          &:hover {
+            background: lighten($blue, 40%);
+          color: desaturate(lighten($blue, 10%), 10%);
+          }
+        }
+      }
     }
 
     &.animated {
@@ -67,11 +81,11 @@ div.new-event {
           background-color: darken($bg-color, 35%);
         }
       }
+
     }
 
     &.secondary [data-role='primary-suggestion'] {
       display: none;
-
     }
 
     a.remove-suggestion {

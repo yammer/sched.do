@@ -1,9 +1,24 @@
 .ui-datepicker {
-  width: 14em;
   padding: 1em;
   @include box-sizing(border-box);
   display: none;
-  .ui-datepicker-header {
+
+  &:before {
+    width: 20px;
+    height: 20px;
+    background: #000;
+    @include transform(rotate(45deg));
+    @include box-shadow(inset -1px -1px 0 #555);
+    bottom: -11px;
+    border: 1px solid #000;
+    content: "";
+    display: block;
+    left: 20px;
+    position: absolute;
+
+  }
+
+ .ui-datepicker-header {
     border: 1px solid #000;
     @include border-radius(3px);
     @include background-image(linear-gradient(#333, #444));
@@ -12,6 +27,7 @@
     padding: .2em 0;
     margin-top: 0.2em;
   }
+
   .ui-datepicker-prev, .ui-datepicker-next {
     @include background-image(linear-gradient(#555, #444));
     border: 1px solid #000;
@@ -163,16 +179,11 @@
     border-left-width: 1px; } }
 
 .ui-timepicker-div {
-  padding: 1em;
-  padding-bottom: 0;
-  margin-top: 1em;
-  @include border-radius(4px);
-  @include box-shadow(0 1px 0 #282828, 0 -1px 0 #383838, inset 0 1px 10px #222);
-  background: rgba(255,255,255,0.1);
-
-  border: 1px solid #111;
-
+  div.ui-widget-header {
+    display: none;
+  }
   dl {
+    margin-bottom: 10px;
     dt {
       width: 33%;
       font-weight: normal;
@@ -199,27 +210,14 @@
         margin-left: 0;
       }
 
-
-
       &.ui-tpicker-time {
-        @include background-image(linear-gradient(#fff, darken($bg-color, 10%)));
-        border: 1px solid #000;
-        @include box-sizing(border-box);
-        @include border-radius(3px);
-        @include box-shadow(0 1px 0 #555);
-        color: darken($bg-color, 50%);
-        font-size: 0.9em;
-        padding: 0.3em 0;
-        font-weight: normal;
-        text-align: center;
-        text-shadow: 0 1px 0 #fff;
+        display: none;
       }
 
       &.ui-tpicker-minute {
         padding-bottom: 5px;
       }
       &.ui-tpicker-hour {
-        padding-top: 20px;
       }
     }
   }

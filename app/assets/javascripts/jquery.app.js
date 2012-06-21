@@ -3,11 +3,15 @@ $(document).ready(function() {
   var datepicker = function(){
 
     // Displays a date/time picker when suggetsion field is focused
-    $('input[data-role="suggestion"]').datetimepicker({
+    $('input[data-role="primary-suggestion"]').datepicker({
       nextText: "▶",
       prevText: "◀",
-      timeFormat: 'hh:mmtt z',
       dateFormat: 'D, dd M yy',
+      constrainInput: false,
+    });
+
+    $('input[data-role="secondary-suggestion"]').timepicker({
+      timeFormat: 'hh:mm TT z',
       constrainInput: false,
       ampm: true,
       stepMinute: 10,
@@ -16,7 +20,6 @@ $(document).ready(function() {
       timezone: '',
       showTimezone: true,
       addSliderAccess: true,
-      showOptions: {direction: 'down'},
       timezoneList: [
         { value: 'UTC-11', label: '(-11h) Pago Pago, Alofi' },
         { value: 'UTC-10', label: '(-10h) Honolulu, Papeete' },
@@ -49,7 +52,17 @@ $(document).ready(function() {
 
   datepicker();
 
-  $.extend($.datepicker,{_checkOffset:function(inst,offset,isFixed){return offset}});
+  // $.extend($.datepicker,{_checkOffset:function(inst,offset,isFixed){return offset}});
+  $.extend($.datepicker,{_checkOffset:function(inst,offset,isFixed){
+    var dpHeight = inst.dpDiv.outerHeight();
+    var inputHeight = inst.input ? inst.input.outerHeight() : 0;
+
+    offset.top -= dpHeight + inputHeight + 10;
+    offset.left -= (window.innerWidth < 430 ? 20 : 0);
+    return offset;
+
+  }});
+
   var forms = $('form[id*=new_event], form[id*="edit_event"]');
 
   forms.bind('insertion-callback', function(){
@@ -60,7 +73,7 @@ $(document).ready(function() {
     lastNode.addClass('animated');
 
     // Focus new nodes
-    lastNode.find('input').delay(1000).queue(function() { $(this).focus(); })
+    // lastNode.find('input').delay(1000).queue(function() { $(this).focus(); })
   });
 
 });
