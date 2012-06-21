@@ -12,17 +12,17 @@ describe EventsController, 'authentication' do
   end
 
   it 'requires login for #show' do
-    get :show
+    get :show, id: 1
     should redirect_to new_guest_url
   end
 
   it 'requires login for #edit' do
-    get :edit
+    get :edit, id: 1
     should deny_access
   end
 
   it 'requires login for #update' do
-    put :update
+    put :update, id: 1
     should deny_access
   end
 end
