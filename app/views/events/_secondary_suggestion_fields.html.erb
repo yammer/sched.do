@@ -3,5 +3,5 @@
         input_html: { 'data-role' => 'primary-suggestion' } %>
   <%= f.input :secondary, as: :time_picker, label: false, placeholder: "Time",
         input_html: { 'data-role' => 'secondary-suggestion' } %>
-  <%= link_to_remove_association 'Remove Suggestion', f %>
+  <%= link_to_remove_association 'Remove Suggestion', f, tabindex: '-1' %>
 </div>
