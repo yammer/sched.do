@@ -1,48 +1,46 @@
-  <div class="table-wrapper">
-    <div class="options">
-      <table class="scrollable horizontal">
-        <tbody>
+<div class="table-wrapper">
+  <div class="options">
+    <table class="scrollable horizontal">
+      <tbody>
+        <tr>
+          <% @suggestions.each do |suggestion| %>
+            <th><%= suggestion.description %></th>
+          <% end %>
+        </tr>
+
+        <% @event.invitees.each do |invitee| %>
           <tr>
             <% @suggestions.each do |suggestion| %>
-              <th><%= suggestion.description %></th>
-            <% end %>
-          </tr>
-
-          <% @event.invitees.each do |invitee| %>
-            <tr>
-              <% @suggestions.each do |suggestion| %>
+              <% if invitee.voted_for?(suggestion) %>
+                <td class="voted">
+                  <%= image_tag('/images/checkmark.png') %>
+                </td>
+              <% else %>
                 <td>
                 </td>
-                <%# If user has voted for this suggestion, display: %>
-                <%# <td id="voted"> %>
-                <%#   <img src="/images/checkmark.png" alt="" /> %>
-                <%# <td> %>
               <% end %>
-            </tr>
-          <% end %>
-
-        </tbody>
-      </table>
-    </div>
-    <div class="search-box">
-      <form id="auto-complete">
-        <input type="text" placeholder="+ Add participant&hellip;"/>
-      </form>
-    </div>
-    <div class="participants">
-      <table>
-
-        <tbody>
-          <% @event.invitees.each do |invitee| %>
-            <tr>
-              <td>
-                <%= invitee.name %>
-              </td>
-            </tr>
-          <% end %>
-
-        </tbody>
-      </table>
-    </div>
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
   </div>
-
+  <div class="search-box">
+    <form id="auto-complete">
+      <input type="text" placeholder="+ Add participant&hellip;"/>
+    </form>
+  </div>
+  <div id="invitees">
+    <table>
+      <tbody>
+        <% @event.invitees.each do |invitee| %>
+          <tr>
+            <td>
+              <%= invitee.name %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

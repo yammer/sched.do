@@ -74,16 +74,28 @@ end
 describe User, '#vote_for_suggestion' do
   it "returns the user's vote for the given suggestion if the user has one" do
     user = create(:user)
-    suggestion = create(:suggestion)
-    user_vote = create(:user_vote, user: user)
-    vote = create(:vote, votable: user_vote, suggestion: suggestion)
-    user.vote_for_suggestion(suggestion).should == vote
+    vote = create(:vote_by_user, user: user)
+    user.vote_for_suggestion(vote.suggestion).should == vote
   end
 
   it 'returns nil if the user has not voted on the suggestion' do
     user = create(:user)
     suggestion = create(:suggestion)
     user.vote_for_suggestion(suggestion).should be_nil
+  end
+end
+
+describe User, '#voted_for?' do
+  it "returns true if the user voted for the suggestion" do
+    user = create(:user)
+    vote = create(:vote_by_user, user: user)
+    user.voted_for?(vote.suggestion).should be_true
+  end
+
+  it "returns false if the user did not vote for the suggestion" do
+    user = create(:user)
+    suggestion = create(:suggestion)
+    user.voted_for?(suggestion).should be_false
   end
 end
 

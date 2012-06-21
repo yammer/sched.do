@@ -6,16 +6,15 @@
     <%= link_to 'Edit event or invite people', edit_event_path(@event), class: "edit-button" %>
   <% end %>
   <%= render partial: 'grid' %>
+
   <p>
-  Share this link with your friends to have them vote on it:
-  <form>
-    <input id="" name="" disabled="disabled" class="disabled" type="url" value="<%= event_url(@event) %>" />
-  </form>
+    Share this link with your friends to have them vote on it:
+    <%= link_to event_url(@event), event_url(@event) %>
   </p>
   <ul class="suggestions">
     <% @suggestions.each do |suggestion| %>
       <%= render partial: 'suggestion', object: suggestion,
-        locals: { vote_for_suggestion: current_user.vote_for_suggestion(suggestion) } %>
+            locals: { vote_for_suggestion: current_user.vote_for_suggestion(suggestion) } %>
       <% end %>
     </ul>
 
@@ -29,5 +28,4 @@
   <%#   </div> %>
   <%#  </form> %>
   <%# </div> %>
-
-  </div>
+</div>

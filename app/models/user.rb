@@ -31,6 +31,10 @@ class User < ActiveRecord::Base
     votes.find_by_suggestion_id(suggestion.id)
   end
 
+  def voted_for?(suggestion)
+    vote_for_suggestion(suggestion).present?
+  end
+
   def guest?
     false
   end

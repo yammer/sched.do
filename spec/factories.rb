@@ -22,6 +22,16 @@ FactoryGirl.define do
   factory :vote do
     suggestion
     association :votable, factory: :user_vote
+
+    factory :vote_by_user do
+      ignore do
+        user { create(:user) }
+      end
+
+       after :create do |vote, evaluator|
+         vote.votable.update_attribute(:user, evaluator.user)
+       end
+    end
   end
 
   factory :user_vote do
