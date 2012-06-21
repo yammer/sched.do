@@ -72,27 +72,27 @@
 
 // New suggestion animation
 
-@-webkit-keyframes slide-up {
+@-webkit-keyframes slideUp {
   0% { opacity: 0; -webkit-transform: translateY(20px); }
   100% { opacity: 1; -webkit-transform: translateY(0); }
 }
 
-@-moz-keyframes slide-up {
+@-moz-keyframes slideUp {
   0% { opacity: 0; -moz-transform: translateY(20px); }
   100% { opacity: 1; -moz-transform: translateY(0); }
 }
 
-@-ms-keyframes slide-up {
+@-ms-keyframes slideUp {
   0% { opacity: 0; -ms-transform: translateY(20px); }
   100% { opacity: 1; -ms-transform: translateY(0); }
 }
 
-@-o-keyframes slide-up {
+@-o-keyframes slideUp {
   0% { opacity: 0; -o-transform: translateY(20px); }
   100% { opacity: 1; -o-transform: translateY(0); }
 }
 
-@keyframes slide-up {
+@keyframes slideUp {
   0% { opacity: 0; transform: translateY(20px); }
   100% { opacity: 1; transform: translateY(0); }
 }
