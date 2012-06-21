@@ -1,0 +1,43 @@
+  <div class="table-wrapper">
+    <div class="options">
+      <table class="scrollable horizontal">
+        <tbody>
+          <tr>
+            <% @suggestions.each do |suggestion| %>
+              <th><%= suggestion.description %></th>
+            <% end %>
+          </tr>
+
+          <% @event.invitees.each do |invitee| %>
+            <tr>
+              <% @suggestions.each do |suggestion| %>
+                <td></th>
+              <% end %>
+            </tr>
+          <% end %>
+
+        </tbody>
+      </table>
+    </div>
+    <div class="search-box">
+      <form id="auto-complete">
+        <input type="text" placeholder="+ Add participant&hellip;"/>
+      </form>
+    </div>
+    <div class="participants">
+      <table>
+
+        <tbody>
+          <% @event.invitees.each do |invitee| %>
+            <tr>
+              <td>
+                <%= invitee.name %>
+              </td>
+            </tr>
+          <% end %>
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+
