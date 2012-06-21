@@ -12,12 +12,12 @@
     <input id="" name="" disabled="disabled" class="disabled" type="url" value="<%= event_url(@event) %>" />
   </form>
   </p>
-  <%# <ul class="suggestions"> %>
-  <%#   <% @suggestions.each do |suggestion| %1> %>
-  <%#     <%= render partial: 'suggestion', object: suggestion, %>
-  <%#       locals: { vote_for_suggestion: current_user.vote_for_suggestion(suggestion) } %1> %>
-  <%#     <% end %1> %>
-  <%#   </ul> %>
+  <ul class="suggestions">
+    <% @suggestions.each do |suggestion| %>
+      <%= render partial: 'suggestion', object: suggestion,
+        locals: { vote_for_suggestion: current_user.vote_for_suggestion(suggestion) } %>
+      <% end %>
+    </ul>
 
 
   <%# <div class="invitation-message"> %>
