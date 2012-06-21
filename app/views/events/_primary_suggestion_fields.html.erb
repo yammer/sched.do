@@ -1,10 +1,10 @@
 <div class="nested-fields primary">
   <div class="date">
-    <%= f.input :primary, as: :string, label: false, placeholder: "Date",
+    <%= f.input :primary, as: :date_picker, label: false, placeholder: "Date",
           input_html: { 'data-role' => 'primary-suggestion' } %>
   </div>
   <div class="times">
-    <%= f.input :secondary, as: :string, label: false, placeholder: "Time",
+    <%= f.input :secondary, as: :time_picker, label: false, placeholder: "Time",
           input_html: { 'data-role' => 'secondary-suggestion' } %>
     <%= link_to_remove_association 'Remove Suggestion', f %>
     <%= link_to_add_association 'Add Another Time', f.parent_builder, :suggestions,
