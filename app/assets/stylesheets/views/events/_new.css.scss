@@ -20,7 +20,8 @@ div.new-event {
     display: block;
     @include fill-parent();
     margin: 0 auto;
-    padding: 12px 10px;
+    padding: 24px 15px;
+    text-align: center;
     text-decoration: none;
 
     &:hover {
@@ -54,6 +55,7 @@ div.new-event {
           border: 1px dashed lighten($blue, 30%);
           color: desaturate(lighten($blue, 20%), 10%);
           text-shadow: 0 1px 0 #fff;
+          padding: 12px 10px;
 
           &:hover {
             background: lighten($blue, 40%);
