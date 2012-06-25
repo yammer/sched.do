@@ -71,9 +71,8 @@ step 'I visit the new event page' do
 end
 
 step 'I fill out the event form with the following suggestions:' do |table|
-  suggestions = table.raw
-  fields = add_enough_fields_for_suggestions(suggestions)
-  fill_in_fields_with_suggestions(fields, suggestions)
+  suggestion_manager = EventCreation::SuggestionManager.new(table.raw, page)
+  suggestion_manager.fill_in_fields
 end
 
 step 'I remove the first suggestion' do
