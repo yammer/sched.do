@@ -52,6 +52,11 @@ $(document).ready(function() {
 
   datepicker();
 
+  var forms = $('form[id*=new_event], form[id*="edit_event"]');
+  forms.find('div.nested-fields input').removeAttr('maxlength');
+  forms.find('div.nested-fields.primary').addClass('animated');
+
+
   // $.extend($.datepicker,{_checkOffset:function(inst,offset,isFixed){return offset}});
   $.extend($.datepicker,{_checkOffset:function(inst,offset,isFixed){
     var dpHeight = inst.dpDiv.outerHeight();
@@ -60,11 +65,8 @@ $(document).ready(function() {
     offset.top -= dpHeight + inputHeight + 10;
     offset.left -= (window.innerWidth < 430 ? 20 : 0);
     return offset;
-
   }});
 
-  var forms = $('form[id*=new_event], form[id*="edit_event"]');
-  forms.find('div.nested-fields.primary').addClass('animated');
 
   forms.bind('insertion-callback', function(){
     datepicker();
@@ -73,6 +75,8 @@ $(document).ready(function() {
     var lastNode =  forms.find('div.nested-fields.primary:last');
     lastNode.addClass('animated');
 
+    // Remove maxlenght attribute from date & time pickers
+    forms.find('div.nested-fields input').removeAttr('maxlength');
   });
 
 });
