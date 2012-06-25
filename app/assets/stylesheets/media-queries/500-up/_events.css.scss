@@ -15,6 +15,14 @@ div.new-event {
       }
     }
   }
+
+  fieldset.actions {
+    @include row();
+    input {
+      @include columns(6);
+      float: right;
+    }
+  }
 }
 
 

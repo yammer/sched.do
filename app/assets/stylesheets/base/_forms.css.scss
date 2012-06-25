@@ -8,21 +8,9 @@
 form {
   fieldset {
     background: transparent;
-    border: 1px solid darken($bg-color, 2%);
+    border: none;
     @include fill-parent();
-    padding: 12px;
-
-    &.actions {
-      border-color: lighten($orange, 30%) ;
-      background: lighten($orange, 37%);
-    }
-
-    & > ol > input {
-      margin-bottom: 12px;
-      &:last-child {
-        margin-bottom: 0;
-      }
-    }
+    padding: 0;
   }
 
   button,

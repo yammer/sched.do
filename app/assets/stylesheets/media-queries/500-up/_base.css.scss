@@ -1,0 +1,12 @@
+form {
+  fieldset {
+    background: transparent;
+    border: 1px solid darken($bg-color, 2%);
+    @include fill-parent();
+    padding: 12px;
+
+    &.actions {
+      text-align: right;
+    }
+  }
+}
