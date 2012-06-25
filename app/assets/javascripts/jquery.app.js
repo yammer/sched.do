@@ -1,7 +1,6 @@
 $(document).ready(function() {
 
   var datepicker = function(){
-
     // Displays a date/time picker when suggetsion field is focused
     $('input[data-role="primary-suggestion"]').datepicker({
       nextText: "▶",
@@ -19,7 +18,6 @@ $(document).ready(function() {
       minute: 20,
       timezone: '',
       showTimezone: true,
-      addSliderAccess: true,
       timezoneList: [
         { value: 'UTC-11', label: '(-11h) Pago Pago, Alofi' },
         { value: 'UTC-10', label: '(-10h) Honolulu, Papeete' },
@@ -50,26 +48,29 @@ $(document).ready(function() {
     });
   };
 
-  datepicker();
+  if (!Modernizr.touch) {
+    datepicker();
+
+    // $.extend($.datepicker,{_checkOffset:function(inst,offset,isFixed){return offset}});
+    $.extend($.datepicker,{_checkOffset:function(inst,offset,isFixed){
+      var dpHeight = inst.dpDiv.outerHeight();
+      var inputHeight = inst.input ? inst.input.outerHeight() : 0;
+
+      offset.top -= dpHeight + inputHeight + 10;
+      offset.left -= (window.innerWidth < 430 ? 20 : 0);
+      return offset;
+    }});
+  }
 
   var forms = $('form[id*=new_event], form[id*="edit_event"]');
   forms.find('div.nested-fields input').removeAttr('maxlength');
   forms.find('div.nested-fields.primary').addClass('animated');
 
 
-  // $.extend($.datepicker,{_checkOffset:function(inst,offset,isFixed){return offset}});
-  $.extend($.datepicker,{_checkOffset:function(inst,offset,isFixed){
-    var dpHeight = inst.dpDiv.outerHeight();
-    var inputHeight = inst.input ? inst.input.outerHeight() : 0;
-
-    offset.top -= dpHeight + inputHeight + 10;
-    offset.left -= (window.innerWidth < 430 ? 20 : 0);
-    return offset;
-  }});
-
-
   forms.bind('insertion-callback', function(){
-    datepicker();
+    if (!Modernizr.touch) {
+      datepicker();
+    }
 
     // Animate new nodes
     var lastNode =  forms.find('div.nested-fields.primary:last');
