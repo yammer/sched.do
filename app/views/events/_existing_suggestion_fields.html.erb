@@ -7,5 +7,9 @@
     <%= f.input :secondary, as: :time_picker, label: false, placeholder: "Time",
           input_html: { 'data-role' => 'secondary-suggestion' } %>
     <%= link_to_remove_association 'Remove Suggestion', f, tabindex: '-1' %>
+    <%= link_to_add_association 'Add Another Time', f.parent_builder, :suggestions,
+          partial: 'secondary_suggestion_fields',
+          'data-association-insertion-node' => 'this',
+          'data-association-insertion-method' => :before %>
   </div>
 </div>

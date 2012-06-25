@@ -13,16 +13,15 @@ class EventsController < ApplicationController
   end
 
   def create
-    event = current_user.events.new(params[:event])
-    event.suggestions = event.suggestions.select(&:valid?)
+    @event = current_user.events.new(params[:event])
+    @event.suggestions = @event.suggestions.select(&:valid?)
 
-    if event.save
+    if @event.save
       flash[:success] = "Event successfully created."
-      redirect_to event
+      redirect_to @event
     else
       flash[:error] = "Please complete all required fields."
-      @event = current_user.events.new(params[:event])
-      @suggestions = event.suggestions
+      @suggestions = @event.suggestions.empty? ? populate_suggestions_for(@event) : @event.suggestions
       render :new
     end
   end

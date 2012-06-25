@@ -1,3 +1,10 @@
+GIT
+  remote: git://github.com/jsteiner/cocoon.git
+  revision: 72d51f6b6e4e5a133ca9061cf08e44410476ce9a
+  branch: nested-add-fields-links
+  specs:
+    cocoon (1.0.20)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -51,7 +58,6 @@ GEM
     childprocess (0.3.2)
       ffi (~> 1.0.6)
     cocaine (0.2.1)
-    cocoon (1.0.20)
     coderay (1.0.5)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
@@ -246,7 +252,7 @@ DEPENDENCIES
   bourne
   bundler (>= 1.2.0.pre)
   capybara-webkit (~> 0.12.0)
-  cocoon (= 1.0.20)
+  cocoon!
   coffee-rails (~> 3.2.1)
   database_cleaner
   email_spec
