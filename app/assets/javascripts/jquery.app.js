@@ -64,16 +64,15 @@ $(document).ready(function() {
   }});
 
   var forms = $('form[id*=new_event], form[id*="edit_event"]');
+  forms.find('div.nested-fields.primary').addClass('animated');
 
   forms.bind('insertion-callback', function(){
     datepicker();
 
     // Animate new nodes
-    var lastNode =  forms.find('div.nested-fields:last');
+    var lastNode =  forms.find('div.nested-fields.primary:last');
     lastNode.addClass('animated');
 
-    // Focus new nodes
-    // lastNode.find('input').delay(1000).queue(function() { $(this).focus(); })
   });
 
 });
