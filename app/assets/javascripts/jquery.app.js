@@ -5,7 +5,7 @@ $(document).ready(function() {
     $('input[data-role="primary-suggestion"]').datepicker({
       nextText: "▶",
       prevText: "◀",
-      dateFormat: 'D, dd M yy',
+      dateFormat: 'D, M dd yy',
       constrainInput: false,
     });
 
@@ -14,8 +14,8 @@ $(document).ready(function() {
       constrainInput: false,
       ampm: true,
       stepMinute: 10,
-      hour: 9,
-      minute: 20,
+      hour: 0,
+      minute: 0,
       timezone: '',
       showTimezone: true,
       timezoneList: [
