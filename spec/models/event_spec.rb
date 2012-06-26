@@ -34,7 +34,7 @@ describe Event, '#invitees' do
     event.invitees.should == invitees
   end
 
-  it 'returns just the event creator if there are no invitees' do
+  it 'returns only the event creator if there are no invitees' do
     event = build(:event)
     event.invitees.should == [event.user]
   end
