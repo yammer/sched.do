@@ -1,9 +1,6 @@
 <div class="guest-sign-in">
-  <div class="sign-in">
-    <%= link_to "Sign in with Yammer", "/auth/yammer", class: "sign-in",  id: "sign-in" %>
-  </div>
-
-  <p>or enter your name and email to begin voting</p>
+  <%= link_to "Sign in with Yammer", "/auth/yammer", class: "sign-in",  id: "sign-in" %>
+  <p class="sign-in-tip">&hellip;or enter your name and email to vote</p>
 
   <%= semantic_form_for @guest do |f| %>
     <%= f.inputs do %>

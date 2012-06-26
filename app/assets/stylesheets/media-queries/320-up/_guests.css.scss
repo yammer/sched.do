@@ -1,4 +1,10 @@
 div.guest-sign-in {
   max-width: $max-width/3;
   padding: 30px;
+
+  a.sign-in {
+    padding: 0.8em 0 0.8em 1.1em;
+    font-size: 1.2em;
+    background-position: 40px center, 0 0;
+  }
 }
