@@ -16,6 +16,25 @@ module EventCreation
       @fields = []
     end
 
+    def fill_in_fields
+      add_fields_for_suggestions
+      @suggestions.keys.each_with_index do |key, index|
+        if @suggestions[key].kind_of?(Array)
+          @fields[index].fill_in_primary_suggestion(key)
+          @fields[index].fill_in_secondary_suggestions(@suggestions[key])
+        else
+          @fields[index].fill_in_primary_suggestion(key)
+        end
+        @fields[index].wait_for_primary_fields_to_update
+      end
+    end
+
+    private
+
+    def find_suggestion_fields
+      @fields = @page.all('.nested-fields.primary').map { |section| NestedFieldsSection.new(section) }
+    end
+
     def hashify_suggestions(suggestions)
       @suggestions = {}
       Array.wrap(suggestions).each do |suggestion|
@@ -27,23 +46,6 @@ module EventCreation
         else
           @suggestions[suggestion] = []
         end
-      end
-    end
-
-    def find_suggestion_fields
-      @fields = @page.all('.nested-fields.primary').map { |section| NestedFieldsSection.new(section) }
-    end
-
-    def fill_in_fields
-      add_fields_for_suggestions
-      @suggestions.keys.each_with_index do |key, index|
-        if @suggestions[key].kind_of?(Array)
-          @fields[index].fill_in_primary_suggestion(key)
-          @fields[index].fill_in_secondary_suggestions(@suggestions[key])
-        else
-          @fields[index].fill_in_primary_suggestion(key)
-        end
-        @fields[index].wait_for_primary_fields_to_update
       end
     end
 
@@ -81,28 +83,8 @@ module EventCreation
       secondary_fields.size
     end
 
-    def primary_field
-      @section.find("[data-role='primary-suggestion']")
-    end
-
-    def primary_fields
-      @section.all("[data-role='primary-suggestion']", visible: false)
-    end
-
-    def secondary_fields
-      @section.all("[data-role='secondary-suggestion']")
-    end
-
     def fill_in_primary_suggestion(suggestion)
       primary_field.set(suggestion)
-    end
-
-    def wait_for_primary_fields_to_update
-      primary_fields.each do |field|
-        Capybara.wait_until(10) do
-          field.value == primary_field.value
-        end
-      end
     end
 
     def fill_in_secondary_suggestions(suggestions)
@@ -113,6 +95,28 @@ module EventCreation
 
     def add_secondary_field
       @section.find('.add_fields').click
+    end
+
+    def wait_for_primary_fields_to_update
+      primary_fields.each do |field|
+        Capybara.wait_until(10) do
+          field.value == primary_field.value
+        end
+      end
+    end
+
+    private
+
+    def primary_fields
+      @section.all("[data-role='primary-suggestion']", visible: false)
+    end
+
+    def primary_field
+      @section.find("[data-role='primary-suggestion']")
+    end
+
+    def secondary_fields
+      @section.all("[data-role='secondary-suggestion']")
     end
   end
 end
