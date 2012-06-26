@@ -39,6 +39,7 @@ module EventCreation
         else
           @fields[index].fill_in_primary_suggestion(key)
         end
+        @fields[index].wait_for_primary_fields_to_update
       end
     end
 
@@ -73,7 +74,7 @@ module EventCreation
     end
 
     def size
-      secondary_fields.size || 0
+      secondary_fields.size
     end
 
     def primary_field
@@ -92,6 +93,10 @@ module EventCreation
       primary_field.set(suggestion)
     end
 
+    def wait_for_primary_fields_to_update
+      sleep(1)
+    end
+
     def fill_in_secondary_suggestions(suggestions)
       secondary_fields.each_with_index do |field, index|
         field.set(suggestions[index])
@@ -100,9 +105,6 @@ module EventCreation
 
     def add_secondary_field
       @section.find('.add_fields').click
-      Capybara::wait_until do
-        primary_fields.last.value.should == primary_fields.first.value
-      end
     end
   end
 end
