@@ -5,7 +5,7 @@ describe Event do
   it { should have_many(:suggestions) }
   it { should have_many(:invitations) }
 
-  it { should validate_presence_of(:name) }
+  it { should validate_presence_of(:name).with_message(/This field is required/) }
   it { should validate_presence_of(:user_id) }
 
   it { should allow_mass_assignment_of(:suggestion) }

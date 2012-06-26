@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Suggestion do
-  it { should validate_presence_of(:primary) }
+  it { should validate_presence_of(:primary).with_message(/This field is required/) }
 
   it { should belong_to :event }
   it { should have_many(:votes).dependent(:destroy) }

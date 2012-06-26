@@ -86,7 +86,7 @@ module EventCreation
     end
 
     def primary_fields
-      @section.all("[data-role='primary-suggestion']")
+      @section.all("[data-role='primary-suggestion']", visible: false)
     end
 
     def secondary_fields
@@ -98,7 +98,11 @@ module EventCreation
     end
 
     def wait_for_primary_fields_to_update
-      sleep(1)
+      primary_fields.each do |field|
+        Capybara.wait_until(10) do
+          field.value == primary_field.value
+        end
+      end
     end
 
     def fill_in_secondary_suggestions(suggestions)
