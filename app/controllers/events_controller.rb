@@ -21,7 +21,7 @@ class EventsController < ApplicationController
       redirect_to @event
     else
       flash[:error] = "Please complete all required fields."
-      @suggestions = @event.suggestions.empty? ? populate_suggestions_for(@event) : @event.suggestions
+      @suggestions = populate_suggestions_for(@event)
       render :new
     end
   end
@@ -55,7 +55,9 @@ class EventsController < ApplicationController
   private
 
   def populate_suggestions_for(event)
-    2.times { event.suggestions.build }
+    if event.suggestions.empty?
+      2.times { event.suggestions.build }
+    end
     event.suggestions
   end
 

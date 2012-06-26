@@ -11,6 +11,12 @@ module EventCreation
 
   class SuggestionManager
     def initialize(suggestions, page)
+      hashify_suggestions(suggestions)
+      @page = page
+      @fields = []
+    end
+
+    def hashify_suggestions(suggestions)
       @suggestions = {}
       Array.wrap(suggestions).each do |suggestion|
         if suggestion.kind_of?(Array)
@@ -22,8 +28,6 @@ module EventCreation
           @suggestions[suggestion] = []
         end
       end
-      @page = page
-      @fields = []
     end
 
     def find_suggestion_fields
@@ -46,15 +50,14 @@ module EventCreation
     def add_fields_for_suggestions
       find_suggestion_fields
       add_primary_suggestion_fields
-      find_suggestion_fields
       add_secondary_suggestion_fields
-      find_suggestion_fields
     end
 
     def add_primary_suggestion_fields
       (@suggestions.size - @fields.size).times do
         @page.click_link 'Add Another Day'
       end
+      find_suggestion_fields
     end
 
     def add_secondary_suggestion_fields
@@ -63,6 +66,7 @@ module EventCreation
           @fields[index].add_secondary_field
         end
       end
+      find_suggestion_fields
     end
   end
 

@@ -51,7 +51,6 @@ $(document).ready(function() {
   if (!Modernizr.touch) {
     datepicker();
 
-    // $.extend($.datepicker,{_checkOffset:function(inst,offset,isFixed){return offset}});
     $.extend($.datepicker,{_checkOffset:function(inst,offset,isFixed){
       var dpHeight = inst.dpDiv.outerHeight();
       var inputHeight = inst.input ? inst.input.outerHeight() : 0;
@@ -76,8 +75,34 @@ $(document).ready(function() {
     var lastNode =  forms.find('div.nested-fields.primary:last');
     lastNode.addClass('animated');
 
-    // Remove maxlenght attribute from date & time pickers
-    forms.find('div.nested-fields input').removeAttr('maxlength');
+    $dateTimePickers = forms.find('div.nested-fields input')
+    $dateTimePickers.removeAttr('maxlength');
   });
 
+  bind_to_new_time_fields();
+  bind_to_changed_primary_fields();
+
+  $('#new_event ol').bind("insertion-callback", function() {
+    bind_to_new_time_fields();
+    bind_to_changed_primary_fields();
+  });
+
+  function bind_to_new_time_fields() {
+    $('.nested-fields.primary').bind("insertion-callback", function() {
+      var primary_suggestions = $(this).find("[data-role='primary-suggestion']");
+      var primary_suggestion_value = primary_suggestions.first().val();
+      primary_suggestions.last().val(primary_suggestion_value);
+    });
+  }
+
+  function bind_to_changed_primary_fields() {
+    $("[data-role='primary-suggestion']").change(function() {
+      var primary_suggestions = $(this).parents('.nested-fields.primary')
+        .first().find("[data-role='primary-suggestion']");
+      var primary_suggestion_value = primary_suggestions.first().val();
+      primary_suggestions.each(function(index) {
+        $(this).val(primary_suggestion_value);
+      });
+    });
+  }
 });
