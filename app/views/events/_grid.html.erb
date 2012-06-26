@@ -4,7 +4,10 @@
       <tbody>
         <tr>
           <% @suggestions.each do |suggestion| %>
-            <th><%= suggestion.description %></th>
+            <th>
+              <%= suggestion.primary %>
+              <%= suggestion.secondary %>
+            </th>
           <% end %>
         </tr>
 
