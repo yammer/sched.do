@@ -5,7 +5,7 @@ class Event < ActiveRecord::Base
   has_many :suggestions
   has_many :invitations
 
-  validates :name, presence: true
+  validates :name, presence: { message: 'This field is required' }
   validates :user_id, presence: true
 
   accepts_nested_attributes_for :suggestions, reject_if: :all_blank,

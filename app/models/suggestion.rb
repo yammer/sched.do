@@ -1,5 +1,5 @@
 class Suggestion < ActiveRecord::Base
-  validates :primary, presence: true
+  validates :primary, presence: { message: 'This field is required' }
 
   attr_accessible :primary, :secondary, :event
 
