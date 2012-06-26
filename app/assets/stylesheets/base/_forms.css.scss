@@ -94,6 +94,7 @@ form {
       &.error {
         #{$all-text-inputs} {
           @include background-image(linear-gradient(darken($bg-color, 2%), lighten($bg-color, 2%)));
+          @include box-shadow(inset 0 2px 0px darken($bg-color, 5%));
         }
 
         p.inline-errors {
