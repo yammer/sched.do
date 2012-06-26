@@ -5,6 +5,10 @@ Feature: User can create an event
     When I create an event named "Clown party" with a suggestion of "lunch"
     Then I should see an event named "Clown party" with a suggestion of "lunch"
 
+  # This spec will occasionally fail, and I don't know why! This is somehow
+  # related to Capybara and the javascript sometimes not being executed.
+  # The issue lies in, or around the following, which does not seem to be waiting.
+  # EventCreation::NestedFieldsSection#wait_for_primary_fields_to_update
   @javascript
   Scenario: User creates event with multiple suggestions
     Given I am signed in
