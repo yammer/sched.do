@@ -16,6 +16,13 @@ form {
       border-color: lighten($orange, 30%) ;
       background: lighten($orange, 37%);
     }
+
+    & > ol > input {
+      margin-bottom: 12px;
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
   }
 
   button,

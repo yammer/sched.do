@@ -1,15 +1,17 @@
-<div class="sign-in">
-  <%= link_to "Sign in with Yammer", "/auth/yammer", class: "sign-in",  id: "sign-in" %>
+<div class="guest-sign-in">
+  <div class="sign-in">
+    <%= link_to "Sign in with Yammer", "/auth/yammer", class: "sign-in",  id: "sign-in" %>
+  </div>
+
+  <p>or enter your name and email to begin voting</p>
+
+  <%= semantic_form_for @guest do |f| %>
+    <%= f.inputs do %>
+      <%= f.text_field :name, label: false, placeholder: 'Name' %>
+      <%= f.text_field :email, label: false, placeholder: 'Email' %>
+    <% end %>
+    <%= f.actions do %>
+      <%= f.action :submit, label: 'Begin Voting', button_html: { class: "cta" } %>
+    <% end %>
+  <% end %>
 </div>
-
-<p>or enter your name and email to begin voting</p>
-
-<%= semantic_form_for @guest do |f| %>
-  <%= f.inputs do %>
-    <%= f.text_field :name, label: false, placeholder: 'Name' %>
-    <%= f.text_field :email, label: false, placeholder: 'Email' %>
-  <% end %>
-  <%= f.actions do %>
-    <%= f.action :submit, label: 'Begin Voting', button_html: { class: "cta" } %>
-  <% end %>
-<% end %>
