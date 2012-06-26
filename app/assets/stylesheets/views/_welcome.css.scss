@@ -38,12 +38,13 @@ body.welcome {
 
         &.sign-in {
           @extend .button;
-          @extend .orange-button;
+          @extend .yammer-button;
           margin: 40px auto 20px auto;
-          font-size: 1.6em;
-          padding: 1em;
+          font-family: Helvetica, Arial, sans-serif;
+          font-size: 1.2em;
+          line-height: 1.5em;
           letter-spacing: 0.05em;
-          font-weight: bold;
+          background-size: 10%, 100%;
         }
       }
     }

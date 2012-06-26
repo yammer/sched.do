@@ -1,6 +1,7 @@
 body.welcome {
 
-  div.logo {
+  div.welcome  {
+    div.logo {
 
       h1 {
         img {
@@ -13,11 +14,13 @@ body.welcome {
     div.sign-in {
       a {
         &.sign-in {
-          margin: 0 auto;
           width: 350px;
+          font-size: 1.5em;
+          // background-size: 100%;
         }
       }
     }
+  }
 
   section.steps {
     ul {
