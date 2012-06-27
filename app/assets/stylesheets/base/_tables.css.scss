@@ -47,13 +47,7 @@ div.table-wrapper {
           }
 
           &.total {
-            td {
-              color: #fff;
-              @include background-image(linear-gradient(darken($bg-color, 38%), darken($bg-color, 60%)));
-              @include box-shadow(inset 0 1px 0 darken($bg-color, 20%));
-              border-top: 1px solid darken($bg-color, 40%);
-              text-shadow: 0 -1px 0 darken($bg-color, 60%);
-            }
+            @extend .invitee;
           }
 
           &:last-child {
@@ -215,18 +209,14 @@ div.table-wrapper {
           tr {
             border: 0;
             td {
-              color: darken($bg-color, 60%);
-              @include background-image(linear-gradient(darken($bg-color, 8%), darken($bg-color, 15%)));
-              @include box-shadow(inset 0 1px 0 darken($bg-color, 4%));
-              border-top: 1px solid darken($bg-color, 30%);
-              text-shadow: 0 1px 0 darken($bg-color, 1%);
+              color: $blue;
+              @include background-image(linear-gradient(#fff, darken($bg-color, 2%)));
+              @include box-shadow(inset 0 1px 0 #fff);
               text-align: center;
-              font-weight: bold;
               font-family: $bariol;
 
               &:nth-child(even) {
-              @include background-image(linear-gradient(darken($bg-color, 12%), darken($bg-color, 18%)));
-              @include box-shadow(inset 0 1px 0 darken($bg-color, 7%));
+                @include background-image(linear-gradient($bg-color, darken($bg-color, 6%)));
               }
             }
           }
