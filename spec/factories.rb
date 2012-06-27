@@ -11,7 +11,8 @@ FactoryGirl.define do
   end
 
   factory :guest do
-    initialize_with { new(name: 'Bruce Wayne', email: generate(:email)) }
+    name 'Bruce Wayne'
+    email
   end
 
   factory :event do
@@ -39,8 +40,7 @@ FactoryGirl.define do
   end
 
   factory :guest_vote do
-    name 'Bruce Wayne'
-    email
+    guest
   end
 
   factory :suggestion do

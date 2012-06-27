@@ -1,8 +1,7 @@
 class GuestVote < ActiveRecord::Base
-  attr_accessible :name, :email
+  belongs_to :guest
 
   has_one :vote, as: :votable
 
-  validates :name, presence: true
-  validates :email, presence: true
+  validates :guest_id, presence: true
 end
