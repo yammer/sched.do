@@ -10,11 +10,11 @@ class CreateGuests < ActiveRecord::Migration
 
     select_all("SELECT id, email, name FROM guest_votes").each do |row|
       guest_id = insert("INSERT INTO guests(name, email, created_at, updated_at) \
-                         VALUES ('#{row['name']}', '#{row['email']}', '#{Time.now}', '#{Time.now}')")
+                         VALUES (#{connection.quote(row['name'])}, #{connection.quote(row['email'])}, #{connection.quote(Time.now)}, #{connection.quote(Time.now)})")
       update("UPDATE guest_votes SET guest_id = #{guest_id} WHERE id = #{row['id']}")
     end
 
-    change_column :guest_votes, :guest_id, :integer, null: false
+    change_column_null :guest_votes, :guest_id, :integer, true
 
     remove_column :guest_votes, :name
     remove_column :guest_votes, :email
@@ -25,11 +25,11 @@ class CreateGuests < ActiveRecord::Migration
     add_column :guest_votes, :email, :string
 
     select_all("SELECT id, name, email FROM guests").each do |row|
-      update("UPDATE guest_votes SET name = '#{row['name']}', email = '#{row['email']}' WHERE guest_id = #{row['id']}")
+      update("UPDATE guest_votes SET name = #{connection.quote(row['name'])}, email = #{connection.quote(row['email'])} WHERE guest_id = #{row['id']}")
     end
 
     change_column :guest_votes, :name, :string
-    change_column :guest_votes, :email, :string, null: false
+    change_column_null :guest_votes, :email, :string, true
 
     remove_column :guest_votes, :guest_id
 
