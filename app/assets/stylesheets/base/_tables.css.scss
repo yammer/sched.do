@@ -76,11 +76,100 @@ div.table-wrapper {
       table {
         @include box-shadow(0 0 20px darken($bg-color, 15%));
 
+        th {
+          @include background-image(linear-gradient(#fff, darken($bg-color, 2%)));
+          border-bottom: 1px solid darken($bg-color, 20%);
+          border-right:1px solid darken($bg-color, 20%);
+          height: 2.6em;
+          text-shadow: 0 1px 0 #fff;
+          font-family: $bariol;
+          line-height: 1.3em;
+          text-align: center;
+
+          &:last-child {
+            border-right: 0;
+          }
+
+          &:nth-child(even) {
+            @include background-image(linear-gradient($bg-color, darken($bg-color, 6%)));
+          }
+
+          span.secondary {
+            font-weight: normal;
+            display: block;
+          }
+        }
+
         tr {
           border-bottom:1px solid darken($bg-color, 20%) ;
 
           &:last-child {
             border:0;
+          }
+
+          &.votable {
+            td {
+              form.vote {
+                li.action {
+                  list-style: none;
+                  position: relative;
+
+                  input[type="submit"] {
+                    padding: 1.2em;
+                    @include box-sizing(border-box);
+                    @include box-shadow(none);
+                    @include border-radius(0);
+                    border: 0;
+                    height: 100%;
+                    text-indent: -9999px;
+                    overflow: hidden;
+                    @include transition(none);
+
+                    &.vote {
+                      background: rgba(231, 244, 247, 0.3);
+                      background-image: url('/images/checkmark-dimmed.png');
+                      background-position: center 10px;
+                      background-repeat: no-repeat;
+                      background-size: 32px;
+                      @include box-shadow(inset 0px -1px 0 darken($bg-color, 20%));
+                    }
+
+                    &.unvote {
+                      background-size: 32px;
+                      background: darken($success, 25%);
+                      background-image: url('/images/checkmark.png');
+                      background-repeat: no-repeat;
+                      background-position: center 10px;
+                    }
+                  }
+                }
+              }
+
+              &:hover {
+                form.vote {
+                  li.action {
+
+                    input[type="submit"] {
+                      &.vote {
+                        background: $orange;
+                        background-image: url('/images/checkmark.png');
+                        @include box-shadow(inset 0 1px 2px darken($orange, 10%));
+                        background-repeat: no-repeat;
+                        background-position: center 10px;
+                      }
+
+                      &.unvote {
+                        background: saturate(darken($failure, 30%), 20%);
+                        background-image: url('/images/cross.png');
+                        @include box-shadow(inset 0 1px 2px darken($orange, 10%));
+                        background-repeat: no-repeat;
+                        background-position: center 12px;
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
 
@@ -107,23 +196,6 @@ div.table-wrapper {
 
           img {
             margin: 0;
-          }
-        }
-
-        th {
-          @include background-image(linear-gradient(#fff, darken($bg-color, 2%)));
-          border-bottom: 1px solid darken($bg-color, 20%);
-          border-right:1px solid darken($bg-color, 20%);
-          height: 2.6em;
-          text-shadow: 0 1px 0 #fff;
-          font-family: $bariol;
-
-          &:last-child {
-            border: 0;
-          }
-
-          &:nth-child(even) {
-            @include background-image(linear-gradient($bg-color, darken($bg-color, 6%)));
           }
         }
       }

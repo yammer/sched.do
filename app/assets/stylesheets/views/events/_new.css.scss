@@ -99,18 +99,16 @@ div.new-event {
       @include box-shadow(inset 0 1px 0 lighten($orange, 30%), 0 1px 4px darken($bg-color, 20%));
       color: #fff;
       font-size: 0.9em;
-      overflow: hidden;
       outline: none;
       padding: 2px 3px;
       position: absolute;
       right: -10px;
       text-decoration: none;
-      text-indent: 150%;
       text-shadow: 0 -1px 0 darken($orange, 20%);
       top:-10px;
       vertical-align: bottom;
-      white-space: nowrap;
       width: 16px;
+      @include no-text;
 
       &:hover {
         @include background-image(url('/images/delete-icon.svg'),linear-gradient(lighten($orange, 10%), darken($orange, 5%)));

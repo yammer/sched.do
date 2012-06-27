@@ -11,10 +11,4 @@
     Share this link with your friends to have them vote on it:
     <%= link_to event_url(@event), event_url(@event) %>
   </p>
-  <ul class="suggestions">
-    <% @suggestions.each do |suggestion| %>
-      <%= render partial: 'suggestion', object: suggestion,
-            locals: { vote_for_suggestion: current_user.vote_for_suggestion(suggestion) } %>
-      <% end %>
-    </ul>
 </div>

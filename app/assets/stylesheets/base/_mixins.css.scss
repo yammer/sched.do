@@ -43,3 +43,9 @@
   -ms-user-select: $argument;
   user-select: $argument;
 }
+
+@mixin no-text {
+  text-indent: 160%;
+  white-space: nowrap;
+  overflow: hidden;
+}

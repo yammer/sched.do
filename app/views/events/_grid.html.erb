@@ -6,14 +6,20 @@
           <% @suggestions.each do |suggestion| %>
             <th data-id="<%= suggestion.id %>">
               <%= suggestion.primary %>
-              <%= suggestion.secondary %>
+              <span class="secondary">
+                <%= suggestion.secondary %>
+              </span>
             </th>
           <% end %>
         </tr>
       </thead>
       <tbody>
         <% @event.invitees.each do |invitee| %>
-          <tr>
+          <% if current_user == invitee %>
+            <tr class="votable">
+          <% else %>
+            <tr>
+          <% end %>
             <% @suggestions.each do |suggestion| %>
               <% if current_user == invitee %>
                 <%= render 'vote', suggestion: suggestion,
