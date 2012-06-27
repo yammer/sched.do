@@ -14,7 +14,7 @@ class CreateGuests < ActiveRecord::Migration
       update("UPDATE guest_votes SET guest_id = #{guest_id} WHERE id = #{row['id']}")
     end
 
-    change_column_null :guest_votes, :guest_id, :integer, true
+    change_column_null :guest_votes, :guest_id, :integer, false
 
     remove_column :guest_votes, :name
     remove_column :guest_votes, :email
@@ -29,7 +29,7 @@ class CreateGuests < ActiveRecord::Migration
     end
 
     change_column :guest_votes, :name, :string
-    change_column_null :guest_votes, :email, :string, true
+    change_column_null :guest_votes, :email, :string, false
 
     remove_column :guest_votes, :guest_id
 
