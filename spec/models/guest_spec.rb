@@ -32,7 +32,7 @@ describe Guest, '#votes' do
   end
 
   it "returns an empty array if the guest has no votes" do
-    guest = create(:guest)
+    guest = build(:guest)
     guest.votes.should == []
   end
 end
@@ -47,7 +47,7 @@ describe Guest, '#vote_for_suggestion' do
   end
 
   it 'returns nil if the guest has not voted on the suggestion' do
-    guest = create(:guest)
+    guest = build(:guest)
     suggestion = create(:suggestion)
     guest.vote_for_suggestion(suggestion).should be_nil
   end

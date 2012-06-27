@@ -21,9 +21,9 @@ class CurrentUser
 
   def guest
     if @name && @email
-      guest = Guest.find_or_create_by_email(@email)
-      guest.update_attributes(name: @name)
-      guest
+      Guest.find_or_create_by_email(@email).tap do |guest|
+        guest.update_attributes(name: @name)
+      end
     end
   end
 
