@@ -15,6 +15,7 @@ table {
     border: 0;
   }
 }
+
 div.table-wrapper {
   position: relative;
   margin: 20px 0;
@@ -37,6 +38,23 @@ div.table-wrapper {
           border-bottom: 1px solid darken($bg-color, 20%);
           @include background-image(linear-gradient(#fff, $bg-color));
           text-shadow: 0 1px 0 #fff;
+
+          &.invitee {
+            @include background-image(linear-gradient($bg-color, darken($bg-color, 6%)));
+            td {
+              color: darken($bg-color, 50%);
+            }
+          }
+
+          &.total {
+            td {
+              color: #fff;
+              @include background-image(linear-gradient(darken($bg-color, 38%), darken($bg-color, 60%)));
+              @include box-shadow(inset 0 1px 0 darken($bg-color, 20%));
+              border-top: 1px solid darken($bg-color, 40%);
+              text-shadow: 0 -1px 0 darken($bg-color, 60%);
+            }
+          }
 
           &:last-child {
             border-bottom: 0;
@@ -103,10 +121,6 @@ div.table-wrapper {
         tr {
           border-bottom:1px solid darken($bg-color, 20%) ;
 
-          &:last-child {
-            border:0;
-          }
-
           &.votable {
             td {
               form.vote {
@@ -115,12 +129,12 @@ div.table-wrapper {
                   position: relative;
 
                   input[type="submit"] {
-                    padding: 1.2em;
+                    // padding: 1.2em;
                     @include box-sizing(border-box);
                     @include box-shadow(none);
                     @include border-radius(0);
                     border: 0;
-                    height: 100%;
+                    height: 3.45em;
                     text-indent: -9999px;
                     overflow: hidden;
                     @include transition(none);
@@ -131,7 +145,6 @@ div.table-wrapper {
                       background-position: center 10px;
                       background-repeat: no-repeat;
                       background-size: 32px;
-                      @include box-shadow(inset 0px -1px 0 darken($bg-color, 20%));
                     }
 
                     &.unvote {
@@ -151,9 +164,8 @@ div.table-wrapper {
 
                     input[type="submit"] {
                       &.vote {
-                        background: $orange;
+                        background: lighten($blue, 10%);
                         background-image: url('/images/checkmark.png');
-                        @include box-shadow(inset 0 1px 2px darken($orange, 10%));
                         background-repeat: no-repeat;
                         background-position: center 10px;
                       }
@@ -196,6 +208,27 @@ div.table-wrapper {
 
           img {
             margin: 0;
+          }
+        }
+
+        tfoot {
+          tr {
+            border: 0;
+            td {
+              color: darken($bg-color, 60%);
+              @include background-image(linear-gradient(darken($bg-color, 8%), darken($bg-color, 15%)));
+              @include box-shadow(inset 0 1px 0 darken($bg-color, 4%));
+              border-top: 1px solid darken($bg-color, 30%);
+              text-shadow: 0 1px 0 darken($bg-color, 1%);
+              text-align: center;
+              font-weight: bold;
+              font-family: $bariol;
+
+              &:nth-child(even) {
+              @include background-image(linear-gradient(darken($bg-color, 12%), darken($bg-color, 18%)));
+              @include box-shadow(inset 0 1px 0 darken($bg-color, 7%));
+              }
+            }
           }
         }
       }

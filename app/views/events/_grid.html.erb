@@ -43,29 +43,30 @@
           <% @suggestions.each do |suggestion| %>
             <td class="vote-count" data-id="<%= suggestion.id %>">
               <%= suggestion.vote_count %>
-            </th>
+            </td>
           <% end %>
         </tr>
       </tfoot>
     </table>
   </div>
-  <%#
-  <div class="search-box">
-    <form id="auto-complete">
-      <input type="text" placeholder="+ Add participant&hellip;"/>
-    </form>
-  </div>
-  %>
+
   <div id="invitees">
     <table>
       <tbody>
         <% @event.invitees.each do |invitee| %>
-          <tr>
+          <% if current_user == invitee %>
+            <tr class="invitee">
+          <% else %>
+            <tr>
+          <% end %>
             <td>
               <%= invitee.name || invitee.email %>
             </td>
           </tr>
         <% end %>
+          <tr class="total">
+           <td>Total Votes</td>
+          </tr>
       </tbody>
     </table>
   </div>
