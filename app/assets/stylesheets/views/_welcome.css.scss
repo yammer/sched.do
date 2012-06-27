@@ -58,8 +58,7 @@ body.welcome {
         @include clearfix();
         display: block;
         visibility: hidden;
-        margin: 10px auto;
-        margin-bottom: 10px;
+        margin: 0 auto;
         min-height: 200px;
         vertical-align: middle;
       }
