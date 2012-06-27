@@ -45,7 +45,6 @@ body.welcome {
   }
 
   section.steps {
-    margin-top: 50px;
     width: 100%;
     @include box-sizing(border-box);
 
@@ -53,14 +52,36 @@ body.welcome {
       text-align: center;
 
       li {
-        border: 1px solid #000;
         @include border-radius(3px);
         @include clearfix();
         display: block;
+        font-family: $bariol;
+        vertical-align: middle;
         visibility: hidden;
         margin: 0 auto;
         min-height: 200px;
+        font-size: 3em;
         vertical-align: middle;
+        // padding-top: 150px;
+        @include box-sizing(border-box);
+
+        &.first-step {
+          background: $blue;
+          color: #fff;
+        }
+
+        &.second-step {
+        
+        }
+
+        &.third-step {
+          background: $orange;
+          color: #fff;
+        }
+
+        &.fourth-step {
+          
+        }
       }
     }
   }

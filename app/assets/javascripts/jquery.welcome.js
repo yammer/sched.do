@@ -35,8 +35,6 @@ var setMarginHeights = function() {
 
   steps.css({
     'height': headerMargin*0.6,
-    // 'margin-top': headerMargin*0.2,
-    // 'margin-bottom': headerMargin*0.2
   });
 
   $('section.steps li:last-child').css('margin-bottom', headerMargin);
