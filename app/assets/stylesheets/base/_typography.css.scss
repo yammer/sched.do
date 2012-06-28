@@ -20,6 +20,17 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'Bariol Light';
+    src: url('/fonts/bariol/bariol_light-webfont.eot');
+    src: url('/fonts/bariol/bariol_light-webfont.eot?#iefix') format('embedded-opentype'),
+         url('/fonts/bariol/bariol_light-webfont.woff') format('woff'),
+         url('/fonts/bariol/bariol_light-webfont.ttf') format('truetype'),
+         url('/fonts/bariol/bariol_light-webfont.svg#BariolRegularRegular') format('svg');
+    font-weight: bold;
+    font-style: normal;
+}
+
 
 h1, h2, h3, h4, h5 {
   color: darken($bg-color, 55%);

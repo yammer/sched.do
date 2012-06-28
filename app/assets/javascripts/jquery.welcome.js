@@ -11,7 +11,7 @@ $(document).ready(function() {
 
   // Shows a step after the user scrolls past the previous one
   steps.waypoint(function() {
-    $(this).next('li').css('visibility', 'visible');
+    $(this).next('li').css('visibility', 'visible').addClass('animated');
   }, {
     triggerOnce: 'true'
   });
@@ -26,7 +26,6 @@ $(window).resize(function() {
 var setMarginHeights = function() {
 
   var height = window.innerHeight;
-  var welcomeHeader = $('#js-welcome-header');
   var headerMargin = (window.innerHeight - welcomeHeader.height()) / 2;
 
   if (height > 480) {

@@ -48,6 +48,12 @@ body.welcome {
     width: 100%;
     @include box-sizing(border-box);
 
+    img {
+      display: inline-block;
+      margin: 0;
+      vertical-align: text-top;
+    }
+
     ul {
       text-align: center;
 
@@ -56,31 +62,60 @@ body.welcome {
         @include clearfix();
         display: block;
         font-family: $bariol;
-        vertical-align: middle;
         visibility: hidden;
         margin: 0 auto;
-        min-height: 200px;
+        min-height: 600px;
         font-size: 3em;
-        vertical-align: middle;
-        // padding-top: 150px;
         @include box-sizing(border-box);
+        padding: 70px 0;
+
+        img.illustration {
+          display: block;
+          @include clearfix();
+          margin: 50px auto 0;
+        }
 
         &.first-step {
-          background: $blue;
-          color: #fff;
+          color: $blue;
+          // visibility: visible;
+          @include animation(bounceInRight 1s 0 1);
         }
 
         &.second-step {
-        
+          background: #AFDCE2;
+          color: #fff;
+
+          div.title {
+            width: 100%;
+            background: #3E9391;
+            padding: 15px 0;
+            font-family: $bariol-light;
+          }
+
+          img.illustration {
+            margin-top: 90px;
+          }
+
+          &.animated {
+            @include animation(bounceInLeft 1s 0 1);
+          }
         }
 
         &.third-step {
-          background: $orange;
           color: #fff;
+          background: $blue;
+          &.animated {
+            @include animation(bounceInRight 1s 0 1);
+          }
         }
 
         &.fourth-step {
-          
+          margin-bottom: 200px;
+          background: $orange;
+          color: #fff;
+          &.animated {
+            @include animation(bounceInLeft 1s 0 1);
+          }
         }
       }
     }
