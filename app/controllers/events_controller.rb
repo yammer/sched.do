@@ -38,6 +38,7 @@ class EventsController < ApplicationController
 
   def update
     event = current_user.events.find(params[:id])
+    create_invitations_for_event(event)
     event.attributes = params[:event]
     event.invitations = event.invitations.select(&:valid?)
 
@@ -53,6 +54,19 @@ class EventsController < ApplicationController
   end
 
   private
+
+  def create_invitations_for_event(event)
+    if params[:event]
+      invitation_attributes = params[:event].delete(:invitations_attributes)
+      invitation_attributes.values.each do |invitation|
+        if invitation[:yammer_user_id].present?
+          User.invite(event, invitation)
+        else
+          Guest.invite(event, invitation[:name_or_email])
+        end
+      end
+    end
+  end
 
   def populate_suggestions_for(event)
     if event.suggestions.empty?

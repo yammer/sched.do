@@ -41,7 +41,7 @@
         <% @event.invitees.each do |invitee| %>
           <tr>
             <td>
-              <%= invitee.name %>
+              <%= invitee.name || invitee.email %>
             </td>
           </tr>
         <% end %>

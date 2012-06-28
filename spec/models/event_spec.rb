@@ -4,6 +4,9 @@ describe Event do
   it { should belong_to(:user) }
   it { should have_many(:suggestions) }
   it { should have_many(:invitations) }
+  it { should have_many(:users).through(:invitations) }
+  it { should have_many(:yammer_invitees).through(:invitations) }
+  it { should have_many(:guests).through(:invitations) }
 
   it { should validate_presence_of(:name).with_message(/This field is required/) }
   it { should validate_presence_of(:user_id) }
@@ -22,19 +25,17 @@ describe Event do
 end
 
 describe Event, '#invitees' do
-  it 'returns all users invited to the event' do
+  it 'returns the event creator and users, yammer_invitees, and guests invited to the event' do
     event = create(:event)
-    invitees = create_list(:invitation_with_user, 2, event: event).map(&:user)
+    invitees = [event.user]
+    invitees += create_list(:invitation_with_user, 2, event: event).map(&:invitee)
+    invitees += create_list(:invitation_with_yammer_invitee, 2, event: event).map(&:invitee)
+    invitees += create_list(:invitation_with_guest, 2, event: event).map(&:invitee)
     event.invitees.should == invitees
   end
 
-  it 'returns an empty array if there are no invitees' do
-    build(:event).invitees.should == []
-  end
-
-  it 'returns an empty array if none of the invitations have users' do
-    event = create(:event)
-    create_list(:invitation, 2, event: event)
-    event.invitees.should == []
+  it 'returns just the event creator if there are no invitees' do
+    event = build(:event)
+    event.invitees.should == [event.user]
   end
 end

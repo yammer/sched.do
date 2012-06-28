@@ -4,6 +4,9 @@ class Event < ActiveRecord::Base
   belongs_to :user
   has_many :suggestions
   has_many :invitations
+  has_many :users, through: :invitations, source: :invitee, source_type: 'User'
+  has_many :yammer_invitees, through: :invitations, source: :invitee, source_type: 'YammerInvitee'
+  has_many :guests, through: :invitations, source: :invitee, source_type: 'Guest'
 
   validates :name, presence: { message: 'This field is required' }
   validates :user_id, presence: true
@@ -13,6 +16,6 @@ class Event < ActiveRecord::Base
   accepts_nested_attributes_for :invitations
 
   def invitees
-    User.find(invitations.pluck(:user_id).compact)
+    [user] + users + yammer_invitees + guests
   end
 end

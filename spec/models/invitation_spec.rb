@@ -2,40 +2,43 @@ require 'spec_helper'
 
 describe Invitation do
   it { should belong_to(:event) }
-  it { should belong_to(:user) }
+  it { should belong_to(:invitee) }
 
-  it { should allow_mass_assignment_of(:event_id) }
-  it { should allow_mass_assignment_of(:name) }
-  it { should allow_mass_assignment_of(:yammer_user_id) }
+  it { should accept_nested_attributes_for :invitee }
+
+  it { should allow_mass_assignment_of(:event) }
+  it { should allow_mass_assignment_of(:invitee) }
 
   it { should validate_presence_of(:event_id) }
-  it { should validate_presence_of(:name) }
+  it { should validate_presence_of(:invitee_id) }
+  it { should validate_presence_of(:invitee_type) }
 end
 
-
-describe Invitation, 'yammer_user_id' do
-  it 'has an attr_accessor' do
-    invitation = Invitation.new
-    invitation.yammer_user_id = '123'
-    invitation.yammer_user_id.should == '123'
+describe Invitation, '#name_or_email' do
+  it 'returns a name if the invitee has one' do
+    invitation = build(:invitation_with_user)
+    invitation.name_or_email.should == invitation.invitee.name
   end
 
-  it "uses the associated user's yammer_user_id if available" do
-    user = create(:user)
-    invitation = create(:invitation, user: user)
-    invitation.yammer_user_id.should == user.yammer_user_id
+  it 'returns an email if the invitee has no name' do
+    invitation = build(:invitation_with_guest)
+    invitation.name_or_email.should == invitation.invitee.email
+  end
+
+  it 'returns nil if there is no invitee' do
+    invitation = build(:invitation)
+    invitation.name_or_email.should == nil
   end
 end
 
-describe Invitation, 'before_save' do
-  it 'sets the user based on yammer_user_id' do
-    user = create(:user)
-    invitation = create(:invitation, yammer_user_id: user.yammer_user_id)
-    invitation.reload.user.should == user
+describe Invitation, '#yammer_user_id' do
+  it 'should return the yammer_user_id if the invitee has one' do
+    invitation = build(:invitation_with_user)
+    invitation.yammer_user_id.should == invitation.invitee.yammer_user_id
   end
 
-  it 'does not set the user if it cannot be found by yammer_user_id' do
-    invitation = create(:invitation, yammer_user_id: nil)
-    invitation.reload.user.should be_nil
+  it 'should return nil if the invitee has none' do
+    invitation = build(:invitation_with_guest)
+    invitation.yammer_user_id.should == nil
   end
 end

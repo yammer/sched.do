@@ -2,6 +2,38 @@ require 'spec_helper'
 
 describe Guest, 'validations' do
   it { should validate_presence_of(:email) }
+  it { should have_many(:guest_votes) }
+  it { should have_many(:votes).through(:guest_votes) }
+  it { should have_many(:invitations) }
+end
+
+describe Guest, '.invite' do
+  it 'creates a new invitation if the email does not have one' do
+    event = create(:event)
+    invitation = Guest.invite(event, 'something@example.com')
+    Invitation.count.should == 1
+  end
+
+  it 'does not create a new invitation if one exists for the event and email' do
+    event = create(:event)
+    guest = create(:guest)
+    invitation = Guest.invite(event, guest.email)
+    repeated_invitation = Guest.invite(event, guest.email)
+    repeated_invitation.should == invitation
+  end
+
+  it 'creates a new guest if there is none with the email address' do
+    event = create(:event)
+    invitation = Guest.invite(event, 'something@example.com')
+    Guest.count.should == 1
+  end
+
+  it 'does not create a new guest if there is one with the email address' do
+    event = create(:event)
+    guest = create(:guest)
+    invitation = Guest.invite(event, guest.email)
+    Guest.all.should == [guest]
+  end
 end
 
 describe Guest, '#guest?' do

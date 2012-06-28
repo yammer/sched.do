@@ -4,6 +4,7 @@ describe User, 'validations' do
   it { should have_many(:events) }
   it { should have_many(:user_votes) }
   it { should have_many(:votes).through(:user_votes) }
+  it { should have_many(:invitations) }
 
   it { should validate_presence_of(:access_token) }
   it { should validate_presence_of(:name) }
@@ -55,6 +56,30 @@ describe User, '.create_from_params' do
     user.name.should == auth[:info][:name]
     user.access_token.should == auth[:info][:access_token]
     user.should be_persisted
+  end
+end
+
+describe User, '.invite' do
+  it 'returns an invitation if the user exists' do
+    event = create(:event)
+    user = create(:user)
+    invitation = User.invite(event, yammer_user_id: user.yammer_user_id)
+    Invitation.first.should == invitation
+  end
+
+  it 'does not create a new invitation if one exists for the event and yammer_user_id' do
+    event = create(:event)
+    user = create(:user)
+    invitation = User.invite(event, yammer_user_id: user.yammer_user_id)
+    repeated_invitation = User.invite(event, yammer_user_id: user.yammer_user_id)
+    repeated_invitation.should == invitation
+  end
+
+  it 'returns an invitation for a YammerInvitee if the user does not exist' do
+    event = create(:event)
+    invitation = User.invite(event, yammer_user_id: 'nonexistant_yammer_id', name: 'Joe')
+    Invitation.first.should == invitation
+    YammerInvitee.first.yammer_user_id.should == 'nonexistant_yammer_id'
   end
 end
 

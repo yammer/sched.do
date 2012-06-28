@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   has_many :events
   has_many :user_votes
   has_many :votes, through: :user_votes
+  has_many :invitations, as: :invitee
 
   validates :access_token, presence: true
   validates :encrypted_access_token, presence: true
@@ -20,6 +21,15 @@ class User < ActiveRecord::Base
     new(name: params[:info][:name], access_token: params[:info][:access_token]).tap do |user|
       user.yammer_user_id = params[:uid]
       user.save!
+    end
+  end
+
+  def self.invite(event, params)
+    user = User.find_by_yammer_user_id(params[:yammer_user_id])
+    if user
+      Invitation.find_or_create_by_event_and_invitee(event, user)
+    else
+      YammerInvitee.invite(event, params)
     end
   end
 

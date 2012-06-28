@@ -10,8 +10,12 @@ FactoryGirl.define do
     sequence(:yammer_user_id) { |n| n.to_s }
   end
 
+  factory :yammer_invitee do
+    name 'Joe'
+    sequence(:yammer_user_id) { |n| n.to_s }
+  end
+
   factory :guest do
-    name 'Bruce Wayne'
     email
   end
 
@@ -49,11 +53,21 @@ FactoryGirl.define do
   end
 
   factory :invitation do
-    name 'Bob Invite'
     event
 
     factory :invitation_with_user do
-      user
+      association :invitee, factory: :user
+      invitee_type 'User'
+    end
+
+    factory :invitation_with_yammer_invitee do
+      association :invitee, factory: :yammer_invitee
+      invitee_type 'YammerInvitee'
+    end
+
+    factory :invitation_with_guest do
+      association :invitee, factory: :guest
+      invitee_type 'Guest'
     end
   end
 end
