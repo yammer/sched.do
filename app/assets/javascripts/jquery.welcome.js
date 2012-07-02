@@ -2,7 +2,7 @@ var welcomeHeader = $('#js-welcome-header');
 var steps = $('section.steps li');
 
 $(document).ready(function() {
-  setMarginHeights();
+  // setMarginHeights();
 
   // Displays the first step when the user starts scrolling
   welcomeHeader.waypoint(function() {
@@ -11,7 +11,8 @@ $(document).ready(function() {
 
   // Shows a step after the user scrolls past the previous one
   steps.waypoint(function() {
-    $(this).next('li').css('visibility', 'visible').addClass('animated');
+    // $(this).next('li').css('visibility', 'visible').addClass('animated');
+    $(this).next('li').css('visibility', 'visible');
   }, {
     triggerOnce: 'true'
   });
@@ -19,23 +20,18 @@ $(document).ready(function() {
 });
 
 $(window).resize(function() {
-  setMarginHeights();
+  // setMarginHeights();
 });
 
 // Function that sets the top-margin and the height of the steps
 var setMarginHeights = function() {
 
-  var height = window.innerHeight;
-  var headerMargin = (window.innerHeight - welcomeHeader.height()) / 2;
+  var viewportHeight = window.innerHeight;
+  var viewportWidth = window.innerWidth;
+  var headerHeight = viewportHeight * 0.65;
 
-  if (height > 480) {
-    welcomeHeader.css('margin-top', headerMargin);
+  if (viewportWidth > 480) {
+    welcomeHeader.css('height', headerHeight);
   }
-
-  steps.css({
-    'height': headerMargin*0.6,
-  });
-
-  $('section.steps li:last-child').css('margin-bottom', headerMargin);
 };
 

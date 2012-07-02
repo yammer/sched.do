@@ -5,8 +5,6 @@ body.welcome {
 
       h1 {
         img {
-          height: auto;
-          width: 550px;
         }
       }
     }
@@ -14,18 +12,24 @@ body.welcome {
     div.sign-in {
       a {
         &.sign-in {
-          font-size: 1.5em;
-          margin-top: 60px;
+          max-width: 350px;
         }
       }
     }
   }
 
   section.steps {
+    img {
+      &.step-number {
+        width: auto;
+      }
+    }
     ul {
       li {
+        font-size: 3em;
       }
     }
   }
 }
+
 
