@@ -15,10 +15,9 @@
     display: block;
     left: 20px;
     position: absolute;
-
   }
 
- .ui-datepicker-header {
+  .ui-datepicker-header {
     border: 1px solid #000;
     @include border-radius(3px);
     @include background-image(linear-gradient(#333, #444));
@@ -71,37 +70,54 @@
     left: 50%;
     margin-left: -8px;
     top: 50%;
-    margin-top: -8px; }
+    margin-top: -8px;
+  }
+
   .ui-datepicker-title {
     margin: 0 2.3em;
     line-height: 1.8em;
     text-align: center;
     select {
       font-size: 1em;
-      margin: 1px 0; } }
+      margin: 1px 0;
+    }
+  }
+
   select {
     &.ui-datepicker-month-year {
-      width: 100%; }
+      width: 100%;
+    }
+
     &.ui-datepicker-month, &.ui-datepicker-year {
-      width: 49%; } }
+      width: 49%;
+    }
+  }
+
   table {
     width: 100%;
     font-size: .9em;
     border-collapse: collapse;
-    margin: 0 0 .4em; }
+    margin: 0 0 .4em;
+  }
+
   th {
     padding: .7em .3em;
     text-align: center;
     font-weight: normal;
-    border: 0; }
+    border: 0;
+  }
+
   td {
     border: 0;
     padding: 1px;
+
     span, a {
       display: block;
       padding: .2em;
       text-align: center;
-      text-decoration: none; } }
+      text-decoration: none;
+    }
+  }
   .ui-datepicker-buttonpane {
     display: none;
     background-image: none;
@@ -110,6 +126,7 @@
     border-left: 0;
     border-right: 0;
     border-bottom: 0;
+
     button {
       float: right;
       margin: .5em .2em .4em;
@@ -117,84 +134,120 @@
       padding: .2em .6em .3em .6em;
       width: auto;
       overflow: visible;
+
       &.ui-datepicker-current {
-        float: left; } } }
+        float: left;
+      }
+    }
+  }
   &.ui-datepicker-multi {
-    width: auto; } }
+    width: auto;
+  }
+}
 
 /* with multiple calendars */
 
 .ui-datepicker-multi .ui-datepicker-group {
   float: left;
+
   table {
     width: 95%;
-    margin: 0 auto .4em; } }
+    margin: 0 auto .4em;
+  }
+}
 
 .ui-datepicker-multi-2 .ui-datepicker-group {
-  width: 50%; }
+  width: 50%;
+}
 
 .ui-datepicker-multi-3 .ui-datepicker-group {
-  width: 33.3%; }
+  width: 33.3%;
+}
 
 .ui-datepicker-multi-4 .ui-datepicker-group {
-  width: 25%; }
+  width: 25%;
+}
 
 .ui-datepicker-multi {
   .ui-datepicker-group-last .ui-datepicker-header, .ui-datepicker-group-middle .ui-datepicker-header {
-    border-left-width: 0; }
+    border-left-width: 0;
+  }
+
   .ui-datepicker-buttonpane {
-    clear: left; } }
+    clear: left;
+  }
+}
 
 .ui-datepicker-row-break {
   clear: both;
   width: 100%;
-  font-size: 0em; }
-
-/* RTL support */
+  font-size: 0em;
+}
 
 .ui-datepicker-rtl {
   direction: rtl;
+
   .ui-datepicker-prev {
     right: 2px;
-    left: auto; }
+    left: auto;
+  }
+
   .ui-datepicker-next {
     left: 2px;
-    right: auto; }
+    right: auto;
+  }
+
   .ui-datepicker-prev:hover {
     right: 1px;
-    left: auto; }
+    left: auto;
+  }
+
   .ui-datepicker-next:hover {
     left: 1px;
-    right: auto; }
+    right: auto;
+  }
+
   .ui-datepicker-buttonpane {
     clear: right;
+
     button {
       float: left;
+
       &.ui-datepicker-current {
-        float: right; } } }
+        float: right;
+      }
+    }
+  }
   .ui-datepicker-group {
-    float: right; }
+    float: right;
+  }
+
   .ui-datepicker-group-last .ui-datepicker-header, .ui-datepicker-group-middle .ui-datepicker-header {
     border-right-width: 0;
-    border-left-width: 1px; } }
+    border-left-width: 1px;
+  }
+}
 
 .ui-timepicker-div {
   div.ui-widget-header {
     display: none;
   }
+
   dl {
     margin-bottom: 10px;
+
     dt {
-      width: 33%;
+      width: 32%;
       font-weight: normal;
       font-size: 0.9em;
       color: #ddd;
       text-shadow: 0 -1px 0 #000;
 
-       &.ui-tpicker-hour-label,  &.ui-tpicker-minute-label,  &.ui-tpicker-timezone-label {
+      &.ui-tpicker-hour-label,  &.ui-tpicker-minute-label,  &.ui-tpicker-timezone-label {
         display: inline-block;
-       }
-       &.ui-tpicker-time-label {
+      }
+
+      &.ui-tpicker-time-label {
         display: none;
       }
     }
@@ -205,10 +258,6 @@
       &.ui-tpicker-time ,&.ui-tpicker-hour,  &.ui-tpicker-minute,  &.ui-tpicker-timezone {
         display: inline-block;
       }
-      &.ui-tpicker-time {
-        width: 100%;
-        margin-left: 0;
-      }
 
       &.ui-tpicker-time {
         display: none;
@@ -217,18 +266,18 @@
       &.ui-tpicker-minute {
         padding-bottom: 5px;
       }
-      &.ui-tpicker-hour {
-      }
     }
   }
 
   .ui-widget-header {
-    margin-bottom: 8px; }
+    margin-bottom: 8px;
+  }
 }
 
 .ui-tpicker-grid-label {
   background: none;
   border: none;
   margin: 0;
-  padding: 0; }
+  padding: 0;
+}
 

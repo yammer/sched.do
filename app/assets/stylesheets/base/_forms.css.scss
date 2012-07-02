@@ -134,7 +134,8 @@ label.custom-select {
     @include background-image(linear-gradient(#fff, darken($bg-color, 10%)));
     border: 1px solid #000;
     @include box-shadow(0 1px 0 #555);
-   color: darken($bg-color, 50%);
+    @include border-radius(4px);
+    color: darken($bg-color, 50%);
     display: inline-block;
     @include fill-parent();
     font-size: 0.7em !important;
@@ -143,6 +144,11 @@ label.custom-select {
     padding: 0.38em 0.8em 0.38em 0.7em;
     text-align: center;
     -webkit-appearance: none;
+
+    option {
+      text-align: left;
+      color: #000;
+    }
 
     &:focus {
       @include background-image(linear-gradient($orange,darken($orange, 15%)));
