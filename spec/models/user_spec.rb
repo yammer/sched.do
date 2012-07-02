@@ -77,7 +77,7 @@ describe User, '.invite' do
 
   it 'returns an invitation for a YammerInvitee if the user does not exist' do
     event = create(:event)
-    invitation = User.invite(event, yammer_user_id: 'nonexistant_yammer_id', name: 'Joe')
+    invitation = User.invite(event, yammer_user_id: 'nonexistant_yammer_id', name_or_email: 'Joe')
     Invitation.first.should == invitation
     YammerInvitee.first.yammer_user_id.should == 'nonexistant_yammer_id'
   end

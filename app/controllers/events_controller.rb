@@ -38,7 +38,7 @@ class EventsController < ApplicationController
 
   def update
     event = current_user.events.find(params[:id])
-    Invitation.create_with_event_from_params(event, params[:event].delete(:invitations_attributes))
+    create_invitations_for_event(event)
     event.attributes = params[:event]
     event.invitations = event.invitations.select(&:valid?)
 
@@ -54,6 +54,13 @@ class EventsController < ApplicationController
   end
 
   private
+
+  def create_invitations_for_event(event)
+    if params[:event]
+      invitations_attributes = params[:event].delete(:invitations_attributes)
+      Invitation.create_with_event_from_params(event, invitations_attributes)
+    end
+  end
 
   def populate_suggestions_for(event)
     if event.suggestions.empty?
