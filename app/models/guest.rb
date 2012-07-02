@@ -7,11 +7,6 @@ class Guest < ActiveRecord::Base
 
   validates :email, presence: true
 
-  def self.invite(event, email)
-    guest = Guest.find_or_create_by_email(email)
-    Invitation.find_or_create_by_event_and_invitee(event, guest)
-  end
-
   def guest?
     true
   end

@@ -59,30 +59,6 @@ describe User, '.create_from_params' do
   end
 end
 
-describe User, '.invite' do
-  it 'returns an invitation if the user exists' do
-    event = create(:event)
-    user = create(:user)
-    invitation = User.invite(event, yammer_user_id: user.yammer_user_id)
-    Invitation.first.should == invitation
-  end
-
-  it 'does not create a new invitation if one exists for the event and yammer_user_id' do
-    event = create(:event)
-    user = create(:user)
-    original_invitation = User.invite(event, yammer_user_id: user.yammer_user_id)
-    repeated_invitation = User.invite(event, yammer_user_id: user.yammer_user_id)
-    repeated_invitation.should == original_invitation
-  end
-
-  it 'returns an invitation for a YammerInvitee if the user does not exist' do
-    event = create(:event)
-    invitation = User.invite(event, yammer_user_id: 'nonexistant_yammer_id', name_or_email: 'Joe')
-    Invitation.first.should == invitation
-    YammerInvitee.first.yammer_user_id.should == 'nonexistant_yammer_id'
-  end
-end
-
 describe User, '#able_to_edit?' do
   it 'returns true if the user created the event' do
     event = create(:event)

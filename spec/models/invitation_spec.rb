@@ -30,30 +30,6 @@ describe Invitation, '.find_or_create_by_event_and_invitee' do
   end
 end
 
-describe Invitation, '.create_with_event_from_params' do
-  it 'invites a user if there is a user for the yammer_user_id' do
-    event = create(:event)
-    user = create(:user, yammer_user_id: '1')
-    params = { '0' => { name_or_email: 'Bruce Wayne', yammer_user_id: '1' } }
-    Invitation.create_with_event_from_params(event, params)
-    Invitation.first.invitee_type.should == "User"
-  end
-
-  it 'invites a yammer invitee if there is a yammer_user_id but no matching user' do
-    event = create(:event)
-    params = { '0' => { name_or_email: 'Bruce Wayne', yammer_user_id: '1' } }
-    Invitation.create_with_event_from_params(event, params)
-    Invitation.first.invitee_type.should == "YammerInvitee"
-  end
-
-  it 'invites a guest if there is no yammer_user_id' do
-    event = create(:event)
-    params = { '0' => { name_or_email: 'Bruce Wayne' } }
-    Invitation.create_with_event_from_params(event, params)
-    Invitation.first.invitee_type.should == "Guest"
-  end
-end
-
 describe Invitation, '#name_or_email' do
   it 'returns a name if the invitee has one' do
     invitation = build(:invitation_with_user)

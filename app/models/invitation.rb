@@ -14,16 +14,6 @@ class Invitation < ActiveRecord::Base
     find_or_create_by_event_id_and_invitee_id_and_invitee_type(event.id, invitee.id, invitee.class.name)
   end
 
-  def self.create_with_event_from_params(event, params)
-    params.values.each do |invitation|
-      if invitation[:yammer_user_id].present?
-        User.invite(event, invitation)
-      else
-        Guest.invite(event, invitation[:name_or_email])
-      end
-    end
-  end
-
   def name_or_email
     invitee.try(:name) || invitee.try(:email)
   end

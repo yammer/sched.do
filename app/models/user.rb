@@ -24,15 +24,6 @@ class User < ActiveRecord::Base
     end
   end
 
-  def self.invite(event, params)
-    user = User.find_by_yammer_user_id(params[:yammer_user_id])
-    if user
-      Invitation.find_or_create_by_event_and_invitee(event, user)
-    else
-      YammerInvitee.invite(event, params)
-    end
-  end
-
   def able_to_edit?(event)
     event.user == self
   end

@@ -56,9 +56,17 @@ class EventsController < ApplicationController
   private
 
   def create_invitations_for_event(event)
+    inviter = Inviter.new(event)
     if params[:event]
       invitations_attributes = params[:event].delete(:invitations_attributes)
-      Invitation.create_with_event_from_params(event, invitations_attributes)
+      invitations_attributes.values.each do |invitation|
+        if invitation[:yammer_user_id].present?
+          inviter.invite_user(invitation[:yammer_user_id]) ||
+          inviter.invite_yammer_invitee(invitation[:yammer_user_id], invitation[:name_or_email])
+        else
+          inviter.invite_guest(invitation[:name_or_email])
+        end
+      end
     end
   end
 
