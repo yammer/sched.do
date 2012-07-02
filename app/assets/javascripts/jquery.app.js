@@ -48,18 +48,16 @@ $(document).ready(function() {
     });
   };
 
-  if (!Modernizr.touch) {
-    datepicker();
+  datepicker();
 
-    $.extend($.datepicker,{_checkOffset:function(inst,offset,isFixed){
-      var dpHeight = inst.dpDiv.outerHeight();
-      var inputHeight = inst.input ? inst.input.outerHeight() : 0;
+  $.extend($.datepicker,{_checkOffset:function(inst,offset,isFixed){
+    var dpHeight = inst.dpDiv.outerHeight();
+    var inputHeight = inst.input ? inst.input.outerHeight() : 0;
 
-      offset.top -= dpHeight + inputHeight + 10;
-      offset.left -= (window.innerWidth < 430 ? 20 : 0);
-      return offset;
-    }});
-  }
+    offset.top -= dpHeight + inputHeight + 10;
+    offset.left -= (window.innerWidth < 430 ? 20 : 0);
+    return offset;
+  }});
 
   var forms = $('form[id*=new_event], form[id*="edit_event"]');
   forms.find('div.nested-fields input').removeAttr('maxlength');
@@ -67,9 +65,7 @@ $(document).ready(function() {
 
 
   forms.bind('insertion-callback', function(){
-    if (!Modernizr.touch) {
-      datepicker();
-    }
+    datepicker();
 
     // Animate new nodes
     var lastNode =  forms.find('div.nested-fields.primary:last');
