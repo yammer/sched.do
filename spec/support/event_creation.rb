@@ -89,7 +89,7 @@ module EventCreation
 
     def fill_in_secondary_suggestions(suggestions)
       secondary_fields.each_with_index do |field, index|
-        field.set(suggestions[index])
+        field.set(suggestions[index] || '')
       end
     end
 
