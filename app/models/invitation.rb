@@ -29,8 +29,6 @@ class Invitation < ActiveRecord::Base
   end
 
   def yammer_user_id
-    if invitee.respond_to?(:yammer_user_id)
-      invitee.yammer_user_id
-    end
+    invitee.try(:yammer_user_id)
   end
 end

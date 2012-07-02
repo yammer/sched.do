@@ -20,6 +20,10 @@ class Guest < ActiveRecord::Base
     false
   end
 
+  def yammer_user_id
+    nil
+  end
+
   def able_to_edit?(event)
     false
   end
