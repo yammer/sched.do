@@ -62,7 +62,7 @@ class EventsController < ApplicationController
       invitations_attributes.values.each do |invitation|
         if invitation[:yammer_user_id].present?
           inviter.invite_user(invitation[:yammer_user_id]) ||
-          inviter.invite_yammer_invitee(invitation[:yammer_user_id], invitation[:name_or_email])
+            inviter.invite_yammer_invitee(invitation[:yammer_user_id], invitation[:name_or_email])
         else
           inviter.invite_guest(invitation[:name_or_email])
         end
