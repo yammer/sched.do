@@ -70,9 +70,9 @@ describe User, '.invite' do
   it 'does not create a new invitation if one exists for the event and yammer_user_id' do
     event = create(:event)
     user = create(:user)
-    invitation = User.invite(event, yammer_user_id: user.yammer_user_id)
+    original_invitation = User.invite(event, yammer_user_id: user.yammer_user_id)
     repeated_invitation = User.invite(event, yammer_user_id: user.yammer_user_id)
-    repeated_invitation.should == invitation
+    repeated_invitation.should == original_invitation
   end
 
   it 'returns an invitation for a YammerInvitee if the user does not exist' do
