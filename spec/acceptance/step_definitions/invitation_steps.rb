@@ -13,3 +13,8 @@ step 'I should see :name in the list of invitees' do |name|
     page.should have_content name
   end
 end
+
+step ':guest_email was invited to the event :event_name' do |guest_email, event_name|
+  event = Event.find_by_name!(event_name)
+  Guest.invite(event, guest_email)
+end

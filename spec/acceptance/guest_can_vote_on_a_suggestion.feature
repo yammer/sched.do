@@ -2,7 +2,8 @@ Feature: Guests can vote on suggestions
 
   Scenario: Guest votes for a single suggestion
     Given someone created an event named "Clown party" with a suggestion of "lunch"
-    And I am signed in as a guest
+    And "guest@example.com" was invited to the event "Clown party"
+    And I am signed in as the guest "guest@example.com"
     When I view the "Clown party" event
     Then I should see that that "lunch" has 0 votes
     When I vote for "lunch"
@@ -10,7 +11,8 @@ Feature: Guests can vote on suggestions
 
   Scenario: Guest can undo their vote for a suggestion
     Given someone created an event named "Clown party" with a suggestion of "lunch"
-    And I am signed in as a guest
+    And "guest@example.com" was invited to the event "Clown party"
+    And I am signed in as the guest "guest@example.com"
     When I view the "Clown party" event
     And I vote for "lunch"
     Then I should see that that "lunch" has 1 vote
@@ -20,7 +22,9 @@ Feature: Guests can vote on suggestions
   Scenario: Guest can vote for suggestions for different events
     Given someone created an event named "Clown party" with a suggestion of "lunch"
     And someone created an event named "Ninja party" with a suggestion of "dinner"
-    And I am signed in as a guest
+    And "guest@example.com" was invited to the event "Clown party"
+    And "guest@example.com" was invited to the event "Ninja party"
+    And I am signed in as the guest "guest@example.com"
     When I view the "Clown party" event
     And I vote for "lunch"
     Then I should see that that "lunch" has 1 vote
@@ -32,7 +36,8 @@ Feature: Guests can vote on suggestions
     Given someone created an event named "Clown party" with the following suggestions:
       | lunch  |
       | dinner |
-    And I am signed in as a guest
+    And "guest@example.com" was invited to the event "Clown party"
+    And I am signed in as the guest "guest@example.com"
     When I view the "Clown party" event
     And I vote for "lunch"
     And I vote for "dinner"

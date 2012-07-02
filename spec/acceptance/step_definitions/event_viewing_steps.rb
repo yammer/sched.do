@@ -1,5 +1,5 @@
 step 'I should see a suggestion of :suggestion' do |suggestion|
-  within '.suggestions' do
+  within '.grid' do
     page.should have_content suggestion
   end
 end
@@ -16,14 +16,14 @@ end
 step 'I should see an event named :event_name with a suggestion of :suggestion' do |event_name, suggestion|
   page.should have_css('.event-name', text: event_name)
 
-  within '.suggestions' do
+  within '.grid' do
     page.should have_content suggestion
   end
 end
 
 step 'I should see an event with the following suggestions in order:' do |table|
   suggestions = table.raw
-  within '.suggestions' do
+  within '.grid' do
     all('.description').each_with_index do |element, i|
       element.should have_content suggestions[i][0]
       if suggestions[i][1]
