@@ -76,7 +76,6 @@ body.welcome {
     font-family: $bariol;
     z-index: 999;
     position: relative;
-    @include box-shadow(0 5px 10px darken($bg-color, 5%));
     border-bottom: 1px solid darken($bg-color, 10%);
 
     p {
@@ -116,6 +115,21 @@ body.welcome {
         @include box-sizing(border-box);
         padding: 10%;
 
+        &.animated {
+          @include animation(fadeInUp 0.5s 0 1);
+
+          div.title {
+            @include animation(rotateInUpLeft 0.5s 0.5s 1 both);
+          }
+
+          img.illustration {
+            @include animation(rotateInUpRight 0.5s 0.7s 1 both);
+          }
+        }
+
+        div.title {
+        }
+
         img.illustration {
           display: block;
           @include clearfix();
@@ -124,38 +138,27 @@ body.welcome {
 
         &.first-step {
           color: $blue;
-          background-image: url("http://subtlepatterns.com/patterns/lightpaperfibers.png");
-          @include box-shadow(inset 0 20px 70px #fff);
-          &.animated {
-            @include animation(bounceInLeft 1s 0 1);
-          }
+          background-image: url("/images/welcome-page/step-1-bg.png");
+          background-color: rbga(255,255,255,1);
+          @include box-shadow(inset 0 5px 20px #fff, 0 5px 10px #eee);
+          border-bottom: 1px solid #ddd;
         }
 
         &.second-step {
           background: $orange;
           color: #fff;
-
-          &.animated {
-            @include animation(bounceInLeft 1s 0 1);
-          }
         }
 
         &.third-step {
           color: #fff;
           background: $blue;
           border-top: 10px solid darken($blue, 20%);
-          &.animated {
-            @include animation(bounceInRight 1s 0 1);
-          }
         }
 
         &.fourth-step {
           background: #d9f3f9;
           color: $blue;
           border-bottom: 10px solid $orange;
-          &.animated {
-            @include animation(bounceInLeft 1s 0 1);
-          }
         }
       }
     }

@@ -6,9 +6,9 @@ $(document).ready(function() {
   // Displays the first step when the user starts scrolling
   scrollCallout.waypoint(function() {
     $('.steps li:first-child').css('visibility', 'visible').addClass('animated');
-    scrollCallout.slideUp('fast');
+    scrollCallout.slideUp('slow');
   }, {
-   offset: '51%'
+   offset: '44%'
   });
 
   // Shows a step after the user scrolls past the previous one
