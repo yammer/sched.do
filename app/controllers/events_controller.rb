@@ -62,10 +62,9 @@ class EventsController < ApplicationController
       invitations_attributes = params[:event].delete(:invitations_attributes)
       invitations_attributes.values.each do |invitation|
         if invitation[:yammer_user_id].present?
-          inviter.invite_user(invitation[:yammer_user_id]) ||
-            inviter.invite_yammer_invitee(invitation[:yammer_user_id], invitation[:name_or_email])
+          inviter.invite_unknown_yammer_user(invitation[:yammer_user_id], invitation[:name_or_email])
         else
-          inviter.invite_guest(invitation[:name_or_email])
+          inviter.invite_guest_by_email(invitation[:name_or_email])
         end
       end
     end
@@ -83,8 +82,8 @@ class EventsController < ApplicationController
   end
 
   def verify_or_setup_invitation_for_current_user
-    if !@event.invitees.include?(current_user)
-      Inviter.new(@event).invite_generic_user(current_user)
+    if !@event.user_invited?(current_user)
+      Inviter.new(@event).invite_user(current_user)
       @event.reload
     end
   end

@@ -16,5 +16,5 @@ end
 
 step ':guest_email was invited to the event :event_name' do |guest_email, event_name|
   event = Event.find_by_name!(event_name)
-  Inviter.new(event).invite_guest(guest_email)
+  Inviter.new(event).invite_guest_by_email(guest_email)
 end

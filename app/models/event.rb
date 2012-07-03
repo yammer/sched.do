@@ -18,4 +18,8 @@ class Event < ActiveRecord::Base
   def invitees
     [user] + users + yammer_invitees + guests
   end
+
+  def user_invited?(user)
+    invitees.include?(user)
+  end
 end

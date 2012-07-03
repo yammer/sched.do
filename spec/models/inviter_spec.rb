@@ -1,79 +1,77 @@
 require 'spec_helper'
 
-describe Inviter, 'invite_user' do
+describe Inviter do
   let(:inviter) { Inviter.new(create(:event)) }
 
   it 'returns an invitation if the user exists' do
-    Invitation.count.should == 0
     user = create(:user)
-    invitation = inviter.invite_user(user.yammer_user_id)
+    Invitation.count.should == 0
+    invitation = inviter.invite_user(user)
     Invitation.count.should == 1
   end
 
-  it 'does not create a new invitation if one exists for the event and yammer_user_id' do
+  it 'does not create a new invitation if one exists for the event and user' do
     user = create(:user)
-    original_invitation = inviter.invite_user(user.yammer_user_id)
-    repeated_invitation = inviter.invite_user(user.yammer_user_id)
+    original_invitation = inviter.invite_user(user)
+    repeated_invitation = inviter.invite_user(user)
     repeated_invitation.should == original_invitation
   end
 
-  it 'returns nil and does not create an invitation if no user exists' do
-    invitation = inviter.invite_user('non_existent_yammer_user_id')
-    invitation.should be_nil
-    Invitation.count.should == 0
-  end
-end
+  context "given a yammer user_id and an email" do
+    it "will create an invitation for the yammer user is possible" do
+      yammer_user = create(:user)
+      invitation = inviter.invite_unknown_yammer_user(yammer_user.yammer_user_id, "someone@example.com")
+      yammer_user.invitations.should include(invitation)
+    end
 
-describe Inviter, 'invite_yammer_invitee' do
-  let(:inviter) { Inviter.new(create(:event)) }
-
-  it 'returns an invitation' do
-    Invitation.count.should == 0
-    invitation = inviter.invite_yammer_invitee('yammer_user_id', 'Bruce Wayne')
-    Invitation.count.should == 1
+    it "will create an invitation for a yammer invitee if a yammer user is not found" do
+      YammerInvitee.count.should == 0
+      invitation = inviter.invite_unknown_yammer_user('yammer-user-id', 'someone@example.com')
+      YammerInvitee.count.should == 1
+    end
   end
 
-  it 'does not create a new invitation if one exists for the event and yammer_user_id' do
-    yammer_invitee = create(:yammer_invitee)
-    original_invitation = inviter.invite_yammer_invitee(yammer_invitee.yammer_user_id, yammer_invitee.name)
-    repeated_invitation = inviter.invite_yammer_invitee(yammer_invitee.yammer_user_id, yammer_invitee.name)
-    repeated_invitation.should == original_invitation
+  context "given a guest email" do
+    it 'it creates a guest' do
+      Guest.count.should == 0
+      invitation = inviter.invite_guest_by_email('this_email_does_not_exist@example.com')
+      Guest.count.should == 1
+    end
+
+    it 'will not create a new guest if one exists' do
+      guest = create(:guest)
+      Guest.count.should == 1
+      invitation = inviter.invite_guest_by_email(guest.email)
+      Guest.count.should == 1
+    end
   end
 
-  it 'creates a new YammerInvitee if one does not exist for the yammer_user_id' do
-    YammerInvitee.count.should == 0
-    invitation = inviter.invite_yammer_invitee('non_existent_yammer_user_id', 'Bruce Wayne')
-    YammerInvitee.count.should == 1
+  context "given a yammer user id" do
+    it "creates an invitaiton is a user is found" do
+      user = create(:user)
+      invitation = inviter.invite_yammer_user_by_id(user.yammer_user_id)
+      user.invitations.should include(invitation)
+    end
+
+    it 'returns nil and does not create an invitation if no user exists' do
+      invitation = inviter.invite_yammer_user_by_id('non_existent_yammer_user_id')
+      invitation.should be_nil
+      Invitation.count.should == 0
+    end
   end
 
-  it 'does not create a new YammerInvitee if one exists for the yammer_user_id' do
-    yammer_invitee = create(:yammer_invitee)
-    YammerInvitee.count.should == 1
-    invitation = inviter.invite_yammer_invitee(yammer_invitee.yammer_user_id, yammer_invitee.name)
-    YammerInvitee.count.should == 1
-  end
-end
+  context "given a yammer invitee id" do
+    it "creates a yammer invitee if one does not exit" do
+      YammerInvitee.count.should == 0
+      invitation = inviter.invite_yammer_invitee('yammer_user_id', 'Bruce Wayne')
+      YammerInvitee.count.should == 1
+    end
 
-
-describe Inviter, 'invite_guest' do
-  let(:inviter) { Inviter.new(create(:event)) }
-
-  it 'returns an invitation' do
-    Invitation.count.should == 0
-    invitation = inviter.invite_guest('batman@example.com')
-    Invitation.count.should == 1
-  end
-
-  it 'creates a new Guest if one does not exist for the email' do
-    Guest.count.should == 0
-    invitation = inviter.invite_guest('this_email_does_not_exist@example.com')
-    Guest.count.should == 1
-  end
-
-  it 'does not create a new Guest if one exists for the email' do
-    guest = create(:guest)
-    Guest.count.should == 1
-    invitation = inviter.invite_guest(guest.email)
-    Guest.count.should == 1
+    it "uses the existing yammer invitee if it exists" do
+      yammer_invitee = create(:yammer_invitee)
+      YammerInvitee.count.should == 1
+      invitation = inviter.invite_yammer_invitee(yammer_invitee.yammer_user_id, yammer_invitee.name)
+      YammerInvitee.count.should == 1
+    end
   end
 end
