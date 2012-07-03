@@ -1,15 +1,22 @@
 body.welcome {
 
   div.welcome  {
+    padding: 4% 10% 10%;
+
     div.logo {
+      div.post-it {
+        max-width: 370px;
+        max-height: 160px;
 
-      h1 {
-        img {
+        h2 {
+          font-size: 1.2em;
         }
-      }
 
-      h2 {
-        font-size: 1.6em;
+        &:before, &:after {
+          height: 1.5em;
+          width:3em;
+        }
+
       }
     }
 
@@ -17,13 +24,14 @@ body.welcome {
       a {
         &.sign-in {
           max-width: 350px;
+          margin-top: 50px;
         }
       }
     }
   }
 
   div.learn-more {
-    padding: 3.5% 40px 40px;
+    padding: 3.5% 40px 3.5%;
     font-size: 2.5em;
 
     p {
@@ -32,7 +40,8 @@ body.welcome {
   }
 
   div.footer-sign-in {
-    padding:30px 0 50px;
+    padding:18px 0 50px;
+
     a.sign-in {
       max-width: 350px;
     }
