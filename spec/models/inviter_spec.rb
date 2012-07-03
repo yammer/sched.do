@@ -6,14 +6,14 @@ describe Inviter do
   it 'returns an invitation if the user exists' do
     user = create(:user)
     Invitation.count.should == 0
-    invitation = inviter.invite_user(user)
+    invitation = inviter.invite(user)
     Invitation.count.should == 1
   end
 
   it 'does not create a new invitation if one exists for the event and user' do
     user = create(:user)
-    original_invitation = inviter.invite_user(user)
-    repeated_invitation = inviter.invite_user(user)
+    original_invitation = inviter.invite(user)
+    repeated_invitation = inviter.invite(user)
     repeated_invitation.should == original_invitation
   end
 
