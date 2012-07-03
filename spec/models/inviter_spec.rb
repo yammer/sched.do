@@ -75,3 +75,19 @@ describe Inviter do
     end
   end
 end
+
+describe Inviter, 'invite_unknown_user' do
+  let(:inviter) { Inviter.new(create(:event)) }
+
+  it "delegates to unknown_yammer_user if a yammer_user_id is passed" do
+    inviter.stubs(:invite_unknown_yammer_user)
+    inviter.invite_unknown_user("yammer-user-id", "someone@example.com")
+    inviter.should have_received(:invite_unknown_yammer_user).with("yammer-user-id", "someone@example.com")
+  end
+
+  it "delegates to invite_guest_by_email if no yammer_user_id is passed" do
+    inviter.stubs(:invite_guest_by_email)
+    inviter.invite_unknown_user(nil, "someone@example.com")
+    inviter.should have_received(:invite_guest_by_email).with("someone@example.com")
+  end
+end
