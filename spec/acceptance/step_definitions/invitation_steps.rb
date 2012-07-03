@@ -12,7 +12,6 @@ step 'I invite :email to :event_name' do |email, event_name|
   event = Event.find_by_name!(event_name)
   visit event_path(event)
   click_link 'Edit event or invite people'
-  find_field_by_data_role('invitation_name').set(event_name)
   find_field_by_data_role('invitation_name').set(email)
   click_button 'Update event'
 end
