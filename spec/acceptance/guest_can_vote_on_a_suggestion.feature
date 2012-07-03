@@ -49,3 +49,5 @@ Feature: Guests can vote on suggestions
     And I am signed in as the guest "guest@example.com"
     When I view the "Clown party" event
     Then I should see "Joe Schmoe" in the list of invitees
+    And I vote for "lunch"
+    Then I should see that that "lunch" has 1 vote
