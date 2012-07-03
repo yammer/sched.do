@@ -69,3 +69,15 @@ describe Guest, '#build_user_vote' do
     guest_vote.guest.should == guest
   end
 end
+
+describe Guest, '#notify' do
+  it 'delivers the invitation email' do
+    guest = create(:guest)
+    invitation = build(:invitation_with_guest, invitee: guest)
+    mailer = stub('mailer', deliver: true)
+    GuestMailer.stubs(invitation: mailer)
+    guest.notify(invitation)
+    GuestMailer.should have_received(:invitation).with(guest, invitation.event)
+    mailer.should have_received(:deliver).once
+  end
+end

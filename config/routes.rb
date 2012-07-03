@@ -8,4 +8,8 @@ SchedDo::Application.routes.draw do
   resources :guests, only: [:new, :create]
 
   root to: "welcome#index"
+
+  if Rails.env.development?
+    mount GuestMailer::Preview => 'mail_view'
+  end
 end

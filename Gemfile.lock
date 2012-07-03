@@ -121,6 +121,8 @@ GEM
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+    mail_view (1.0.3)
+      tilt
     metaclass (0.0.1)
     method_source (0.7.1)
     mime-types (1.19)
@@ -265,6 +267,7 @@ DEPENDENCIES
   high_voltage
   jquery-rails
   launchy
+  mail_view
   omniauth (~> 1.0)
   omniauth-oauth2 (~> 1.0.2)
   paperclip (~> 3.0.4)

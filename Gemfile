@@ -42,6 +42,7 @@ group :development, :test do
   gem 'sham_rack'
   gem 'pry'
   gem 'evergreen', require: 'evergreen/rails'
+  gem 'mail_view'
 end
 
 group :test do

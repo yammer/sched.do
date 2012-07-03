@@ -34,4 +34,8 @@ class Guest < ActiveRecord::Base
   def build_user_vote
     guest_votes.new
   end
+
+  def notify(invitation)
+    GuestMailer.invitation(self, invitation.event).deliver
+  end
 end

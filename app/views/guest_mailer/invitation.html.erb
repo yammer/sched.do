@@ -1,0 +1,3 @@
+<h1>Hello!</h1>
+<p><%= @event.user.name %> has invited to the event <%= link_to @event.name, @event %>.</p>
+<p>Click the link, or paste <%= link_to event_url(@event), @event %> into your URL bar.</p>

@@ -4,6 +4,7 @@ require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'rspec/autorun'
 require 'turnip/capybara'
+require 'email_spec'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
@@ -15,6 +16,8 @@ DatabaseCleaner.strategy = :truncation
 RSpec.configure do |config|
   config.mock_with :mocha
   config.include FactoryGirl::Syntax::Default
+  config.include EmailSpec::Helpers
+  config.include EmailSpec::Matchers
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
