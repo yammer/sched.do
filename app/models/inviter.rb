@@ -7,34 +7,29 @@ class Inviter
     Invitation.find_or_create_by_event_and_invitee(@event, user)
   end
 
-  def invite_unknown_user(yammer_user_id, name_or_email)
+  def invite_from_params(yammer_user_id, name_or_email)
     if yammer_user_id
-      invite_unknown_yammer_user(yammer_user_id, name_or_email)
+      invitee = find_user_or_yammer_invitee(yammer_user_id, name_or_email)
     else
-      invite_guest_by_email(name_or_email)
+      invitee = find_guest(name_or_email)
     end
+    invite(invitee)
   end
 
-  def invite_unknown_yammer_user(yammer_user_id, name)
-    invite_yammer_user_by_id(yammer_user_id) || invite_yammer_invitee(yammer_user_id, name)
+  def find_user_or_yammer_invitee(yammer_user_id, name)
+    find_user(yammer_user_id) || find_yammer_invitee(yammer_user_id, name)
   end
 
-  def invite_yammer_user_by_id(yammer_user_id)
-    user = User.find_by_yammer_user_id(yammer_user_id)
-    if user
-      invite(user)
-    end
+  def find_user(yammer_user_id)
+    User.find_by_yammer_user_id(yammer_user_id)
   end
 
-  def invite_yammer_invitee(yammer_user_id, name)
-    yammer_invitee = YammerInvitee.find_or_create_by_yammer_user_id(yammer_user_id: yammer_user_id, name: name)
-    if yammer_invitee
-      invite(yammer_invitee)
-    end
+  def find_yammer_invitee(yammer_user_id, name)
+    YammerInvitee.find_or_create_by_yammer_user_id(yammer_user_id: yammer_user_id, name: name)
   end
 
-  def invite_guest_by_email(email)
-    guest = Guest.find_or_create_by_email(email)
-    invite(guest)
+  def find_guest(email)
+    Guest.find_or_create_by_email(email)
   end
 end
+

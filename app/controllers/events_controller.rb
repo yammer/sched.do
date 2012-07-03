@@ -61,7 +61,7 @@ class EventsController < ApplicationController
     if params[:event]
       invitations_attributes = params[:event].delete(:invitations_attributes)
       invitations_attributes.values.each do |invitation|
-        inviter.invite_unknown_user(invitation[:yammer_user_id], invitation[:name_or_email])
+        inviter.invite_from_params(invitation[:yammer_user_id], invitation[:name_or_email])
       end
     end
   end
