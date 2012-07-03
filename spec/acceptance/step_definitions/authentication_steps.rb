@@ -35,6 +35,11 @@ step 'I am signed in as the guest :guest_email' do |guest_email|
   fill_in_guest_info(guest_email)
 end
 
+step 'I am signed in as the guest :guest_email named :guest_name' do |guest_email, guest_name|
+  visit new_guest_path
+  fill_in_guest_info(guest_email, guest_name)
+end
+
 step 'I should not see a sign out button' do
   page.should have_no_content 'Sign out'
 end

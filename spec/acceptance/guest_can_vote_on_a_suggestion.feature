@@ -46,8 +46,8 @@ Feature: Guests can vote on suggestions
  
   Scenario: Guest votes on an event without prior invitation
     Given someone created an event named "Clown party" with a suggestion of "lunch"
-    And I am signed in as the guest "guest@example.com"
+    And I am signed in as the guest "guest@example.com" named "Example Guest"
     When I view the "Clown party" event
-    Then I should see "Joe Schmoe" in the list of invitees
+    Then I should see "Example Guest" in the list of invitees
     And I vote for "lunch"
     Then I should see that that "lunch" has 1 vote
