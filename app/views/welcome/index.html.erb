@@ -1,13 +1,16 @@
 <div class= "welcome" id="js-welcome-header">
-<div class="logo">
-  <h1><img src="/images/welcome-logo.svg" alt="Sched.do" /></h1>
-  <h2>Group event scheduling made easy</h2>
+  <div class="logo">
+    <h1><img src="/images/welcome-logo.svg" alt="Sched.do" /></h1>
+    <h2>Schedule events with friends and colleagues the smart way.</h2>
+  </div>
+
+  <div class="sign-in">
+    <%= link_to "Sign in with Yammer", "/auth/yammer", class: "sign-in",  id: "sign-in" %>
+  </div>
 </div>
 
-<div class="sign-in">
-  <%= link_to "Sign in with Yammer", "/auth/yammer", class: "sign-in",  id: "sign-in" %>
-  <%# <p id="learn-more">Scroll to see how Sched.do works ⬇</p> %>
-</div>
+<div class="learn-more">
+  <p>↓ Scroll to see how it works ↓</p>
 </div>
 
 <section class="steps">
@@ -17,22 +20,30 @@
     Create an event
     <img src="/images/welcome-page/new-event.png" class="illustration" id="new-event"  alt="" />
   </li>
+
   <li class="second-step">
-    <div class="title">
     <img src="/images/welcome-page/step-indicator-2.png" class="step-number"  alt="" />
     Suggest dates & times
-    </div>
     <img src="/images/welcome-page/suggestions.png" class="illustration" id="suggestions"  alt="" />
   </li>
+
   <li class="third-step">
     <img src="/images/welcome-page/step-indicator-3.png"class="step-number" alt="" />
     Invite guests to vote
     <img src="/images/welcome-page/invite-people.png" class="illustration" id="invite-people"  alt="" />
   </li>
+
   <li class="fourth-step">
     <img src="/images/welcome-page/step-indicator-4.png" class="step-number" alt="" />
-    Pick the right date and time
+    Pick a date & time
     <img src="/images/welcome-page/choose-date.png" class="illustration" id="choose-date"  alt="" />
   </li>
 </ul>
 </section>
+
+<div class="footer-sign-in">
+  <%= link_to "Sign in with Yammer", "/auth/yammer", class: "sign-in",  id: "sign-in" %>
+</div>
+
+
+

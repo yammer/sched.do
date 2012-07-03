@@ -10,19 +10,22 @@ body.welcome {
         }
       }
     }
+  }
 
-    div.sign-in {
-      a {
-        &.sign-in {
+  div.learn-more {
 
-        }
-      }
-    }
   }
 
   section.steps {
     ul {
       li {
+        &.second-step {
+          font-family: $bariol-light;
+        }
+
+        &.third-step {
+          font-family: $bariol-light;
+        }
       }
     }
   }

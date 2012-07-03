@@ -14,18 +14,13 @@ body.welcome {
       }
 
       h2 {
-        color: darken($bg-color, 16%);
-        font-weight: normal;
+        color: darken($bg-color, 20%);
         font-family: $bariol;
-        text-shadow: 0 1px 0 #fff;
-        font-variant: normal;
-        line-height: 1em;
-      }
-
-      p#learn-more {
-        @extend h2;
-        color: darken($bg-color, 35%);
         font-size: 1.2em;
+        line-height: 1em;
+        margin: 0 auto;
+        max-width: 400px;
+        text-shadow: 0 1px 0 #fff;
       }
     }
 
@@ -40,6 +35,23 @@ body.welcome {
           @extend .yammer-button;
         }
       }
+    }
+  }
+
+  div.learn-more {
+    @include fill-parent();
+    text-align: center;
+    padding: 5%;
+    font-size: 1.25em;
+    font-family: $bariol;
+
+    p {
+      @include border-radius(4px);
+      @include animation(bounce 1.5s 1s infinite);
+      color: darken($bg-color, 30%);
+      overflow: hidden;
+      white-space: nowrap;
+      margin: 0 auto;
     }
   }
 
@@ -66,9 +78,8 @@ body.welcome {
         font-family: $bariol;
         visibility: hidden;
         margin: 0 auto;
-        font-size: 2em;
+        font-size: 1.5em;
         @include box-sizing(border-box);
-        // padding: 70px 0;
         padding: 10%;
 
         img.illustration {
@@ -79,24 +90,14 @@ body.welcome {
 
         &.first-step {
           color: $blue;
-          // visibility: visible;
-          @include animation(bounceInRight 1s 0 1);
+          &.animated {
+            @include animation(bounceInLeft 1s 0 1);
+          }
         }
 
         &.second-step {
-          background: #AFDCE2;
+          background: $orange;
           color: #fff;
-
-          div.title {
-            width: 100%;
-            background: #3E9391;
-            padding: 15px 0;
-            font-family: $bariol-light;
-          }
-
-          img.illustration {
-            margin-top: 90px;
-          }
 
           &.animated {
             @include animation(bounceInLeft 1s 0 1);
@@ -106,20 +107,32 @@ body.welcome {
         &.third-step {
           color: #fff;
           background: $blue;
+          border-top: 10px solid darken($blue, 20%);
           &.animated {
             @include animation(bounceInRight 1s 0 1);
           }
         }
 
         &.fourth-step {
-          margin-bottom: 200px;
-          background: $orange;
-          color: #fff;
+          background: #d9f3f9;
+          color: $blue;
           &.animated {
             @include animation(bounceInLeft 1s 0 1);
           }
         }
       }
+    }
+  }
+
+  div.footer-sign-in {
+    @include fill-parent();
+    padding: 0 10% 5%;
+    text-align: center;
+
+    a.sign-in {
+      @extend .button;
+      @extend .yammer-button;
+      display: block;
     }
   }
 }
