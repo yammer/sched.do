@@ -3,6 +3,14 @@ class Inviter
     @event = event
   end
 
+  def invite_generic_user(user)
+    if user.yammer_user?
+      invite_user(user.yammer_user_id)
+    else
+      invite_guest(user.email)
+    end
+  end
+
   def invite_user(yammer_user_id)
     user = User.find_by_yammer_user_id(yammer_user_id)
     if user

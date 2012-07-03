@@ -29,6 +29,7 @@ class EventsController < ApplicationController
   def show
     @event = Event.find(params[:id])
     @suggestions = @event.suggestions
+    verify_or_setup_invitation_for_current_user
   end
 
   def edit
@@ -79,5 +80,12 @@ class EventsController < ApplicationController
 
   def populate_invitations_for(event)
     event.invitations.build
+  end
+
+  def verify_or_setup_invitation_for_current_user
+    if !@event.invitees.include?(current_user)
+      Inviter.new(@event).invite_generic_user(current_user)
+      @event.reload
+    end
   end
 end
