@@ -7,14 +7,16 @@ class Inviter
     Invitation.find_or_create_by_event_and_invitee(@event, user)
   end
 
-  def invite_from_params(yammer_user_id, name_or_email)
-    if yammer_user_id
-      invitee = find_user_or_yammer_invitee(yammer_user_id, name_or_email)
+  def invite_from_params(options)
+    if options[:yammer_user_id]
+      invitee = find_user_or_yammer_invitee(options[:yammer_user_id], options[:name_or_email])
     else
-      invitee = find_guest(name_or_email)
+      invitee = find_guest(options[:name_or_email])
     end
     invite(invitee)
   end
+
+  private
 
   def find_user_or_yammer_invitee(yammer_user_id, name)
     find_user(yammer_user_id) || find_yammer_invitee(yammer_user_id, name)
