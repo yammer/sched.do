@@ -24,9 +24,23 @@ describe SessionsController, '#create' do
     session[:email].should be_nil
   end
 
+  it 'converts YammerInvitees to Users' do
+    yammer_invitee = create(:yammer_invitee)
+    stub_omniauth_env_with_yammer_invitee(yammer_invitee)
+    [User.count, YammerInvitee.count].should == [0, 1]
+    post :create
+    [User.count, YammerInvitee.count].should == [1, 0]
+  end
+
   private
 
   def stub_omniauth_env
     request.env['omniauth.auth'] = OmniAuth.mock_auth_for(:yammer)
+  end
+
+  def stub_omniauth_env_with_yammer_invitee(yammer_invitee)
+    request.env['omniauth.auth'] = OmniAuth.mock_auth_for(:yammer).merge!({
+      uid: yammer_invitee.yammer_user_id
+    })
   end
 end

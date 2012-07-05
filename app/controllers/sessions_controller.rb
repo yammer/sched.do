@@ -24,7 +24,7 @@ class SessionsController < ApplicationController
   end
 
   def find_or_create_user
-    find_user || User.create_from_params(auth)
+    find_user || YammerInvitee.convert_to_user_from_params(auth) || User.create_from_params(auth)
   end
 
   def find_user

@@ -5,4 +5,19 @@ class YammerInvitee < ActiveRecord::Base
 
   validates :yammer_user_id, presence: true
   validates :name, presence: true
+
+  def self.convert_to_user_from_params(params)
+    yammer_invitee = YammerInvitee.find_by_yammer_user_id(params[:uid].to_s)
+    if yammer_invitee
+      User.create_from_params(params).tap do |user|
+        if user
+          yammer_invitee.invitations.each do |invitation|
+            invitation.invitee = user
+            invitation.save
+          end
+          yammer_invitee.destroy
+        end
+      end
+    end
+  end
 end
