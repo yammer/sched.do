@@ -52,6 +52,12 @@ describe Inviter do
       invitation = inviter.invite_from_params(yammer_user_id: user.yammer_user_id)
       user.invitations.should include(invitation)
     end
+
+    it "will create a guest if the yammer_user_id is blank" do
+      Guest.count.should == 0
+      invitiation = inviter.invite_from_params(yammer_user_id: '', name_or_email: 'test@example.com')
+      Guest.count.should == 1
+    end
   end
 
   context "given a yammer invitee id" do
@@ -66,6 +72,14 @@ describe Inviter do
       YammerInvitee.count.should == 1
       invitation = inviter.invite_from_params(yammer_user_id: yammer_invitee.yammer_user_id, name_or_email: yammer_invitee.name)
       YammerInvitee.count.should == 1
+    end
+  end
+
+  context "with no yammer_user_id and no email" do
+    it "should not create an invitation" do
+      Invitation.count.should == 0
+      invitation = inviter.invite_from_params(yammer_user_id: '', name_or_email: '')
+      Invitation.count.should == 0
     end
   end
 end

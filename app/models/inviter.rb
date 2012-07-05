@@ -8,7 +8,7 @@ class Inviter
   end
 
   def invite_from_params(options)
-    if options[:yammer_user_id]
+    if options[:yammer_user_id].present?
       invitee = find_user_or_yammer_invitee(options[:yammer_user_id], options[:name_or_email])
     else
       invitee = find_guest(options[:name_or_email])

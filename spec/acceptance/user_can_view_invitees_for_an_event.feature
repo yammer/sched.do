@@ -6,3 +6,10 @@ Feature: User can view invitees for an event
     When I create an event named "Party"
     And I invite the Yammer user "Joe Smith" to "Party"
     Then I should see "Joe Smith" in the list of invitees
+
+  Scenario: User views guest invitees
+    Given a user exists with a name of "Joe Smith"
+    And I am signed in
+    When I create an event named "Party"
+    And I invite "myfriend@example.com" to "Party"
+    Then I should see "myfriend@example.com" in the list of invitees
