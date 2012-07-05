@@ -15,7 +15,8 @@ $(document).ready(function() {
   steps.waypoint(function() {
     $(this).next('li').css('visibility', 'visible').addClass('animated');
   }, {
-    triggerOnce: 'true'
+    triggerOnce: 'true',
+    offset: '15%'
   });
 
 });
