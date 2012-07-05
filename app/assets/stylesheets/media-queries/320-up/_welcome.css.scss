@@ -6,7 +6,13 @@ body.welcome {
       h1 {
         img {
           height: auto;
-          width: 400px;
+          width: 550px;
+        }
+      }
+
+      div.post-it {
+        h2 {
+          font-size: 1em;
         }
       }
     }
@@ -14,17 +20,28 @@ body.welcome {
     div.sign-in {
       a {
         &.sign-in {
-          width: 350px;
           font-size: 1.5em;
+          margin-top: 30px;
         }
       }
+    }
+  }
+
+   div.learn-more {
+    font-size: 1.8em;
+  }
+
+
+  div.footer-sign-in {
+    a.sign-in {
+      font-size: 1.5em;
     }
   }
 
   section.steps {
     ul {
       li {
-        min-height: 300px;
+        font-size: 2em;
       }
     }
   }

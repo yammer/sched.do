@@ -1,10 +1,11 @@
 body.welcome {
+  font-smoothing:subpixel-antialiased;
+
   div.welcome {
     @include background-image(linear-gradient(#fff, darken($bg-color, 2%)));
     border-bottom: 1px solid darken($bg-color, 20%);
-    border-top: 1px solid darken($bg-color, 8%);
     @include box-shadow(inset 0 -1px 0px #fff);
-    padding: 50px 10px;
+    padding: 8% 10% 10%;
 
     div.logo {
       @include fill-parent();
@@ -14,19 +15,41 @@ body.welcome {
         margin-bottom: -10px;
       }
 
-      h2 {
-        color: darken($bg-color, 16%);
-        font-weight: normal;
-        font-family: $bariol;
-        text-shadow: 0 1px 0 #fff;
-        font-variant: normal;
-        line-height: 1em;
-      }
+      div.post-it {
+        @include background-image(linear-gradient(#F9EFAF, #F7E98D));
+        @include box-sizing(border-box);
+        border: 1px solid lighten($orange, 26%);
+        @include border-radius(3px);
+        @include box-shadow(0 2px 3px darken($bg-color, 6%));
+        margin: auto;
+        max-width: 80%;
+        padding: 3% 3% 10%;
+        @include transform(rotate(2deg));
+        position: relative;
 
-      p#learn-more {
-        @extend h2;
-        color: darken($bg-color, 35%);
-        font-size: 1.2em;
+        h2 {
+          font:0.78em/1.5em 'Gloria Hallelujah', cursive;
+          text-shadow: none;
+          color: #d0ad56;
+        }
+
+        &:before, &:after {
+          @include background-image(linear-gradient(45deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0.5) 44%, rgba(255,255,255,1) 67%, rgba(255,255,255,0.22) 99%, rgba(255,255,255,0.2) 100%));
+          border: 1px solid #eee;
+          content:'';
+          position: absolute;
+          height: 1em;
+          width: 2em;
+        }
+
+        &:before {
+          left: -1.5em;
+          top: 10px;
+        }
+
+        &:after {
+          right: -1.5em;
+        }
       }
     }
 
@@ -39,30 +62,117 @@ body.welcome {
         &.sign-in {
           @extend .button;
           @extend .yammer-button;
+          margin-bottom: 0;
         }
       }
     }
   }
 
+  div.learn-more {
+    @include fill-parent();
+    text-align: center;
+    padding: 5%;
+    font-size: 1.25em;
+    font-family: $bariol;
+    z-index: 999;
+    position: relative;
+    border-bottom: 1px solid darken($bg-color, 10%);
+
+    p {
+      @include border-radius(4px);
+      color: darken($bg-color, 30%);
+      overflow: hidden;
+      white-space: nowrap;
+      margin: 0 auto;
+      @include animation(bounce 1.5s 1s infinite);
+    }
+  }
+
   section.steps {
-    margin-top: 50px;
     width: 100%;
     @include box-sizing(border-box);
+
+    img {
+      display: inline-block;
+      margin: 0;
+      vertical-align: text-top;
+
+      &.step-number {
+        width: 1.2em;
+      }
+    }
 
     ul {
       text-align: center;
 
       li {
-        border: 1px solid #000;
-        @include border-radius(3px);
         @include clearfix();
         display: block;
+        font-family: $bariol;
         visibility: hidden;
-        margin: 10px auto;
-        margin-bottom: 10px;
-        min-height: 200px;
-        vertical-align: middle;
+        margin: 0 auto;
+        font-size: 1.5em;
+        @include box-sizing(border-box);
+        padding: 10%;
+
+        &.animated {
+          @include animation(fadeInUp 0.5s 0 1);
+
+          div.title {
+            @include animation(rotateInUpLeft 0.5s 0.5s 1 both);
+          }
+
+          img.illustration {
+            @include animation(rotateInUpRight 0.5s 0.7s 1 both);
+          }
+        }
+
+        div.title {
+        }
+
+        img.illustration {
+          display: block;
+          @include clearfix();
+          margin: 5% auto 0;
+        }
+
+        &.first-step {
+          color: $blue;
+          background-image: url("/images/welcome-page/step-1-bg.png");
+          background-color: rbga(255,255,255,1);
+          @include box-shadow(inset 0 5px 20px #fff, 0 5px 10px #eee);
+          border-bottom: 1px solid #ddd;
+        }
+
+        &.second-step {
+          background: $orange;
+          color: #fff;
+        }
+
+        &.third-step {
+          color: #fff;
+          background: $blue;
+          border-top: 10px solid darken($blue, 20%);
+        }
+
+        &.fourth-step {
+          background: #d9f3f9;
+          color: $blue;
+          border-bottom: 10px solid $orange;
+        }
       }
+    }
+  }
+
+  div.footer-sign-in {
+    @include fill-parent();
+    padding: 0 10% 5%;
+    text-align: center;
+
+    a.sign-in {
+      @extend .button;
+      @extend .yammer-button;
+      display: block;
     }
   }
 }
