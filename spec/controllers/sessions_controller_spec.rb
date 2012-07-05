@@ -27,9 +27,11 @@ describe SessionsController, '#create' do
   it 'converts YammerInvitees to Users' do
     yammer_invitee = create(:yammer_invitee)
     stub_omniauth_env_with_yammer_invitee(yammer_invitee)
-    [User.count, YammerInvitee.count].should == [0, 1]
+    User.count.should == 0
+    YammerInvitee.count.should == 1
     post :create
-    [User.count, YammerInvitee.count].should == [1, 0]
+    User.count.should == 1
+    YammerInvitee.count.should == 0
   end
 
   private

@@ -9,7 +9,7 @@ class YammerInvitee < ActiveRecord::Base
   def self.convert_to_user_from_params(params)
     yammer_invitee = YammerInvitee.find_by_yammer_user_id(params[:uid].to_s)
     if yammer_invitee
-      User.create_from_params(params).tap do |user|
+      User.create_from_params!(params).tap do |user|
         if user
           yammer_invitee.invitations.each do |invitation|
             invitation.invitee = user

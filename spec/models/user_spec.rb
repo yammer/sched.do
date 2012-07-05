@@ -49,10 +49,10 @@ describe User, 'validations' do
   end
 end
 
-describe User, '.create_from_params' do
+describe User, '.create_from_params!' do
   it 'returns a new user' do
     auth = create_yammer_account
-    user = User.create_from_params(auth)
+    user = User.create_from_params!(auth)
     user.name.should == auth[:info][:name]
     user.access_token.should == auth[:info][:access_token]
     user.should be_persisted
