@@ -8,18 +8,20 @@ table {
   th {
     font-weight: bold;
   }
-
-  td, th {
-    padding: 0 13px;
-    height: 56px;
-    text-align: left;
-    border: 0;
-  }
 }
 
 div.table-wrapper {
   position: relative;
   margin: 20px 0;
+
+  table {
+    td, th {
+      padding: 0 13px;
+      height: 56px;
+      text-align: left;
+      border: 0;
+    }
+  }
 
   div {
     &#invitees {
