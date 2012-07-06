@@ -48,6 +48,10 @@ class User < ActiveRecord::Base
     user_votes.new
   end
 
+  def notify(invitation)
+    nil # TODO
+  end
+
   private
 
   def set_salt_if_necessary

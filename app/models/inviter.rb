@@ -4,7 +4,9 @@ class Inviter
   end
 
   def invite(user)
-    Invitation.find_or_create_by_event_and_invitee(@event, user)
+    Invitation.find_or_create_by_event_and_invitee(@event, user).tap do |invitation|
+      user.notify(invitation)
+    end
   end
 
   def invite_from_params(options)

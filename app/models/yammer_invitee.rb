@@ -20,4 +20,8 @@ class YammerInvitee < ActiveRecord::Base
       end
     end
   end
+
+  def notify(invitation)
+    nil # TODO
+  end
 end
