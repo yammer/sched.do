@@ -1,7 +1,7 @@
 GIT
   remote: git://github.com/jsteiner/cocoon.git
-  revision: 72d51f6b6e4e5a133ca9061cf08e44410476ce9a
-  branch: nested-add-fields-links
+  revision: ab64ff6e465793343744f20a2a36295f80ad63de
+  branch: scheddo
   specs:
     cocoon (1.0.20)
 

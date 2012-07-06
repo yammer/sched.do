@@ -22,7 +22,7 @@ gem 'formtastic'
 # We currently use this forked repo as it allows you to nest links to add associations.
 # We can move back to the original gem when the gem fixes a bug where nesting causes
 # infinite looping and the gem correctly adds nested dynamically added objects to the params.
-gem 'cocoon', git: 'git://github.com/jsteiner/cocoon.git', branch: 'nested-add-fields-links'
+gem 'cocoon', git: 'git://github.com/jsteiner/cocoon.git', branch: 'scheddo'
 gem 'flutie'
 gem 'bourbon'
 gem 'jquery-rails'
