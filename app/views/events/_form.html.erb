@@ -9,7 +9,7 @@
         <%= render 'existing_suggestion_fields', f: suggestion_form %>
       <% end %>
     </div>
-    <%= link_to_add_association 'Add Another Day', f, :suggestions,
+    <%= link_to_add_association 'Add Another Date', f, :suggestions,
           partial: 'primary_suggestion_fields',
           link_partial: 'link_to_add_secondary_fields',
           'data-link-insertion-node' => '.times',

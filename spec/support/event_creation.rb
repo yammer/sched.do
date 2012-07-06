@@ -57,7 +57,7 @@ module EventCreation
 
     def add_primary_suggestion_fields
       (@suggestions.size - @fields.size).times do
-        @page.click_link 'Add Another Day'
+        @page.click_link 'Add Another Date'
       end
       find_suggestion_fields
     end

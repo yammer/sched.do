@@ -1,11 +1,6 @@
 div.new-event {
   @extend .sheet;
 
-  // #event_name {
-  //   font-size: 1.6em;
-  //   font-family: $bariol-light;
-  // }
-
   div.suggestions {
     margin-top: 15px;
     padding-top: 15px;
@@ -13,10 +8,10 @@ div.new-event {
   }
 
   a.add-suggestion {
-    background: lighten($success, 1%);
-    border: 1px dashed darken($success, 30%);
+    background: $success;
+    border: 1px dashed darken($success, 50%);
     @include border-radius(5px);
-    color: desaturate(darken($success, 35%), 10%);
+    color: desaturate(darken($success, 50%), 15%);
     display: block;
     @include fill-parent();
     margin: 0 auto;
@@ -52,8 +47,8 @@ div.new-event {
 
         a.add_fields {
           background: transparent;
-          border: 1px dashed lighten($blue, 30%);
-          color: desaturate(lighten($blue, 20%), 10%);
+          border: 1px dashed lighten($blue, 5%);
+          color: desaturate(lighten($blue, 10%), 10%);
           text-shadow: 0 1px 0 #fff;
           padding: 12px 10px;
 
@@ -115,8 +110,8 @@ div.new-event {
       }
     }
 
-    &.deleted-suggestion {
-      @include animation(hinge 2s 0 1 ease both);
+    &.deleted {
+      @include animation(hinge 2s 1 both);
       z-index: 99;
 
       input {

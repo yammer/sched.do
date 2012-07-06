@@ -50,7 +50,17 @@ $(document).ready(function() {
     });
   };
 
+  var addRemovalAnimation = function() {
+    $('div.primary > div.times > a.remove_fields').click(function(){
+      $(this).parents('div.nested-fields').addClass('deleted');
+    });
+    $('div.secondary a.remove_fields').click(function(){
+      $(this).parent('div.nested-fields').addClass('deleted');
+    });
+  };
+
   datepicker();
+  addRemovalAnimation();
 
   $.extend($.datepicker,{_checkOffset:function(inst,offset,isFixed){
     var dpHeight = inst.dpDiv.outerHeight();
@@ -63,11 +73,9 @@ $(document).ready(function() {
 
   var forms = $('form[id*=new_event], form[id*="edit_event"]');
   forms.find('div.nested-fields input').removeAttr('maxlength');
-  forms.find('div.nested-fields.primary').addClass('animated');
-
-
   forms.bind('insertion-callback', function(){
     datepicker();
+    addRemovalAnimation();
 
     // Animate new nodes
     var lastNode =  forms.find('div.nested-fields.primary:last');
@@ -76,6 +84,8 @@ $(document).ready(function() {
     $dateTimePickers = forms.find('div.nested-fields input')
     $dateTimePickers.removeAttr('maxlength');
   });
+
+
 
   bind_to_new_time_fields();
   bind_to_changed_primary_fields();
