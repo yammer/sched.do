@@ -65,10 +65,11 @@ div.new-event {
         border-top: 1px dashed darken($bg-color, 10%);
 
         a.add_fields {
-          background: transparent;
           border: 1px dashed lighten($blue, 5%);
+          background: lighten($blue, 40%);
           color: desaturate(lighten($blue, 10%), 10%);
           text-shadow: 0 1px 0 #fff;
+          @include transition(background 0.2s);
           padding: 12px 10px;
 
           &:before {
@@ -76,7 +77,7 @@ div.new-event {
           }
 
           &:hover {
-            background: lighten($blue, 40%);
+            background: #fff;
             color: desaturate(lighten($blue, 10%), 10%);
           }
         }
