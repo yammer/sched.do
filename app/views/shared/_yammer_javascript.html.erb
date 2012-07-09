@@ -1,4 +1,7 @@
 <script type="text/javascript" src="https://assets.yammer.com/platform/yam.js"></script>
 <script type="text/javascript">
   yam.config({appId: '<%= ENV['CONSUMER_KEY'] %>'});
+  <% if signed_in? %>
+    var access_token = "<%= current_user.access_token %>";
+  <% end %>
 </script>

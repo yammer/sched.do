@@ -24,4 +24,8 @@ class YammerInvitee < ActiveRecord::Base
   def notify(invitation)
     nil # TODO
   end
+
+  def voted_for?(suggest)
+    false
+  end
 end
