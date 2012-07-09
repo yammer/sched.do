@@ -1,5 +1,6 @@
 class Event < ActiveRecord::Base
-  attr_accessible :name, :suggestion, :suggestions_attributes, :invitations_attributes
+  attr_accessible :name, :suggestion, :suggestions_attributes,
+    :invitations_attributes, :message
 
   belongs_to :user
   has_many :suggestions

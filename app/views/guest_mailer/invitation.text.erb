@@ -1,4 +1,11 @@
 You have been invited!
 
 <%= @event.user.name %> has invited you to the event <%= link_to @event.name, @event %> on Sched.do!
+<% if @event.message %>
+
+<%= @event.user.name %> says:
+
+  <%= @event.message %>
+
+<% end %>
 In order to help <%= @event.user.name %> pick a date and time for the event, follow this link <%= link_to event_url(@event), @event %> or paste it into your URL bar, then vote on one or more options.

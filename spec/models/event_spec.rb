@@ -14,6 +14,7 @@ describe Event do
   it { should allow_mass_assignment_of(:suggestion) }
   it { should allow_mass_assignment_of(:suggestions_attributes) }
   it { should allow_mass_assignment_of(:invitations_attributes) }
+  it { should allow_mass_assignment_of(:message) }
 
   it { should accept_nested_attributes_for(:suggestions).allow_destroy(true) }
   it { should accept_nested_attributes_for(:invitations) }

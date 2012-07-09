@@ -59,7 +59,7 @@ class EventsController < ApplicationController
   def create_invitations_for_event(event)
     inviter = Inviter.new(event)
     if params[:event]
-      invitations_attributes = params[:event].delete(:invitations_attributes)
+      invitations_attributes = params[:event].delete(:invitations_attributes) || {}
       invitations_attributes.values.each do |invitation|
         inviter.invite_from_params(invitation)
       end
