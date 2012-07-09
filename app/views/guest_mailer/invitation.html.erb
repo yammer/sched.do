@@ -100,15 +100,12 @@
         background-color:#FFFFFF;
       }
 
-<<<<<<< HEAD
       p#message {
         background: #f6fbfc;
         padding: 20px;
         color: #5d8188;
       }
 
-=======
->>>>>>> design email invitation template.
       .bodyContent div{
         color:#505050;
         font-family:Arial;
@@ -229,8 +226,7 @@
                                 <h1 class="h1">You have been invited!</h1>
                                 <p><%= @event.user.name %> has invited you to the event <%= link_to @event.name, @event %> on Sched.do!</p>
                                 <% if @event.message %>
-                                  <p><%= @event.user.name %> says:</p>
-                                  <p><%= @event.message %></p>
+                                  <p id="message"><%= @event.message %></p>
                                 <% end %>
                               </div>
                             </td>
