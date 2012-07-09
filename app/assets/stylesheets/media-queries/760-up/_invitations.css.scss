@@ -1,15 +1,42 @@
 div.invitation-message {
   @include row();
 
-  textarea {
-    @include columns(7);
-  }
+  form {
+    fieldset {
+      padding: 0;
+      border: none;
 
-  div.meta {
-    @include columns(5);
-    input[type="url"], input[type="submit"] {
-      @include fill-parent();
+      &.inputs {
+        @include columns(7);
+
+        textarea {
+          padding: 1em;
+        }
+      }
+
+      &.actions {
+        @include columns(5);
+
+        input[disabled] {
+          margin-bottom: 15px;
+          margin-top: -1px;
+        }
+
+        input[type="submit"] {
+          padding: 18px;
+          font-weight: bold;
+        }
+      }
     }
 
+    textarea {
+    }
+
+    div.meta {
+      input[type="url"], input[type="submit"] {
+        @include fill-parent();
+      }
+
+    }
   }
 }

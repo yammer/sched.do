@@ -7,19 +7,17 @@
   <% end %>
   <%= render partial: 'grid' %>
 
-  <p>
-    Share this link with your friends to have them vote on it:
-    <%= link_to event_url(@event), event_url(@event) %>
-  </p>
-
   <% if current_user.able_to_edit?(@event) %>
-    <%= semantic_form_for(@event) do |f| %>
-      <%= f.inputs do %>
-        <%= f.input :message, label: false, placeholder: "Enter your custom message here..." %>
+    <div class="invitation-message">
+      <%= semantic_form_for(@event) do |f| %>
+        <%= f.inputs do %>
+          <%= f.input :message, label: false, placeholder: "Enter your custom message here..." %>
+        <% end %>
+        <%= f.actions do %>
+          <input id="" name="" disabled="disabled" class="disabled" type="url" value="<%= event_url(@event) %>" />
+          <%= f.action :submit, label: 'Send Invitation ➜', button_html: { class: "cta" } %>
+        <% end %>
       <% end %>
-      <%= f.actions do %>
-        <%= f.action :submit, label: 'Save Invitation Message', button_html: { class: "cta" } %>
-      <% end %>
-    <% end %>
+    </div>
   <% end %>
 </div>
