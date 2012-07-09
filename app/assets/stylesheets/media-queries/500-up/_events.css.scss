@@ -7,6 +7,7 @@ div.new-event {
       div.date {
         @include columns(6);
       }
+
       div.times {
         @include columns(6);
         margin-top: 0;

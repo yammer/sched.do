@@ -11,3 +11,34 @@ div.show-event {
     }
   }
 }
+
+div.new-event {
+  div.nested-fields  {
+    &.primary {
+      div.times {
+        a.add_fields {
+          &:before {
+            background: desaturate(lighten($blue, 10%), 10%);
+            @include border-radius(2px);
+            color: #fff;
+            content: "+";
+            display: block;
+            font-weight: bold;
+            margin-top: -1px;
+            opacity: 0.7;
+            padding: 1px 3px 2px;
+            position: absolute;
+            text-shadow: none;
+            vertical-align: text-top;
+          }
+
+          &:hover {
+            &:before {
+              opacity: 1;
+            }
+          }
+        }
+      }
+    }
+  }
+}

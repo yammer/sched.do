@@ -19,8 +19,27 @@ div.new-event {
     text-align: center;
     text-decoration: none;
 
+    &:before {
+      background: desaturate(darken($success, 50%), 15%);
+      @include border-radius(3px);
+      color: #fff;
+      content: "+";
+      display: block;
+      font-weight: bold;
+      margin-top: -3px;
+      opacity: 0.5;
+      padding: 4px 6px 5px;
+      position: absolute;
+      text-shadow: none;
+      vertical-align: text-top;
+    }
+
     &:hover {
       background: darken($success, 2%);
+
+      &:before {
+        opacity: 1;
+      }
     }
   }
 
@@ -52,9 +71,13 @@ div.new-event {
           text-shadow: 0 1px 0 #fff;
           padding: 12px 10px;
 
+          &:before {
+            display: none;
+          }
+
           &:hover {
             background: lighten($blue, 40%);
-          color: desaturate(lighten($blue, 10%), 10%);
+            color: desaturate(lighten($blue, 10%), 10%);
           }
         }
       }

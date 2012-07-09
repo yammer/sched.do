@@ -73,17 +73,21 @@ $(document).ready(function() {
 
   var forms = $('form[id*=new_event], form[id*="edit_event"]');
   forms.find('div.nested-fields input').removeAttr('maxlength');
+
   forms.bind('insertion-callback', function(){
     datepicker();
     addRemovalAnimation();
 
     // Animate new nodes
-    var lastNode =  forms.find('div.nested-fields.primary:last');
+    var lastNode =  forms.find('div.nested-fields.primary:not(".initial"):last');
     lastNode.addClass('animated');
 
     $dateTimePickers = forms.find('div.nested-fields input')
     $dateTimePickers.removeAttr('maxlength');
   });
+
+  // Prevent initial primary suggestion fields from animating
+  $('div.nested-fields.primary').addClass('initial');
 
 
 
