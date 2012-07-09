@@ -100,6 +100,12 @@
         background-color:#FFFFFF;
       }
 
+      p#message {
+        background: #f6fbfc;
+        padding: 20px;
+        color: #5d8188;
+      }
+
       .bodyContent div{
         color:#505050;
         font-family:Arial;
@@ -220,8 +226,7 @@
                                 <h1 class="h1">You have been invited!</h1>
                                 <p><%= @event.user.name %> has invited you to the event <%= link_to @event.name, @event %> on Sched.do!</p>
                                 <% if @event.message %>
-                                  <p><%= @event.user.name %> says:</p>
-                                  <p><%= @event.message %></p>
+                                  <p id="message"><%= @event.message %></p>
                                 <% end %>
                                 <p>In order to help <%= @event.user.name %> pick a date and time for the event, follow this link <%= link_to event_url(@event), @event %> or paste it into your URL bar, then vote on one or more options.</p>
                               </div>
