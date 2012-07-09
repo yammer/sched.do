@@ -134,7 +134,6 @@ div.table-wrapper {
                     height: 56px;
                     text-indent: -9999px;
                     overflow: hidden;
-                    @include transition(background-color 0.2s);
 
                     &.vote {
                       background: rgba(231, 244, 247, 0.3);
@@ -145,7 +144,7 @@ div.table-wrapper {
                     }
 
                     &.unvote {
-                      background: desaturate(darken($success, 40%), 20%);
+                      background: darken($success, 25%);
                       background-image: url('/images/checkmark.png');
                       background-position: center 10px;
                       background-repeat: no-repeat;
