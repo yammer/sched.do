@@ -89,8 +89,6 @@ $(document).ready(function() {
   // Prevent initial primary suggestion fields from animating
   $('div.nested-fields.primary').addClass('initial');
 
-
-
   bind_to_new_time_fields();
   bind_to_changed_primary_fields();
 
@@ -117,4 +115,10 @@ $(document).ready(function() {
       });
     });
   }
+
+  // Select event URL on click
+  $("input#event-url").click(function() {
+   $(this).select();
+  });
+
 });
