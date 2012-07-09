@@ -1,4 +1,9 @@
 YammerApi = {
+  setAccessToken: function(token){
+   yam.request.setAuthenticator('oauth2');
+   yam.request.getAuthenticator({ auth: 'oauth2' }).setAuthToken(token);
+  },
+
   autocomplete: {
     get: function(term, autocompleteCallback){
       var options = {
