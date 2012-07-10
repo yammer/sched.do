@@ -12,7 +12,7 @@ step 'I invite :email to :event_name' do |email, event_name|
   event = Event.find_by_name!(event_name)
   visit event_path(event)
   click_link 'Edit event or invite people'
-  find_field_by_data_role('invitation_name').set(email)
+  find_first_empty_field_by_data_role('invitation_name').set(email)
   click_button 'Update event'
 end
 
@@ -26,3 +26,4 @@ step ':guest_email was invited to the event :event_name' do |guest_email, event_
   event = Event.find_by_name!(event_name)
   Inviter.new(event).invite_from_params(name_or_email: guest_email)
 end
+

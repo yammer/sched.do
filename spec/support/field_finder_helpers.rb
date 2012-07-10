@@ -11,6 +11,11 @@ module FieldFinderHelpers
     Field.new(data_role, page).find_all_by_data_role
   end
 
+  def find_first_empty_field_by_data_role(role_name)
+    fields = find_fields_by_data_role(role_name)
+    fields.select {|field| field.value.nil? }.first
+  end
+
   private
 
   class Field
