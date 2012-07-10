@@ -25,6 +25,13 @@ describe Guest, '#yammer_user_id' do
   end
 end
 
+describe Guest, '#yammer_group_id' do
+  it 'always returns nil' do
+    build(:guest).yammer_group_id.should be_nil
+  end
+end
+
+
 describe Guest, '#able_to_edit?' do
   it 'always returns false' do
     event = build(:event)

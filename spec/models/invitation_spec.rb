@@ -74,3 +74,20 @@ describe Invitation, '#yammer_user_id' do
     invitation.yammer_user_id.should == nil
   end
 end
+
+describe Invitation, '#yammer_group_id' do
+  it 'should return the yammer_group_id if the invitee has one' do
+    invitation = build(:invitation_with_group)
+    invitation.yammer_group_id.should == invitation.invitee.yammer_group_id
+  end
+
+  it 'should return nil if the invitee has no yammer_group_id' do
+    invitation = build(:invitation_with_guest)
+    invitation.yammer_group_id.should == nil
+  end
+
+  it 'should return nil if there is no invitee' do
+    invitation = build(:invitation)
+    invitation.yammer_group_id.should == nil
+  end
+end

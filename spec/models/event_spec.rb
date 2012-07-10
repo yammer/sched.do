@@ -7,6 +7,7 @@ describe Event do
   it { should have_many(:users).through(:invitations) }
   it { should have_many(:yammer_invitees).through(:invitations) }
   it { should have_many(:guests).through(:invitations) }
+  it { should have_many(:groups).through(:invitations) }
 
   it { should validate_presence_of(:name).with_message(/This field is required/) }
   it { should validate_presence_of(:user_id) }

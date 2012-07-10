@@ -22,7 +22,12 @@ YammerApi = {
                    value: userObject.full_name,
                    yammerUserId: userObject.id };
         });
-        autocompleteCallback(users);
+        var groups = _.map(yammerData.groups, function(userObject) {
+          return { label: userObject.full_name,
+                   value: userObject.full_name,
+                   yammerGroupId: userObject.id };
+        });
+        autocompleteCallback(users.concat(groups));
       };
     }
   }

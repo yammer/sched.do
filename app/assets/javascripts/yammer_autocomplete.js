@@ -2,10 +2,18 @@ $("input[data-role='invitation_name']").autocomplete({
   minLength: 3,
   appendTo: '.invitation-autocomplete-suggestions',
   select: function(event, ui) {
-    var target = event.target;
-    var yammerUserId = ui.item.yammerUserId;
-    var $yammerUserIdField = $(target).closest('fieldset.inputs').find('[data-role="yammer_user_id"]');
-    $yammerUserIdField.prop('value', yammerUserId);
+    var id;
+    var dataRole;
+    clearAllNearbyDataRoles(event.target);
+    if (ui.item.yammerUserId) {
+      id = ui.item.yammerUserId;
+      dataRole = "yammer_user_id";
+    }
+    else{
+      id = ui.item.yammerGroupId;
+      dataRole = "yammer_group_id";
+    };
+    fillInClosestFieldWithDataRole(id, event.target, dataRole);
   },
   source: function(request, response) {
     var term = request.term;
@@ -13,3 +21,14 @@ $("input[data-role='invitation_name']").autocomplete({
     YammerApi.autocomplete.get(term, response);
   }
 });
+
+function clearAllNearbyDataRoles(target){
+  fillInClosestFieldWithDataRole('', target, "yammer_user_id");
+  fillInClosestFieldWithDataRole('', target, "yammer_group_id");
+}
+
+function fillInClosestFieldWithDataRole(id, target, dataRole){
+  var dataRoleString = '[data-role="' + dataRole + '"]';
+  var $field = $(target).closest('fieldset.inputs').find(dataRoleString);
+  $field.prop('value', id);
+}

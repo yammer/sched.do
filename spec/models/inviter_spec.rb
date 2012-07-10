@@ -31,6 +31,22 @@ describe Inviter do
     end
   end
 
+  context "given a yammer group_id" do
+    it "will create an invitation for an existing yammer group" do
+      group = create(:group)
+      invitation = inviter.invite_from_params(yammer_group_id: group.yammer_group_id)
+      group.invitations.should include(invitation)
+    end
+
+    it "will create a group and attach an invitation to it if the group does not already exist" do
+      Group.count.should == 0
+      yammer_group_name = 'Group Name'
+      invitation = inviter.invite_from_params(yammer_group_id: 'yammer-group-id', name_or_email: yammer_group_name)
+      Group.count.should == 1
+      Group.first.name.should == yammer_group_name
+    end
+  end
+
   context "given a guest email with no current yammer user" do
     it 'it creates a guest' do
       Guest.count.should == 0

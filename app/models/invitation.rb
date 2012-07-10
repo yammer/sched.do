@@ -23,6 +23,10 @@ class Invitation < ActiveRecord::Base
     invitee.try(:yammer_user_id)
   end
 
+  def yammer_group_id
+    invitee.try(:yammer_group_id)
+  end
+
   def send_notification
     invitee.notify(self)
   end

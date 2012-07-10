@@ -19,6 +19,11 @@ FactoryGirl.define do
     email
   end
 
+  factory :group do
+    name 'Yammer Group'
+    sequence(:yammer_group_id) { |n| n.to_s }
+  end
+
   factory :event do
     name 'Clown party'
     user
@@ -58,6 +63,11 @@ FactoryGirl.define do
     factory :invitation_with_user do
       association :invitee, factory: :user
       invitee_type 'User'
+    end
+
+    factory :invitation_with_group do
+      association :invitee, factory: :group
+      invitee_type 'Group'
     end
 
     factory :invitation_with_yammer_invitee do

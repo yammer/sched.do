@@ -10,6 +10,8 @@ class Inviter
   def invite_from_params(options)
     if options[:yammer_user_id].present?
       invitee = find_user_or_yammer_invitee(options[:yammer_user_id], options[:name_or_email])
+    elsif options[:yammer_group_id].present?
+      invitee = find_group(options[:yammer_group_id], options[:name_or_email])
     else
       invitee = find_guest(options[:name_or_email])
     end
@@ -28,6 +30,10 @@ class Inviter
 
   def find_yammer_invitee(yammer_user_id, name)
     YammerInvitee.find_or_create_by_yammer_user_id(yammer_user_id: yammer_user_id, name: name)
+  end
+
+  def find_group(yammer_group_id, name)
+    Group.find_or_create_by_yammer_group_id(yammer_group_id: yammer_group_id, name: name)
   end
 
   def find_guest(email)

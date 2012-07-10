@@ -77,4 +77,10 @@
       </tbody>
     </table>
   </div>
+
+  <ul id="groups">
+    <% @event.groups.each do |group| %>
+      <li><%= group.name %></li>
+    <% end %>
+  </ul>
 </div>
