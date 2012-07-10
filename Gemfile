@@ -30,6 +30,7 @@ gem 'omniauth', '~> 1.0'
 gem 'omniauth-oauth2', '~> 1.0.2'
 gem 'airbrake', '~> 3.1.0'
 gem 'underscore-rails', '~> 1.3.1'
+gem 'mail_view'
 
 group :development do
   gem 'heroku'
@@ -42,7 +43,6 @@ group :development, :test do
   gem 'sham_rack'
   gem 'pry'
   gem 'evergreen', require: 'evergreen/rails'
-  gem 'mail_view'
 end
 
 group :test do
