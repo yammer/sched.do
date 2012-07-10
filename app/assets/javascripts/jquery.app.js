@@ -117,8 +117,10 @@ $(document).ready(function() {
   }
 
   // Select event URL on click
-  $("input#event-url").click(function() {
+  var eventURL =  $("input#event-url");
+  eventURL.click(function() {
    $(this).select();
   });
+  eventURL.tooltip({trigger: 'focus'});
 
 });
