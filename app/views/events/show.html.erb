@@ -14,7 +14,7 @@
           <%= f.input :message, label: false, placeholder: "Enter your custom message here..." %>
         <% end %>
         <%= f.actions do %>
-          <input id="event-url" name="" readonly="readonly" data-title="Copy (Command+C) this event's URL" rel="tooltip" class="read-only" type="url" value="<%= event_url(@event) %>" />
+          <input id="event-url" name="" readonly="readonly" data-title="Copy and share this event's URL" rel="tooltip" class="read-only" type="url" value="<%= event_url(@event) %>" />
           <%= f.action :submit, label: 'Send Invitation ➜', button_html: { class: "cta" } %>
         <% end %>
       <% end %>
