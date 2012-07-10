@@ -15,12 +15,24 @@ class Event < ActiveRecord::Base
   accepts_nested_attributes_for :suggestions, reject_if: :all_blank,
     allow_destroy: true
 
+  after_create :create_event_created_activity
+
   def invitees
     group = [user] + users + yammer_invitees + guests
     group.sort{|a, b| b.created_at <=> a.created_at }
   end
 
+  def invitees_for_json
+    invitees.map { |e| { name: e.name, email: e.email } }
+  end
+
   def user_invited?(user)
     invitees.include?(user)
+  end
+
+  private
+
+  def create_event_created_activity
+    ActivityCreator.new(self.user, 'create', self).create
   end
 end

@@ -40,6 +40,7 @@ GEM
       activesupport
       builder
     arel (3.0.2)
+    awesome_print (1.0.2)
     bourbon (2.1.0)
       sass (>= 3.1)
     bourne (1.1.2)
@@ -250,6 +251,7 @@ PLATFORMS
 
 DEPENDENCIES
   airbrake (~> 3.1.0)
+  awesome_print
   bourbon
   bourne
   bundler (>= 1.2.0.pre)
@@ -274,11 +276,13 @@ DEPENDENCIES
   pg
   pry
   rails (= 3.2.6)
+  rest-client
   rspec-rails (~> 2.9.0)
   sass
   sass-rails (~> 3.2.3)
   sham_rack
   shoulda-matchers (~> 1.1.0)
+  sinatra
   sprockets-redirect
   thin
   timecop

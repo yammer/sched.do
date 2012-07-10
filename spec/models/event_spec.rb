@@ -22,6 +22,12 @@ describe Event do
     nested_attributes_options = Event.nested_attributes_options[:suggestions]
     nested_attributes_options[:reject_if].call({ primary: '' }).should be_true
   end
+
+  it 'updates Yammer activity ticker after creation' do
+    FakeYammer.has_activity_message?.should be_false
+    event = create(:event)
+    FakeYammer.has_activity_message?.should be_true
+  end
 end
 
 describe Event, '#invitees' do
@@ -31,6 +37,8 @@ describe Event, '#invitees' do
     invitees += create_list(:invitation_with_user, 2, event: event).map(&:invitee)
     invitees += create_list(:invitation_with_yammer_invitee, 2, event: event).map(&:invitee)
     invitees += create_list(:invitation_with_guest, 2, event: event).map(&:invitee)
+    event.reload
+
     event.invitees.should =~ invitees
   end
 
@@ -43,6 +51,7 @@ describe Event, '#invitees' do
     event = create(:event)
     first_invitee = create(:invitation_with_user, event: event).invitee
     second_invitee = create(:invitation_with_user, event: event).invitee
+    event.reload
 
     event.invitees.should == [second_invitee, first_invitee, event.user]
   end

@@ -84,3 +84,7 @@ step 'I sign in and fill in the event name' do
   sign_in
   fill_in 'event_name', with: 'something'
 end
+
+step 'my network should see an activity message announcing the event' do
+  FakeYammer.has_activity_message?.should be_true
+end

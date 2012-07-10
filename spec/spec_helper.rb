@@ -35,4 +35,8 @@ RSpec.configure do |config|
     DatabaseCleaner.clean
     ActionMailer::Base.deliveries.clear
   end
+
+  config.before(:each) do
+    FakeYammer.reset
+  end
 end

@@ -18,10 +18,15 @@ class User < ActiveRecord::Base
   end
 
   def self.create_from_params!(params)
-    new(name: params[:info][:name], access_token: params[:info][:access_token]).tap do |user|
-      user.yammer_user_id = params[:uid]
-      user.save!
-    end
+    create!(
+      {
+        access_token: params[:info][:access_token],
+        name: params[:info][:name],
+        yammer_user_id: params[:uid],
+        email: params[:info][:email]
+      },
+      { without_protection: true }
+    )
   end
 
   def able_to_edit?(event)

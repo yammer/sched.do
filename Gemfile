@@ -12,6 +12,7 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
+gem 'awesome_print'
 gem 'pg'
 gem 'thin'
 gem 'sass'
@@ -31,6 +32,7 @@ gem 'omniauth-oauth2', '~> 1.0.2'
 gem 'airbrake', '~> 3.1.0'
 gem 'underscore-rails', '~> 1.3.1'
 gem 'mail_view'
+gem 'rest-client'
 
 group :development do
   gem 'heroku'
@@ -55,6 +57,7 @@ group :test do
   gem 'shoulda-matchers', '~> 1.1.0'
   gem 'launchy'
   gem 'email_spec'
+  gem 'sinatra'
 end
 
 group :staging, :production do

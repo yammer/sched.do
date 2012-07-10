@@ -4,6 +4,7 @@ Feature: User can create an event
     Given I am signed in
     When I create an event named "Clown party" with a suggestion of "lunch"
     Then I should see an event named "Clown party" with a suggestion of "lunch"
+    And my network should see an activity message announcing the event
 
   # This spec will occasionally fail, and I don't know why! This is somehow
   # related to Capybara and the javascript sometimes not being executed.
