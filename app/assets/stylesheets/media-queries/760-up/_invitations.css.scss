@@ -7,7 +7,7 @@ div.invitation-message {
       border: none;
 
       &.inputs {
-        @include columns(7);
+        @include columns(8);
 
         textarea {
           padding: 1em;
@@ -15,28 +15,27 @@ div.invitation-message {
       }
 
       &.actions {
-        @include columns(5);
+        @include columns(4);
 
         input.read-only {
           margin-bottom: 15px;
           margin-top: -1px;
         }
-
-        input[type="submit"] {
-          padding: 18px;
-          font-weight: bold;
-        }
       }
     }
+  }
+}
 
-    textarea {
-    }
 
-    div.meta {
-      input[type="url"], input[type="submit"] {
-        @include fill-parent();
-      }
+div.event-url {
+  @include row();
 
-    }
+  p.help {
+    @include columns(3.8);
+    position: relative;
+  }
+
+  form {
+    @include columns(8.2);
   }
 }
