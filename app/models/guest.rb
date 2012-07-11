@@ -6,6 +6,7 @@ class Guest < ActiveRecord::Base
   has_many :invitations, as: :invitee
 
   validates :email, presence: true
+  validates :email, format: %r{^[a-z0-9!#\$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#\$%&'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$}i
 
   def guest?
     true

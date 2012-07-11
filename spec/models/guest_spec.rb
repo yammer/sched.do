@@ -5,6 +5,15 @@ describe Guest, 'validations' do
   it { should have_many(:guest_votes) }
   it { should have_many(:votes).through(:guest_votes) }
   it { should have_many(:invitations) }
+
+  it "requires a valid e-mail address" do
+    should allow_value("person@example.com").for(:email)
+    should allow_value("person-awesome@example.com").for(:email)
+    should allow_value("person-awesome@example.co.ul.com").for(:email)
+    should_not allow_value("person@@example.com").for(:email)
+    should_not allow_value("person").for(:email)
+    should_not allow_value("person @person.com").for(:email)
+  end
 end
 
 describe Guest, '#guest?' do
