@@ -149,6 +149,7 @@ div.table-wrapper {
                       background-position: center 10px;
                       background-repeat: no-repeat;
                       background-size: 32px;
+                      @include transition(none);
                     }
                   }
                 }
@@ -160,7 +161,7 @@ div.table-wrapper {
 
                     input[type="submit"] {
                       &.vote {
-                        background: lighten($blue, 10%);
+                        background: darken($success, 10%);
                         background-image: url('/images/checkmark.png');
                         background-repeat: no-repeat;
                         background-position: center 10px;
