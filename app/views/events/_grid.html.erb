@@ -1,4 +1,16 @@
 <div class="table-wrapper grid">
+
+  <div class="search-box">
+  <%= semantic_form_for(:invitations, html: { id: 'invitations'}) do |form| %>
+    <%= form.inputs do %>
+      <%= form.input :name_or_email, label: false, required: false,
+            input_html: { 'data-role' => 'invitation_name' }  %>
+      <%= form.input :yammer_user_id, as: :hidden, input_html: { 'data-role' => 'yammer_user_id' } %>
+      <div class="invitation-autocomplete-suggestions"></div>
+    <% end %>
+  <% end %>
+  </div>
+
   <div class="options">
     <table class="touch-scrollable">
       <thead>
