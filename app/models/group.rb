@@ -8,4 +8,12 @@ class Group < ActiveRecord::Base
   def notify(invitation)
 
   end
+
+  def yammer_user?
+   false
+  end
+
+  def yammer_user_id
+    nil
+  end
 end
