@@ -127,11 +127,12 @@ $(document).ready(function() {
   if (Modernizr.touch) {
     $('table.touch-scrollable').addClass("scrollable horizontal")
   }
-  $('#auto-complete').keypress(function(){
+  $('#auto-complete').keyup(function(){
+    var inviteButton = $(this).parents("form").find('.add-invitee');
     if($(this).val() != ""){
-      $(this).parents("form").find('.add-invitee').show();
+      inviteButton.show();
     } else {
-      $(this).parents("form").find('.add-invitee').hide();
+      inviteButton.hide();
     }
   });
 

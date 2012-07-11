@@ -85,6 +85,10 @@ div.table-wrapper {
           position: relative;
         }
 
+        input#auto-complete {
+          padding-right: 4.5em;
+        }
+
         .add-invitee {
           @include button-color(darken($success, 10%));
           display:  none;
