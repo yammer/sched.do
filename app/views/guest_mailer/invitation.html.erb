@@ -222,11 +222,11 @@
                             <td valign="top" style="border-collapse: collapse;">
                               <div style="color: #505050;font-family: Arial;font-size: 14px;line-height: 150%;text-align: left;">
                                 <h1 class="h1" style="color: #30AADE;display: block;font-family: Helvetica, sans-serif;font-size: 24px;font-weight: normal;line-height: 100%;margin-top: 10px;margin-right: 0;margin-bottom: 25px;margin-left: 0;text-align: left;">You have been invited!</h1>
-                                <p><%= @event.user.name %> has invited you to the event <%= link_to @event.name, @event %> on Sched.do!</p>
+                                <p><strong><%= @event.user.name %></strong> has invited you to the event <%= link_to @event.name, @event, html_options = {:style => "color: #EC6E4D"} %> on Sched.do!</p>
                                 <% if @event.message %>
                                   <p id="message" style="background: #f6fbfc;padding: 20px;color: #5d8188;"><%= @event.message %></p>
                                 <% end %>
-                                <p>In order to help <%= @event.user.name %> pick a date and time for the event, follow this link <%= link_to event_url(@event), @event %> or paste it into your URL bar, then vote on one or more options.</p>
+                                <p>In order to help <%= @event.user.name %> pick a date and time for the event, follow this link <%= link_to event_url(@event), @event, html_options = {:style => "color: #EC6E4D"} %> or paste it into your URL bar, then vote on one or more options.</p>
                               </div>
                             </td>
                           </tr>
