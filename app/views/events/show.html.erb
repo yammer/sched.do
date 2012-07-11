@@ -8,14 +8,21 @@
   <%= render partial: 'grid' %>
 
   <% if current_user.able_to_edit?(@event) %>
+    <div class="event-url">
+      <p class="help">Share this link with your friends to invite them and have them vote as well:</p>
+      <form>
+        <input id="event-url" readonly="readonly" class="read-only" data-title="To copy: ⌘+C (Mac) or CTRL+C (Windows/Linux)" type="url" value="<%= event_url(@event) %>" />
+      </form>
+    </div>
+
     <div class="invitation-message">
       <%= semantic_form_for(@event) do |f| %>
         <%= f.inputs do %>
           <%= f.input :message, label: false, placeholder: "Enter your custom message here..." %>
         <% end %>
         <%= f.actions do %>
-          <input id="event-url" name="" readonly="readonly" data-title="Copy and share this event's URL" rel="tooltip" class="read-only" type="url" value="<%= event_url(@event) %>" />
-          <%= f.action :submit, label: 'Send Invitation ➜', button_html: { class: "cta" } %>
+          <%= f.action :submit, label: 'Save Message', button_html: { class: "cta" } %>
+          <p class="help">This message will get sent once to every new invitee you add in the grid above.</p>
         <% end %>
       <% end %>
     </div>

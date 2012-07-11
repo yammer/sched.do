@@ -153,4 +153,42 @@ div.new-event {
   }
 }
 
+div.invitation-message {
+
+  textarea {
+    height: 7em;
+    resize: vertical;
+  }
+
+  fieldset {
+    &.actions {
+      ol li {
+        margin-bottom: 8px;
+      }
+      input[type="submit"] {
+        font-weight: normal;
+        margin-bottom: 0;
+      }
+
+      p.help {
+        font-size: 0.7em;
+        text-align: center;
+        color: darken($bg-color, 30%);
+      }
+    }
+  }
+}
+
+div.event-url {
+  @extend div.invitation-message;
+  padding-top: 20px;
+  padding-bottom: 40px;
+
+  p.help {
+    font-size: 0.82em;
+    color: darken($bg-color, 30%);
+    padding-top: 5px;
+  }
+}
+
 
