@@ -127,5 +127,12 @@ $(document).ready(function() {
   if (Modernizr.touch) {
     $('table.touch-scrollable').addClass("scrollable horizontal")
   }
+  $('#auto-complete').keypress(function(){
+    if($(this).val() != ""){
+      $(this).parents("form").find('.add-invitee').show();
+    } else {
+      $(this).parents("form").find('.add-invitee').hide();
+    }
+  });
 
 });

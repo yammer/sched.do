@@ -82,6 +82,19 @@ div.table-wrapper {
         fieldset {
           padding: 0;
           border: none;
+          position: relative;
+        }
+
+        .add-invitee {
+          @include button-color(darken($success, 10%));
+          display:  none;
+          font-size: 0.8em;
+          padding: 0.2em 0.5em;
+          position: absolute;
+          right: 0.8em;
+          top: 0.9em;
+          width: auto;
+          z-index: 9999;
         }
       }
     }

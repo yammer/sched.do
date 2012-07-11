@@ -18,5 +18,4 @@ $(document).ready(function() {
     triggerOnce: 'true',
     offset: '15%'
   });
-
 });
