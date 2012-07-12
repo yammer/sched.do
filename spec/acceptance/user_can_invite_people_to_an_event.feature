@@ -17,3 +17,9 @@ Feature: User can invite people to an event
     When I update the message with the text 'Welcome!'
     And I invite "batman@example.com" to "Clown party"
     Then "batman@example.com" should receive an email with the text 'Welcome!'
+
+  Scenario: Invitees are placed in reverse chronological order
+    Given I sign in and create an event named "Clown party"
+    When I invite "batman@example.com" to "Clown party"
+    When I invite "spiderman@example.com" to "Clown party"
+    Then "spiderman@example.com" should appear before "batman@example.com"

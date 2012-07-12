@@ -44,3 +44,6 @@ step ':guest_email was invited to the event :event_name' do |guest_email, event_
   Inviter.new(event).invite_from_params(name_or_email: guest_email)
 end
 
+step ':first_item should appear before :second_item' do |first_item, second_item|
+  page.body.should =~ /#{first_item}.*#{second_item}/m
+end

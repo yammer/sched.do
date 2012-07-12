@@ -16,7 +16,8 @@ class Event < ActiveRecord::Base
     allow_destroy: true
 
   def invitees
-    [user] + users + yammer_invitees + guests
+    group = [user] + users + yammer_invitees + guests
+    group.sort{|a, b| b.created_at <=> a.created_at }
   end
 
   def user_invited?(user)

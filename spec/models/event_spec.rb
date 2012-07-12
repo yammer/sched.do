@@ -31,11 +31,19 @@ describe Event, '#invitees' do
     invitees += create_list(:invitation_with_user, 2, event: event).map(&:invitee)
     invitees += create_list(:invitation_with_yammer_invitee, 2, event: event).map(&:invitee)
     invitees += create_list(:invitation_with_guest, 2, event: event).map(&:invitee)
-    event.invitees.should == invitees
+    event.invitees.should =~ invitees
   end
 
   it 'returns only the event creator if there are no invitees' do
     event = build(:event)
     event.invitees.should == [event.user]
+  end
+
+  it "returns invitees with the newest first" do
+    event = create(:event)
+    first_invitee = create(:invitation_with_user, event: event).invitee
+    second_invitee = create(:invitation_with_user, event: event).invitee
+
+    event.invitees.should == [second_invitee, first_invitee, event.user]
   end
 end
