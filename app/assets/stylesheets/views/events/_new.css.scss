@@ -178,17 +178,3 @@ div.invitation-message {
     }
   }
 }
-
-div.event-url {
-  @extend div.invitation-message;
-  padding-top: 20px;
-  padding-bottom: 40px;
-
-  p.help {
-    font-size: 0.82em;
-    color: darken($bg-color, 30%);
-    padding-top: 5px;
-  }
-}
-
-
