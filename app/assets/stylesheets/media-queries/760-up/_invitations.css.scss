@@ -25,17 +25,3 @@ div.invitation-message {
     }
   }
 }
-
-
-div.event-url {
-  @include row();
-
-  p.help {
-    @include columns(3.8);
-    position: relative;
-  }
-
-  form {
-    @include columns(8.2);
-  }
-}

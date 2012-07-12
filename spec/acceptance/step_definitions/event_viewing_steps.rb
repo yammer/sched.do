@@ -38,6 +38,5 @@ step 'I should see multiple suggestions' do
 end
 
 step 'I should see a link to that event' do
-  url = event_url(Event.order('id').last)
-  page.find("#event-url").value.should == url
+  page.should have_content event_url(Event.order('id').last)
 end
