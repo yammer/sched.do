@@ -37,6 +37,8 @@ div.table-wrapper {
       @include user-select();
 
       table {
+        @include box-shadow(0 0 20px darken($bg-color, 15%));
+
         tr {
           border-bottom: 1px solid darken($bg-color, 20%);
           @include background-image(linear-gradient(#fff, $bg-color));
@@ -79,13 +81,10 @@ div.table-wrapper {
 
     &.options {
       border: 1px solid darken($bg-color, 20%);
-      overflow: scroll;
-      overflow-y: hidden;
+      overflow: auto;
       @include box-sizing(border-box);
       @include border-radius(0 4px 0 0);
       margin-left: $table-width-mobile - 1;
-      cursor: -webkit-grab;
-      @include user-select();
 
 
       table {

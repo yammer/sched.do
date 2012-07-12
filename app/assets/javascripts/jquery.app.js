@@ -123,4 +123,9 @@ $(document).ready(function() {
   });
   eventURL.tooltip({trigger: 'focus'});
 
+  // Enable dragging in touch devices on tables
+  if (Modernizr.touch) {
+    $('table.touch-scrollable').addClass("scrollable horizontal")
+  }
+
 });

@@ -1,13 +1,6 @@
 <div class="table-wrapper grid">
-
-<%#   <div class="search-box"> %>
-<%#     <form id="auto-complete"> %>
-<%#       <input type="text" placeholder="+ Add participant&hellip;"/> %>
-<%#     </form> %>
-<%#   </div> %>
-
   <div class="options">
-    <table class="scrollable horizontal">
+    <table class="touch-scrollable">
       <thead>
         <tr>
           <% @suggestions.each do |suggestion| %>
@@ -58,7 +51,7 @@
   </div>
 
   <div id="invitees">
-    <table>
+    <table class="touch-scrollable">
       <tbody>
         <% @event.invitees.each do |invitee| %>
           <% if current_user == invitee %>

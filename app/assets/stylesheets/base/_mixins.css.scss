@@ -35,15 +35,6 @@
   }
 }
 
-@mixin user-select($argument: none) {
-  -webkit-touch-callout: $argument;
-  -webkit-user-select: $argument;
-  -khtml-user-select: $argument;
-  -moz-user-select: $argument;
-  -ms-user-select: $argument;
-  user-select: $argument;
-}
-
 @mixin no-text {
   text-indent: 160%;
   white-space: nowrap;

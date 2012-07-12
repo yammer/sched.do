@@ -159,7 +159,7 @@ function onTouchStart(event) {
 
         document.removeEventListener(isTouch ? 'touchmove' : 'mousemove', onTouchMove, false);
         document.removeEventListener(isTouch ? 'touchend' : 'mouseup', onTouchEnd, false);
-        
+
         touchAnimators.forEach(function(animator) {
             animator.takeoff();
         });
