@@ -6,7 +6,6 @@ class SessionsController < ApplicationController
     cookies[:encrypted_access_token] = user.encrypted_access_token
     log_out_guest
 
-    flash[:success] = "You have successfully signed in."
     redirect_to new_event_path
   end
 

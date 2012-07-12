@@ -14,10 +14,6 @@ step 'I submit the create event form' do
   click_button 'Create event'
 end
 
-step 'I should see that the event was successfully created' do
-  find('#flash-success').should have_content 'Event successfully created.'
-end
-
 step 'I should see a presence error on the suggestion field' do
   expect_error_on_field_with_data_role("can't be blank", 'suggestion')
 end

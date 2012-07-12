@@ -2,10 +2,6 @@ step 'I have a Yammer account' do
   create_yammer_account
 end
 
-step 'I should see the sign-in welcome message' do
-  page.should have_content 'You have successfully signed in.'
-end
-
 step 'I am signed in' do
   create_yammer_account
   sign_in

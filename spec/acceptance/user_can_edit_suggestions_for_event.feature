@@ -6,7 +6,6 @@ Feature: User can edit suggestions for event
     When I follow "Edit event or invite people"
     When I suggest "dinner"
     And I press "Update event"
-    Then I should see that the event was successfully updated
     And I should see a suggestion of "dinner"
 
   Scenario: User tries to edit event suggestion with invalid data

@@ -17,7 +17,6 @@ class EventsController < ApplicationController
     @event.suggestions = @event.suggestions.select(&:valid?)
 
     if @event.save
-      flash[:success] = "Event successfully created."
       redirect_to @event
     else
       flash[:error] = "Please complete all required fields."
@@ -42,7 +41,6 @@ class EventsController < ApplicationController
     event.attributes = params[:event]
 
     if event.save
-      flash[:success] = 'Event successfully updated.'
       redirect_to event
     else
       @event = event
