@@ -31,13 +31,13 @@ div.table-wrapper {
       background: #fff;
       width: $table-width-mobile;
       overflow: hidden;
-      overflow-x: scroll;
       border: 1px solid darken($bg-color, 20%);
       @include box-sizing(border-box);
       @include user-select();
 
       table {
         @include box-shadow(0 0 20px darken($bg-color, 15%));
+        table-layout: fixed;
 
         tr {
           border-bottom: 1px solid darken($bg-color, 20%);
@@ -61,6 +61,8 @@ div.table-wrapper {
 
           td {
             color: darken($bg-color, 35%);
+            overflow: hidden;
+            text-overflow: ellipsis;
           }
         }
       }

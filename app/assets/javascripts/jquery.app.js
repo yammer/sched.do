@@ -128,4 +128,18 @@ $(document).ready(function() {
     $('table.touch-scrollable').addClass("scrollable horizontal")
   }
 
+
+  // Shrink invitee name/email text size if it is too large to fit in the table cell
+  $('div#invitees td').each(function(){
+    var stringLength = $(this).html().length;
+    if (stringLength > 60) {
+      $(this).css('font-size','0.8em');
+    }
+    else if (stringLength > 55) {
+      $(this).css('font-size','0.85em');
+    }
+    else if (stringLength > 50) {
+      $(this).css('font-size','0.9em');
+    }
+  });
 });
