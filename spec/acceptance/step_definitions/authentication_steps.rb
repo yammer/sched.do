@@ -18,7 +18,7 @@ step 'I sign in as a different user' do
 end
 
 step 'I should be redirected to the new event page' do
-  page.should have_content "Create a New Event"
+  page.should have_content "Schedule an Event"
 end
 
 step 'I sign out' do
