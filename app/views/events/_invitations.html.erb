@@ -1,9 +1,0 @@
-<%= f.semantic_fields_for(:invitations, html: { id: 'invitations'}) do |invitation_form| %>
-  <%= invitation_form.inputs do %>
-    <%= invitation_form.input :name_or_email, label: "Invite someone", required: false,
-          input_html: { 'data-role' => 'invitation_name' }  %>
-    <%= invitation_form.input :yammer_user_id, as: :hidden, input_html: { 'data-role' => 'yammer_user_id' } %>
-    <%= invitation_form.input :yammer_group_id, as: :hidden, input_html: { 'data-role' => 'yammer_group_id' } %>
-    <div class="invitation-autocomplete-suggestions"></div>
-  <% end %>
-<% end %>

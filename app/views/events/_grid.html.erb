@@ -1,17 +1,7 @@
 <div class="table-wrapper grid">
-
-  <div class="search-box">
-  <%= semantic_form_for(:invitations, html: { id: 'invitations'}) do |form| %>
-    <%= form.inputs do %>
-      <%= form.input :name_or_email, label: false, required: false,
-            input_html: { 'data-role' => 'invitation_name', placeholder: "+ Add invitees...", id: "auto-complete" }  %>
-      <%= form.input :yammer_user_id, as: :hidden, input_html: { 'data-role' => 'yammer_user_id' } %>
-      <%= form.action :submit, label: "+ Invite", button_html: {class: "add-invitee"} %>
-      <div class="invitation-autocomplete-suggestions"></div>
-    <% end %>
+  <% if current_user.able_to_edit?(@event) %>
+    <%= render 'add_invitation' %>
   <% end %>
-  </div>
-
   <div class="options">
     <table class="touch-scrollable">
       <thead>

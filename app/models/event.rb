@@ -1,6 +1,5 @@
 class Event < ActiveRecord::Base
-  attr_accessible :name, :suggestion, :suggestions_attributes,
-    :invitations_attributes, :message
+  attr_accessible :name, :suggestion, :suggestions_attributes, :message
 
   belongs_to :user
   has_many :suggestions
@@ -15,7 +14,6 @@ class Event < ActiveRecord::Base
 
   accepts_nested_attributes_for :suggestions, reject_if: :all_blank,
     allow_destroy: true
-  accepts_nested_attributes_for :invitations
 
   def invitees
     [user] + users + yammer_invitees + guests

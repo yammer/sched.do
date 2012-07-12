@@ -30,41 +30,28 @@ class EventsController < ApplicationController
     @event = Event.find(params[:id])
     @suggestions = @event.suggestions
     verify_or_setup_invitation_for_current_user
+    setup_invitation_for_event_creator
   end
 
   def edit
     @event = current_user.events.find(params[:id])
-    @invitations = populate_invitations_for(@event)
   end
 
   def update
     event = current_user.events.find(params[:id])
-    create_invitations_for_event(event)
     event.attributes = params[:event]
-    event.invitations = event.invitations.select(&:valid?)
 
     if event.save
       flash[:success] = 'Event successfully updated.'
       redirect_to event
     else
       @event = event
-      @invitations = populate_invitations_for(@event)
       flash[:failure] = 'Please check the errors and try again.'
       render :edit
     end
   end
 
   private
-
-  def create_invitations_for_event(event)
-    inviter = Inviter.new(event)
-    if params[:event]
-      invitations_attributes = params[:event].delete(:invitations_attributes) || {}
-      invitations_attributes.values.each do |invitation|
-        inviter.invite_from_params(invitation)
-      end
-    end
-  end
 
   def populate_suggestions_for(event)
     if event.suggestions.empty?
@@ -81,6 +68,13 @@ class EventsController < ApplicationController
     if !@event.user_invited?(current_user)
       Inviter.new(@event).invite(current_user)
       @event.reload
+    end
+  end
+
+  def setup_invitation_for_event_creator
+    if current_user.able_to_edit?(@event)
+      @invitation = Invitation.new
+      session[:current_event] = @event.id
     end
   end
 end

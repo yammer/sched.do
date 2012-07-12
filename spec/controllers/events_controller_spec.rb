@@ -69,19 +69,6 @@ describe EventsController, '#update' do
       put :update, id: event.id
       response.should redirect_to(event)
     end
-
-    it 'accepts nested attributes for invitations' do
-      invitations_attributes = { '0' => { name_or_email: 'someone@example.com' } }
-      put :update, id: event.id, event: { invitations_attributes: invitations_attributes }
-      response.should redirect_to(event)
-      Invitation.count.should == 1
-    end
-
-    it 'ignores blank invitations' do
-      invitations_attributes = { '0' => { name_or_email: 'someone@example.com' }, '1' => { name_or_email: '' }}
-      put :update, id: event.id, event: { invitations_attributes: invitations_attributes }
-      Invitation.count.should == 1
-    end
   end
 
   context 'with a user who did not create the event' do

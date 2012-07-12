@@ -1,9 +1,6 @@
 <%= semantic_form_for(@event) do |f| %>
   <%= f.inputs do %>
     <%= f.input :name, label: false, placeholder: "Event name" %>
-    <% if @event.persisted? %>
-      <%= render partial: 'invitations', locals: { f: f } %>
-    <% end %>
     <div class="suggestions">
       <%= f.semantic_fields_for(:suggestions, @suggestions) do |suggestion_form| %>
         <%= render 'existing_suggestion_fields', f: suggestion_form %>
