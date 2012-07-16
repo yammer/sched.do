@@ -130,15 +130,13 @@ body.welcome {
         }
 
         &.third-step {
-          color: #fff;
-          background: $blue;
-          border-top: 10px solid darken($blue, 20%);
+          background: #d9f3f9;
+          color: $blue;
         }
 
         &.fourth-step {
-          background: #d9f3f9;
-          color: $blue;
-          border-bottom: 10px solid $orange;
+          color: #fff;
+          background: $blue;
         }
       }
     }
