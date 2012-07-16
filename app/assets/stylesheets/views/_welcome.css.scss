@@ -68,26 +68,6 @@ body.welcome {
     }
   }
 
-  div.learn-more {
-    @include fill-parent();
-    text-align: center;
-    padding: 5%;
-    font-size: 1.25em;
-    font-family: $bariol;
-    z-index: 999;
-    position: relative;
-    border-bottom: 1px solid darken($bg-color, 10%);
-
-    p {
-      @include border-radius(4px);
-      color: darken($bg-color, 30%);
-      overflow: hidden;
-      white-space: nowrap;
-      margin: 0 auto;
-      @include animation(bounce 1.5s 1s infinite);
-    }
-  }
-
   section.steps {
     width: 100%;
     @include box-sizing(border-box);

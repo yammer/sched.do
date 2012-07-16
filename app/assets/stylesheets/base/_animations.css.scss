@@ -92,39 +92,6 @@
   100% { opacity: 1; transform: translateY(0); }
 }
 
-
-// Scroll to learn more animation
-
-@-webkit-keyframes bounce {
-  0%, 20%, 50%, 80%, 100% {-webkit-transform: translateY(0);}
-  40% {-webkit-transform: translateY(6px);}
-  60% {-webkit-transform: translateY(4px);}
-}
-
-@-moz-keyframes bounce {
-  0%, 20%, 50%, 80%, 100% {-moz-transform: translateY(0);}
-  40% {-moz-transform: translateY(6px);}
-  60% {-moz-transform: translateY(4px);}
-}
-
-@-ms-keyframes bounce {
-  0%, 20%, 50%, 80%, 100% {-ms-transform: translateY(0);}
-  40% {-ms-transform: translateY(6px);}
-  60% {-ms-transform: translateY(4px);}
-}
-
-@-o-keyframes bounce {
-  0%, 20%, 50%, 80%, 100% {-o-transform: translateY(0);}
-  40% {-o-transform: translateY(6px);}
-  60% {-o-transform: translateY(4px);}
-}
-@keyframes bounce {
-  0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
-  40% {transform: translateY(6px);}
-  60% {transform: translateY(4px);}
-}
-
-
 // fadeinUp
 
 @-webkit-keyframes fadeInUp {
