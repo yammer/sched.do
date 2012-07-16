@@ -15,7 +15,7 @@ class Event < ActiveRecord::Base
   accepts_nested_attributes_for :suggestions, reject_if: :all_blank,
     allow_destroy: true
 
-  after_create :create_event_created_activity
+  after_create :create_yammer_activity_for_new_event
 
   def invitees
     group = [user] + users + yammer_invitees + guests
@@ -23,7 +23,7 @@ class Event < ActiveRecord::Base
   end
 
   def invitees_for_json
-    invitees.map { |e| { name: e.name, email: e.email } }
+    invitees.map { |i| { name: i.name, email: i.email } }
   end
 
   def user_invited?(user)
@@ -32,7 +32,7 @@ class Event < ActiveRecord::Base
 
   private
 
-  def create_event_created_activity
+  def create_yammer_activity_for_new_event
     ActivityCreator.new(self.user, 'create', self).create
   end
 end

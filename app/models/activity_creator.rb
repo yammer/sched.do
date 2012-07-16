@@ -6,7 +6,7 @@ class ActivityCreator
   end
 
   def create
-    response = RestClient.post "https://www.yammer.com/api/v1/activity.json?access_token=#{@user.access_token}",
+    response = RestClient.post rest_client_url(@user.access_token),
     generate_json,
     :content_type => :json,
     :accept => :json
@@ -36,9 +36,7 @@ class ActivityCreator
     }.to_json
   end
 
-  def invitee_array
-    @event.invitees.map do |i|
-      Hash.new(name: i.name, email: i.email)
-    end
+  def rest_client_url(access_token)
+    "https://www.yammer.com/api/v1/activity.json?access_token=#{access_token}"
   end
 end
