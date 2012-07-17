@@ -28,6 +28,7 @@ describe Event do
     event = create(:event)
     FakeYammer.has_activity_message?.should be_true
   end
+  
   it 'has a uuid after creation' do
     event = create(:event)
     event.uuid.length.should eq(8)

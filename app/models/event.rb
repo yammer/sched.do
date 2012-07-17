@@ -11,13 +11,14 @@ class Event < ActiveRecord::Base
 
   validates :name, presence: { message: 'This field is required' }
   validates :user_id, presence: true
+  validates :uuid, presence: true
 
   accepts_nested_attributes_for :suggestions, reject_if: :all_blank,
     allow_destroy: true
 
   after_create :create_yammer_activity_for_new_event
-  before_create :generate_uuid
-
+  before_validation :generate_uuid, :on => :create
+  
   def invitees
     group = [user] + users + yammer_invitees + guests
     group.sort{|a, b| b.created_at <=> a.created_at }
@@ -28,7 +29,7 @@ class Event < ActiveRecord::Base
   end
   
   def generate_uuid
-    self.uuid = SecureRandom.hex(4).gsub(/=+$\//,"_")
+    self.uuid = SecureRandom.hex(4)
   end
 
   def user_invited?(user)
