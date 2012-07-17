@@ -1,7 +1,5 @@
 $(document).ready(function() {
 
-  // Create a client instance fro ZeroCipboard
-
   var datepicker = function(){
     // Displays a date/time picker when suggetsion field is focused
     $('input[data-role="primary-suggestion"]').datepicker({
