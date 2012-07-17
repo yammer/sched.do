@@ -17,6 +17,12 @@
         </tr>
       </thead>
       <tbody>
+        <tr>
+          <% @suggestions.each do |suggestion| %>
+            <td>
+            </td>
+          <% end %>
+        </tr>
         <% @event.invitees.each do |invitee| %>
           <% if current_user == invitee %>
             <tr class="votable">
