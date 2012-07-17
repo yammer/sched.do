@@ -12,6 +12,7 @@ FactoryGirl.define do
     name 'Joe'
     sequence(:access_token) { |n| "abc12#{n}" }
     sequence(:yammer_user_id) { |n| n.to_s }
+    yammer_profile_url
   end
 
   factory :yammer_invitee do
