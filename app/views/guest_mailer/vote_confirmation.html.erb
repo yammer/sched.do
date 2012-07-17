@@ -1,0 +1,4 @@
+<h1 class="h1" style="color: #30AADE;display: block;font-family: Helvetica, sans-serif;font-size: 24px;font-weight: normal;line-height: 100%;margin-top: 10px;margin-right: 0;margin-bottom: 25px;margin-left: 0;text-align: left;">
+  Thanks for voting!
+</h1>
+<p>You voted on the on the <%= @event.name %> event. To find out the results at any time, follow this link <%= link_to event_url(@event), @event, html_options = {:style => "color: #EC6E4D"} %> or paste it into your URL bar.</p>

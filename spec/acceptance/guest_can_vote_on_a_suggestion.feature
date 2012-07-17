@@ -9,6 +9,14 @@ Feature: Guests can vote on suggestions
     When I vote for "lunch"
     Then I should see that "lunch" has 1 vote
 
+  Scenario: Guest gets a vote confimation email
+    Given someone created an event named "Clown party" with a suggestion of "lunch"
+    And "guest@example.com" was invited to the event "Clown party"
+    And I am signed in as the guest "guest@example.com"
+    When I view the "Clown party" event
+    When I vote for "lunch"
+    Then I should receive a vote confirmation email for "Clown party"
+
   Scenario: Guest can undo their vote for a suggestion
     Given someone created an event named "Clown party" with a suggestion of "lunch"
     And "guest@example.com" was invited to the event "Clown party"

@@ -51,8 +51,8 @@ end
 describe Guest, '#votes' do
   it "returns the guest's votes if there are any" do
     guest = create(:guest)
-    guest_vote = create(:guest_vote, guest: guest)
-    vote = create(:vote, votable: guest_vote)
+    vote = build(:vote, votable: nil)
+    guest_vote = create(:guest_vote, guest: guest, vote: vote)
     guest.votes.should == [vote]
   end
 
@@ -66,8 +66,8 @@ describe Guest, '#vote_for_suggestion' do
   it "returns the guest's vote for the given suggestion if the guest has one" do
     guest = create(:guest)
     suggestion = create(:suggestion)
-    guest_vote = create(:guest_vote, guest: guest)
-    vote = create(:vote, votable: guest_vote, suggestion: suggestion)
+    vote = build(:vote, suggestion: suggestion, votable: nil)
+    guest_vote = create(:guest_vote, guest: guest, vote: vote)
     guest.vote_for_suggestion(suggestion).should == vote
   end
 

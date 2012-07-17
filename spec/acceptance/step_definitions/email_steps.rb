@@ -10,4 +10,3 @@ end
 step ':email_address should have :count email(s)' do |email_address, count|
   mailbox_for(email_address).size.should == count.to_i
 end
-
