@@ -26,18 +26,18 @@ class EventsController < ApplicationController
   end
 
   def show
-    @event = Event.find(params[:id])
+    @event = Event.find_by_uuid!(params[:id])
     @suggestions = @event.suggestions
     verify_or_setup_invitation_for_current_user
     setup_invitation_for_event_creator
   end
 
   def edit
-    @event = current_user.events.find(params[:id])
+    @event = current_user.events.find_by_uuid!(params[:id])
   end
 
   def update
-    event = current_user.events.find(params[:id])
+    event = current_user.events.find_by_uuid!(params[:id])
     event.attributes = params[:event]
 
     if event.save

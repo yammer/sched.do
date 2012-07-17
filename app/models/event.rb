@@ -1,5 +1,5 @@
 class Event < ActiveRecord::Base
-  attr_accessible :name, :suggestion, :suggestions_attributes, :message
+  attr_accessible :name, :suggestion, :suggestions_attributes, :message, :uuid
 
   belongs_to :user
   has_many :suggestions
@@ -16,6 +16,7 @@ class Event < ActiveRecord::Base
     allow_destroy: true
 
   after_create :create_yammer_activity_for_new_event
+  before_create :generate_uuid
 
   def invitees
     group = [user] + users + yammer_invitees + guests
@@ -25,11 +26,19 @@ class Event < ActiveRecord::Base
   def invitees_for_json
     invitees.map { |i| { name: i.name, email: i.email } }
   end
+  
+  def generate_uuid
+    self.uuid = SecureRandom.hex(4).gsub(/=+$\//,"_")
+  end
 
   def user_invited?(user)
     invitees.include?(user)
   end
 
+  def to_param
+    uuid
+  end
+  
   private
 
   def create_yammer_activity_for_new_event

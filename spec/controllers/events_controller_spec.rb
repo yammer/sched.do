@@ -12,17 +12,17 @@ describe EventsController, 'authentication' do
   end
 
   it 'requires login for #show' do
-    get :show, id: 1
+    get :show, id: 'LIUgiu6y'
     should redirect_to new_guest_url
   end
 
   it 'requires login for #edit' do
-    get :edit, id: 1
+    get :edit, id: 'LIUgiu6y'
     should deny_access
   end
 
   it 'requires login for #update' do
-    put :update, id: 1
+    put :update, id: 'LIUgiu6y'
     should deny_access
   end
 end
@@ -33,7 +33,7 @@ describe EventsController, '#edit' do
       user = create(:user)
       event = create(:event, user: user)
       sign_in_as(user)
-      get :edit, id: event.id
+      get :edit, id: event.uuid
       response.should be_success
     end
   end
@@ -43,7 +43,7 @@ describe EventsController, '#edit' do
       user = create(:user)
       event = create(:event, user: user)
       sign_in_as(create(:user))
-      get :edit, id: event.id
+      get :edit, id: event.uuid
     end
 
     it 'redirects to the home page' do
@@ -66,7 +66,7 @@ describe EventsController, '#update' do
     end
 
     it 'is successful' do
-      put :update, id: event.id
+      put :update, id: event.uuid
       response.should redirect_to(event)
     end
   end
@@ -76,7 +76,7 @@ describe EventsController, '#update' do
       user = create(:user)
       event = create(:event, user: user)
       sign_in_as(create(:user))
-      put :update, id: event.id
+      put :update, id: event.uuid
     end
 
     it 'redirects to the home page' do
