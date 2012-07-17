@@ -1,8 +1,12 @@
 FactoryGirl.define do
   sequence(:yammer_uid) { |n| "12345#{n}" }
-  sequence(:yammer_user_name) { |n| "Yammer #{n}" }
-  sequence(:yammer_token) { |n| "token_#{n}" }
   sequence(:email) { |n| "user#{n}@example.com" }
+  sequence(:extra) { |n| { web_prefs: "prefs#{n}", expertise: "Rails#{n}" } }
+  sequence(:yammer_image_url) { |n| "http://www.yammer.com/mugshot/48x48/#{n}" }
+  sequence(:yammer_nickname) { |n| "Yams #{n}" }
+  sequence(:yammer_profile_url) { |n| "http://www.yammer.com/example.com/users/#{n}" }
+  sequence(:yammer_token) { |n| "token_#{n}" }
+  sequence(:yammer_user_name) { |n| "Yammer User #{n}" }
 
   factory :user do
     name 'Joe'

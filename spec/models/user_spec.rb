@@ -55,26 +55,13 @@ describe User, '.create_from_params!' do
     user = User.create_from_params!(auth)
 
     user.access_token.should == auth[:info][:access_token]
-    user.name.should == auth[:info][:name]
-    user.yammer_user_id.should == auth[:uid]
     user.email.should == auth[:info][:email]
-
-    # user.nickname.should == auth[:info][:nickname]
-    # user. auth[:info][:full_name]
-    # user. auth  [:info][:image]
-    # user. auth[:info][:urls][:yammer]
-    # user. auth[:credentials][:token]
-    # user. auth[:extra][:network_id] *make sure this is the user’s home network, not an external network or other canonical
-    # user. auth[:extra][:url]
-    # user. auth[:extra][:web_preferences][:allow_attachments]
-    # user. auth[:extra][:web_preferences][:allow_yammer_apps]
-    # user. auth[:extra][:id]
-    # user. auth[:extra][:timezone]
-    # user. auth[:extra][:verified_admin]
-    # user. auth[:extra][:expertise]
-    # user. auth[:extra][:network_name]
-    # user. auth[:extra][:canonical_network_name]
-    # user. auth[:extra][:state]
+    user.name.should == auth[:info][:name]
+    user.nickname.should == auth[:info][:nickname]
+    user.image.should == auth[:info][:image]
+    user.yammer_profile_url.should == auth[:info][:yammer_profile_url]
+    user.yammer_user_id.should == auth[:uid]
+    user.extra.should_not be nil
 
     user.should be_persisted
   end

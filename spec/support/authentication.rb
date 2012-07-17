@@ -29,10 +29,14 @@ module AuthenticationHelpers
     OmniAuth.config.mock_auth[:yammer].merge!({
       uid: generate(:yammer_uid),
       info: {
-        name: generate(:yammer_user_name),
+        access_token: generate(:yammer_token),
         email: generate(:email),
-        access_token: generate(:yammer_token)
-      }
+        image: generate(:yammer_image_url),
+        name: generate(:yammer_user_name),
+        nickname: generate(:yammer_nickname),
+        yammer_profile_url: generate(:yammer_profile_url)
+      },
+        extra: generate(:extra)
     })
   end
 

@@ -17,9 +17,12 @@ module OmniAuth
 
       info do
         {
-          name: raw_info['full_name'],
+          access_token: access_token.token,
           email: primary_email,
-          access_token: access_token.token
+          image: raw_info['mugshot_url'],
+          name: raw_info['full_name'],
+          nickname: raw_info['name'],
+          yammer_profile_url: raw_info['web_url']
         }
       end
 

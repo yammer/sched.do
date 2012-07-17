@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  serialize :extra, JSON
   attr_accessible :access_token, :encrypted_access_token, :name
 
   has_many :events
@@ -21,9 +22,13 @@ class User < ActiveRecord::Base
     create!(
       {
         access_token: params[:info][:access_token],
+        email: params[:info][:email],
+        image: params[:info][:image],
         name: params[:info][:name],
+        nickname: params[:info][:nickname],
+        yammer_profile_url: params[:info][:yammer_profile_url],
         yammer_user_id: params[:uid],
-        email: params[:info][:email]
+        extra: params[:extra]
       },
       { without_protection: true }
     )

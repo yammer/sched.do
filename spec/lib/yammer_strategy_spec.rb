@@ -18,9 +18,14 @@ describe OmniAuth::Strategies::Yammer do
   it 'sets the correct info' do
     subject.stubs(raw_info: yammer_raw_info)
     subject.stubs(access_token: stub(token: 'abc123'))
-    subject.info[:name].should == 'Henry Smith'
-    subject.info[:email].should == 'henry@example.com'
+
     subject.info[:access_token].should == 'abc123'
+    subject.info[:email].should == 'henry@example.com'
+    subject.info[:image].should == 'https://www.yammer.com/mugshot/48x48/12345678'
+    subject.info[:name].should == 'Henry Smith'
+    subject.info[:nickname].should == 'henry'
+    subject.info[:yammer_profile_url].should == 'https://www.yammer.com/example.com/users/henry'
+    subject.extra.should_not be_nil
   end
 
   def app
