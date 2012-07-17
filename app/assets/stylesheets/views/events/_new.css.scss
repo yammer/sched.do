@@ -161,7 +161,14 @@ div.new-event {
   }
 }
 
+section.event-section {
+  border-top: 1px solid darken($bg-color, 5%);
+  padding: 30px 0;
+}
+
 div.invitation-message {
+  @extend section.event-section;
+  padding-bottom: 0;
 
   textarea {
     height: 7em;
@@ -169,6 +176,10 @@ div.invitation-message {
   }
 
   fieldset {
+    padding: 0;
+    border: none;
+    margin-bottom: 0;
+
     &.actions {
       ol li {
         margin-bottom: 8px;
@@ -185,4 +196,36 @@ div.invitation-message {
       }
     }
   }
+}
+
+div.event-url {
+  font-size: 0.7em;
+  padding: 0;
+  padding-top: -20px;
+
+  form {
+    input[type="url"] {
+      margin-bottom: 10px;
+    }
+
+    input[type="button"] {
+      padding:0.45em;
+      font-size: 1.3em;
+    }
+
+    div#copy-url-container {
+      position: relative;
+
+      input {
+        &.hover {
+          @include background-image(linear-gradient(lighten($bg-color, 10%), darken($bg-color, 2%)));
+        }
+
+        &.active {
+          @include background-image(linear-gradient(darken($bg-color, 5%), lighten($bg-color, 10%)));
+        }
+      }
+    }
+  }
+
 }

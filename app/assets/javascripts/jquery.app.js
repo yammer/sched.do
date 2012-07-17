@@ -1,5 +1,7 @@
 $(document).ready(function() {
 
+  // Create a client instance fro ZeroCipboard
+
   var datepicker = function(){
     // Displays a date/time picker when suggetsion field is focused
     $('input[data-role="primary-suggestion"]').datepicker({
@@ -117,16 +119,36 @@ $(document).ready(function() {
   }
 
   // Select event URL on click
-  var eventURL =  $("input#event-url");
-  eventURL.click(function() {
-   $(this).select();
-  });
-  eventURL.tooltip({trigger: 'focus'});
+   $("input#event-url").click(function() {
+     $(this).select();
+   });
 
   // Enable dragging in touch devices on tables
   if (Modernizr.touch) {
     $('table.touch-scrollable').addClass("scrollable horizontal")
   }
+
+  // Enable click-to-copy
+  var clip = new ZeroClipboard.Client();
+  clip.addEventListener( 'mouseDown', function(client) {
+    clip.setText( $('input#event-url').val());
+    $('input#copy-url').val('URL Copied!');
+  });
+
+  clip.addEventListener( 'mouseOver', function(client) {
+    $("input#copy-url").tooltip('show');
+  });
+
+   clip.addEventListener( 'mouseOut', function(client) {
+    $("input#copy-url").tooltip('hide');
+  });
+
+  clip.glue( 'copy-url', 'copy-url-container' );
+
+  $(window).resize(function(){
+    clip.reposition();
+  });
+
   $('#auto-complete').keyup(function(){
     var inviteButton = $(this).parents("form").find('.add-invitee');
     if($(this).val() != ""){

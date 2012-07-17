@@ -1,10 +1,8 @@
 div.invitation-message {
-  @include row();
 
   form {
+    @include row();
     fieldset {
-      padding: 0;
-      border: none;
 
       &.inputs {
         @include columns(8);
@@ -23,5 +21,22 @@ div.invitation-message {
         }
       }
     }
+  }
+}
+
+div.event-url {
+  @include row();
+  form {
+    @include columns(8);
+    @include row();
+
+    input[type="url"] {
+      @include columns(9);
+    }
+
+    div#copy-url-container {
+      @include columns(3);
+    }
+
   }
 }

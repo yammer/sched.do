@@ -9,15 +9,26 @@
 
   <% if current_user.able_to_edit?(@event) %>
     <div class="invitation-message">
+      <p>Customize your invitation message (optional):</p>
       <%= semantic_form_for(@event) do |f| %>
         <%= f.inputs do %>
-          <%= f.input :message, label: false, placeholder: "Enter your custom message here..." %>
+          <%= f.input :message, label: false, placeholder: "Custom invitation message..." %>
         <% end %>
         <%= f.actions do %>
           <%= f.action :submit, label: 'Save Message', button_html: { class: "cta" } %>
-          <p class="help">You can also share the following URL with people you have invited: <%= link_to event_url(@event) %> </p>
+          <p class="help">This message will get sent only once to every new invitee you add in the grid above.</p>
         <% end %>
       <% end %>
     </div>
+
+    <div class="event-url">
+     <form>
+       <input id="event-url" readonly="readonly" class="read-only"  type="url" value="<%= event_url(@event) %>" />
+       <div id="copy-url-container">
+         <input id="copy-url" type="button" value="Copy event URL" data-title="You can also share this URL directly with your guests" type="url" value="<%= event_url(@event) %>"/>
+       </div>
+     </form>
+    </div>
+
   <% end %>
 </div>

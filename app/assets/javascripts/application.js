@@ -15,4 +15,5 @@
 //= require jquery-ui
 //= require cocoon
 //= require underscore
+//= require zero-clipboard
 //= require_tree .

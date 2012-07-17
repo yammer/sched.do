@@ -33,6 +33,7 @@ gem 'airbrake', '~> 3.1.0'
 gem 'underscore-rails', '~> 1.3.1'
 gem 'mail_view'
 gem 'rest-client'
+gem "zero-clipboard-rails", "~> 1.0.1"
 
 group :development do
   gem 'heroku'
