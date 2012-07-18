@@ -1,6 +1,6 @@
 You have been invited!
 
-<%= @event.user.name %> has invited you to the event <%= link_to @event.name, @event %> on Sched.do!
+<%= @event.user.name %> has invited you to the event <%= link_to @event.name, event_url(@event) %> on Sched.do!
 <% if @event.message %>
 
 <%= @event.user.name %> says:
