@@ -47,6 +47,6 @@ class Event < ActiveRecord::Base
   private
 
   def create_yammer_activity_for_new_event
-    ActivityCreator.new(self.user, 'create', self).create
+    user.create_yammer_activity('create', self)
   end
 end

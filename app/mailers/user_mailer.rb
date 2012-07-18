@@ -8,7 +8,7 @@ class UserMailer < ActionMailer::Base
          template_path: "guest_mailer"
         )
   end
-  
+
   class Preview < MailView
     def vote_confirmation
       vote = Vote.first

@@ -1,16 +1,16 @@
 class FakeYammer < Sinatra::Base
-  cattr_accessor :hit_successfully
+  cattr_accessor :successful_hits
 
-  def self.has_activity_message?
-    hit_successfully
+  def self.activity_messages_sent
+    successful_hits
   end
 
   def self.reset
-    self.hit_successfully = false
+    self.successful_hits = 0
   end
 
   post '/api/v1/activity.json' do
-    self.hit_successfully = true
+    self.successful_hits += 1
     202
   end
 end

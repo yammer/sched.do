@@ -127,3 +127,15 @@ describe User, '#build_user_vote' do
     user_vote.user_id.should == user.id
   end
 end
+
+describe User, '#create_yammer_activity' do
+  it 'creates a Yammer activity story' do
+    FakeYammer.activity_messages_sent.should == 0
+    user = build_stubbed(:user)
+    event = build_stubbed(:event)
+
+    user.create_yammer_activity('update', event)
+
+    FakeYammer.activity_messages_sent.should == 1
+  end
+end

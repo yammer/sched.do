@@ -18,8 +18,18 @@ describe Vote, '#create' do
   it 'sends confirmation email to user' do
     mailer = stub('mailer', deliver: true)
     UserMailer.stubs(vote_confirmation: mailer)
+
     vote = create(:vote)
+
     UserMailer.should have_received(:vote_confirmation).with(vote)
     mailer.should have_received(:deliver).once
+  end
+
+  it 'updates Yammer activity ticker after voting' do
+    FakeYammer.activity_messages_sent.should == 0
+
+    vote = create(:vote)
+
+    FakeYammer.activity_messages_sent.should == 2
   end
 end

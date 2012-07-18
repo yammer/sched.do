@@ -4,5 +4,4 @@ class GuestVote < ActiveRecord::Base
   has_one :vote, as: :votable
 
   validates :guest_id, presence: true
-
 end

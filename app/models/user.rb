@@ -38,6 +38,22 @@ class User < ActiveRecord::Base
     event.user == self
   end
 
+  def build_user_vote
+    user_votes.new
+  end
+
+  def create_yammer_activity(action, event)
+    ActivityCreator.new(self, action, event).create
+  end
+
+  def guest?
+    false
+  end
+
+  def notify(invitation)
+    nil # TODO
+  end
+
   def vote_for_suggestion(suggestion)
     votes.find_by_suggestion_id(suggestion.id)
   end
@@ -46,31 +62,19 @@ class User < ActiveRecord::Base
     vote_for_suggestion(suggestion).present?
   end
 
-  def guest?
-    false
-  end
-
   def yammer_user?
     true
   end
 
-  def build_user_vote
-    user_votes.new
-  end
-
-  def notify(invitation)
-    nil # TODO
-  end
-
   private
+
+  def set_encrypted_access_token
+    self.encrypted_access_token = Encrypter.new(access_token, salt).encrypt
+  end
 
   def set_salt_if_necessary
     if salt.blank?
       self.salt = SaltGenerator.new.generate
     end
-  end
-
-  def set_encrypted_access_token
-    self.encrypted_access_token = Encrypter.new(access_token, salt).encrypt
   end
 end
