@@ -1,7 +1,9 @@
 <%= semantic_form_for(@event) do |f| %>
   <%= f.inputs do %>
-    <%= f.input :name, label: false, placeholder: "Event name" %>
+    <%= f.input :name, label: false, placeholder: "What do you want to schedule? (e.g. Company Picnic)" %>
     <div class="suggestions">
+
+  <p>Suggest Dates & Times</p>
       <%= f.semantic_fields_for(:suggestions, @suggestions) do |suggestion_form| %>
         <%= render 'existing_suggestion_fields', f: suggestion_form %>
       <% end %>
