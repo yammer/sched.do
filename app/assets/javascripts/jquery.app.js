@@ -97,16 +97,19 @@ $(document).ready(function() {
     $("input#copy-url").tooltip('show');
   });
 
-   clip.addEventListener( 'mouseOut', function(client) {
+  clip.addEventListener( 'mouseOut', function(client) {
     $("input#copy-url").tooltip('hide');
   });
 
-  clip.glue( 'copy-url', 'copy-url-container' );
+  if( $("body.events-show").length > 0) {
+    clip.glue( 'copy-url', 'copy-url-container' );
+  }
 
   $(window).resize(function(){
     clip.reposition();
   });
 
+  // Display "Invite" button on auto-complete
   $('#auto-complete').keyup(function(){
     var inviteButton = $(this).parents("form").find('.add-invitee');
     if($(this).val() != ""){
