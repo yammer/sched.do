@@ -18,7 +18,7 @@ class Event < ActiveRecord::Base
 
   after_create :create_yammer_activity_for_new_event
   before_validation :generate_uuid, :on => :create
-  
+
   def invitees
     group = [user] + users + yammer_invitees + guests
     group.sort{|a, b| b.created_at <=> a.created_at }
@@ -27,7 +27,7 @@ class Event < ActiveRecord::Base
   def invitees_for_json
     invitees.map { |i| { name: i.name, email: i.email } }
   end
-  
+
   def generate_uuid
     self.uuid = SecureRandom.hex(4)
   end
@@ -39,7 +39,7 @@ class Event < ActiveRecord::Base
   def to_param
     uuid
   end
-  
+
   private
 
   def create_yammer_activity_for_new_event
