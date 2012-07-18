@@ -1,41 +1,20 @@
-div.invitation-message {
-
-  form {
-    @include row();
-    fieldset {
-
-      &.inputs {
-        @include columns(8);
-
-        textarea {
-          padding: 1em;
-        }
-      }
-
-      &.actions {
-        @include columns(4);
-
-        input.read-only {
-          margin-bottom: 15px;
-          margin-top: -1px;
-        }
-      }
-    }
-  }
-}
-
 div.event-url {
   @include row();
+
+  p {
+    @include columns(3.8);
+  }
+
   form {
-    @include columns(8);
+    @include columns(8.2);
     @include row();
 
     input[type="url"] {
-      @include columns(9);
+      @include columns(8);
     }
 
     div#copy-url-container {
-      @include columns(3);
+      @include columns(4);
     }
 
   }

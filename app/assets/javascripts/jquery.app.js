@@ -88,17 +88,10 @@ $(document).ready(function() {
 
   // Enable click-to-copy
   var clip = new ZeroClipboard.Client();
+
   clip.addEventListener( 'mouseDown', function(client) {
     clip.setText( $('input#event-url').val());
     $('input#copy-url').val('URL Copied!');
-  });
-
-  clip.addEventListener( 'mouseOver', function(client) {
-    $("input#copy-url").tooltip('show');
-  });
-
-  clip.addEventListener( 'mouseOut', function(client) {
-    $("input#copy-url").tooltip('hide');
   });
 
   if( $('#event-url').length > 0) {

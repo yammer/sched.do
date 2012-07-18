@@ -11,20 +11,8 @@
   <%= render partial: 'grid' %>
 
   <% if current_user.able_to_edit?(@event) %>
-    <div class="invitation-message">
-      <p>Customize your invitation message (optional):</p>
-      <%= semantic_form_for(@event) do |f| %>
-        <%= f.inputs do %>
-          <%= f.input :message, label: false, placeholder: "Custom invitation message..." %>
-        <% end %>
-        <%= f.actions do %>
-          <%= f.action :submit, label: 'Save Message', button_html: { class: "cta" } %>
-          <p class="help">This message will get sent only once to every new invitee you add in the grid above.</p>
-        <% end %>
-      <% end %>
-    </div>
-
     <div class="event-url">
+      <p>You can also share this URL directly with your invitees to have them vote:</p>
      <form>
        <input id="event-url" readonly="readonly" class="read-only"  type="url" value="<%= event_url(@event) %>" />
        <div id="copy-url-container">

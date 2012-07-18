@@ -6,7 +6,7 @@ $column-width: (100% - ($gutter-width * ($grid-columns - 1))) / $grid-columns;
 $max-width: 1000px; // Change to 100% for a completely fluid layout. Also, keep this in mind when changing the pixel value of max-width http://ejohn.org/blog/sub-pixel-problems-in-css/
 
 $table-width-mobile: $max-width*0.3; // Used for the invitation table mobile layout
-$table-width: $max-width*0.2; // Used for the invitation table layout
+$table-width: $max-width*0.3; // Used for the invitation table layout
 
 // Fonts
 $bariol: 'Bariol', Helvetica, sans-serif;
