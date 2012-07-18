@@ -13,3 +13,13 @@ describe Vote, '#event' do
     vote.event.should == vote.suggestion.event
   end
 end
+
+describe Vote, '#create' do
+  it 'sends confirmation email to user' do
+    mailer = stub('mailer', deliver: true)
+    UserMailer.stubs(vote_confirmation: mailer)
+    vote = create(:vote)
+    UserMailer.should have_received(:vote_confirmation).with(vote)
+    mailer.should have_received(:deliver).once
+  end
+end

@@ -7,7 +7,15 @@ class Vote < ActiveRecord::Base
   validates :suggestion_id, presence: true
   validates :votable_id, presence: true
 
+  after_create :send_confirmation_email
+
   def event
     suggestion.event
+  end
+
+  private
+
+  def send_confirmation_email
+    UserMailer.vote_confirmation(self).deliver
   end
 end

@@ -54,7 +54,7 @@ FactoryGirl.define do
   end
 
   factory :guest_vote do
-    guest
+    user
   end
 
   factory :suggestion do

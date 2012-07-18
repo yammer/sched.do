@@ -1,15 +1,8 @@
 class GuestVote < ActiveRecord::Base
-  belongs_to :guest
+  belongs_to :user, :foreign_key => 'guest_id', class_name: 'Guest'
 
   has_one :vote, as: :votable
 
   validates :guest_id, presence: true
 
-  after_create :send_confirmation_email
-
-  private
-
-  def send_confirmation_email
-    GuestMailer.vote_confirmation(self).deliver
-  end
 end
