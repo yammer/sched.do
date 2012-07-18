@@ -31,12 +31,11 @@
       <tbody>
 
         <% if current_user.able_to_edit?(@event) %>
-        <tr id="blank">
-          <% @suggestions.each do |suggestion| %>
-            <td>
-            </td>
-          <% end %>
-        </tr>
+          <tr id="blank">
+            <% @suggestions.each do |suggestion| %>
+              <td></td>
+            <% end %>
+          </tr>
         <% end %>
 
         <% @event.invitees.each do |invitee| %>
@@ -55,8 +54,7 @@
                     <%= image_tag('/images/checkmark.png') %>
                   </td>
                 <% else %>
-                  <td>
-                  </td>
+                  <td></td>
                 <% end %>
               <% end %>
             <% end %>
@@ -89,9 +87,9 @@
             </td>
           </tr>
         <% end %>
-          <tr class="total">
-           <td>Total Votes</td>
-          </tr>
+        <tr class="total">
+         <td>Total Votes</td>
+        </tr>
       </tbody>
     </table>
   </div>
