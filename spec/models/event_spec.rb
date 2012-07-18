@@ -61,3 +61,16 @@ describe Event, '#invitees' do
     event.invitees.should == [second_invitee, first_invitee, event.user]
   end
 end
+
+describe Event, '#user_owner?' do
+  it 'returns true if the user is the owner of the event' do
+    event = create(:event)
+    user = event.user
+    event.should be_user_owner(user)
+  end
+
+  it 'returns false if if the user is not the owner of the event' do
+    event = create(:event)
+    event.should_not be_user_owner(build(:user))
+  end
+end

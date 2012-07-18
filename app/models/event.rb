@@ -32,6 +32,10 @@ class Event < ActiveRecord::Base
     self.uuid = SecureRandom.hex(4)
   end
 
+  def user_owner?(user)
+    self.user == user
+  end
+
   def user_invited?(user)
     invitees.include?(user)
   end
