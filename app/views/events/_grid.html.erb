@@ -78,11 +78,12 @@
       <tbody>
         <% @event.invitees.each do |invitee| %>
           <% if current_user == invitee %>
-            <tr class="invitee">
+            <tr class="current-user">
           <% else %>
             <tr>
           <% end %>
-            <td>
+          <td <% if @event.user_owner?(current_user) %>class="event-creator"<% end %>>
+
               <%= invitee.name || invitee.email %>
             </td>
           </tr>

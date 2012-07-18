@@ -48,15 +48,36 @@ div.table-wrapper {
           @include background-image(linear-gradient(#fff, $bg-color));
           text-shadow: 0 1px 0 #fff;
 
-          &.invitee {
+          &.current-user {
             @include background-image(linear-gradient($bg-color, darken($bg-color, 6%)));
             td {
               color: darken($bg-color, 50%);
+
+              &:after {
+                @include background-image(linear-background());
+                @include background-image(linear-gradient(lighten($orange, 10%), darken($orange, 5%)));
+                border: 1px solid darken($orange, 20%);
+                @include box-shadow(0 1px 0px #fff, inset 0 1px 0px lighten($orange, 20%));
+                color: #fff;
+                content: "You!";
+                font-size: 0.7em;
+                padding: 0 0.5em;
+                @include border-radius(0 0 4px 4px);
+                position: absolute;
+                text-shadow: 0 -1px 0 darken($orange, 40%);
+                top: 0;
+                right: 10px;
+
+              }
             }
           }
 
           &.total {
-            @extend .invitee;
+            @include background-image(linear-gradient($bg-color, darken($bg-color, 6%)));
+
+            td {
+              color: darken($bg-color, 50%);
+            }
           }
 
           &:last-child {
@@ -67,6 +88,22 @@ div.table-wrapper {
             color: darken($bg-color, 35%);
             overflow: hidden;
             text-overflow: ellipsis;
+
+            &.event-creator {
+              padding-left: 40px;
+
+              &:before {
+                content: "";
+                display: block;
+                height: 24px;
+                left: 10px;
+                top: 15px;
+                position: absolute;
+                width: 24px;
+                background-image: url(speaker.svg);
+                opacity: 0.8;
+              }
+            }
           }
         }
       }
