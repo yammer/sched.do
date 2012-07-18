@@ -59,4 +59,4 @@ Feature: User can create an event
   Scenario: User sees event link after creating event
     Given I am signed in
     When I create an event
-    Then I should see a shortened link to that event
+    Then I should see a link to that event
