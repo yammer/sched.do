@@ -1,10 +1,13 @@
 <div class="show-event">
-  <h1 class="event-name">
-    <%= @event.name %>
-  </h1>
-  <% if current_user.able_to_edit?(@event) %>
-    <%= link_to 'Edit event or invite people', edit_event_path(@event), class: "edit-button" %>
-  <% end %>
+  <div class="event-header">
+    <h1 class="event-name">
+      <%= @event.name %>
+    </h1>
+    <% if current_user.able_to_edit?(@event) %>
+      <%= link_to 'Edit', edit_event_path(@event), class: "edit-button" %>
+    <% end %>
+  </div>
+
   <%= render partial: 'grid' %>
 
   <% if current_user.able_to_edit?(@event) %>

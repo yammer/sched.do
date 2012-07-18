@@ -22,7 +22,7 @@ end
 
 
 step 'I should not see an edit link' do
-  page.should have_no_css('a', text: 'Edit event or invite people')
+  page.should have_no_css('a', text: 'Edit')
 end
 
 step 'I should see an event named :event_name with a suggestion of :suggestion' do |event_name, suggestion|

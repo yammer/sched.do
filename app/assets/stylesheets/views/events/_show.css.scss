@@ -1,20 +1,27 @@
 div.show-event {
   @extend .sheet;
 
-  h1.event-name {
-    display: inline-block;
-    font-size: 1.7em;
-  }
+  div.event-header {
+    border-bottom: 1px solid darken($bg-color, 10%);
+    margin-top: -30px;
+    padding: 1.6em 0 0.7em;
+    text-align: center;
+    position: relative;
 
-  a.edit-button {
-    @extend .button;
-    @extend .orange-button;
-    display: inline-block;
-    font-size: 0.9em;
-    font-weight: bold;
-    margin-left: 5px;
-    padding: 0.2em 1em;
-    vertical-align: text-bottom;
+    h1.event-name {
+      font-family: $bariol-light;
+      font-size: 2.5em;
+      display: inline-block;
+    }
+
+    a.edit-button {
+      @extend .button;
+      @extend .orange-button;
+      padding: 0.2em 1em;
+      display: inline-block;
+      vertical-align: text-bottom;
+      margin-left: 10px;
+    }
   }
 
   ul.suggestions {
@@ -71,4 +78,3 @@ div.show-event {
     }
   }
 }
-

@@ -27,13 +27,17 @@ div.table-wrapper {
     &#invitees {
       position: absolute;
       left: 0;
-      top: 145px;
       background: #fff;
       width: $table-width-mobile;
       overflow: hidden;
       border: 1px solid darken($bg-color, 20%);
       @include box-sizing(border-box);
       @include user-select();
+      top: 75px;
+
+      &.blank {
+        top: 145px;
+      }
 
       table {
         @include box-shadow(0 0 20px darken($bg-color, 15%));
@@ -65,6 +69,18 @@ div.table-wrapper {
             text-overflow: ellipsis;
           }
         }
+      }
+    }
+
+    &.grid-help {
+      position: absolute;
+      top: 0;
+      width: $table-width-mobile;
+      padding: 0.7em 1em;
+      color: darken($bg-color, 25%);
+
+      h4 {
+      margin-bottom: 0;
       }
     }
 
@@ -109,7 +125,7 @@ div.table-wrapper {
       border: 1px solid darken($bg-color, 20%);
       overflow: auto;
       @include box-sizing(border-box);
-      @include border-radius(0 4px 0 0);
+      @include border-radius(4px 4px 0 0);
       margin-left: $table-width-mobile - 1;
 
 
@@ -144,7 +160,7 @@ div.table-wrapper {
         }
 
         tbody {
-          tr:first-child {
+          tr#blank {
             height:70px;
 
             td:nth-child(even) {
@@ -274,7 +290,25 @@ div.table-wrapper {
 
 // A quick fix for https://developer.mozilla.org/en/CSS/box-sizing#Notes
 @-moz-document url-prefix() {
-  div.options table thead th {
-    height: 76px !important;
+  div.table-wrapper  {
+    div.search-box, div#invitees {
+      top: 76px;
+
+      tr.invitee td {
+      height: 57px;
+      }
+    }
+
+    div#invitees.blank {
+      top: 146px;
+    }
+
+    div.options table td {
+      padding: 0;
+    }
+
+    div.options table thead th {
+      height: 76px;
+    }
   }
 }
