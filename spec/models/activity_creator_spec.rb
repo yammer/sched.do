@@ -20,7 +20,7 @@ describe ActivityCreator do
             url: "https://sched.do/events/#{event.id}",
             type: 'file',
             title: event.name,
-            image: 'http://sched.do/logo.gif'
+            image: 'http://sched.do/assets/logo.png'
           }
         },
         message: 'Fake message for testing purposes',
