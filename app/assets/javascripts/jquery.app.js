@@ -132,5 +132,9 @@ $(document).ready(function() {
     else if (stringLength > 50) {
       $(this).css('font-size','0.9em');
     }
+
+    if ($(this).hasClass("event-creator")) {
+      $(this).css('font-size','1em');
+    }
   });
 });

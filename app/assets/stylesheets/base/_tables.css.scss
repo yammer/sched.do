@@ -62,7 +62,7 @@ div.table-wrapper {
                 @include box-shadow(0 1px 0px #fff, inset 0 1px 0px lighten($orange, 20%));
                 color: #fff;
                 content: "You!";
-                font-size: 0.7em;
+                font-size: 11px;
                 padding: 0 0.5em;
                 @include border-radius(0 0 4px 4px);
                 position: absolute;
@@ -92,19 +92,16 @@ div.table-wrapper {
             text-overflow: ellipsis;
 
             &.event-creator {
-              padding-left: 40px;
               position: relative;
 
-              &:before {
-                content: "";
-                display: block;
-                height: 24px;
-                left: 10px;
-                top: 15px;
+              img {
                 position: absolute;
-                width: 24px;
-                background-image: url(speaker.svg);
-                opacity: 0.8;
+                margin-top: -3px;
+                opacity: 0.7;
+              }
+
+              span {
+                margin-left: 30px;
               }
             }
           }
@@ -334,6 +331,16 @@ div.table-wrapper {
 
       tr.invitee td {
         height: 57px;
+      }
+    }
+
+    div#invitees table tr.current-user {
+      height: 57px;
+
+      td:after {
+        position: inherit;
+        right: -35%;
+        top: -21px;
       }
     }
 
