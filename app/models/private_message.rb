@@ -1,5 +1,5 @@
 class PrivateMessage
- Rails.application.routes.default_url_options = ActionMailer::Base.default_url_options
+  Rails.application.routes.default_url_options = ActionMailer::Base.default_url_options
   MESSAGES_ENDPOINT = "https://www.yammer.com/api/v1/messages.json"
 
   def initialize(event, recipient, message)

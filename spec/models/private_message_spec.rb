@@ -1,13 +1,19 @@
 require 'spec_helper'
 
 describe PrivateMessage do
-  it 'posts to a Yammer Private Message when created' do
-   event = build_stubbed(:event)
-   recipient = build_stubbed(:user)
-   message = 'You are invited to the "Clown party"'
+ it 'posts to a Yammer Private Message when inviting users' do
+    event = build_stubbed_event
 
-   private_message = PrivateMessage.new(event, recipient, message).create
+    RestClient.should have_received(:post)
+  end
 
-   FakeYammer.messages_endpoint_hits.should == 1
+  #helper methods
+
+  def build_stubbed_event
+    event = build_stubbed(:event)
+    event.generate_uuid
+    invitees = [build_stubbed(:user), build_stubbed(:user)]
+    event.stubs(:invitees).returns(invitees)
+    event
   end
 end

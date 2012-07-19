@@ -2,6 +2,14 @@ class FakeYammer < Sinatra::Base
   cattr_accessor :activity_endpoint_hits
   cattr_accessor :messages_endpoint_hits
 
+  def self.activity_messages_sent
+    activity_endpoint_hits
+  end
+
+  def self.messages_messages_sent
+    messages_endpoint_hits
+  end
+
   def self.reset
     self.activity_endpoint_hits = 0
     self.messages_endpoint_hits = 0
