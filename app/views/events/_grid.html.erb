@@ -76,20 +76,19 @@
   <div id="invitees" <% if current_user.able_to_edit?(@event) %>class="blank"<% end %>>
     <table>
       <tbody>
+
         <% @event.invitees.each do |invitee| %>
           <% if current_user == invitee %>
             <tr class="current-user">
-            <% else %>
-              <tr>
-              <% end %>
-              <td <% if @event.user_owner?(invitee) %>class="event-creator"<% end %>>
-                <% if @event.user_owner?(invitee) %>
-                  <img src="/assets/bullhorn.svg" alt="" />
-                <% end %>
-                <span><%= invitee.name || invitee.email %></span>
-              </td>
+          <% else %>
+            <tr>
+          <% end %>
+          <%= event_invitee_username(@event, invitee) do %>
+            <span><%= invitee.name || invitee.email %></span>
+          <% end %>
             </tr>
         <% end %>
+
         <tr class="total">
          <td>Total Votes</td>
         </tr>
