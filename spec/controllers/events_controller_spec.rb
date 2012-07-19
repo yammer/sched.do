@@ -1,29 +1,50 @@
 require 'spec_helper'
 
 describe EventsController, 'authentication' do
-  it 'requires login for #new' do
-    get :new
-    should deny_access
+
+  it 'requires yammer login for #new if you are coming from yammer' do
+    get :new, from_yammer: true
+    should redirect_to '/auth/yammer' 
   end
 
-  it 'requires login for #create' do
+  it 'requires yammer login for #create if you are coming from yammer' do
+    post :create, from_yammer: true
+    should redirect_to '/auth/yammer' 
+  end
+
+  it 'requires yammer login for #edit if you are coming from yammer' do
+    get :edit, id: 'LIUgiu6y', from_yammer: true
+    should redirect_to '/auth/yammer'
+  end
+
+  it 'requires yammer login for #update if you are coming from yammer' do
+    put :update, id: 'LIUgiu6y', from_yammer: true
+    should redirect_to '/auth/yammer' 
+  end
+
+  it 'requires yammer login for #new' do
+    get :new
+    should redirect_to '/auth/yammer' 
+  end
+
+  it 'requires yammer login for #create' do
     post :create
-    should deny_access
+    should redirect_to '/auth/yammer'
+  end
+
+  it 'requires yammer login for #edit' do
+    get :edit, id: 'LIUgiu6y'
+    should redirect_to '/auth/yammer'
+  end
+
+  it 'requires yammer login for #update' do
+    put :update, id: 'LIUgiu6y'
+    should redirect_to '/auth/yammer'
   end
 
   it 'requires login for #show' do
     get :show, id: 'LIUgiu6y'
     should redirect_to new_guest_url
-  end
-
-  it 'requires login for #edit' do
-    get :edit, id: 'LIUgiu6y'
-    should deny_access
-  end
-
-  it 'requires login for #update' do
-    put :update, id: 'LIUgiu6y'
-    should deny_access
   end
 end
 
