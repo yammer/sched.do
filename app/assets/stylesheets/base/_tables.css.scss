@@ -50,8 +50,10 @@ div.table-wrapper {
 
           &.current-user {
             @include background-image(linear-gradient($bg-color, darken($bg-color, 6%)));
+
             td {
               color: darken($bg-color, 50%);
+              position: relative;
 
               &:after {
                 @include background-image(linear-background());
@@ -91,6 +93,7 @@ div.table-wrapper {
 
             &.event-creator {
               padding-left: 40px;
+              position: relative;
 
               &:before {
                 content: "";

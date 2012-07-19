@@ -79,14 +79,13 @@
         <% @event.invitees.each do |invitee| %>
           <% if current_user == invitee %>
             <tr class="current-user">
-          <% else %>
-            <tr>
-          <% end %>
-          <td <% if @event.user_owner?(current_user) %>class="event-creator"<% end %>>
-
-              <%= invitee.name || invitee.email %>
-            </td>
-          </tr>
+            <% else %>
+              <tr>
+              <% end %>
+              <td <% if @event.user_owner?(current_user) %>class="event-creator"<% end %>>
+                <%= invitee.name || invitee.email %>
+              </td>
+            </tr>
         <% end %>
         <tr class="total">
          <td>Total Votes</td>
