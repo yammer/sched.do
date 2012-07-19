@@ -51,7 +51,7 @@ class User < ActiveRecord::Base
   end
 
   def notify(invitation)
-    nil # TODO
+    nil
   end
 
   def vote_for_suggestion(suggestion)
