@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
 
   def require_yammer_login
     unless current_user.yammer_user?
-      session[:return_to] = request.fullpath
+      session[:return_to] ||= request.fullpath
       redirect_to view_context.auth_yammer_path
     end
   end
@@ -31,6 +31,7 @@ class ApplicationController < ActionController::Base
   def require_guest_or_yammer_login
     if current_user.blank?
       session[:return_to] ||= request.fullpath
+      session[:guest_email] = params[:guest_email]
       redirect_to new_guest_url
     end
   end
