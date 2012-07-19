@@ -24,7 +24,7 @@ class YammerInvitee < ActiveRecord::Base
   end
 
   def notify(invitation)
-    nil # TODO
+    PrivateMessage.new(invitation.event, invitation.invitee, "You were invited to event http://localhost:3000/events/#{invitation.event.id}").create
   end
 
   def voted_for?(suggest)

@@ -86,5 +86,5 @@ step 'I sign in and fill in the event name' do
 end
 
 step 'my network should see an activity message announcing the event' do
-  FakeYammer.activity_messages_sent.should == 1
+  FakeYammer.activity_endpoint_hits.should == 1
 end

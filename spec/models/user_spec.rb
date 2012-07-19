@@ -130,13 +130,13 @@ end
 
 describe User, '#create_yammer_activity' do
   it 'creates a Yammer activity story' do
-    FakeYammer.activity_messages_sent.should == 0
+    FakeYammer.activity_endpoint_hits.should == 0
     user = build_stubbed(:user)
     event = build_stubbed(:event)
     event.generate_uuid
 
     user.create_yammer_activity('update', event)
 
-    FakeYammer.activity_messages_sent.should == 1
+    FakeYammer.activity_endpoint_hits.should == 1
   end
 end

@@ -33,6 +33,10 @@ FactoryGirl.define do
   factory :event do
     name 'Clown party'
     user
+
+    after :stub do |event|
+      event.generate_uuid
+    end
   end
 
   factory :vote do
