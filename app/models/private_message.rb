@@ -10,15 +10,14 @@ class PrivateMessage
   end
 
   def create
-    response = RestClient.post MESSAGES_ENDPOINT, {
+    uri = Addressable::URI.new
+    uri.query_values = {
       access_token: @user.access_token,
-      message: @message,
+      body: @message,
       direct_to_id: @recipient.yammer_user_id,
       og_url: Rails.application.routes.url_helpers.event_url(@event)
     }
-  #rescue Exception => e
-  #  Rails.logger.debug(e.response.inspect)
-  #  Rails.logger.debug(generate_json.inspect)
-  #  raise
+
+    response = RestClient.post MESSAGES_ENDPOINT + "?" + uri.query.to_s, nil
   end
 end
