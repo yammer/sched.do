@@ -23,11 +23,11 @@ describe Event do
   end
 
   it 'updates Yammer activity ticker after creation' do
-    FakeYammer.activity_messages_sent.should == 0
+    FakeYammer.activity_endpoint_hits.should == 0
 
     event = create(:event)
 
-    FakeYammer.activity_messages_sent.should == 1
+    FakeYammer.activity_endpoint_hits.should == 1
   end
 
   it 'has a uuid after creation' do

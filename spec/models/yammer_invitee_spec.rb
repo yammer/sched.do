@@ -35,3 +35,17 @@ describe YammerInvitee, '.convert_to_user_from_params' do
     end
   end
 end
+
+describe YammerInvitee, '#notify' do
+  it 'delivers a private message' do
+    yammer_invitee = create(:yammer_invitee)
+    invitee = create(:yammer_invitee)
+
+    invitation = build(:invitation_with_yammer_invitee, invitee: invitee)
+    ap invitation
+
+    yammer_invitee.notify(invitation)
+
+    FakeYammer.messages_endpoint_hits.should == 1
+  end
+end
