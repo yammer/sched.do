@@ -5,6 +5,7 @@ class GuestsController < ApplicationController
 
   def new
     @guest = Guest.new
+    @guest.email = session.delete(:guest_email)
   end
 
   def create
