@@ -39,7 +39,7 @@ class SessionsController < ApplicationController
     if session[:return_to].blank?
       new_event_path
     else
-      session[:return_to]
+      session.delete(:return_to)
     end
   end
 end
