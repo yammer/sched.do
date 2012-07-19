@@ -26,10 +26,10 @@ describe Vote, '#create' do
   end
 
   it 'updates Yammer activity ticker after voting' do
-    FakeYammer.activity_messages_sent.should == 0
+    FakeYammer.activity_endpoint_hits.should == 0
 
     vote = create(:vote)
 
-    FakeYammer.activity_messages_sent.should == 2
+    FakeYammer.activity_endpoint_hits.should == 2
   end
 end

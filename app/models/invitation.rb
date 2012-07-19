@@ -9,6 +9,7 @@ class Invitation < ActiveRecord::Base
   validates :event_id, presence: true
   validates :invitee_id, presence: true
   validates :invitee_type, presence: true
+
   after_create :send_notification
 
   def self.find_or_create_by_event_and_invitee(event, invitee)
@@ -28,6 +29,9 @@ class Invitation < ActiveRecord::Base
   end
 
   def send_notification
+    Rails.logger.debug("invitation")
+    Rails.logger.debug(self)
+    Rails.logger.debug(invitee)
     invitee.notify(self)
   end
 end
