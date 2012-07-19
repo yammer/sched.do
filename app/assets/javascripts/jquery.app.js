@@ -101,7 +101,7 @@ $(document).ready(function() {
     $("input#copy-url").tooltip('hide');
   });
 
-  if( $("body.events-show").length > 0) {
+  if( $('#event-url').length > 0) {
     clip.glue( 'copy-url', 'copy-url-container' );
   }
 
