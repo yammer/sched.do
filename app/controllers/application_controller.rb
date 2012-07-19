@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
 
   def require_yammer_login
     unless current_user.yammer_user?
-      redirect_to root_path
+      redirect_to view_context.auth_yammer_path
     end
   end
 
