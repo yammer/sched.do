@@ -6,7 +6,7 @@ class SessionsController < ApplicationController
     cookies[:encrypted_access_token] = user.encrypted_access_token
     log_out_guest
 
-    redirect_to new_event_path
+    redirect_to after_sign_in_path
   end
 
   def destroy
@@ -33,5 +33,13 @@ class SessionsController < ApplicationController
   def log_out_guest
     session[:name] = nil
     session[:email] = nil
+  end
+
+  def after_sign_in_path
+    if session[:return_to].blank?
+      new_event_path
+    else
+      session[:return_to]
+    end
   end
 end
