@@ -84,7 +84,9 @@
             <tr>
           <% end %>
           <%= event_invitee_username(@event, invitee) do %>
-            <span><%= invitee.name || invitee.email %></span>
+            <span>
+              <%= invitee.name || invitee.email %>
+            </span>
           <% end %>
             </tr>
         <% end %>
