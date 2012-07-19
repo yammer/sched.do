@@ -133,6 +133,7 @@ describe User, '#create_yammer_activity' do
     FakeYammer.activity_messages_sent.should == 0
     user = build_stubbed(:user)
     event = build_stubbed(:event)
+    event.generate_uuid
 
     user.create_yammer_activity('update', event)
 
