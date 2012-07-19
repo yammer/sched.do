@@ -17,7 +17,7 @@ describe ActivityCreator do
           actor: { name: 'Fred Jones', email: 'fred@example.com' },
           action: 'create',
           object: {
-            url: Rails.application.routes.event_url(event, from_yammer: "true"),
+            url: Rails.application.routes.url_helpers.event_url(event, from_yammer: "true"),
             type: 'file',
             title: event.name,
             image: ActionController::Base.helpers.asset_path('logo.png')
