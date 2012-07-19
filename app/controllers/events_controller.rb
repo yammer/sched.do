@@ -5,7 +5,7 @@ class EventsController < ApplicationController
   end
 
   skip_before_filter :require_yammer_login, only: :show
-  before_filter :require_guest_or_yammer_login, only: :show
+  before_filter :require_yammer_login_from_yammer, only: :show
 
   def new
     @event = current_user.events.build
@@ -66,6 +66,14 @@ class EventsController < ApplicationController
     if !@event.user_invited?(current_user)
       Inviter.new(@event).invite(current_user)
       @event.reload
+    end
+  end
+
+  def require_yammer_login_from_yammer
+    if params[:from_yammer].blank?
+      require_guest_or_yammer_login
+    else
+      require_yammer_login
     end
   end
 

@@ -17,10 +17,10 @@ describe ActivityCreator do
           actor: { name: 'Fred Jones', email: 'fred@example.com' },
           action: 'create',
           object: {
-            url: "https://sched.do/events/#{event.id}",
+            url: Rails.application.routes.event_url(event, from_yammer: "true"),
             type: 'file',
             title: event.name,
-            image: 'http://sched.do/assets/logo.png'
+            image: ActionController::Base.helpers.asset_path('logo.png')
           }
         },
         message: 'Fake message for testing purposes',
@@ -44,6 +44,7 @@ describe ActivityCreator do
 
   def build_stubbed_event
     event = build_stubbed(:event)
+    event.generate_uuid
     invitees = [build_stubbed(:user), build_stubbed(:user)]
     event.stubs(:invitees).returns(invitees)
     event

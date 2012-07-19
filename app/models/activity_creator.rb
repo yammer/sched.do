@@ -1,4 +1,6 @@
 class ActivityCreator
+  Rails.application.routes.default_url_options = ActionMailer::Base.default_url_options
+
   def initialize(user, action, event)
     @action = action
     @user = user
@@ -25,10 +27,10 @@ class ActivityCreator
         actor: { name: @user.name, email: @user.email },
         action: @action,
         object: {
-          url: "https://sched.do/events/#{@event.id}",
+          url: Rails.application.routes.url_helpers.event_url(@event, from_yammer: "true"),
           type: 'file',
           title: @event.name,
-          image: 'http://sched.do/assets/logo.png'
+          image: ActionController::Base.helpers.asset_path('logo.png')
         }
       },
       message: 'Fake message for testing purposes',
