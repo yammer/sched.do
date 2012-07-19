@@ -121,20 +121,22 @@ $(document).ready(function() {
 
 
   // Shrink invitee name/email text size if it is too large to fit in the table cell
-  $('div#invitees td').each(function(){
+  $('div#invitees td span').each(function(){
     var stringLength = $(this).html().length;
+    var span = $(this);
+
     if (stringLength > 60) {
-      $(this).css('font-size','0.8em');
+      span.css('font-size','0.8em');
     }
     else if (stringLength > 55) {
-      $(this).css('font-size','0.85em');
+      span.css('font-size','0.85em');
     }
     else if (stringLength > 50) {
-      $(this).css('font-size','0.9em');
+      span.css('font-size','0.9em');
     }
 
     if ($(this).hasClass("event-creator")) {
-      $(this).css('font-size','1em');
+      span.css('font-size','1em');
     }
   });
 });
