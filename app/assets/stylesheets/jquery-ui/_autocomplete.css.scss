@@ -24,7 +24,7 @@ ul.ui-autocomplete {
       text-shadow: 0 -1px 0 #000;
 
       &.ui-state-hover {
-        @include background-image(url('/images/add-sign.svg'),linear-gradient(lighten($orange, 5%), darken($orange, 5%) 80%, $orange));
+        @include background-image(url(add-sign.svg),linear-gradient(lighten($orange, 5%), darken($orange, 5%) 80%, $orange));
         background-repeat: no-repeat;
         background-position: 0.6em, center;
         padding-left: 1.9em;

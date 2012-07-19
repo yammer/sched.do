@@ -80,7 +80,7 @@ div.new-event {
       }
 
       a.remove_fields {
-        @include background-image(url('/images/delete-icon.svg'), linear-gradient(lighten($orange, 20%), $orange));
+        @include background-image(url(delete-icon.svg), linear-gradient(lighten($orange, 20%), $orange));
         background-position: center, left;
         background-repeat: no-repeat;
         border: 1px solid lighten($orange, 5%);
@@ -102,7 +102,7 @@ div.new-event {
         @include no-text;
 
         &:hover {
-          @include background-image(url('/images/delete-icon.svg'),linear-gradient(lighten($orange, 10%), darken($orange, 5%)));
+          @include background-image(url(delete-icon.svg),linear-gradient(lighten($orange, 10%), darken($orange, 5%)));
         }
       }
 
@@ -120,7 +120,7 @@ div.new-event {
 
     &.secondary {
       a.remove_fields { // Cocoon Class
-        @include background-image(url('/images/delete-icon-small.svg'));
+        @include background-image(url(delete-icon-small.svg));
         border: none;
         display: none;
         background-color: darken($bg-color, 20%);
@@ -129,7 +129,7 @@ div.new-event {
         right: -9px;
 
         &:hover {
-          @include background-image(url('/images/delete-icon-small.svg'));
+          @include background-image(url(delete-icon-small.svg));
           background-color: darken($bg-color, 35%);
         }
       }
