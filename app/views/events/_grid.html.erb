@@ -97,15 +97,13 @@
       </tbody>
     </table>
   </div>
-
-  <% if @event.groups.any? %>
-    <ul id="groups">
-      <h3>Yammer Groups</h3>
-      <p>Invitations have been sent to the following Yammer groups:</p>
-      <% @event.groups.each do |group| %>
-        <li><%= group.name %></li>
-      <% end %>
-    </ul>
-  <% end %>
-
 </div>
+
+<% if @event.groups.any? & current_user.able_to_edit?(@event)  %>
+  <ul id="groups">
+    <h4>Invited Yammer Groups</h4>
+    <% @event.groups.each do |group| %>
+      <li><%= group.name %></li>
+    <% end %>
+  </ul>
+<% end %>

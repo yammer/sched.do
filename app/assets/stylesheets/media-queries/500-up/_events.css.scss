@@ -26,5 +26,10 @@ div.new-event {
   }
 }
 
-
-
+div.show-event {
+  div.event-header {
+    h1.event-name {
+      font-size: 2.5em;
+    }
+  }
+}

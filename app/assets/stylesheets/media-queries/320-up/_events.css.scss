@@ -7,9 +7,14 @@ div.show-event {
 }
 
 div.show-event {
-
   ul.suggestions {
     margin-top: 10px;
+  }
+
+  ul#groups {
+    li {
+      width: auto;
+    }
   }
 }
 
