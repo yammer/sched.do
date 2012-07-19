@@ -130,7 +130,8 @@ body.welcome {
         }
 
         &.third-step {
-          background: #d9f3f9;
+          // background: #d9f3f9;
+          background: darken($bg-color, 2%);
           color: $blue;
         }
 
