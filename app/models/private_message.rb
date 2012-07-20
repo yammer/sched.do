@@ -1,3 +1,5 @@
+require 'addressable/uri'
+
 class PrivateMessage
   include Rails.application.routes.url_helpers
   MESSAGES_ENDPOINT = "https://www.yammer.com/api/v1/messages.json"
