@@ -264,7 +264,7 @@
         display: inline-block;
         background: #000;
         border: 1px solid #000;
-        @include background-image(url('/images/clock.svg'),linear-gradient(#444, #111, #222));
+        @include background-image(url(clock.svg),linear-gradient(#444, #111, #222));
         background-repeat: no-repeat;
         background-position: 10px center, 0 0;
         @include border-radius(4px);

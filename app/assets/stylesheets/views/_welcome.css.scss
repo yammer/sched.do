@@ -118,7 +118,7 @@ body.welcome {
 
         &.first-step {
           color: $blue;
-          background-image: url("/images/welcome-page/step-1-bg.png");
+          background-image: url(welcome-page/step-1-bg.png);
           background-color: rbga(255,255,255,1);
           @include box-shadow(inset 0 5px 20px #fff, 0 5px 10px #eee);
           border-bottom: 1px solid #ddd;

@@ -42,10 +42,11 @@ describe YammerInvitee, '#notify' do
     invitee = create(:yammer_invitee)
 
     invitation = build(:invitation_with_yammer_invitee, invitee: invitee)
-    ap invitation
 
     yammer_invitee.notify(invitation)
 
+    ap invitation.event
     FakeYammer.messages_endpoint_hits.should == 1
+    invitation.message.should == "#{invitee.name} was invited to event: #{invitation.event.name} by #{invitation.event.user.name}"
   end
 end
