@@ -1,5 +1,5 @@
 class ActivityCreator
-  Rails.application.routes.default_url_options = ActionMailer::Base.default_url_options
+  include Rails.application.routes.url_helpers
 
   def initialize(user, action, event)
     @action = action
@@ -12,11 +12,6 @@ class ActivityCreator
     generate_json,
     :content_type => :json,
     :accept => :json
-
-  rescue Exception => e
-    Rails.logger.debug(e.response.inspect)
-    Rails.logger.debug(generate_json.inspect)
-    raise
   end
 
   private
@@ -27,7 +22,7 @@ class ActivityCreator
         actor: { name: @user.name, email: @user.email },
         action: @action,
         object: {
-          url: Rails.application.routes.url_helpers.event_url(@event, from_yammer: "true"),
+          url: event_url(@event, from_yammer: "true"),
           type: 'file',
           title: @event.name,
           image: ActionController::Base.helpers.asset_path('logo.png')
