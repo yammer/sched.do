@@ -13,11 +13,11 @@ describe Invitation do
   it { should validate_presence_of(:invitee_id) }
   it { should validate_presence_of(:invitee_type) }
 
-  it "should notify the invitee after creation" do
+  it 'should notify the invitee after creation' do
     user = create(:user)
     user.stubs(:notify)
-
     invitation = build(:invitation, invitee: user)
+
     invitation.save
 
     user.should have_received(:notify)
