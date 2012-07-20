@@ -16,6 +16,10 @@ class Invitation < ActiveRecord::Base
     find_or_create_by_event_id_and_invitee_id_and_invitee_type(event.id, invitee.id, invitee.class.name)
   end
 
+  def message
+    "#{invitee.name} was invited to event: #{event.name} by #{event.user.name}"
+  end
+
   def name_or_email
     invitee.try(:name) || invitee.try(:email)
   end
@@ -29,9 +33,6 @@ class Invitation < ActiveRecord::Base
   end
 
   def send_notification
-    Rails.logger.debug("invitation")
-    Rails.logger.debug(self)
-    Rails.logger.debug(invitee)
     invitee.notify(self)
   end
 end
