@@ -7,7 +7,6 @@ class PrivateMessage
     @user = event.user
     @recipient = recipient
     @message = message
-    #self.default_url_options = ActionMailer::Base.default_url_options
   end
 
   def create
