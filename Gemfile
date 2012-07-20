@@ -12,6 +12,7 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
+gem 'addressable'
 gem 'awesome_print'
 gem 'pg'
 gem 'thin'

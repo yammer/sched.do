@@ -253,6 +253,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  addressable
   airbrake (~> 3.1.0)
   awesome_print
   bourbon
