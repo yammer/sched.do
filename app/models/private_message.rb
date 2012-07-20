@@ -10,15 +10,11 @@ class PrivateMessage
   end
 
   def create
-
-    uri = Addressable::URI.new
-    uri.query_values = {
+    response = RestClient.post MESSAGES_ENDPOINT + "?" + {
       access_token: @user.access_token,
       body: @message,
       direct_to_id: @recipient.yammer_user_id,
       og_url: event_url(@event)
-    }
-
-    response = RestClient.post MESSAGES_ENDPOINT + "?" + uri.query.to_s, nil
+    }.to_query, nil
   end
 end
