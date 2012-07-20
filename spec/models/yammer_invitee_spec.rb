@@ -40,6 +40,7 @@ describe YammerInvitee, '#notify' do
   it 'delivers a private message' do
     yammer_invitee = create(:yammer_invitee)
     invitee = create(:yammer_invitee)
+
     invitation = build(:invitation_with_yammer_invitee, invitee: invitee)
 
     yammer_invitee.notify(invitation)
