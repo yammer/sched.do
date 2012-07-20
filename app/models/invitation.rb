@@ -33,9 +33,6 @@ class Invitation < ActiveRecord::Base
   end
 
   def send_notification
-    Rails.logger.debug("invitation")
-    Rails.logger.debug(self)
-    Rails.logger.debug(invitee)
     invitee.notify(self)
   end
 end

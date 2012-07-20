@@ -38,14 +38,14 @@ end
 
 describe YammerInvitee, '#notify' do
   it 'delivers a private message' do
-    yammer_invitee = create(:yammer_invitee)
-    invitee = create(:yammer_invitee)
+    invitee = build_stubbed(:yammer_invitee)
+    invitation = build_stubbed(:invitation_with_yammer_invitee,
+                               invitee: invitee)
 
-    invitation = build(:invitation_with_yammer_invitee, invitee: invitee)
-
-    yammer_invitee.notify(invitation)
+    invitee.notify(invitation)
 
     FakeYammer.messages_endpoint_hits.should == 1
+    FakeYammer.message.should == "#{invitation.event.user.name} has invited you to the event \"#{invitation.event.name}\" on Sched.do!"
     invitation.message.should ==  "#{invitation.event.user.name} has invited you to the event \"#{invitation.event.name}\" on Sched.do!"
   end
 end

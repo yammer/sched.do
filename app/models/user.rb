@@ -51,7 +51,9 @@ class User < ActiveRecord::Base
   end
 
   def notify(invitation)
-    nil
+    PrivateMessage.new(invitation.event,
+                       invitation.invitee,
+                       invitation.message).create
   end
 
   def vote_for_suggestion(suggestion)

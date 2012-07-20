@@ -1,5 +1,6 @@
 class FakeYammer < Sinatra::Base
   cattr_accessor :activity_endpoint_hits
+  cattr_accessor :message
   cattr_accessor :messages_endpoint_hits
 
   def self.reset
@@ -14,6 +15,7 @@ class FakeYammer < Sinatra::Base
 
   post '/api/v1/messages.json' do
     self.messages_endpoint_hits += 1
+    self.message = params[:body]
     202
   end
 end

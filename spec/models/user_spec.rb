@@ -140,3 +140,17 @@ describe User, '#create_yammer_activity' do
     FakeYammer.activity_endpoint_hits.should == 1
   end
 end
+
+describe User, '#notify' do
+  it 'sends a private message notification' do
+    invitee = build_stubbed(:user)
+    invitation = build_stubbed(:invitation_with_user,
+                               invitee: invitee)
+
+    invitee.notify(invitation)
+
+    FakeYammer.messages_endpoint_hits.should == 1
+    FakeYammer.message.should == "#{invitation.event.user.name} has invited you to the event \"#{invitation.event.name}\" on Sched.do!"
+    invitation.message.should ==  "#{invitation.event.user.name} has invited you to the event \"#{invitation.event.name}\" on Sched.do!"
+  end
+end
