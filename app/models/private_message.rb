@@ -16,7 +16,7 @@ class PrivateMessage
     uri.query_values = {
       access_token: @user.access_token,
       body: @message,
-      direct_to_id: 1488374236, #for testing send everything to mason #@recipient.yammer_user_id,
+      direct_to_id: @recipient.yammer_user_id,
       og_url: event_url(@event)
     }
 
