@@ -9,14 +9,14 @@
 }
 
 .ui-helper-reset {
-  margin: 0;
-  padding: 0;
   border: 0;
-  outline: 0;
-  line-height: 1.3;
-  text-decoration: none;
   font-size: 100%;
+  line-height: 1.3;
   list-style: none;
+  margin: 0;
+  outline: 0;
+  padding: 0;
+  text-decoration: none;
 }
 
 .ui-helper-clearfix {
@@ -26,21 +26,21 @@
   }
 
   &:after {
+    clear: both;
     content: "";
     display: table;
-    clear: both;
   }
 
   zoom: 1;
 }
 
 .ui-helper-zfix {
-  width: 100%;
   height: 100%;
-  top: 0;
   left: 0;
-  position: absolute;
   opacity: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
 }
 
 .ui-state-disabled {
@@ -48,11 +48,11 @@
 }
 
 .ui-widget-overlay {
+  height: 100%;
+  left: 0;
   position: absolute;
   top: 0;
-  left: 0;
   width: 100%;
-  height: 100%;
 }
 
 .ui-widget {
@@ -69,11 +69,12 @@
 }
 
 .ui-widget-content {
+  @include background-image(linear-gradient(#555, #000));
   border: 1px solid #000;
   @include border-radius(3px);
-  @include background-image(linear-gradient(#555, #000));
   @include box-shadow(inset 0 1px 0 #999, 0 1px 5px #aaa, inset 0 -1px 0 #333);
   color: #fff;
+
   a {
     color: #222222;
   }
@@ -90,9 +91,9 @@
 }
 
 .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
-  font-weight: normal;
   border: 1px solid transparent;
   color: #aaa;
+  font-weight: normal;
 }
 
 .ui-state-default a {
@@ -106,15 +107,16 @@
 }
 
 .ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus {
-  @include border-radius(3px);
-  font-weight: normal;
-  color: #fff;
   background: rgba(0,0,0,0.5);
+  @include border-radius(3px);
+  color: #fff;
+  font-weight: normal;
 }
 
 .ui-state-hover a {
   color: #212121;
   text-decoration: none;
+
   &:hover {
     color: #212121;
     text-decoration: none;
@@ -123,11 +125,11 @@
 
 .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active {
   @include background-image(linear-gradient($orange,darken($orange, 15%)));
-  color: #fff;
   border: 1px solid darken($bg-color, 90%);
-  @include box-shadow(inset 0 1px 0 lighten($orange, 15%), 0 1px 0 #333);
-  font-weight: normal;
   @include border-radius(3px);
+  @include box-shadow(inset 0 1px 0 lighten($orange, 15%), 0 1px 0 #333);
+  color: #fff;
+  font-weight: normal;
 }
 
 .ui-state-active a {
@@ -174,7 +176,6 @@
 
 .ui-state-disabled, .ui-widget-content .ui-state-disabled, .ui-widget-header .ui-state-disabled {
   opacity: .35;
-  filter: Alpha(Opacity = 35);
   background-image: none;
 }
 

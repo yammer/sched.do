@@ -47,26 +47,25 @@ div.new-event {
     position: relative;
 
     &.primary {
-      padding: 1em;
       @include background-image(linear-gradient(lighten($bg-color, 0.5%), darken($bg-color, 0.5%) 20%));
-      @include box-shadow(inset 0 1px 0 #fff);
       border: 1px solid darken($bg-color, 10%);
       @include border-radius(4px);
+      @include box-shadow(inset 0 1px 0 #fff);
       margin-bottom: 20px;
-
+      padding: 1em;
 
       div.times {
+        border-top: 1px dashed darken($bg-color, 10%);
         margin-top: 15px;
         padding-top: 15px;
-        border-top: 1px dashed darken($bg-color, 10%);
 
         a.add_fields {
-          border: 1px dashed lighten($blue, 5%);
           background: lighten($blue, 40%);
+          border: 1px dashed lighten($blue, 5%);
           color: desaturate(lighten($blue, 10%), 10%);
+          padding: 12px 10px;
           text-shadow: 0 1px 0 #fff;
           @include transition(background 0.2s);
-          padding: 12px 10px;
 
           &:before {
             display: none;
@@ -80,6 +79,7 @@ div.new-event {
       }
 
       a.remove_fields {
+        @include animation(rotateIn 0.5s);
         @include background-image(url(delete-icon.svg), linear-gradient(lighten($orange, 20%), $orange));
         background-position: center, left;
         background-repeat: no-repeat;
@@ -87,9 +87,9 @@ div.new-event {
         @include border-radius(20px);
         @include box-shadow(inset 0 1px 0 lighten($orange, 30%), 0 1px 4px darken($bg-color, 20%));
         color: #fff;
-        @include animation(rotateIn 0.5s);
         display: none;
         font-size: 0.9em;
+        @include no-text;
         outline: none;
         padding: 2px 3px;
         position: absolute;
@@ -99,7 +99,6 @@ div.new-event {
         top:-10px;
         vertical-align: bottom;
         width: 16px;
-        @include no-text;
 
         &:hover {
           @include background-image(url(delete-icon.svg),linear-gradient(lighten($orange, 10%), darken($orange, 5%)));
@@ -113,13 +112,13 @@ div.new-event {
 
     &.secondary {
       a.remove_fields { // Cocoon Class
+        background-color: darken($bg-color, 20%);
         @include background-image(url(delete-icon-small.svg));
         border: none;
-        display: none;
-        background-color: darken($bg-color, 20%);
         @include box-shadow(none);
-        top: -8px;
+        display: none;
         right: -9px;
+        top: -8px;
 
         &:hover {
           @include background-image(url(delete-icon-small.svg));
@@ -131,7 +130,6 @@ div.new-event {
     &.secondary [data-role='primary-suggestion'] {
       display: none;
     }
-
 
     &.deleted {
       @include animation(hinge 1.5s 1 both);
@@ -182,5 +180,4 @@ div.event-url {
       }
     }
   }
-
 }

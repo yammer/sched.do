@@ -6,19 +6,19 @@ div.flash {
 
 
 div.error, div.notice, div.success {
+  @include animation(slide-down 3s 0s 1 ease forwards);
   border: 1px solid #ddd;
-  border-top: none;
   @include border-radius(0 0 3px 3px);
+  border-top: none;
+  @include box-shadow(0 1px 3px rgba(0,0,0,0.15));
+  @include box-sizing(border-box);
+  max-width: $max-width*0.97;
+  opacity: 0;
   padding: .75em;
   position: absolute;
-  z-index: 0;
-  opacity: 0;
-  width: 100%;
-  max-width: $max-width*0.97;
-  @include box-sizing(border-box);
-  @include box-shadow(0 1px 3px rgba(0,0,0,0.15));
-  @include animation(slide-down 3s 0s 1 ease forwards);
   text-align: center;
+  width: 100%;
+  z-index: 0;
 }
 
 div.error {

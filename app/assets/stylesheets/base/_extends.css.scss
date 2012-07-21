@@ -10,19 +10,17 @@
 }
 
 .yammer-button {
-
   @include button-color(#48AEF1);
-
-  margin: 40px auto 20px auto;
+  @include background-image(url(yammer-logo.svg),linear-gradient(#48AFF3, #228ed5));
+  background-position: 20px center, 0 0;
+  background-repeat: no-repeat;
   background-size: 10%, 100%;
+  color: #fff;
   font-family: Helvetica, Arial, sans-serif;
   font-size: 1.2em;
   letter-spacing: 0.05em;
   line-height: 1.5em;
-  @include background-image(url(yammer-logo.svg),linear-gradient(#48AFF3, #228ed5));
-  background-position: 20px center, 0 0;
-  background-repeat: no-repeat;
-  color: #fff;
+  margin: 40px auto 20px auto;
   padding-left: 40px;
   padding-right: 0px;
   text-shadow: 0 -1px 0 darken(#48AEF1, 40%);
@@ -33,15 +31,13 @@
 }
 
 .sheet {
-  max-width: 100%;
   @include background-image(linear-gradient(top, darken($bg-color, 5%), $bg-color 1%, #fff 20%));
   border: 1px solid darken($bg-color, 10%);
   border-top: none;
   @include box-shadow(0 4px 5px darken($bg-color, 1%));
-  margin: 0 auto;
-  margin-top: -20px;
+  margin: -20px auto 0;
+  max-width: 100%;
   padding: 4%;
-  // overflow-y: scroll;
 
   h2 {
     margin-bottom: 0.6em;

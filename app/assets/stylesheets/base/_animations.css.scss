@@ -1,5 +1,4 @@
 // Flash animation
-
 @-webkit-keyframes slide-down {
   0%, 100% { opacity: 1; -webkit-transform: translateY(-100px); }
   10%, 90% { -webkit-transform: translateY(0); }
@@ -27,7 +26,6 @@
 
 
 // Hinge
-
 @-webkit-keyframes hinge {
   0% { -webkit-transform: rotate(0); -webkit-transform-origin: top left; -webkit-animation-timing-function: ease-in-out; }
   30% { -webkit-transform: rotate(80deg); -webkit-transform-origin: top left; -webkit-animation-timing-function: ease-in-out; }
@@ -66,7 +64,6 @@
 
 
 // New suggestion animation
-
 @-webkit-keyframes slideUp {
   0% { opacity: 0; -webkit-transform: translateY(20px); }
   100% { opacity: 1; -webkit-transform: translateY(0); }
@@ -92,8 +89,7 @@
   100% { opacity: 1; transform: translateY(0); }
 }
 
-// fadeinUp
-
+// Homepage step animation
 @-webkit-keyframes fadeInUp {
   0% { opacity: 0; -webkit-transform: translateY(200px); }
   100% { opacity: 1; -webkit-transform: translateY(0); }
@@ -120,8 +116,7 @@
 }
 
 
-// rotateInUpLeft
-
+// Homepage illustration animation 1
 @-webkit-keyframes rotateInUpLeft {
   0% { -webkit-transform-origin: left bottom; -webkit-transform: rotate(90deg); opacity: 0; }
   100% { -webkit-transform-origin: left bottom; -webkit-transform: rotate(0); opacity: 1;
@@ -148,8 +143,7 @@
   100% { transform-origin: left bottom; transform: rotate(0); opacity: 1; }
 }
 
-// rotateInUpRight
-
+// Homepage illustration animation 2
 @-webkit-keyframes rotateInUpRight {
   0% { -webkit-transform-origin: right bottom; -webkit-transform: rotate(-90deg); opacity: 0; }
   100% { -webkit-transform-origin: right bottom; -webkit-transform: rotate(0); opacity: 1; }
@@ -175,8 +169,7 @@
   100% { transform-origin: right bottom; transform: rotate(0); opacity: 1; }
 }
 
-// rotateIn
-
+// Delete icon animation
 @-webkit-keyframes rotateIn {
   0% { -webkit-transform-origin: center center; -webkit-transform: rotate(-300deg); opacity: 0; }
   100% { -webkit-transform-origin: center center; -webkit-transform: rotate(0); opacity: 1; }

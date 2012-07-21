@@ -10,7 +10,6 @@
   @include background-image(linear-gradient(lighten($color, 10%), darken($color, 5%)));
   border: 1px solid darken($color, 20%);
   @include box-shadow(0 1px 0px #fff, inset 0 1px 0px lighten($color, 20%));
-
   color: darken($color,40%);
   text-shadow: 0 1px 0px lighten($color, 20%);
 
@@ -35,6 +34,7 @@
   }
 }
 
+// Alternative IR mixin
 @mixin no-text {
   text-indent: 160%;
   white-space: nowrap;

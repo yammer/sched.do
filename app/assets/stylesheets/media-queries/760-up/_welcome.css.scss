@@ -1,19 +1,16 @@
 body.welcome {
-
   div.welcome  {
-    min-height: 500px;
     @include box-sizing(border-box);
+
     div.logo {
       div.post-it {
         padding: 20px 20px 50px;
+
         h2 {
           font-size: 1.5em;
         }
       }
-
     }
   }
 }
-
-
 

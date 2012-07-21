@@ -41,7 +41,3 @@
   width: 100%;
   @include box-sizing(border-box);
 }
-
-@mixin flatten-column() {
-  @include row();
-}

@@ -25,9 +25,9 @@ form {
     font-size: 1em;
 
     &.cta {
-      padding-top: 15px;
-      padding-bottom: 15px;
       font-size: 1.5em;
+      padding-bottom: 15px;
+      padding-top: 15px;
     }
 
   }
@@ -62,16 +62,16 @@ form {
 
   #{$all-text-inputs} {
     &.read-only, &.disabled {
-      color: $orange;
-      border-color: lighten($orange, 15%);
       @include background-image(linear-gradient(lighten($orange, 32%), #fff));
+      border-color: lighten($orange, 15%);
       @include box-shadow(inset 0 2px 2px lighten($orange, 28%), 0 1px 0 #fff);
+      color: $orange;
     }
   }
 
   label {
-    font-weight: normal;
     color: $blue;
+    font-weight: normal;
   }
 
   ol {
@@ -80,8 +80,8 @@ form {
     li.input, li.action {
       p.inline-hints {
         color: darken($bg-color, 25%);
-        margin: 5px;
         font-size: 0.8em;
+        margin: 5px;
       }
 
       &.required {
@@ -118,6 +118,7 @@ form {
       }
     }
   }
+
   abbr[title], dfn[title] {
     border: none;
     font-size: 1.5em;
@@ -126,18 +127,17 @@ form {
 }
 
 label.custom-select {
-  position: relative;
   display: inline-block;
   @include fill-parent();
-  text-overflow: ellipsis;
   overflow: hidden;
-
+  position: relative;
+  text-overflow: ellipsis;
 
   select {
     @include background-image(linear-gradient(#fff, darken($bg-color, 10%)));
     border: 1px solid #000;
-    @include box-shadow(0 1px 0 #555);
     @include border-radius(4px);
+    @include box-shadow(0 1px 0 #555);
     color: darken($bg-color, 50%);
     display: inline-block;
     @include fill-parent();
@@ -149,15 +149,15 @@ label.custom-select {
     -webkit-appearance: none;
 
     option {
-      text-align: left;
       color: #000;
+      text-align: left;
     }
 
     &:focus {
       @include background-image(linear-gradient($orange,darken($orange, 15%)));
-      color: #fff;
       border: 1px solid darken($bg-color, 90%);
       @include box-shadow(inset 0 1px 0 lighten($orange, 15%), 0 1px 0 #333);
+      color: #fff;
     }
   }
 }

@@ -5,21 +5,21 @@ div.show-event {
     border-bottom: 1px solid darken($bg-color, 10%);
     margin-top: -10px;
     padding: 1.6em 0 0.7em;
-    text-align: center;
     position: relative;
+    text-align: center;
 
     h1.event-name {
+      display: inline-block;
       font-family: $bariol-light;
       font-size: 2em;
-      display: inline-block;
     }
 
     a.edit-button {
       @extend .button;
-      padding: 0.2em 1em;
       display: inline-block;
-      vertical-align: text-bottom;
       margin-left: 10px;
+      padding: 0.2em 1em;
+      vertical-align: text-bottom;
     }
   }
 
@@ -36,10 +36,10 @@ div.show-event {
       }
 
       aside {
-        width: auto;
-        max-width: 10%;
         display: inline-block;
+        max-width: 10%;
         text-align: center;
+        width: auto;
 
         div.vote-count {
           background: $bg-color;
@@ -53,7 +53,6 @@ div.show-event {
         }
 
         div.vote {
-
           input[type="submit"] {
             @extend .button;
             font-size: 0.8em;
@@ -64,14 +63,15 @@ div.show-event {
               @extend .orange-button;
             }
           }
-      } }
+        }
+      }
 
       div.description {
         color: darken($bg-color, 45%);
         display: inline-block;
         font-size: 1.25em;
-        vertical-align: top;
         margin-left: 12px;
+        vertical-align: top;
         width: 83%;
       }
     }
@@ -94,13 +94,12 @@ div.show-event {
       background-repeat: no-repeat;
       @include border-radius(4px);
       display: inline-block;
+      @include fill-parent();
       font-size: 0.9em;
       list-style: none;
-      margin-right: 10px;
-      @include fill-parent();
       margin-bottom: 10px;
-      padding: 0.5em 1em;
-      padding-left: 30px;
+      margin-right: 10px;
+      padding: 0.5em 1em 0.5em 30px;
     }
   }
 

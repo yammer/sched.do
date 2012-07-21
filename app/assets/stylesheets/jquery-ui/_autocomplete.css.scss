@@ -25,14 +25,14 @@ ul.ui-autocomplete {
 
       &.ui-state-hover {
         @include background-image(url(add-sign.svg),linear-gradient(lighten($orange, 5%), darken($orange, 5%) 80%, $orange));
-        background-repeat: no-repeat;
         background-position: 0.6em, center;
-        padding-left: 1.9em;
+        background-repeat: no-repeat;
         border: 1px solid darken($orange, 20%);
-        border-top: #fff;
         border-bottom: none;
+        border-top: #fff;
         @include box-shadow(inset 0 1px 0px lighten($orange, 20%));
         color: #fff ;
+        padding-left: 1.9em;
         text-shadow: 0 -1px 0px darken($orange,40%);
       }
     }

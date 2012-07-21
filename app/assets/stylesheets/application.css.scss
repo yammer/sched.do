@@ -11,7 +11,7 @@
  *= require_self
 */
 
-
+// Global (mobile/tablet/desktop)
 @import 'flutie';
 @import 'bourbon';
 @import 'base/mixins';
@@ -28,7 +28,6 @@
 //jQuery-UI
 @import 'jquery-ui/base';
 @import 'jquery-ui/datepicker';
-@import 'jquery-ui/slider';
 @import 'jquery-ui/autocomplete';
 
 //Views
