@@ -19,8 +19,30 @@ $(document).ready(function() {
     });
   };
 
+  // Show delete button on hover
+  var showRemoveIcons = function() {
+    var primary = $('div.nested-fields.primary');
+    var secondary = $('div.nested-fields.secondary');
+
+    secondary.hover(function(){
+      $(this).children('a.remove_fields').css('display', 'block');
+    },
+    function(){
+      $(this).children('a.remove_fields').hide();
+    });
+
+    primary.hover(function(){
+      $(this).find('div.times > a.remove_fields').css('display', 'block');
+    },
+    function(){
+      $(this).find('div.times > a.remove_fields').hide();
+    });
+
+  }
+
   datepicker();
   addRemovalAnimation();
+  showRemoveIcons();
 
   $.extend($.datepicker,{_checkOffset:function(inst,offset,isFixed){
     var dpHeight = inst.dpDiv.outerHeight();
@@ -37,6 +59,7 @@ $(document).ready(function() {
   forms.bind('insertion-callback', function(){
     datepicker();
     addRemovalAnimation();
+    showRemoveIcons();
 
     // Animate new nodes
     var lastNode =  forms.find('div.nested-fields.primary:not(".initial"):last');

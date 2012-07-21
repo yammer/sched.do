@@ -105,13 +105,6 @@ div.new-event {
           @include background-image(url(delete-icon.svg),linear-gradient(lighten($orange, 10%), darken($orange, 5%)));
         }
       }
-
-      &:hover {
-        & > div.times > a.remove_fields {
-          display: block;
-        }
-      }
-
     }
 
     &.animated {
@@ -133,12 +126,6 @@ div.new-event {
           background-color: darken($bg-color, 35%);
         }
       }
-      &:hover {
-        a.remove_fields {
-          display: block;
-        }
-      }
-
     }
 
     &.secondary [data-role='primary-suggestion'] {
