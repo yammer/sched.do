@@ -113,7 +113,8 @@ div.table-wrapper {
       position: absolute;
       top: 0;
       width: $table-width-mobile;
-      padding: 0.7em 1em;
+      font-size: 0.8em;
+      padding: 0.7em 0.5em;
       color: darken($bg-color, 25%);
 
       h4 {

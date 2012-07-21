@@ -4,9 +4,11 @@ div.new-event, div.edit-event {
 
 div.show-event {
   padding: 30px;
-}
 
-div.show-event {
+  div.event-header {
+    margin-top: -30px;
+  }
+
   ul.suggestions {
     margin-top: 10px;
   }

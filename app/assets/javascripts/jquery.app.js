@@ -14,6 +14,7 @@ $(document).ready(function() {
     $('div.primary > div.times > a.remove_fields').click(function(){
       $(this).parents('div.nested-fields').addClass('deleted');
     });
+
     $('div.secondary a.remove_fields').click(function(){
       $(this).parent('div.nested-fields').addClass('deleted');
     });
@@ -37,7 +38,6 @@ $(document).ready(function() {
     function(){
       $(this).find('div.times > a.remove_fields').hide();
     });
-
   }
 
   datepicker();

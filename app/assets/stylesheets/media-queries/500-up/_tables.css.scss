@@ -1,0 +1,21 @@
+div.table-wrapper {
+  div {
+    &#invitees {
+      width: $table-width;
+    }
+
+    &.grid-help {
+      font-size: 1em;
+      padding: 0.7em 1em;
+      width: $table-width;
+    }
+
+    &.search-box {
+      width: $table-width;
+    }
+
+    &.options {
+      margin-left: $table-width - 1;
+    }
+  }
+}
