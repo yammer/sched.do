@@ -46,6 +46,6 @@ describe YammerInvitee, '#notify' do
     yammer_invitee.notify(invitation)
 
     FakeYammer.messages_endpoint_hits.should == 1
-    invitation.message.should ==  "#{invitation.event.user.name} has invited you to the event #{invitation.event.name} on Sched.do!"
+    invitation.message.should ==  "#{invitation.event.user.name} has invited you to the event \"#{invitation.event.name}\" on Sched.do!"
   end
 end

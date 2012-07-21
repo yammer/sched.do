@@ -17,7 +17,7 @@ class Invitation < ActiveRecord::Base
   end
 
   def message
-    "#{event.user.name} has invited you to the event #{event.name} on Sched.do!"
+    "#{event.user.name} has invited you to the event \"#{event.name}\" on Sched.do!"
   end
 
   def name_or_email
