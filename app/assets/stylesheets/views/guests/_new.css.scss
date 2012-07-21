@@ -15,4 +15,15 @@ div.guest-sign-in {
     font-size: 0.9em;
     text-align: center;
   }
+
+  form {
+    fieldset {
+      &.inputs {
+        color: #000;
+        input:first-child {
+          margin-bottom: 10px;
+        }
+      }
+    }
+  }
 }
