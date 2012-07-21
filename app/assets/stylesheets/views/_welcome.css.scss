@@ -21,14 +21,14 @@ body.welcome {
         border: 1px solid lighten($orange, 26%);
         @include border-radius(3px);
         @include box-shadow(0 2px 3px darken($bg-color, 6%));
-        margin: auto;
+        margin: 10px auto 20px;
         max-width: 80%;
         padding: 3% 3% 10%;
         @include transform(rotate(2deg));
         position: relative;
 
         h2 {
-          font:0.78em/1.5em 'Gloria Hallelujah', cursive;
+          font:0.9em/1.5em 'Gloria Hallelujah', cursive;
           text-shadow: none;
           color: #d0ad56;
         }
