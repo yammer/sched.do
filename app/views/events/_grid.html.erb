@@ -82,11 +82,20 @@
         <% @event.invitees.each do |invitee| %>
           <% if display_invitee_in_grid?(@event, invitee) %>
             <tr class="<% "current-user" if  current_user == invitee %>">
-            <%= event_invitee_username(@event, invitee) do %>
-              <span>
-                <%= invitee.name || invitee.email %>
-              </span>
+
+            <% if @event.user_owner?(invitee) %>
+              <td class="event-creator">
+                <div class="avatar" style="background-image: url(/assets/no_photo.png)"></div>
+                <img src="/assets/bullhorn.svg" >
+            <% else %>
+              <td>
+                <div class="avatar" style="background-image: url(/assets/no_photo.png)"></div>
             <% end %>
+                <span class="user-name">
+                  <%= invitee.name || invitee.email %>
+                </span>
+              </td>
+            </tr>
           <% end %>
         <% end %>
 
