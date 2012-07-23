@@ -1,6 +1,6 @@
 Feature: User can view invitees for an event
 
-  Scenario: Event owner views yammer invitees
+  Scenario: Event owner views Yammer invitees
     Given a user exists with a name of "Joe Smith"
     And I am signed in
     When I create an event named "Party"
