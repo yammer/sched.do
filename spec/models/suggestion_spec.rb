@@ -39,10 +39,10 @@ describe Suggestion, '#user_voted?' do
     suggestion.should be_user_voted(user)
   end
 
-#  it 'returns false if the user has not voted on the event' do
-#    user = create(:user)
-#    suggestion = build_stubbed(:suggestion)
- 
-#    suggestion.should_not be_user_voted(build(:user))
-#  end
+  it 'returns false if the user has not voted on the event' do
+    user = create(:user)
+    suggestion = build_stubbed(:suggestion)
+
+    suggestion.should_not be_user_voted(build(:user))
+  end
 end
