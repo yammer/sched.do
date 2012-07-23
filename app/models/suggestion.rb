@@ -11,7 +11,7 @@ class Suggestion < ActiveRecord::Base
   end
 
   def user_voted?(user)
-    persisted_votes.any?{|vote| vote.user == user }
+    user.votes.where(suggestion_id: id).exists?
   end
 
   def persisted_votes
