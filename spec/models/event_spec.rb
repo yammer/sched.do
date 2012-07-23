@@ -63,6 +63,23 @@ describe Event, '#invitees' do
   end
 end
 
+describe Event, '#user_voted?' do
+  it 'returns true if the user has voted on the event' do
+    event = create(:event)
+    user = event.user
+    suggestion = create(:suggestion, event: event)
+    vote = create(:vote_by_user, user: user, suggestion: suggestion)
+
+    event.should be_user_voted(user)
+  end
+
+  it 'returns false if the user has not voted on the event' do
+    event = create(:event)
+
+    event.should_not be_user_voted(build(:user))
+  end
+end
+
 describe Event, '#user_owner?' do
   it 'returns true if the user is the owner of the event' do
     event = create(:event)

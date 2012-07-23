@@ -28,6 +28,12 @@ step 'I should see :name in the list of invitees' do |name|
   end
 end
 
+step 'I should not see :name in the list of invitees' do |name|
+  within '#invitees' do
+    page.should_not have_content name
+  end
+end
+
 step 'I should see :name in the groups list' do |name|
   within '#invitees' do
     page.should_not have_content name

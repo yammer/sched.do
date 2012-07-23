@@ -44,7 +44,8 @@
           <% else %>
             <tr>
           <% end %>
-            <% @suggestions.each do |suggestion| %>
+          <% @suggestions.each do |suggestion| %>
+            <% if display_invitee_in_grid?(@event, invitee)  %>
               <% if current_user == invitee %>
                 <%= render 'vote', suggestion: suggestion,
                   vote_for_suggestion: current_user.vote_for_suggestion(suggestion) %>
@@ -58,6 +59,7 @@
                 <% end %>
               <% end %>
             <% end %>
+          <% end %>
           </tr>
         <% end %>
       </tbody>
@@ -78,17 +80,14 @@
       <tbody>
 
         <% @event.invitees.each do |invitee| %>
-          <% if current_user == invitee %>
-            <tr class="current-user">
-          <% else %>
-            <tr>
+          <% if display_invitee_in_grid?(@event, invitee) %>
+            <tr class="<% "current-user" if  current_user == invitee %>">
+            <%= event_invitee_username(@event, invitee) do %>
+              <span>
+                <%= invitee.name || invitee.email %>
+              </span>
+            <% end %>
           <% end %>
-          <%= event_invitee_username(@event, invitee) do %>
-            <span>
-              <%= invitee.name || invitee.email %>
-            </span>
-          <% end %>
-            </tr>
         <% end %>
 
         <tr class="total">

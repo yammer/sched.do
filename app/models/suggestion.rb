@@ -7,6 +7,14 @@ class Suggestion < ActiveRecord::Base
   has_many :votes, dependent: :destroy
 
   def vote_count
-    votes.select(&:persisted?).size
+    persisted_votes.size
+  end
+
+  def user_voted?(user)
+    persisted_votes.any?{|vote| vote.user == user }
+  end
+
+  def persisted_votes
+    votes.select(&:persisted?)
   end
 end

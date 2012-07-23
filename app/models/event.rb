@@ -40,6 +40,10 @@ class Event < ActiveRecord::Base
     invitees.include?(user)
   end
 
+  def user_voted?(user)
+    suggestions.any?{ |suggestion| suggestion.user_voted?(user) }
+  end
+
   def to_param
     uuid
   end

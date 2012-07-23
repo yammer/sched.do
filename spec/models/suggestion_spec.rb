@@ -28,3 +28,21 @@ describe Suggestion, '#vote_count' do
     suggestion_with_no_votes.vote_count.should == 0
   end
 end
+
+describe Suggestion, '#user_voted?' do
+  it 'returns true if the user has voted on the event' do
+    user = create(:user)
+    suggestion = build_stubbed(:suggestion)
+    vote = create(:vote_by_user, user: user, suggestion: suggestion)
+
+
+    suggestion.should be_user_voted(user)
+  end
+
+  it 'returns false if the user has not voted on the event' do
+    user = create(:user)
+    suggestion = build_stubbed(:suggestion)
+ 
+    suggestion.should_not be_user_voted(build(:user))
+  end
+end
