@@ -13,7 +13,7 @@ step ':email_address follows the link :link in his email' do |email_address, lin
 end
 step ':email_address should receive a vote confirmation email with a link to :event' do |email_address, event|
   event = Event.find_by_name(event)
-  email_body(last_email_sent).should have_link(event_url(event), href: event_url(event))
+  email_body(last_email_sent).should have_link(event_url(event, yammer: false), href: event_url(event, yammer: false))
 end
 
 step ':email_address should have :count email(s)' do |email_address, count|

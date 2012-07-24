@@ -70,7 +70,7 @@ class EventsController < ApplicationController
   end
 
   def require_yammer_login_from_yammer
-    if params[:from_yammer].blank?
+    if params[:yammer] == "false" || (not current_user.blank?)
       require_guest_or_yammer_login
     else
       require_yammer_login
