@@ -4,7 +4,7 @@ class UserMailer < ActionMailer::Base
     @event = vote.suggestion.event
     mail(to: @user.email,
          from: "votes@sched.do",
-         subject: "You have voted for a Sched.do event!",
+         subject: "#{@user.name}, thanks for voting with Sched.do",
          template_path: "guest_mailer"
         )
   end
@@ -12,6 +12,8 @@ class UserMailer < ActionMailer::Base
   class Preview < MailView
     def vote_confirmation
       vote = Vote.first
+      @user = vote.votable.user
+      @event = vote.suggestion.event
       UserMailer.vote_confirmation(vote)
     end
   end

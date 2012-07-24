@@ -13,4 +13,4 @@
 
 <%= link_to "View Poll", event_url(@event, guest_email: @guest.email), html_options = {:style => "background-color: #30AADE; border: 1px solid #0F7CC4; border-radius: 3px; color: #fff; display: block; margin: 20px auto; padding: 8px 12px; text-align: center; text-decoration: none; width: 100px"} %>
 
-<p><%= @event.user.name %> sent this poll in just seconds using Sche.do. <a href="#">Click here</a> to create your own polls for free.</p>
+<p><%= @event.user.name %> sent this poll in just seconds using Sche.do. Click here to <%= link_to "create your own polls for free", root_url %>.</p>
