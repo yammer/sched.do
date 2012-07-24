@@ -20,6 +20,7 @@ describe SessionsController, '#create' do
     session[:email] = 'joe@example.com'
     stub_omniauth_env
     post :create
+
     session[:name].should be_nil
     session[:email].should be_nil
   end
@@ -27,9 +28,12 @@ describe SessionsController, '#create' do
   it 'converts YammerInvitees to Users' do
     yammer_invitee = create(:yammer_invitee)
     stub_omniauth_env_with_yammer_invitee(yammer_invitee)
+
     User.count.should == 0
     YammerInvitee.count.should == 1
+
     post :create
+
     User.count.should == 1
     YammerInvitee.count.should == 0
   end

@@ -23,11 +23,13 @@ class SessionsController < ApplicationController
   end
 
   def find_or_create_user
-    find_user || YammerInvitee.convert_to_user_from_params(auth) || User.create_from_params!(auth)
+    find_user ||
+      YammerInvitee.convert_to_user_from_params(auth) ||
+      User.create_from_params!(auth)
   end
 
   def find_user
-    User.find_by_access_token(auth[:info][:access_token])
+    User.find_and_update_from_yammer(auth)
   end
 
   def log_out_guest

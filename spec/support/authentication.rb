@@ -40,6 +40,25 @@ module AuthenticationHelpers
     })
   end
 
+  def create_named_yammer_account(yammer_name)
+    OmniAuth.config.mock_auth[:yammer].merge!({
+      uid: generate(:yammer_uid),
+      info: {
+        access_token: generate(:yammer_token),
+        email: generate(:email),
+        image: generate(:yammer_image_url),
+        name: yammer_name,
+        nickname: generate(:yammer_nickname),
+        yammer_profile_url: generate(:yammer_profile_url)
+      },
+        extra: generate(:extra)
+    })
+  end
+
+  def rename_yammer_account(new_name)
+    OmniAuth.config.mock_auth[:yammer][:info][:name] = new_name
+  end
+
   def create_yammer_account_with_yammer_user_id(yammer_user_id)
     create_yammer_account.merge!({ uid: yammer_user_id })
   end

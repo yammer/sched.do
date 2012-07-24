@@ -39,3 +39,18 @@ end
 step 'I should not see a sign out button' do
   page.should have_no_content 'Sign out'
 end
+
+step 'I have a Yammer account with name :name' do |name|
+  create_named_yammer_account(name)
+  sign_in
+end
+
+step 'I change my name to :new_name' do |new_name|
+  rename_yammer_account(new_name)
+end
+
+step 'I log out and sign back in again' do
+  step "I sign out"
+  step "I visit the homepage"
+  step "I click 'Sign in with Yammer'"
+end

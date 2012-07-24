@@ -65,6 +65,17 @@ describe User, '.create_from_params!' do
 
     user.should be_persisted
   end
+
+  it 'updates Yammer.com account information on login' do
+    auth = create_yammer_account
+    user = User.create_from_params!(auth)
+
+    rename_yammer_account('Adam West')
+
+    user.update_yammer_info(auth)
+
+    user.name.should == auth[:info][:name]
+  end
 end
 
 describe User, '#able_to_edit?' do

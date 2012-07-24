@@ -34,6 +34,16 @@ class User < ActiveRecord::Base
     )
   end
 
+  def self.find_and_update_from_yammer(params)
+    user = User.find_by_access_token(params[:info][:access_token])
+
+    if user
+      user.update_yammer_info(params)
+    end
+
+    user
+  end
+
   def able_to_edit?(event)
     event.user == self
   end
@@ -54,6 +64,22 @@ class User < ActiveRecord::Base
     PrivateMessage.new(invitation.event,
                        invitation.invitee,
                        invitation.message).create
+  end
+
+  def update_yammer_info(params)
+    self.update_attributes(
+      {
+        access_token: params[:info][:access_token],
+        email: params[:info][:email],
+        image: params[:info][:image],
+        name: params[:info][:name],
+        nickname: params[:info][:nickname],
+        yammer_profile_url: params[:info][:yammer_profile_url],
+        yammer_user_id: params[:uid],
+        extra: params[:extra]
+      },
+      { without_protection: true }
+    )
   end
 
   def vote_for_suggestion(suggestion)
