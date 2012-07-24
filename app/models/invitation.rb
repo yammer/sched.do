@@ -16,10 +16,6 @@ class Invitation < ActiveRecord::Base
     find_or_create_by_event_id_and_invitee_id_and_invitee_type(event.id, invitee.id, invitee.class.name)
   end
 
-  def message
-    "#{event.user.name} has invited you to the event \"#{event.name}\" on Sched.do!"
-  end
-
   def name_or_email
     invitee.try(:name) || invitee.try(:email)
   end

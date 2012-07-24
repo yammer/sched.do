@@ -1,0 +1,9 @@
+<%= @recipient.name %>, I am planning "<%= @event.name %>" and I need your help.
+
+Please click this link to view the options and vote: <%= event_url(@event) %>
+
+
+Thanks in advance!
+-<%= @event.user.name %>
+
+*This poll was sent using Sche.do. Create your own polls for free at <%= root_url %>

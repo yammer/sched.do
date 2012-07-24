@@ -61,9 +61,7 @@ class User < ActiveRecord::Base
   end
 
   def notify(invitation)
-    PrivateMessage.new(invitation.event,
-                       invitation.invitee,
-                       invitation.message).create
+    PrivateMessager.new(invitation).deliver
   end
 
   def update_yammer_info(params)

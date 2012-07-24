@@ -24,9 +24,7 @@ class YammerInvitee < ActiveRecord::Base
   end
 
   def notify(invitation)
-    PrivateMessage.new(invitation.event,
-                       invitation.invitee,
-                       invitation.message).create
+    PrivateMessager.new(invitation).deliver
   end
 
   def voted_for?(suggest)
