@@ -1,11 +1,4 @@
 class PrivateMessager < AbstractController::Base
-  include AbstractController::Rendering
-  include AbstractController::Helpers
-  include AbstractController::Translation
-  include AbstractController::AssetPaths
-  include Rails.application.routes.url_helpers
-  helper ApplicationHelper
-  self.view_paths = "app/views"
   include Rails.application.routes.url_helpers
   MESSAGES_ENDPOINT = "https://www.yammer.com/api/v1/messages.json"
 
@@ -17,12 +10,27 @@ class PrivateMessager < AbstractController::Base
   end
 
   def deliver
-    body = render(@template)
     response = RestClient.post MESSAGES_ENDPOINT + "?" + {
       access_token: @user.access_token,
-      body: body,
+      body: message,
       direct_to_id: @recipient.yammer_user_id,
       og_url: event_url(@event)
     }.to_query, nil
+  end
+
+  private
+
+  def message
+     <<-eos
+#{@recipient.name}, I am planning "#{@event.name}" and I need your help.
+
+Please click this link to view the options and vote: #{event_url(@event)}
+
+
+Thanks in advance!
+-#{@event.user.name}
+
+*This poll was sent using Sche.do. Create your own polls for free at #{ root_url }
+eos
   end
 end
