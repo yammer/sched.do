@@ -2,12 +2,12 @@ require 'omniauth-oauth2'
 
 module OmniAuth
   module Strategies
-    class Yammer < OmniAuth::Strategies::OAuth2
+    class YammerStaging < OmniAuth::Strategies::OAuth2
       # Give your strategy a name.
-      option :name, 'yammer-staging'
+      option :name, 'yammer_staging'
 
       option :client_options, {
-        site: 'https://staging.yammer.com',
+        site: 'https://www.staging.yammer.com',
         authorize_url: '/dialog/oauth',
         token_url: '/oauth2/access_token.json'
       }
