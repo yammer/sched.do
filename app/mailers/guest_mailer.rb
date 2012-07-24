@@ -4,7 +4,7 @@ class GuestMailer < ActionMailer::Base
     @event = event
     mail(to: @guest.email,
          from: "invitation@sched.do",
-         subject: "You have been invited to a Sched.do event!")
+         subject: "#{@event.user.name} invited you to vote on '#{@event.name}'")
   end
 
   class Preview < MailView
