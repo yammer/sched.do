@@ -12,6 +12,6 @@
   <% end %>
 </ul>
 
-<p>Click here to <%= link_to "change your vote", event_url(@event), html_options = {:style => "color: #EC6E4D"} %>, or to find out how other people have voted.</p>
+<p>Click here to <%= link_to "change your vote", event_url(@event, yammer: false), html_options = {:style => "color: #EC6E4D"} %>, or to find out how other people have voted.</p>
 
 <p>Did you know you can send your own polls for free? Use sched.do to plan events easily and collect fast feedback/ feedback fast on virtually any topic. Click here to <%= link_to "learn more", root_url, html_options = {:style => "color: #EC6E4D"} %>.</p>

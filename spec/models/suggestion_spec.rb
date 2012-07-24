@@ -32,7 +32,7 @@ end
 describe Suggestion, '#user_voted?' do
   it 'returns true if the user has voted on the event' do
     user = create(:user)
-    suggestion = build_stubbed(:suggestion)
+    suggestion = create(:suggestion)
     vote = create(:vote_by_user, user: user, suggestion: suggestion)
 
 
