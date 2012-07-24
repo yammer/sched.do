@@ -4,7 +4,7 @@ module OmniAuth
   module Strategies
     class Yammer < OmniAuth::Strategies::OAuth2
       # Give your strategy a name.
-      option :name, 'yammer-staging'
+      option :name, 'yammer'
 
       option :client_options, {
         site: 'https://staging.yammer.com',
