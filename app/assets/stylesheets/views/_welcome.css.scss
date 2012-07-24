@@ -140,7 +140,6 @@ body.welcome {
   }
 
   div.footer-sign-in {
-    @include fill-parent();
     padding: 0 10% 5%;
     text-align: center;
 
@@ -148,6 +147,20 @@ body.welcome {
       @extend .button;
       @extend .yammer-button;
       display: block;
+    }
+
+    footer {
+      padding: 40px 20px 20px;
+      text-align: right;
+
+      a {
+        color: rgb(190,190,190);
+        @include transition(all, 0.15s, linear);
+
+        &:hover {
+          color: rgb(140,140,140);
+        }
+      }
     }
   }
 }

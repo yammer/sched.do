@@ -25,7 +25,7 @@ gem 'formtastic'
 # infinite looping and the gem correctly adds nested dynamically added objects to the params.
 gem 'cocoon', git: 'git://github.com/jsteiner/cocoon.git', branch: 'scheddo'
 gem 'flutie'
-gem 'bourbon'
+gem 'bourbon', '~> 2.1.1'
 gem 'jquery-rails'
 gem 'omniauth', '~> 1.0'
 gem 'omniauth-oauth2', '~> 1.0.2'
