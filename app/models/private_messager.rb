@@ -12,7 +12,7 @@ class PrivateMessager < AbstractController::Base
   def deliver
     response = RestClient.post MESSAGES_ENDPOINT + "?" + {
       access_token: @user.access_token,
-      body: message,
+      body: message_body,
       direct_to_id: @recipient.yammer_user_id,
       og_url: event_url(@event)
     }.to_query, nil
@@ -20,17 +20,17 @@ class PrivateMessager < AbstractController::Base
 
   private
 
-  def message
-     <<-eos
-#{@recipient.name}, I am planning "#{@event.name}" and I need your help.
+  def message_body
+     <<-BODY.strip_heredoc
+      #{@recipient.name}, I am planning "#{@event.name}" and I need your help.
 
-Please click this link to view the options and vote: #{event_url(@event)}
+      Please click this link to view the options and vote: #{event_url(@event)}
 
 
-Thanks in advance!
--#{@event.user.name}
+      Thanks in advance!
+      -#{@event.user.name}
 
-*This poll was sent using Sche.do. Create your own polls for free at #{ root_url }
-eos
+      *This poll was sent using Sche.do. Create your own polls for free at #{ root_url }
+    BODY
   end
 end
