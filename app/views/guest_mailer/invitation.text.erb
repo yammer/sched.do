@@ -1,3 +1,13 @@
-You have been invited!
+<%= @guest.name || @guest.email %>, You’re invited!
 
-<%= @event.user.name %> has invited you to the event <%= link_to @event.name, event_url(@event, guest_email: @guest.email, yammer: false) %> on Sched.do!
+<%= @event.user.name %> needs your help to plan "<%= link_to @event.name, event_url(@event, guest_email: @guest.email) %>".
+
+Here are your options:
+
+<% @event.suggestions.each do |suggestion| %>
+  "<%= suggestion.primary %>, <%= suggestion.secondary %>"
+<% end %>
+
+Click here to vote: <%= link_to @event.name, event_url(@event, guest_email: @guest.email) %>
+
+<%= @event.user.name %> sent this poll in just seconds using Sche.do. Create your own polls for free at <a href="http://sched.do.com">schedo.com</a>.
