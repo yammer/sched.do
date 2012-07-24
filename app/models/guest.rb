@@ -25,7 +25,7 @@ class Guest < ActiveRecord::Base
   end
 
   def notify(invitation)
-    GuestMailer.invitation(self, invitation.event).deliver
+    UserMailer.invitation(self, invitation.event).deliver
   end
 
   def vote_for_suggestion(suggestion)

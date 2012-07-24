@@ -10,6 +10,6 @@ SchedDo::Application.routes.draw do
   root to: "welcome#index"
 
   if Rails.env.development?
-    mount GuestMailer::Preview => 'mail_view'
+    mount UserMailer::Preview => 'mail_view'
   end
 end
