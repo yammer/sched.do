@@ -3,6 +3,7 @@ require 'spec_helper'
 describe Event do
   it { should belong_to(:user) }
   it { should have_many(:suggestions) }
+  it { should have_many(:votes).through(:suggestions) }
   it { should have_many(:invitations) }
   it { should have_many(:users).through(:invitations) }
   it { should have_many(:yammer_invitees).through(:invitations) }
@@ -70,13 +71,15 @@ describe Event, '#user_voted?' do
     suggestion = create(:suggestion, event: event)
     vote = create(:vote_by_user, user: user, suggestion: suggestion)
 
-    event.should be_user_voted(user)
+    event.user_voted?(user).should be_true
   end
 
   it 'returns false if the user has not voted on the event' do
     event = create(:event)
+    user = event.user
+    suggestion = create(:suggestion, event: event)
 
-    event.should_not be_user_voted(build(:user))
+    event.user_voted?(user).should be_false
   end
 end
 
@@ -84,11 +87,33 @@ describe Event, '#user_owner?' do
   it 'returns true if the user is the owner of the event' do
     event = create(:event)
     user = event.user
+
     event.should be_user_owner(user)
   end
 
-  it 'returns false if if the user is not the owner of the event' do
+  it 'returns false if the user is not the owner of the event' do
     event = create(:event)
+
     event.should_not be_user_owner(build(:user))
+  end
+end
+
+describe Event, '#user_votes' do
+  it 'returns an events votes for a specific user if they voted' do
+    event = create(:event)
+    user = event.user
+    suggestion = create(:suggestion, event: event)
+    vote = create(:vote_by_user, suggestion: suggestion)
+
+    event.user_votes(user).should_not include(vote)
+  end
+
+  it 'returns an events votes for a specific user if they voted' do
+    event = create(:event)
+    user = event.user
+    suggestion = create(:suggestion, event: event)
+    vote = create(:vote_by_user, user: user, suggestion: suggestion)
+
+    event.user_votes(user).should include(vote)
   end
 end

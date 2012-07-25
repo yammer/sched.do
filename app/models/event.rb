@@ -3,6 +3,7 @@ class Event < ActiveRecord::Base
 
   belongs_to :user
   has_many :suggestions
+  has_many :votes, through: :suggestions
   has_many :invitations
   has_many :users, through: :invitations, source: :invitee, source_type: 'User'
   has_many :yammer_invitees, through: :invitations, source: :invitee, source_type: 'YammerInvitee'
@@ -41,7 +42,11 @@ class Event < ActiveRecord::Base
   end
 
   def user_voted?(user)
-    suggestions.any?{ |suggestion| suggestion.user_voted?(user) }
+    user_votes(user).exists?
+  end
+
+  def user_votes(user)
+    user.votes.joins(:suggestion).where(suggestions: { event_id: self } )
   end
 
   def to_param

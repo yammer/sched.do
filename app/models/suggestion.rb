@@ -10,10 +10,6 @@ class Suggestion < ActiveRecord::Base
     persisted_votes.size
   end
 
-  def user_voted?(user)
-    user.votes.where(suggestion_id: id).exists?
-  end
-
   def persisted_votes
     votes.select(&:persisted?)
   end

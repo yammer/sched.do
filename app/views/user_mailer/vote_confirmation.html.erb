@@ -7,7 +7,7 @@
 <p>You voted for:</p>
 
 <ul>
-  <% @user.votes.each do |vote| %>
+  <% @event.user_votes(@user).each do |vote| %>
     <li><strong><%= vote.suggestion.primary %>, <%= vote.suggestion.secondary %></strong></li>
   <% end %>
 </ul>
