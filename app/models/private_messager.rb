@@ -30,7 +30,7 @@ class PrivateMessager < AbstractController::Base
       Thanks in advance!
       -#{@event.user.name}
 
-      *This poll was sent using Sche.do. Create your own polls for free at #{ root_url }
+      *This poll was sent using Sche.do. Create your own polls for free at #{root_url}
     BODY
   end
 end
