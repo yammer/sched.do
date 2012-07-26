@@ -8,7 +8,7 @@ class ActivityCreator
   end
 
   def create
-    response = RestClient.post rest_client_url(@user.access_token),
+    response = RestClient.post rest_client_url,
     generate_json,
     :content_type => :json,
     :accept => :json
@@ -38,7 +38,7 @@ class ActivityCreator
     }.to_json
   end
 
-  def rest_client_url(access_token)
-    "https://www.yammer.com/api/v1/activity.json?access_token=#{access_token}"
+  def rest_client_url
+    @user.yammer_endpoint + "api/v1/activity.json?access_token=#{@user.access_token}"
   end
 end

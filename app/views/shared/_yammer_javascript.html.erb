@@ -1,4 +1,8 @@
-<script type="text/javascript" src="https://assets.yammer.com/platform/yam.js"></script>
+<% if current_user.yammer_staging %>
+  <script type="text/javascript" src="https://assets.staging.yammer.com/platform/yam.js"></script>
+<% else %>
+  <script type="text/javascript" src="https://assets.yammer.com/platform/yam.js"></script>
+<% end %>
 <script type="text/javascript">
   yam.config({appId: '<%= ENV['CONSUMER_KEY'] %>'});
   <% if signed_in? %>

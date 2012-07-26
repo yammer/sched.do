@@ -22,6 +22,7 @@ class User < ActiveRecord::Base
     create!(
       {
         access_token: params[:info][:access_token],
+        yammer_staging: params[:provider] == "yammer_staging",
         email: params[:info][:email],
         image: params[:info][:image],
         name: params[:info][:name],
@@ -68,6 +69,7 @@ class User < ActiveRecord::Base
     self.update_attributes(
       {
         access_token: params[:info][:access_token],
+        yammer_staging: params[:provider] == "yammer_staging",
         email: params[:info][:email],
         image: params[:info][:image],
         name: params[:info][:name],
@@ -90,6 +92,10 @@ class User < ActiveRecord::Base
 
   def yammer_user?
     true
+  end
+
+  def yammer_endpoint
+    yammer_staging ? "https://www.staging.yammer.com/" : "https://www.yammer.com/"
   end
 
   private

@@ -47,4 +47,8 @@ class Guest < ActiveRecord::Base
   def yammer_user_id
     nil
   end
+
+  def yammer_staging
+    false
+  end
 end

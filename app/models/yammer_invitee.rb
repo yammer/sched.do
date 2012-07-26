@@ -30,4 +30,8 @@ class YammerInvitee < ActiveRecord::Base
   def voted_for?(suggest)
     false
   end
+
+  def yammer_staging
+    false
+  end
 end

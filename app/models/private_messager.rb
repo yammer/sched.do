@@ -10,7 +10,7 @@ class PrivateMessager < AbstractController::Base
   end
 
   def deliver
-    response = RestClient.post MESSAGES_ENDPOINT + "?" + {
+    response = RestClient.post messages_endpoint + "?" + {
       access_token: @user.access_token,
       body: message_body,
       direct_to_id: @recipient.yammer_user_id,
@@ -39,5 +39,9 @@ class PrivateMessager < AbstractController::Base
 
       *This poll was sent using Sche.do. Create your own polls for free at #{root_url}
     BODY
+  end
+
+  def messages_endpoint
+    @user.yammer_endpoint + "api/v1/messages.json"
   end
 end
