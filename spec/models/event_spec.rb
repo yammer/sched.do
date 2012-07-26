@@ -12,11 +12,23 @@ describe Event do
 
   it { should validate_presence_of(:name).with_message(/This field is required/) }
   it { should validate_presence_of(:user_id) }
+  it { should validate_presence_of(:user_id) }
 
   it { should allow_mass_assignment_of(:suggestion) }
   it { should allow_mass_assignment_of(:suggestions_attributes) }
 
   it { should accept_nested_attributes_for(:suggestions).allow_destroy(true) }
+
+  it "should allow the event to have 1 or more suggestions" do
+    event = create(:event)
+    event.suggestions.destroy_all
+
+    event.valid?.should == true
+  end
+  it "should not allow the event to have no suggestions" do
+    event = create(:event)
+    event.valid?.should == false
+  end
 
   it 'rejects blank suggestions' do
     nested_attributes_options = Event.nested_attributes_options[:suggestions]

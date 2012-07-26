@@ -10,6 +10,7 @@ class Event < ActiveRecord::Base
   has_many :guests, through: :invitations, source: :invitee, source_type: 'Guest'
   has_many :groups, through: :invitations, source: :invitee, source_type: 'Group'
 
+  validate  :has_suggestions?
   validates :name, presence: { message: 'This field is required' }
   validates :user_id, presence: true
   validates :uuid, presence: true
@@ -31,6 +32,10 @@ class Event < ActiveRecord::Base
 
   def generate_uuid
     self.uuid = SecureRandom.hex(4)
+  end
+
+  def has_suggestions?
+    errors[:base] << "Enter a suggestion" if self.suggestions.blank?
   end
 
   def user_owner?(user)
