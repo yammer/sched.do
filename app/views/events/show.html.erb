@@ -1,3 +1,9 @@
+<% content_for :head do %><meta property="og:title" content="<%= @event.name %>" />
+    <meta property="og:site_name" content="Sched.do" />
+    <meta property="og:type" content="event" />
+    <meta property="og:url" content="<%= event_url(@event) %>" />
+    <meta property="og:image" content="<%=  image_url("logo.png") %>" />
+<% end %>
 <div class="show-event">
   <div class="event-header">
     <h1 class="event-name">
