@@ -16,6 +16,10 @@ class PrivateMessager < AbstractController::Base
       direct_to_id: @recipient.yammer_user_id,
       og_url: event_url(@event)
     }.to_query, nil
+  rescue Exception => e
+    Rails.logger.debug(e.response.inspect)
+    Rails.logger.debug(message_body.inspect)
+    raise
   end
 
   private
