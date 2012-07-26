@@ -18,6 +18,9 @@ class PrivateMessager < AbstractController::Base
     }.to_query, nil
   rescue Exception => e
     Rails.logger.error(e.response.inspect)
+    Rails.logger.error(@recipient.yammer_user_id)
+    Rails.logger.error(@user.access_token)
+    Rails.logger.error(event_url(@event))
     Rails.logger.error(message_body.inspect)
     raise
   end
