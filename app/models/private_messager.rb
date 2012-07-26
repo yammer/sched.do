@@ -17,8 +17,8 @@ class PrivateMessager < AbstractController::Base
       og_url: event_url(@event)
     }.to_query, nil
   rescue Exception => e
-    Rails.logger.debug(e.response.inspect)
-    Rails.logger.debug(message_body.inspect)
+    Rails.logger.error(e.response.inspect)
+    Rails.logger.error(message_body.inspect)
     raise
   end
 
