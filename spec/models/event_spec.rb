@@ -99,7 +99,7 @@ describe Event, '#user_owner?' do
 end
 
 describe Event, '#user_votes' do
-  it 'returns an events votes for a specific user if they voted' do
+    it 'does not return an event\'s votes for a user unless they voted' do
     event = create(:event)
     user = event.user
     suggestion = create(:suggestion, event: event)

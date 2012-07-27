@@ -38,15 +38,15 @@ module OmniAuth
         @access_token = ::OAuth2::AccessToken.new(client, token, access_token.params)
       end
 
-    private
+      private
 
-    def raw_info
-      @raw_info ||= access_token.params['user']
-    end
+      def raw_info
+        @raw_info ||= access_token.params['user']
+      end
 
-    def primary_email
-      raw_info['contact']['email_addresses'].detect{|address| address['type'] == 'primary'}['address']
+      def primary_email
+        raw_info['contact']['email_addresses'].detect{|address| address['type'] == 'primary'}['address']
+      end
     end
   end
-end
 end

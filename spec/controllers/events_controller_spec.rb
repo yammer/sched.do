@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe EventsController, 'authentication' do
+  YAMMER_USER_ID_FROM_FAKE = 'LIUgiu6y'
 
   it 'requires yammer login for #new' do
     get :new
@@ -13,22 +14,22 @@ describe EventsController, 'authentication' do
   end
 
   it 'requires yammer login for #edit' do
-    get :edit, id: 'LIUgiu6y'
+    get :edit, id: YAMMER_USER_ID_FROM_FAKE
     should redirect_to '/auth/yammer'
   end
 
   it 'requires yammer login for #update' do
-    put :update, id: 'LIUgiu6y'
+    put :update, id: YAMMER_USER_ID_FROM_FAKE
     should redirect_to '/auth/yammer'
   end
 
   it 'requires yammer login for #show' do
-    get :show, id: 'LIUgiu6y'
+    get :show, id: YAMMER_USER_ID_FROM_FAKE
     should redirect_to '/auth/yammer'
   end
 
   it 'requires yammer or guest login for #show if yammer=false' do
-    get :show, id: 'LIUgiu6y', yammer: "false"
+    get :show, id: YAMMER_USER_ID_FROM_FAKE, yammer: "false"
     should redirect_to new_guest_url
   end
 end

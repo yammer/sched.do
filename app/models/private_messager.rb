@@ -1,4 +1,4 @@
-class PrivateMessager < AbstractController::Base
+class PrivateMessager
   include Rails.application.routes.url_helpers
   MESSAGES_ENDPOINT = "https://www.yammer.com/api/v1/messages.json"
 
