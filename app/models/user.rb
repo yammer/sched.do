@@ -66,6 +66,10 @@ class User < ActiveRecord::Base
     yammer_network_id == test_user.yammer_network_id
   end
 
+  def image
+    self[:image] || 'http://' + ENV['HOSTNAME'] + '/assets/no_photo.png'
+  end
+
   def notify(invitation)
     if invitation.sender.in_network?(invitation.invitee)
       PrivateMessager.new(invitation).deliver

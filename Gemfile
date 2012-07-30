@@ -42,10 +42,11 @@ group :development do
 end
 
 group :development, :test do
+  gem 'dotenv'
+  gem 'evergreen', require: 'evergreen/rails'
+  gem 'pry'
   gem 'rspec-rails', '~> 2.9.0'
   gem 'sham_rack'
-  gem 'pry'
-  gem 'evergreen', require: 'evergreen/rails'
 end
 
 group :test do

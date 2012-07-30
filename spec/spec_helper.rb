@@ -1,4 +1,5 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
+
 ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
@@ -34,6 +35,7 @@ RSpec.configure do |config|
   config.before(:each, type: :request) do
     DatabaseCleaner.clean
     ActionMailer::Base.deliveries.clear
+    Dotenv.load
   end
 
   config.before(:each) do

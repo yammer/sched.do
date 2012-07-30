@@ -85,11 +85,15 @@
 
             <% if @event.user_owner?(invitee) %>
               <td class="event-creator">
-                <div class="avatar" style="background-image: url(/assets/no_photo.png)"></div>
                 <img src="/assets/bullhorn.svg" >
+                <div class="avatar">
+                  <%= image_tag invitee.image %>
+                </div>
             <% else %>
               <td>
-                <div class="avatar" style="background-image: url(/assets/no_photo.png)"></div>
+                <div class="avatar">
+                  <%= image_tag invitee.image %>
+                </div>
             <% end %>
                 <span class="user-name">
                   <%= invitee.name || invitee.email %>

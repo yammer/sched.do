@@ -101,6 +101,20 @@ describe User, '#able_to_edit?' do
   end
 end
 
+describe User, '#image' do
+  it 'returns the placeholder if there is no image' do
+    user = build_stubbed(:user, image: nil)
+
+    user.image.should == 'http://' + ENV['HOSTNAME'] + '/assets/no_photo.png'
+  end
+
+  it 'returns the absolute image url if one exists' do
+    user = create(:user)
+
+    user.image.should include('http://www.yammer.com/mugshot/48x48/')
+  end
+end
+
 describe User, '#vote_for_suggestion' do
   it "returns the user's vote for the given suggestion if the user has one" do
     user = create(:user)

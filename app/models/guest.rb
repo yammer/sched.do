@@ -29,6 +29,10 @@ class Guest < ActiveRecord::Base
     true
   end
 
+  def image
+    'http://' + ENV['HOSTNAME'] + '/assets/no_photo.png'
+  end
+
   def notify(invitation)
     UserMailer.invitation(self, invitation.event).deliver
   end

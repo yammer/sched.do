@@ -23,6 +23,10 @@ class YammerInvitee < ActiveRecord::Base
     end
   end
 
+  def image
+    self[:image] || 'http://' + ENV['HOSTNAME'] + '/assets/no_photo.png'
+  end
+
   def notify(invitation)
     PrivateMessager.new(invitation).deliver
   end

@@ -22,6 +22,14 @@ describe Guest, '#guest?' do
   end
 end
 
+describe Guest, 'image' do
+  it 'returns the placeholder image' do
+    guest = build_stubbed(:guest)
+
+    guest.image.should == 'http://' + ENV['HOSTNAME'] + '/assets/no_photo.png'
+  end
+end
+
 describe Guest, '#yammer_user?' do
   it 'always returns false' do
     build(:guest).should_not be_yammer_user
