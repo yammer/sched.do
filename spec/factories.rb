@@ -34,10 +34,9 @@ FactoryGirl.define do
     name 'Clown party'
     user
 
-    before(:create) do |event, evaluator|
+    before(:create) do |event|
       event.suggestions << build(:suggestion, event: event)
     end
-
 
     after :stub do |event|
       event.generate_uuid
