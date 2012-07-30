@@ -19,3 +19,8 @@ end
 step ':email_address should have :count email(s)' do |email_address, count|
   mailbox_for(email_address).size.should == count.to_i
 end
+
+step 'out-network Yammer user :name should get an email notification' do |name|
+  user = User.find_by_name!(name)
+  mailbox_for(user.email).size.should == 1
+end

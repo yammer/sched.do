@@ -34,6 +34,7 @@ module AuthenticationHelpers
         image: generate(:yammer_image_url),
         name: generate(:yammer_user_name),
         nickname: generate(:yammer_nickname),
+        yammer_network_id: 1,
         yammer_profile_url: generate(:yammer_profile_url)
       },
         extra: generate(:extra)
@@ -49,6 +50,7 @@ module AuthenticationHelpers
         image: generate(:yammer_image_url),
         name: yammer_name,
         nickname: generate(:yammer_nickname),
+        yammer_network_id: 1,
         yammer_profile_url: generate(:yammer_profile_url)
       },
         extra: generate(:extra)

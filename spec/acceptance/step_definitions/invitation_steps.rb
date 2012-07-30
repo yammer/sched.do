@@ -44,7 +44,6 @@ step 'I should see :name in the groups list' do |name|
   end
 end
 
-
 step ':guest_email was invited to the event :event_name' do |guest_email, event_name|
   event = Event.find_by_name!(event_name)
   Inviter.new(event).invite_from_params(name_or_email: guest_email)
@@ -52,4 +51,8 @@ end
 
 step ':first_item should appear before :second_item' do |first_item, second_item|
   page.body.should =~ /#{first_item}.*#{second_item}/m
+end
+
+step ':name should receive a private message' do |name|
+  FakeYammer.messages_endpoint_hits.should == 1
 end

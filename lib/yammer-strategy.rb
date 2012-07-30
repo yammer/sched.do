@@ -22,6 +22,7 @@ module OmniAuth
           image: raw_info['mugshot_url'],
           name: raw_info['full_name'],
           nickname: raw_info['name'],
+          yammer_network_id: raw_info['network_id'],
           yammer_profile_url: raw_info['web_url']
         }
       end

@@ -23,7 +23,7 @@ class UserMailer < ActionMailer::Base
       @event = vote.suggestion.event
       UserMailer.vote_confirmation(vote)
     end
-    
+
     def invitation
       guest = Guest.first
       event = Event.first

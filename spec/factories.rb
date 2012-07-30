@@ -1,7 +1,7 @@
 FactoryGirl.define do
   sequence(:yammer_uid) { |n| "12345#{n}" }
   sequence(:email) { |n| "user#{n}@example.com" }
-  sequence(:extra) { |n| { web_prefs: "prefs#{n}", expertise: "Rails#{n}" } }
+  sequence(:extra) { |n| { raw_info: { network_id: 1 }, expertise: "Rails#{n}" } }
   sequence(:yammer_image_url) { |n| "http://www.yammer.com/mugshot/48x48/#{n}" }
   sequence(:yammer_nickname) { |n| "Yams #{n}" }
   sequence(:yammer_profile_url) { |n| "http://www.yammer.com/example.com/users/#{n}" }
@@ -14,6 +14,11 @@ FactoryGirl.define do
     yammer_profile_url
     sequence(:access_token) { |n| "abc12#{n}" }
     sequence(:yammer_user_id) { |n| n.to_s }
+    yammer_network_id 1
+
+    factory :out_network_user do
+      yammer_network_id 2
+    end
   end
 
   factory :yammer_invitee do

@@ -58,20 +58,10 @@ describe Invitation, '#name_or_email' do
   end
 end
 
-describe Invitation, '#yammer_user_id' do
-  it 'should return the yammer_user_id if the invitee has one' do
+describe Invitation, '#sender' do
+  it 'should tell you who created the invitations event' do
     invitation = build(:invitation_with_user)
-    invitation.yammer_user_id.should == invitation.invitee.yammer_user_id
-  end
-
-  it 'should return nil if the invitee has no yammer_user_id' do
-    invitation = build(:invitation_with_guest)
-    invitation.yammer_user_id.should == nil
-  end
-
-  it 'should return nil if there is no invitee' do
-    invitation = build(:invitation)
-    invitation.yammer_user_id.should == nil
+    invitation.sender.should == invitation.event.user
   end
 end
 
@@ -89,5 +79,22 @@ describe Invitation, '#yammer_group_id' do
   it 'should return nil if there is no invitee' do
     invitation = build(:invitation)
     invitation.yammer_group_id.should == nil
+  end
+end
+
+describe Invitation, '#yammer_user_id' do
+  it 'should return the yammer_user_id if the invitee has one' do
+    invitation = build(:invitation_with_user)
+    invitation.yammer_user_id.should == invitation.invitee.yammer_user_id
+  end
+
+  it 'should return nil if the invitee has no yammer_user_id' do
+    invitation = build(:invitation_with_guest)
+    invitation.yammer_user_id.should == nil
+  end
+
+  it 'should return nil if there is no invitee' do
+    invitation = build(:invitation)
+    invitation.yammer_user_id.should == nil
   end
 end

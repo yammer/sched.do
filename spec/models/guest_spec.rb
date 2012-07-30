@@ -92,7 +92,9 @@ describe Guest, '#notify' do
     invitation = build(:invitation_with_guest, invitee: guest)
     mailer = stub('mailer', deliver: true)
     UserMailer.stubs(invitation: mailer)
+
     guest.notify(invitation)
+
     UserMailer.should have_received(:invitation).with(guest, invitation.event)
     mailer.should have_received(:deliver).once
   end

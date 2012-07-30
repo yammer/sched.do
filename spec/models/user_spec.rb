@@ -59,6 +59,7 @@ describe User, '.create_from_params!' do
     user.name.should == auth[:info][:name]
     user.nickname.should == auth[:info][:nickname]
     user.image.should == auth[:info][:image]
+    user.yammer_network_id.should == auth[:info][:yammer_network_id]
     user.yammer_profile_url.should == auth[:info][:yammer_profile_url]
     user.yammer_user_id.should == auth[:uid]
     user.extra.should_not be nil
@@ -75,6 +76,15 @@ describe User, '.create_from_params!' do
     user.update_yammer_info(auth)
 
     user.name.should == auth[:info][:name]
+  end
+end
+
+describe User, '#in_network?' do
+  it 'returns true if user is in network' do
+    user = User.create_from_params!(create_yammer_account)
+    in_network_user = User.create_from_params!(create_yammer_account)
+
+    user.should be_in_network(in_network_user)
   end
 end
 
@@ -166,13 +176,30 @@ describe User, '#create_yammer_activity' do
 end
 
 describe User, '#notify' do
-  it 'sends a private message notification' do
-    invitee = build_stubbed(:user)
+  it 'if the user is out-network, it sends an email notification' do
+    invitee = build_stubbed(:out_network_user)
     invitation = build_stubbed(:invitation_with_user,
                                invitee: invitee)
+    mailer = stub('mailer', deliver: true)
+    UserMailer.stubs(invitation: mailer)
+    organizer = invitation.sender
 
     invitee.notify(invitation)
 
+    organizer.in_network?(invitee).should be_false
+    UserMailer.should have_received(:invitation).with(invitee, invitation.event)
+    mailer.should have_received(:deliver).once
+  end
+
+  it 'if the user is in-network, it sends a private message notification' do
+    invitee = build_stubbed(:user)
+    invitation = build_stubbed(:invitation_with_user,
+                               invitee: invitee)
+    organizer = invitation.sender
+
+    invitee.notify(invitation)
+
+    organizer.in_network?(invitee).should be_true
     FakeYammer.messages_endpoint_hits.should == 1
     FakeYammer.message.should include(invitation.event.name)
   end

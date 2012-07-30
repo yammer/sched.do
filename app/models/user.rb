@@ -27,6 +27,7 @@ class User < ActiveRecord::Base
         image: params[:info][:image],
         name: params[:info][:name],
         nickname: params[:info][:nickname],
+        yammer_network_id: params[:info][:yammer_network_id],
         yammer_profile_url: params[:info][:yammer_profile_url],
         yammer_user_id: params[:uid],
         extra: params[:extra]
@@ -61,8 +62,16 @@ class User < ActiveRecord::Base
     false
   end
 
+  def in_network?(test_user)
+    yammer_network_id == test_user.yammer_network_id
+  end
+
   def notify(invitation)
-    PrivateMessager.new(invitation).deliver
+    if invitation.sender.in_network?(invitation.invitee)
+      PrivateMessager.new(invitation).deliver
+    else
+      UserMailer.invitation(self, invitation.event).deliver
+    end
   end
 
   def update_yammer_info(params)

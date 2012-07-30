@@ -20,15 +20,19 @@ class Invitation < ActiveRecord::Base
     invitee.try(:name) || invitee.try(:email)
   end
 
-  def yammer_user_id
-    invitee.try(:yammer_user_id)
+  def send_notification
+    invitee.notify(self)
+  end
+
+  def sender
+    event.user
   end
 
   def yammer_group_id
     invitee.try(:yammer_group_id)
   end
 
-  def send_notification
-    invitee.notify(self)
+  def yammer_user_id
+    invitee.try(:yammer_user_id)
   end
 end
