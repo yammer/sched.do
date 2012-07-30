@@ -28,6 +28,7 @@ FactoryGirl.define do
 
   factory :guest do
     email
+    name 'Joe'
   end
 
   factory :group do
@@ -97,6 +98,14 @@ FactoryGirl.define do
     factory :invitation_with_guest do
       association :invitee, factory: :guest
       invitee_type 'Guest'
+    end
+
+    factory :invitation_with_guest_without_name do
+      association :invitee, factory: :guest
+      invitee_type 'Guest'
+      after :build do |invitation|
+        invitation.invitee.name = nil
+      end
     end
   end
 end

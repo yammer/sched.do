@@ -48,7 +48,7 @@ describe Invitation, '#name_or_email' do
   end
 
   it 'returns an email if the invitee has no name' do
-    invitation = build(:invitation_with_guest)
+    invitation = build(:invitation_with_guest_without_name)
     invitation.name_or_email.should == invitation.invitee.email
   end
 

@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe Guest, 'validations' do
   it { should validate_presence_of(:email) }
+  it { should validate_presence_of(:name) }
   it { should have_many(:guest_votes) }
   it { should have_many(:votes).through(:guest_votes) }
   it { should have_many(:invitations) }
