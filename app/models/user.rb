@@ -107,10 +107,6 @@ class User < ActiveRecord::Base
     yammer_staging ? "https://www.staging.yammer.com/" : "https://www.yammer.com/"
   end
 
-  def votes
-    Vote.none
-  end
-  
   private
 
   def set_encrypted_access_token
