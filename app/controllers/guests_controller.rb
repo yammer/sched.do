@@ -9,8 +9,14 @@ class GuestsController < ApplicationController
   end
 
   def create
-    log_in_guest
-    return_to_previous_page
+    @guest = Guest.new(params[:guest])
+
+    if @guest.save
+      log_in_guest
+      return_to_previous_page
+    else
+      render :new
+    end
   end
 
   private

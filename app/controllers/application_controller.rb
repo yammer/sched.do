@@ -37,6 +37,6 @@ class ApplicationController < ActionController::Base
   end
 
   def previous_page
-    session[:return_to] || root_url
+    session.delete(:return_to) || root_url
   end
 end
