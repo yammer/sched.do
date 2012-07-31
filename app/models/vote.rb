@@ -10,6 +10,10 @@ class Vote < ActiveRecord::Base
   after_create :send_confirmation_email
   after_create :create_yammer_activity_for_new_vote
 
+  def self.none
+    where( id: nil)
+  end
+
   def event
     suggestion.event
   end

@@ -34,4 +34,8 @@ class YammerInvitee < ActiveRecord::Base
   def yammer_staging
     false
   end
+
+  def votes
+    Vote.none
+  end
 end
