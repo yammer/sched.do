@@ -13,12 +13,32 @@ form {
     padding: 0;
   }
 
+  .inline-errors {
+    background-color: darken($failure, 30%);
+    //@include background-image(linear-gradient(darken($failure, 48%), darken($failure, 20%) 8%, darken($failure, 30%)));
+    border: 1px solid darken($failure, 50%);
+    //border-top: none;
+    @include box-shadow(inset 0 0 2px 0 darken($failure,42%));
+    color: #fff;
+    font-size: 0.8em;
+    margin: -2px auto 0;
+    padding: 0.2em 0 0.3em;
+    text-align: center;
+    text-shadow: 0 -1px 0 darken($failure, 50%);
+    width: 90%;
+
+    &:last-child {
+      @include border-radius(0 0 4px 4px);
+    }
+  }
+
   button,
   input[type="button"],
   input[type="reset"] {
     @extend .button;
 
   }
+
   input[type="submit"] {
     @extend .button;
     @extend .orange-button;
@@ -29,7 +49,6 @@ form {
       padding-bottom: 15px;
       padding-top: 15px;
     }
-
   }
 
   textarea, button,
@@ -40,7 +59,7 @@ form {
     @include background-image(linear-gradient(darken($bg-color, 2%), lighten($bg-color, 2%)));
     border: 1px solid darken($bg-color, 20%);
     @include border-radius(4px);
-    @include box-shadow(inset 0 2px 0px darken($bg-color, 5%), 0 1px 0 #fff);
+      @include box-shadow(inset 0 0px 5px darken($bg-color, 20%));
     color: darken($bg-color, 50%);
     @include fill-parent();
     outline: none;
@@ -48,8 +67,7 @@ form {
     @include transition(box-shadow 200ms);
 
     &:focus {
-      @include box-shadow(inset 0 0px 5px darken($bg-color, 20%), 0 1px 0 #fff);
-
+      @include box-shadow(inset 0 0px 5px darken($bg-color, 20%));
     }
   }
 
@@ -99,22 +117,6 @@ form {
           @include background-image(linear-gradient(darken($bg-color, 2%), lighten($bg-color, 2%)));
           @include box-shadow(inset 0 2px 0px darken($bg-color, 5%));
         }
-
-        p.inline-errors {
-          @include background-image(linear-gradient(darken($failure, 48%), darken($failure, 20%) 8%, darken($failure, 30%)));
-          border: 1px solid darken($failure, 50%);
-          @include border-radius(0 0 4px 4px);
-          border-top: none;
-          @include box-shadow(inset 0 -1px 0 darken($failure,15%));
-          color: #fff;
-          font-size: 0.8em;
-          margin: -2px auto 0;
-          padding: 0.2em 0 0.3em;
-          text-align: center;
-          text-shadow: 0 -1px 0 darken($failure, 50%);
-          width: 90%;
-        }
-
       }
     }
   }

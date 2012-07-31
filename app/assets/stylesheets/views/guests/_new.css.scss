@@ -18,10 +18,11 @@ div.guest-sign-in {
 
   form {
     fieldset {
-      &.inputs {
-        color: #000;
-        input:first-child {
-          margin-bottom: 10px;
+      input {
+        margin-top: 10px;
+
+        &:first-child {
+          margin-top: 0px;
         }
       }
     }
