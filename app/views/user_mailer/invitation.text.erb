@@ -1,6 +1,6 @@
 <%= @guest.name || @guest.email %>, You’re invited!
 
-<%= @event.user.name %> needs your help to plan "<%= link_to @event.name, event_url(@event, guest_email: @guest.email, yammer: false) %>".
+<%= @event.user.name %> needs your help to plan "<%= link_to @event.name, event_url(@event, guest_email: @guest.email) %>".
 
 Here are your options:
 
@@ -8,6 +8,6 @@ Here are your options:
   "<%= suggestion.primary %>, <%= suggestion.secondary %>"
 <% end %>
 
-lick here to vote: <%= link_to @event.name, event_url(@event, guest_email: @guest.email, yammer: false) %>
+lick here to vote: <%= link_to @event.name, event_url(@event, guest_email: @guest.email) %>
 
 <%= @event.user.name %> sent this poll in just seconds using Sche.do. Create your own polls for free at <%= link_to "#{root_url}", root_url %>.

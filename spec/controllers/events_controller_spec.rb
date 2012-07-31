@@ -23,13 +23,8 @@ describe EventsController, 'authentication' do
     should redirect_to '/auth/yammer'
   end
 
-  it 'requires yammer login for #show' do
+  it 'requires guest or yammer login for #show' do
     get :show, id: YAMMER_USER_ID_FROM_FAKE
-    should redirect_to '/auth/yammer'
-  end
-
-  it 'requires yammer or guest login for #show if yammer=false' do
-    get :show, id: YAMMER_USER_ID_FROM_FAKE, yammer: "false"
     should redirect_to new_guest_url
   end
 end

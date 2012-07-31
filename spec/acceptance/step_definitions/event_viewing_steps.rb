@@ -17,7 +17,7 @@ end
 
 step 'I view the :event_name event' do |event_name|
   event = Event.find_by_name!(event_name)
-  visit event_path(event, yammer: false)
+  visit event_path(event)
 end
 
 step 'I should not see an edit link' do
@@ -49,6 +49,6 @@ step 'I should see multiple suggestions' do
 end
 
 step 'I should see a link to that event' do
-  url = event_url(Event.order('id').last, yammer: false)
+  url = event_url(Event.order('id').last)
   page.find("#event-url").value.should == url
 end

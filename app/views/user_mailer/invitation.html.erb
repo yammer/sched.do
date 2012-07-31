@@ -1,6 +1,6 @@
 <h1 class="h1" style="color: #30AADE;display: block;font-family: Helvetica, sans-serif;font-size: 24px;font-weight: normal;line-height: 100%;margin-top: 10px;margin-right: 0;margin-bottom: 25px;margin-left: 0;text-align: left;"><%= @guest.name || @guest.email %> You’re invited!</h1>
 
-<p><strong><%= @event.user.name %></strong> needs your help to plan "<%= link_to @event.name, event_url(@event, guest_email: @guest.email, yammer: false), html_options = {:style => "color: #EC6E4D"} %>"</p>
+<p><strong><%= @event.user.name %></strong> needs your help to plan "<%= link_to @event.name, event_url(@event, guest_email: @guest.email), html_options = {:style => "color: #EC6E4D"} %>"</p>
 
 
 <p>Here are your options:</p>
@@ -11,6 +11,6 @@
   <% end %>
 </ul>
 
-<%= link_to "View Poll", event_url(@event, guest_email: @guest.email, yammer: false), html_options = {:style => "background-color: #30AADE; border: 1px solid #0F7CC4; border-radius: 3px; color: #fff; display: block; margin: 20px auto; padding: 8px 12px; text-align: center; text-decoration: none; width: 100px"} %>
+<%= link_to "View Poll", event_url(@event, guest_email: @guest.email), html_options = {:style => "background-color: #30AADE; border: 1px solid #0F7CC4; border-radius: 3px; color: #fff; display: block; margin: 20px auto; padding: 8px 12px; text-align: center; text-decoration: none; width: 100px"} %>
 
 <p><%= @event.user.name %> sent this poll in just seconds using Sche.do. Click here to <%= link_to "create your own polls for free", root_url %>.</p>
