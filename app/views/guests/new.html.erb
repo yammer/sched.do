@@ -13,9 +13,4 @@
   <% end %>
 </div>
 
-<div class="footer-sign-in">
-  <%= link_to "Sign in with Yammer", "/auth/yammer", class: "sign-in",  id: "sign-in" %>
-  <footer>
-    <%= link_to "staging", "/auth/yammer_staging" %>
-  </footer>
-</div>
+<%= link_to "staging", "/auth/yammer_staging", :class => "staging-login" %>

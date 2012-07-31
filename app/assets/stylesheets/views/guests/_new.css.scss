@@ -27,3 +27,15 @@ div.guest-sign-in {
     }
   }
 }
+
+a.staging-login {
+  color: rgb(190,190,190);
+  @include transition(all, 0.15s, linear);
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+
+  &:hover {
+    color: rgb(140,140,140);
+  }
+}
