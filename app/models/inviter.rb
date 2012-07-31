@@ -37,15 +37,8 @@ class Inviter
   end
 
   def find_guest(email)
-    Guest.find_by_email(email) || create_guest_without_validation(email)
+    Guest.find_or_create_by_email(email)
   end
 
-  def create_guest_without_validation(email)
-    guest = Guest.new
-    guest.email = email
-    guest.validate_name = false
-    guest.save
-    guest
-  end
 end
 
