@@ -81,7 +81,7 @@
 
         <% @event.invitees.each do |invitee| %>
           <% if display_invitee_in_grid?(@event, invitee) %>
-            <tr class="<% "current-user" if  current_user == invitee %>">
+            <tr class="<%= 'current-user' if  current_user == invitee %>">
 
             <% if @event.user_owner?(invitee) %>
               <td class="event-creator">
