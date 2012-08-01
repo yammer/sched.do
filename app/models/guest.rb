@@ -1,5 +1,6 @@
 class Guest < ActiveRecord::Base
-  attr_accessible :name, :email,  :should_validate_name
+  attr_accessible :name, :email
+  attr_accessor :should_validate_name
 
   has_many :guest_votes
   has_many :votes, through: :guest_votes
@@ -9,9 +10,8 @@ class Guest < ActiveRecord::Base
   validates :email, format: %r{^[a-z0-9!#\$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#\$%&'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$}i
   validates :name, presence: true, if: :should_validate_name
 
-  def initialize
-    @should_validate_name = true
-  end
+  after_initialize :set_should_validate_name
+
 
   def able_to_edit?(event)
     false
@@ -31,6 +31,10 @@ class Guest < ActiveRecord::Base
 
   def notify(invitation)
     UserMailer.invitation(self, invitation.event).deliver
+  end
+
+  def set_should_validate_name
+    @should_validate_name = true
   end
 
   def vote_for_suggestion(suggestion)
