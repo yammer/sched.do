@@ -9,7 +9,8 @@ class GuestsController < ApplicationController
   end
 
   def create
-    @guest = Guest.new(params[:guest])
+    @guest = Guest.find_or_initialize_by_email(params[:guest][:email])
+    @guest.name = params[:guest][:name]
 
     if @guest.save
       log_in_guest

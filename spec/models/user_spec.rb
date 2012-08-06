@@ -16,8 +16,10 @@ describe User, 'validations' do
   context 'encrypted_access_token' do
     it 'encrypts access_token before validation on create' do
       access_token = 'abc123'
-      expected_encrypted_access_token = Encryptor.encrypt(access_token, key: ENV['ACCESS_TOKEN_ENCRYPTION_KEY'])
-      expected_encrypted_access_token = ActiveSupport::Base64.encode64(expected_encrypted_access_token)
+      expected_encrypted_access_token =
+        Encryptor.encrypt(access_token, key: ENV['ACCESS_TOKEN_ENCRYPTION_KEY'])
+      expected_encrypted_access_token =
+        Base64.encode64(expected_encrypted_access_token)
       user = build(:user, access_token: access_token)
 
       user.save
