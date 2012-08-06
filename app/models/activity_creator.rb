@@ -27,7 +27,7 @@ class ActivityCreator
         actor: { name: @user.name, email: @user.email },
         action: @action,
         object: {
-          url: event_url(@event, from_yammer: "true"),
+          url: event_url(@event),
           type: 'file',
           title: @event.name,
           image: ActionController::Base.helpers.asset_path('logo.png')
