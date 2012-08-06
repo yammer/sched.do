@@ -37,9 +37,10 @@ gem 'rest-client'
 gem "zero-clipboard-rails", "~> 1.0.1"
 
 group :development do
-  gem 'heroku'
   gem 'bundler', '>= 1.2.0.pre'
   gem 'foreman', '~> 0.46.0'
+  gem 'heroku'
+  gem 'quiet_assets'
 end
 
 group :development, :test do
