@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-  skip_before_filter :require_yammer_login, only: :create
+  skip_before_filter :require_yammer_login, only: [:create, :destroy]
 
   def create
     user = find_or_create_user
