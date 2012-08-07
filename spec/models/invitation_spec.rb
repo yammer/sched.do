@@ -98,3 +98,94 @@ describe Invitation, '#yammer_user_id' do
     invitation.yammer_user_id.should == nil
   end
 end
+
+describe Invitation do
+  let (:user) { create(:user) }
+  let (:event) { create(:event) }
+  let (:yammer_user) { create(:user) }
+  let (:group) { create(:group) }
+
+  it 'returns an invitation if the user exists' do
+    lambda{
+      Invitation.invite(event, user)
+    }.should change(Invitation,:count).by(1)
+  end
+
+  it 'does not create a new invitation if one exists for the event and user' do
+    original_invitation = Invitation.invite(event, user)
+    repeated_invitation = Invitation.invite(event, user)
+    repeated_invitation.should == original_invitation
+  end
+
+  context "given a yammer user_id and an email" do
+    it "will create an invitation for the yammer user is possible" do
+
+      invitation = Invitation.invite_from_params(event, {yammer_user_id: yammer_user.yammer_user_id})
+
+      yammer_user.invitations.should include(invitation)
+    end
+
+    it 'will create a user if one does not exist given a yammer_user_id' do
+      invited_yammer_user_id = 'LIBu6'
+      User.find_by_yammer_user_id(invited_yammer_user_id).should be_nil
+
+      invitation =
+        Invitation.invite_from_params(event, {yammer_user_id: invited_yammer_user_id})
+
+      user = User.find_by_yammer_user_id(invited_yammer_user_id)
+      user.should_not be_nil
+      user.invitations.should include(invitation)
+    end
+  end
+
+  context "given a yammer group_id" do
+    it "will create an invitation for an existing yammer group" do
+      invitation = Invitation.invite_from_params(event, yammer_group_id: group.yammer_group_id)
+      group.invitations.should include(invitation)
+    end
+
+    it "will create a group and attach an invitation to it if the group does not already exist" do
+      yammer_group_name = 'Group Name'
+      invitation = Invitation.invite_from_params(event, yammer_group_id: 'yammer-group-id', name_or_email: yammer_group_name)
+      Group.count.should == 1
+      Group.first.name.should == yammer_group_name
+    end
+  end
+
+  context "given a guest email with no current yammer user" do
+    it 'it creates a guest' do
+      lambda{
+        invitation = Invitation.invite_from_params(event, name_or_email: 'this_email_does_not_exist@example.com')
+      }.should change(Guest,:count).by(1)
+    end
+
+    it 'will not create a new guest if one exists' do
+      guest = create(:guest)
+      lambda{
+        invitation = Invitation.invite_from_params(event, name_or_email:guest.email)
+      }.should_not change(Guest,:count)
+    end
+  end
+
+  context "given a yammer user id" do
+    it "creates an invitation is a user is found" do
+      user = create(:user)
+      invitation = Invitation.invite_from_params(event, yammer_user_id: user.yammer_user_id)
+      user.invitations.should include(invitation)
+    end
+
+    it "will create a guest if the yammer_user_id is blank" do
+      lambda{
+        Invitation.invite_from_params(event, yammer_user_id: '', name_or_email: 'test@example.com')
+      }.should change(Guest,:count).by(1)
+    end
+  end
+
+  context "with no yammer_user_id and no email" do
+    it "should not create an invitation" do
+      lambda{ 
+        Invitation.invite_from_params(event, yammer_user_id: '', name_or_email: '')
+      }.should_not change(Invitation,:count)
+    end
+  end
+end

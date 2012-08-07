@@ -6,6 +6,10 @@ class Suggestion < ActiveRecord::Base
   belongs_to :event
   has_many :votes, dependent: :destroy
 
+  scope :with_votes,
+    joins('LEFT OUTER JOIN votes ON votes.suggestion_id = suggestions.id').
+    includes(:votes)
+
   def vote_count
     persisted_votes.size
   end

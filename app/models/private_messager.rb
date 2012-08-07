@@ -1,6 +1,5 @@
 class PrivateMessager
   include Rails.application.routes.url_helpers
-  MESSAGES_ENDPOINT = "https://www.yammer.com/api/v1/messages.json"
 
   def initialize(invitation)
     @template = 'invitation'

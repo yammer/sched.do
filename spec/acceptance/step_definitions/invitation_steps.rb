@@ -46,7 +46,7 @@ end
 
 step ':guest_email was invited to the event :event_name' do |guest_email, event_name|
   event = Event.find_by_name!(event_name)
-  Inviter.new(event).invite_from_params(name_or_email: guest_email)
+  Invitation.invite_from_params(event, name_or_email: guest_email)
 end
 
 step ':first_item should appear before :second_item' do |first_item, second_item|

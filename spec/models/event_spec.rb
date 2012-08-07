@@ -6,7 +6,6 @@ describe Event do
   it { should have_many(:votes).through(:suggestions) }
   it { should have_many(:invitations) }
   it { should have_many(:users).through(:invitations) }
-  it { should have_many(:yammer_invitees).through(:invitations) }
   it { should have_many(:guests).through(:invitations) }
   it { should have_many(:groups).through(:invitations) }
 
@@ -50,11 +49,10 @@ describe Event do
 end
 
 describe Event, '#invitees' do
-  it 'returns the event creator and users, yammer_invitees, and guests invited to the event' do
+  it 'returns the event creator and users and guests invited to the event' do
     event = create(:event)
     invitees = [event.user]
     invitees += create_list(:invitation_with_user, 2, event: event).map(&:invitee)
-    invitees += create_list(:invitation_with_yammer_invitee, 2, event: event).map(&:invitee)
     invitees += create_list(:invitation_with_guest, 2, event: event).map(&:invitee)
     event.reload
 

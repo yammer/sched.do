@@ -6,12 +6,9 @@ describe User, 'validations' do
   it { should have_many(:votes).through(:user_votes) }
   it { should have_many(:invitations) }
 
-  it { should validate_presence_of(:access_token) }
   it { should validate_presence_of(:name) }
   it { should validate_presence_of(:yammer_user_id) }
-
-  it { should_not allow_mass_assignment_of(:salt) }
-
+  it { should validate_presence_of(:encrypted_access_token) }
 
   context 'encrypted_access_token' do
     it 'encrypts access_token before validation on create' do
@@ -25,70 +22,56 @@ describe User, 'validations' do
       user.save
       user.encrypted_access_token.should == expected_encrypted_access_token
     end
-
-    it 'validates presence of encrypted_access_token' do
-      user = create(:user)
-      user.encrypted_access_token = ' '
-      user.valid?
-      user.errors[:encrypted_access_token].should include "can't be blank"
-    end
   end
 end
 
-describe User, '.create_from_params!' do
-  it 'returns a new user' do
-    auth = create_yammer_account
-    user = User.create_from_params!(auth)
+describe User, '.find_or_create_with_access_token_and_yammer_user_id' do
+  it 'finds a user if one already exists using the yammer_user_id' do
+    user = create(:user)
 
-    user.access_token.should == auth[:info][:access_token]
-    user.email.should == auth[:info][:email]
-    user.name.should == auth[:info][:name]
-    user.nickname.should == auth[:info][:nickname]
-    user.image.should == auth[:info][:image]
-    user.yammer_network_id.should == auth[:info][:yammer_network_id]
-    user.yammer_profile_url.should == auth[:info][:yammer_profile_url]
-    user.yammer_user_id.should == auth[:uid]
-    user.extra.should_not be nil
+    found_user = User.find_or_create_with_auth(
+      {
+      access_token: user.access_token,
+      yammer_staging: user.yammer_staging?,
+      yammer_user_id: user.yammer_user_id
+    })
 
-    user.should be_persisted
+    found_user.should == user
   end
 
-  it 'updates Yammer.com account information on login' do
-    auth = create_yammer_account
-    user = User.create_from_params!(auth)
+  it 'creates a new user if one does not exist' do
+    new_yammer_user_id = 'G7df63'
+    access_token = 'PUH98h'
+    yammer_staging = false
+    User.count.should == 0
 
-    rename_yammer_account('Adam West')
+    User.find_or_create_with_auth(
+      access_token: access_token,
+      yammer_staging: yammer_staging,
+      yammer_user_id: new_yammer_user_id)
 
-    user.update_yammer_info(auth)
-
-    user.name.should == auth[:info][:name]
-  end
-end
-
-describe User, '.find_and_update_from_yammer' do
-  it 'finds a user by yammer_user_id' do
-    params = create_yammer_account
-    user_with_same_yammer_id = create(:user,
-                               yammer_user_id: params[:uid],
-                               access_token: '1111')
-    user_with_same_access_token = create(:user,
-                             yammer_user_id: 'AAAA',
-                             access_token: params[:info][:access_token])
-
-    returned_user = User.find_and_update_from_yammer(params)
-
-    returned_user.should == user_with_same_yammer_id
-    returned_user.should_not == user_with_same_access_token
+    user = User.last
+    User.count.should == 1
+    user.yammer_user_id.should == new_yammer_user_id
+    user.access_token.should == access_token
+    user.yammer_staging.should == yammer_staging
   end
 end
 
 describe User, '#in_network?' do
   it 'returns true if user is in network' do
-    user = User.create_from_params!(create_yammer_account)
-    in_network_user = User.create_from_params!(create_yammer_account)
+    user = build_stubbed(:user, yammer_network_id: 1)
+    in_network_user = build_stubbed(:user, yammer_network_id: 1)
 
     user.should be_in_network(in_network_user)
   end
+  it 'returns false if user is out network' do
+    user = build_stubbed(:user, yammer_network_id: 1)
+    in_network_user = build_stubbed(:user, yammer_network_id: 2)
+
+    user.should_not be_in_network(in_network_user)
+  end
+
 end
 
 describe User, '#able_to_edit?' do
@@ -149,6 +132,29 @@ end
 describe User, '#guest?' do
   it 'always returns false' do
     build(:user).should_not be_guest
+  end
+end
+
+describe User, '#fetch_yammer_user_data' do
+  it 'should query the Yammer Users API for Yammer Production data' do
+    user = User.new(yammer_user_id: '123ABC',
+                    access_token: 'Tokenz',
+                    yammer_staging: false)
+    oauth_hash = user.yammer_user_data
+    before_user_id = user.yammer_user_id
+
+    user.fetch_yammer_user_data
+
+    before_user_id.should == user.yammer_user_id
+    user.yammer_staging?.should == false
+    user.email.should == oauth_hash['contact']['email_addresses'].
+      first['address']
+    user.image.should == oauth_hash['mugshot_url']
+    user.name.should == oauth_hash['full_name']
+    user.nickname.should == oauth_hash['name']
+    user.yammer_profile_url.should == oauth_hash['web_url']
+    user.yammer_network_id.should == oauth_hash['network_id']
+    user.extra.should == oauth_hash
   end
 end
 

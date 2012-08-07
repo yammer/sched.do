@@ -6,7 +6,6 @@ class Event < ActiveRecord::Base
   has_many :votes, through: :suggestions
   has_many :invitations
   has_many :users, through: :invitations, source: :invitee, source_type: 'User'
-  has_many :yammer_invitees, through: :invitations, source: :invitee, source_type: 'YammerInvitee'
   has_many :guests, through: :invitations, source: :invitee, source_type: 'Guest'
   has_many :groups, through: :invitations, source: :invitee, source_type: 'Group'
 
@@ -22,7 +21,7 @@ class Event < ActiveRecord::Base
   before_validation :generate_uuid, :on => :create
 
   def invitees
-    group = [user] + users + yammer_invitees + guests
+    group = [user] + users + guests
     group.sort{|a, b| b.created_at <=> a.created_at }
   end
 

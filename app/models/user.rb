@@ -1,6 +1,9 @@
 class User < ActiveRecord::Base
+  USERS_ENDPOINT = 'https://www.yammer.com/api/v1/users'
+
   serialize :extra, JSON
-  attr_accessible :access_token, :encrypted_access_token, :name
+  attr_accessible :access_token, :encrypted_access_token, :name,
+    :yammer_user_id, :yammer_staging
   attr_encrypted :access_token, key: ENV['ACCESS_TOKEN_ENCRYPTION_KEY']
 
   has_many :events
@@ -8,37 +11,21 @@ class User < ActiveRecord::Base
   has_many :votes, through: :user_votes
   has_many :invitations, as: :invitee
 
-  validates :access_token, presence: true
-  validates :encrypted_access_token, presence: true
   validates :name, presence: true
   validates :yammer_user_id, presence: true
+  validates :encrypted_access_token, presence: true
 
-  def self.create_from_params!(params)
-    create!(
-      {
-        access_token: params[:info][:access_token],
-        yammer_staging: params[:provider] == "yammer_staging",
-        email: params[:info][:email],
-        image: params[:info][:image],
-        name: params[:info][:name],
-        nickname: params[:info][:nickname],
-        yammer_network_id: params[:info][:yammer_network_id],
-        yammer_profile_url: params[:info][:yammer_profile_url],
-        yammer_user_id: params[:uid],
-        extra: params[:extra]
-      },
-      { without_protection: true }
-    )
+  def self.create_with_auth(auth)
+    create(yammer_user_id: auth[:yammer_user_id]).tap do |user|
+      user.access_token = auth[:access_token]
+      user.yammer_staging = auth[:yammer_staging]
+      user.fetch_yammer_user_data
+      user.save!
+    end
   end
 
-  def self.find_and_update_from_yammer(params)
-    user = User.find_by_yammer_user_id(params[:uid].to_s)
-
-    if user
-      user.update_yammer_info(params)
-    end
-
-    user
+  def self.find_or_create_with_auth(auth)
+    find_by_yammer_user_id(auth[:yammer_user_id]) || create_with_auth(auth)
   end
 
   def able_to_edit?(event)
@@ -57,6 +44,22 @@ class User < ActiveRecord::Base
     false
   end
 
+  def fetch_yammer_user_data
+    response = yammer_user_data
+    update_attributes(
+      {
+        email: response['contact']['email_addresses'].detect{|address| address['type'] == 'primary'}['address'],
+        image: response['mugshot_url'],
+        name: response['full_name'],
+        nickname: response['name'],
+        yammer_profile_url: response['web_url'],
+        yammer_network_id: response['network_id'],
+        extra: response
+      },
+      { without_protection: true }
+    )
+  end
+
   def in_network?(test_user)
     yammer_network_id == test_user.yammer_network_id
   end
@@ -71,23 +74,6 @@ class User < ActiveRecord::Base
     else
       UserMailer.delay.invitation(self, invitation.event)
     end
-  end
-
-  def update_yammer_info(params)
-    self.update_attributes(
-      {
-        access_token: params[:info][:access_token],
-        yammer_staging: params[:provider] == "yammer_staging",
-        email: params[:info][:email],
-        image: params[:info][:image],
-        name: params[:info][:name],
-        nickname: params[:info][:nickname],
-        yammer_profile_url: params[:info][:yammer_profile_url],
-        yammer_user_id: params[:uid],
-        extra: params[:extra]
-      },
-      { without_protection: true }
-    )
   end
 
   def vote_for_suggestion(suggestion)
@@ -106,4 +92,14 @@ class User < ActiveRecord::Base
     yammer_staging ? "https://www.staging.yammer.com/" : "https://www.yammer.com/"
   end
 
+  def yammer_user_data
+    JSON.parse(
+      RestClient.get yammer_endpoint +
+      "api/v1/users/" +
+      yammer_user_id +
+      ".json?" + {
+        access_token: access_token,
+      }.to_query
+    )
+  end
 end

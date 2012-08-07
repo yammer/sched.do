@@ -2,7 +2,8 @@ class SessionsController < ApplicationController
   skip_before_filter :require_yammer_login, only: [:create, :destroy]
 
   def create
-    user = find_or_create_user
+    user = find_or_create_with_auth
+    user.fetch_yammer_user_data 
     cookies[:encrypted_access_token] = user.encrypted_access_token
     log_out_guest
 
@@ -22,14 +23,12 @@ class SessionsController < ApplicationController
     request.env['omniauth.auth']
   end
 
-  def find_or_create_user
-    find_user ||
-      YammerInvitee.convert_to_user_from_params(auth) ||
-      User.create_from_params!(auth)
-  end
-
-  def find_user
-    User.find_and_update_from_yammer(auth)
+  def find_or_create_with_auth
+    User.find_or_create_with_auth(
+        access_token: auth[:info][:access_token],
+        yammer_staging: auth[:provider] == "yammer_staging",
+        yammer_user_id: auth[:uid]
+    )
   end
 
   def log_out_guest

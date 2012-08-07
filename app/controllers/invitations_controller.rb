@@ -3,7 +3,7 @@ class InvitationsController < ApplicationController
 
   def create
     event = Event.find(session[:current_event])
-    inviter = Inviter.new(event).invite_from_params(params[:invitation])
+    inviter = Invitation.invite_from_params(event, params[:invitation])
     redirect_to event
   end
 end

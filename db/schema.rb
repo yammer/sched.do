@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120808231312) do
+ActiveRecord::Schema.define(:version => 20120810185224) do
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
@@ -93,7 +93,7 @@ ActiveRecord::Schema.define(:version => 20120808231312) do
 
   create_table "users", :force => true do |t|
     t.string   "name",                                      :null => false
-    t.string   "encrypted_access_token",                    :null => false
+    t.string   "encrypted_access_token"
     t.string   "yammer_user_id",                            :null => false
     t.datetime "created_at",                                :null => false
     t.datetime "updated_at",                                :null => false
@@ -120,15 +120,6 @@ ActiveRecord::Schema.define(:version => 20120808231312) do
 
   add_index "votes", ["suggestion_id"], :name => "index_votes_on_suggestion_id"
   add_index "votes", ["votable_id"], :name => "index_votes_on_votable_id"
-
-  create_table "yammer_invitees", :force => true do |t|
-    t.string   "yammer_user_id", :null => false
-    t.string   "name",           :null => false
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
-    t.string   "email"
-  end
-
-  add_index "yammer_invitees", ["yammer_user_id"], :name => "index_yammer_invitees_on_yammer_user_id"
+  add_index "votes", ["votable_type"], :name => "index_votes_on_votable_type"
 
 end

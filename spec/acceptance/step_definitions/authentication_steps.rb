@@ -1,15 +1,15 @@
 step 'I have a Yammer account' do
-  create_yammer_account
+  mock_yammer_oauth
 end
 
 step 'I am signed in' do
-  create_yammer_account
+  mock_yammer_oauth
   sign_in
 end
 
 step 'I sign in as a different user' do
   sign_out
-  create_yammer_account
+  mock_yammer_oauth
   sign_in
 end
 
@@ -41,12 +41,12 @@ step 'I should not see a sign out button' do
 end
 
 step 'I have a Yammer account with name :name' do |name|
-  create_named_yammer_account(name)
+  named_fake_yammer(name)
   sign_in
 end
 
 step 'I change my name to :new_name' do |new_name|
-  rename_yammer_account(new_name)
+  change_fake_yammer_fullname(new_name)
 end
 
 step 'I log out and sign back in again' do
