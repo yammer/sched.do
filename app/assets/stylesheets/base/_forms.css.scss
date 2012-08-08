@@ -55,7 +55,8 @@ form {
   #{$all-text-inputs},
   input[type="button"],
   input[type="reset"],
-  input[type="submit"] {
+  input[type="submit"],
+  .read-only {
     @include background-image(linear-gradient(darken($bg-color, 2%), lighten($bg-color, 2%)));
     border: 1px solid darken($bg-color, 20%);
     @include border-radius(4px);
@@ -71,6 +72,13 @@ form {
     }
   }
 
+  &.ui-autocomplete-input {
+    @include background-image(linear-gradient(darken($success, 2%), lighten($success, 2%)));
+    border: 1px solid darken($success, 20%);
+    @include box-shadow(inset 0 0px 5px darken($success, 20%));
+    color: darken($success, 50%);
+  }
+
   textarea {
     font-family: $sans;
     font-size: 0.95em;
@@ -79,7 +87,7 @@ form {
   }
 
   #{$all-text-inputs} {
-    &.read-only, &.disabled {
+    &.disabled {
       @include background-image(linear-gradient(lighten($orange, 32%), #fff));
       border-color: lighten($orange, 15%);
       @include box-shadow(inset 0 2px 2px lighten($orange, 28%), 0 1px 0 #fff);
