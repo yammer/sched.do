@@ -1,5 +1,5 @@
 class UserMailer < ActionMailer::Base
-  default :from => '"Sched.do" <app@sched.do>'
+  default from: '"Sched.do" <app@sched.do>'
 
   def vote_confirmation(vote)
     @user = vote.votable.user
@@ -12,6 +12,7 @@ class UserMailer < ActionMailer::Base
     @guest = guest
     @event = event
     mail(to: @guest.email,
+      from: "\"#{event.user.name} via Sched.do \" <app@sched.do>",
       subject: "You have been invited to a Sched.do event!")
   end
 
