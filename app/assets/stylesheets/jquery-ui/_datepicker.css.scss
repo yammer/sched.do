@@ -3,7 +3,7 @@
   display: none;
   padding: 1em;
 
-  &:before {
+  &::before {
     background: #000;
     border: 1px solid #000;
     bottom: -11px;
@@ -18,6 +18,7 @@
   }
 
   .ui-datepicker-header {
+    background-color: #3B3B3B;
     @include background-image(linear-gradient(#333, #444));
     border: 1px solid #000;
     @include border-radius(3px);
@@ -28,19 +29,20 @@
   }
 
   .ui-datepicker-prev, .ui-datepicker-next {
+    background-color: #4B4B4B;
     @include background-image(linear-gradient(#555, #444));
     border: 1px solid #000;
     @include border-radius(3px);
     @include box-shadow(inset 0 1px 0 #999);
     cursor: pointer;
     font-size: 0.7em;
-    height: 1.9rem;
+    height: 2.6em;
     position: absolute;
     text-align: center;
     text-decoration: none;
     text-shadow: 0 -1px 0 #000;
     top: 2px;
-    width: 1.9rem;
+    width: 2.6em;
 
     span {
       padding-top: 0.1em;
@@ -49,6 +51,7 @@
   }
 
   .ui-datepicker-prev-hover, .ui-datepicker-next-hover {
+    background-color: #555;
     @include background-image(linear-gradient(#666, #444));
     @include box-shadow(inset 0 1px 0 #aaa);
   }

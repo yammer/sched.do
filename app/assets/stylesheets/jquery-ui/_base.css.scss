@@ -69,6 +69,7 @@
 }
 
 .ui-widget-content {
+  background-color: #333;
   @include background-image(linear-gradient(#555, #000));
   border: 1px solid #000;
   @include border-radius(3px);
@@ -107,7 +108,7 @@
 }
 
 .ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus {
-  background: rgba(0,0,0,0.5);
+  background: rgb(0,0,0);
   @include border-radius(3px);
   color: #fff;
   font-weight: normal;
@@ -124,6 +125,7 @@
 }
 
 .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active {
+  background-color: darken($orange, 7%);
   @include background-image(linear-gradient($orange,darken($orange, 15%)));
   border: 1px solid darken($bg-color, 90%);
   @include border-radius(3px);

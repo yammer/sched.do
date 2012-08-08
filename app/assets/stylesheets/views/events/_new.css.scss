@@ -80,6 +80,7 @@ div.new-event {
 
       a.remove_fields {
         @include animation(rotateIn 0.5s);
+        background-color: lighten($orange, 10%);
         @include background-image(url(delete-icon.svg), linear-gradient(lighten($orange, 20%), $orange));
         background-position: center, left;
         background-repeat: no-repeat;

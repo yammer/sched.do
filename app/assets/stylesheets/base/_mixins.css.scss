@@ -7,6 +7,7 @@
 }
 
 @mixin button-color($color: $bg-color) {
+  background-color: $color;
   @include background-image(linear-gradient(lighten($color, 10%), darken($color, 5%)));
   border: 1px solid darken($color, 20%);
   @include box-shadow(0 1px 0px #fff, inset 0 1px 0px lighten($color, 20%));
@@ -14,15 +15,18 @@
   text-shadow: 0 1px 0px lighten($color, 20%);
 
   &:hover {
+    background-color: lighten($color, 3%);
     @include background-image(linear-gradient(lighten($color, 10%), darken($color, 2%)));
   }
 
   &:active {
+    background-color: darken($color, 2%);
     @include background-image(linear-gradient(darken($color, 5%), lighten($color, 10%)));
   }
 }
 
 @mixin notice-style($color) {
+  background-color: $color;
   @include background-image(linear-gradient(darken($color, 10%), lighten($color, 2%) 5%, darken($color, 3%), lighten($color, 1%) 99%));
   border-color: darken($color, 20%);
   color: desaturate(darken($color, 45%), 10%);

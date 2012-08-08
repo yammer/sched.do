@@ -19,6 +19,7 @@ a, a:link {
 }
 
 header {
+  background-color: darken($bg-color, 2%);
   @include background-image(linear-gradient(#fff, darken($bg-color, 2%)));
   border-bottom: 1px solid darken($bg-color, 20%);
   @include box-shadow(inset 0 -1px 0px #fff);
@@ -34,6 +35,7 @@ header {
 
       img {
         $border: 1px solid darken($bg-color, 8%);
+        background-color: lighten($bg-color, 5%);
         @include background-image(linear-gradient(rgba(255,255,255, 1),rgba(255,255,255, 0.3)));
         border-left: $border;
         border-right: $border;

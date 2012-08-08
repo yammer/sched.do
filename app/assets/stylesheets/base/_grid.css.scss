@@ -2,7 +2,7 @@
   @return ($column-count * $column-width)+(($column-count - 1)* $gutter-width);
 }
 
-@mixin columns($columns, $container-columns: $grid-columns, $display: inline) {
+@mixin columns($columns, $container-columns: $grid-columns, $display: block) {
   $container-width: calculate-width($container-columns);
   $width: calculate-width($columns);
   width: percentage($width / $container-width);

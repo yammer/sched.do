@@ -10,6 +10,7 @@
 }
 
 .yammer-button {
+  background-color: #48AEF1;
   @include button-color(#48AEF1);
   @include background-image(url(yammer-logo.svg),linear-gradient(#48AFF3, #228ed5));
   background-position: 20px center, 0 0;
@@ -26,11 +27,13 @@
   text-shadow: 0 -1px 0 darken(#48AEF1, 40%);
 
   &:hover {
+    background-color: lighten(#48AEF1, 5%);
     @include background-image(url(yammer-logo.svg),linear-gradient(#48AFF3, lighten(#228ed5, 5%)));
   }
 }
 
 .sheet {
+  background-color: $bg-color;
   @include background-image(linear-gradient(top, darken($bg-color, 5%), $bg-color 1%, #fff 20%));
   border: 1px solid darken($bg-color, 10%);
   border-top: none;
