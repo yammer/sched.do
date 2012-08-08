@@ -5,7 +5,7 @@
 Here are your options:
 
 <% @event.suggestions.each do |suggestion| %>
-  "<%= suggestion.primary %>, <%= suggestion.secondary %>"
+  "<%= suggestion.primary %><%= "," if not suggestion.secondary.blank? %> <%= suggestion.secondary %>"
 <% end %>
 
 lick here to vote: <%= link_to @event.name, event_url(@event, guest_email: @guest.email) %>

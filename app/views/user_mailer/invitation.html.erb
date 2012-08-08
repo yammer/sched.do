@@ -7,7 +7,7 @@
 
 <ul>
   <% @event.suggestions.each do |suggestion| %>
-    <li><strong><%= suggestion.primary %>, <%= suggestion.secondary %></strong></li>
+    <li><strong><%= suggestion.primary %><%= "," if not suggestion.secondary.blank? %> <%= suggestion.secondary %></strong></li>
   <% end %>
 </ul>
 
