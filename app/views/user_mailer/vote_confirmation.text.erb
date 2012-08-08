@@ -3,7 +3,7 @@ Thanks for helping <%= @event.user.name %> with “<%= @event.name %>”.
 You voted for:
 
 <% @event.user_votes(@user).each do |vote| %>
-  "<%= vote.suggestion.primary %><%= "," if not vote.suggestion.secondary.blank? %> <%= vote.suggestion.secondary %>"
+  "<%= vote.suggestion.primary %><%= "," if vote.suggestion.secondary.present? %> <%= vote.suggestion.secondary %>"
 <% end %>
 
 To change your vote or find out how other people have voted, <%= link_to "click here", event_url(@event) %>.

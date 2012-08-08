@@ -8,7 +8,7 @@
 
 <ul>
   <% @event.user_votes(@user).each do |vote| %>
-    <li><strong><%= vote.suggestion.primary %><%= "," if not vote.suggestion.secondary.blank? %> <%= vote.suggestion.secondary %></strong></li>
+    <li><strong><%= vote.suggestion.primary %><%= "," if vote.suggestion.secondary.present? %> <%= vote.suggestion.secondary %></strong></li>
   <% end %>
 </ul>
 
