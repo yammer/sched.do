@@ -69,6 +69,6 @@ module SchedDo
 
     # If you want to precompile a file other than application.css/js, add it to
     # this array.
-    config.assets.precompile += %w(media-queries.css)
+    config.assets.precompile += %w(media-queries.css ie.css)
   end
 end
