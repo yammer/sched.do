@@ -69,7 +69,7 @@ class User < ActiveRecord::Base
     if invitation.sender.in_network?(invitation.invitee)
       PrivateMessager.new(invitation).deliver
     else
-      UserMailer.invitation(self, invitation.event).deliver
+      UserMailer.delay.invitation(self, invitation.event)
     end
   end
 

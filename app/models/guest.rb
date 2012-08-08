@@ -34,7 +34,7 @@ class Guest < ActiveRecord::Base
   end
 
   def notify(invitation)
-    UserMailer.invitation(self, invitation.event).deliver
+    UserMailer.delay.invitation(self, invitation.event)
   end
 
   def set_should_validate_name

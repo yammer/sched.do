@@ -25,6 +25,7 @@ gem 'thin'
 # We can move back to the original gem when the gem fixes a bug where nesting causes
 # infinite looping and the gem correctly adds nested dynamically added objects to the params.
 gem 'cocoon', git: 'git://github.com/jsteiner/cocoon.git', branch: 'scheddo'
+gem 'delayed_job_active_record'
 gem 'flutie'
 gem 'bourbon', '~> 2.1.1'
 gem 'jquery-rails'

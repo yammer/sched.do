@@ -29,6 +29,6 @@ class Vote < ActiveRecord::Base
   end
 
   def send_confirmation_email
-    UserMailer.vote_confirmation(self).deliver
+    UserMailer.delay.vote_confirmation(self)
   end
 end
