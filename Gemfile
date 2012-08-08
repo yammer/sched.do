@@ -13,12 +13,13 @@ group :assets do
 end
 
 gem 'awesome_print'
-gem 'pg'
-gem 'thin'
-gem 'sass'
-gem 'high_voltage'
-gem 'paperclip', '~> 3.0.4'
 gem 'formtastic'
+gem 'high_voltage'
+gem 'newrelic_rpm'
+gem 'paperclip', '~> 3.0.4'
+gem 'pg'
+gem 'sass'
+gem 'thin'
 
 # We currently use this forked repo as it allows you to nest links to add associations.
 # We can move back to the original gem when the gem fixes a bug where nesting causes
