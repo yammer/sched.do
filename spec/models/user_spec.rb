@@ -65,6 +65,23 @@ describe User, '.create_from_params!' do
   end
 end
 
+describe User, '.find_and_update_from_yammer' do
+  it 'finds a user by yammer_user_id' do
+    params = create_yammer_account
+    user_with_same_yammer_id = create(:user,
+                               yammer_user_id: params[:uid],
+                               access_token: '1111')
+    user_with_same_access_token = create(:user,
+                             yammer_user_id: 'AAAA',
+                             access_token: params[:info][:access_token])
+
+    returned_user = User.find_and_update_from_yammer(params)
+
+    returned_user.should == user_with_same_yammer_id
+    returned_user.should_not == user_with_same_access_token
+  end
+end
+
 describe User, '#in_network?' do
   it 'returns true if user is in network' do
     user = User.create_from_params!(create_yammer_account)

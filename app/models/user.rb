@@ -32,7 +32,7 @@ class User < ActiveRecord::Base
   end
 
   def self.find_and_update_from_yammer(params)
-    user = User.find_by_access_token(params[:info][:access_token])
+    user = User.find_by_yammer_user_id(params[:uid].to_s)
 
     if user
       user.update_yammer_info(params)
