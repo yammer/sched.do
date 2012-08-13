@@ -98,7 +98,7 @@ class User < ActiveRecord::Base
     JSON.parse(
       RestClient.get yammer_endpoint +
       "api/v1/users/" +
-      yammer_user_id +
+      yammer_user_id.to_s +
       ".json?" + {
         access_token: access_token,
       }.to_query

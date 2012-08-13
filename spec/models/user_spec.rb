@@ -40,7 +40,7 @@ describe User, '.find_or_create_with_access_token_and_yammer_user_id' do
   end
 
   it 'creates a new user if one does not exist' do
-    new_yammer_user_id = 'G7df63'
+    new_yammer_user_id = 321123
     access_token = 'PUH98h'
     yammer_staging = false
     User.count.should == 0
@@ -48,7 +48,8 @@ describe User, '.find_or_create_with_access_token_and_yammer_user_id' do
     User.find_or_create_with_auth(
       access_token: access_token,
       yammer_staging: yammer_staging,
-      yammer_user_id: new_yammer_user_id)
+      yammer_user_id: new_yammer_user_id
+    )
 
     user = User.last
     User.count.should == 1
@@ -137,7 +138,7 @@ end
 
 describe User, '#fetch_yammer_user_data' do
   it 'should query the Yammer Users API for Yammer Production data' do
-    user = User.new(yammer_user_id: '123ABC',
+    user = User.new(yammer_user_id: 123456,
                     access_token: 'Tokenz',
                     yammer_staging: false)
     oauth_hash = user.yammer_user_data
