@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
   validates :encrypted_access_token, presence: true
 
   def self.create_with_auth(auth)
-    create(yammer_user_id: auth[:yammer_user_id].to_s).tap do |user|
+    create(yammer_user_id: auth[:yammer_user_id]).tap do |user|
       user.access_token = auth[:access_token]
       user.yammer_staging = auth[:yammer_staging]
       user.fetch_yammer_user_data
@@ -25,7 +25,7 @@ class User < ActiveRecord::Base
   end
 
   def self.find_or_create_with_auth(auth)
-    find_by_yammer_user_id(auth[:yammer_user_id].to_s) ||
+    find_by_yammer_user_id(auth[:yammer_user_id]) ||
       create_with_auth(auth)
   end
 
@@ -49,7 +49,8 @@ class User < ActiveRecord::Base
     response = yammer_user_data
     update_attributes(
       {
-        email: response['contact']['email_addresses'].detect{|address| address['type'] == 'primary'}['address'],
+        email: response['contact']['email_addresses'].
+          detect{ |address| address['type'] == 'primary' }['address'],
         image: response['mugshot_url'],
         name: response['full_name'],
         nickname: response['name'],
