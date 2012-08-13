@@ -18,16 +18,13 @@
 
   <%= render partial: 'grid' %>
 
-  <% if current_user.able_to_edit?(@event) %>
-    <div class="event-url">
-      <p>You can also share this URL directly with your invitees to have them vote:</p>
-     <form>
-       <input id="event-url" readonly="readonly" class="read-only"  type="url" value="<%= event_url(@event) %>" />
-       <div id="copy-url-container">
-         <input id="copy-url" type="button" value="Copy event URL" data-title="You can also share this URL directly with your guests" type="url" value="<%= event_url(@event) %>"/>
-       </div>
-     </form>
-    </div>
-
-  <% end %>
+  <div class="event-url">
+    <p>You can also share this URL directly with your invitees to have them vote:</p>
+    <form>
+      <input id="event-url" readonly="readonly" class="read-only"  type="url" value="<%= event_url(@event) %>" />
+      <div id="copy-url-container">
+        <input id="copy-url" type="button" value="Copy event URL" data-title="You can also share this URL directly with your guests" type="url" value="<%= event_url(@event) %>"/>
+      </div>
+    </form>
+  </div>
 </div>
