@@ -25,8 +25,13 @@ class User < ActiveRecord::Base
   end
 
   def self.find_or_create_with_auth(auth)
-    find_by_yammer_user_id(auth[:yammer_user_id]) ||
-      create_with_auth(auth)
+    user = find_by_yammer_user_id(auth[:yammer_user_id]) ||
+     create_with_auth(auth)
+
+    user.tap do |user|
+      user.access_token = auth[:access_token]
+      user.save!
+    end
   end
 
   def able_to_edit?(event)

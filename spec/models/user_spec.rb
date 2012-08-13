@@ -28,15 +28,16 @@ end
 describe User, '.find_or_create_with_access_token_and_yammer_user_id' do
   it 'finds a user if one already exists using the yammer_user_id' do
     user = create(:user)
+    sent_access_token = 'ZZZZZZZ'
 
-    found_user = User.find_or_create_with_auth(
-      {
-      access_token: user.access_token,
+    found_user = User.find_or_create_with_auth( {
+      access_token: sent_access_token,
       yammer_staging: user.yammer_staging?,
       yammer_user_id: user.yammer_user_id
-    })
+    } )
 
     found_user.should == user
+    found_user.access_token.should == sent_access_token
   end
 
   it 'creates a new user if one does not exist' do
