@@ -64,7 +64,7 @@ class EventsController < ApplicationController
 
   def verify_or_setup_invitation_for_current_user
     if !@event.user_invited?(current_user)
-      Invitation.invite(@event, current_user)
+      Invitation.invite_without_notification(@event, current_user)
       @event.reload
     end
   end

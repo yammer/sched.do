@@ -1,4 +1,5 @@
 class Invitation < ActiveRecord::Base
+  attr_accessor :skip_notification
   attr_accessible :event, :invitee
 
   belongs_to :event
@@ -10,14 +11,18 @@ class Invitation < ActiveRecord::Base
   validates :invitee_id, presence: true
   validates :invitee_type, presence: true
 
-  after_create :send_notification
+  after_create :send_notification, unless: :skip_notification
 
-  def self.find_or_create_by_event_and_invitee(event, invitee)
-    find_or_create_by_event_id_and_invitee_id_and_invitee_type(event.id, invitee.id, invitee.class.name)
+  def self.invite(event, invitee)
+    find_or_create_by_event_id_and_invitee_id_and_invitee_type(
+      event.id,
+      invitee.id,
+      invitee.class.name)
   end
 
-  def self.invite(event, user)
-    Invitation.find_or_create_by_event_and_invitee(event, user)
+  def self.invite_without_notification(event, invitee)
+    skip_notification = true
+    invite(event, invitee)
   end
 
   def self.invite_from_params(event, params)
@@ -34,7 +39,7 @@ class Invitation < ActiveRecord::Base
       invitee = find_guest(params[:name_or_email])
     end
 
-    Invitation.find_or_create_by_event_and_invitee(event, invitee)
+    invite(event, invitee)
   end
 
 

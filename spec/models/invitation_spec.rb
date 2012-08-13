@@ -22,22 +22,30 @@ describe Invitation do
 
     user.should have_received(:notify)
   end
+
+  it 'invite_without_notification should not notify the invitee' do
+    user = create(:user)
+    event = create(:event)
+
+    user.stubs(:notify)
+
+    Invitation.invite_without_notification(event, user)
+
+    user.should have_received(:notify).never
+  end
 end
 
-
-describe Invitation, '.find_or_create_by_event_and_invitee' do
-  it 'does not create an invitation if one exists' do
+describe Invitation, '#invite' do
+  it 'calls find_or_create_by_event_id_and_invitee_id_and_invitee_type ' do
     user = create(:user)
     event = create(:event)
-    invitation = create(:invitation_with_user, event: event, invitee: user)
-    Invitation.find_or_create_by_event_and_invitee(event, user).should == invitation
-  end
+    Invitation.stubs(:find_or_create_by_event_id_and_invitee_id_and_invitee_type)
 
-  it 'creates an invitation if one does not exists' do
-    user = create(:user)
-    event = create(:event)
-    Invitation.find_or_create_by_event_and_invitee(event, user)
-    Invitation.count.should == 1
+    Invitation.invite(event, user)
+
+    Invitation.should have_received(
+      :find_or_create_by_event_id_and_invitee_id_and_invitee_type).
+        with(event.id, user.id, user.class.name)
   end
 end
 
