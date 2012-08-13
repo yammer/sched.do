@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
   validates :encrypted_access_token, presence: true
 
   def self.create_with_auth(auth)
-    create(yammer_user_id: auth[:yammer_user_id]).tap do |user|
+    create(yammer_user_id: auth[:yammer_user_id].to_s).tap do |user|
       user.access_token = auth[:access_token]
       user.yammer_staging = auth[:yammer_staging]
       user.fetch_yammer_user_data
@@ -25,7 +25,8 @@ class User < ActiveRecord::Base
   end
 
   def self.find_or_create_with_auth(auth)
-    find_by_yammer_user_id(auth[:yammer_user_id]) || create_with_auth(auth)
+    find_by_yammer_user_id(auth[:yammer_user_id].to_s) ||
+      create_with_auth(auth)
   end
 
   def able_to_edit?(event)
