@@ -11,7 +11,7 @@
   </div>
 
   <% if current_user.able_to_edit?(@event) %>
-    <%= render 'add_invitation' %>
+    <%= render 'events/add_invitation' %>
   <% end %>
 
   <div class="options">
@@ -47,7 +47,7 @@
           <% @suggestions.each do |suggestion| %>
             <% if display_invitee_in_grid?(@event, invitee)  %>
               <% if current_user == invitee %>
-                <%= render 'vote', suggestion: suggestion,
+                <%= render 'events/vote', suggestion: suggestion,
                   vote_for_suggestion: current_user.vote_for_suggestion(suggestion) %>
               <% else %>
                 <% if invitee.voted_for?(suggestion) %>

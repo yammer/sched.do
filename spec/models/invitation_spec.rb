@@ -13,6 +13,20 @@ describe Invitation do
   it { should validate_presence_of(:invitee_id) }
   it { should validate_presence_of(:invitee_type) }
 
+  it 'should be valid if the event owner is not invited' do
+    user = create(:user)
+    invitation = build(:invitation, invitee: user)
+
+    invitation.should be_valid
+  end
+
+  it 'should be invalid if the event owner is invited' do
+    event = create(:event)
+    invitation = build(:invitation, event: event, invitee: event.user)
+
+    invitation.should be_invalid
+  end
+
   it 'should notify the invitee after creation' do
     user = create(:user)
     user.stubs(:notify)

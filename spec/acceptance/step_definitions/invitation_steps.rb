@@ -15,6 +15,15 @@ step 'I invite the Yammer group :user_name to :event_name' do |group_name, event
   click_button '+ Invite'
 end
 
+step 'I invite myself' do
+  user = User.last
+  event = Event.last
+  visit event_path(event)
+  find_field_by_data_role('invitation_name').set(event.name)
+  find_field_by_data_role('yammer_user_id').set(user.yammer_user_id)
+  click_button '+ Invite'
+end
+
 step 'I invite :email to :event_name' do |email, event_name|
   event = Event.find_by_name!(event_name)
   visit event_path(event)

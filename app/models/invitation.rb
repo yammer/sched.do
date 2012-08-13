@@ -10,6 +10,7 @@ class Invitation < ActiveRecord::Base
   validates :event_id, presence: true
   validates :invitee_id, presence: true
   validates :invitee_type, presence: true
+  validate  :invitee_is_not_event_owner
 
   after_create :send_notification, unless: :skip_notification
 
@@ -45,6 +46,10 @@ class Invitation < ActiveRecord::Base
 
   def name_or_email
     invitee.try(:name) || invitee.try(:email)
+  end
+
+  def invitee_is_not_event_owner
+    errors[:base] << "You can not invite yourself" if invitee == event.try(:user)
   end
 
   def send_notification

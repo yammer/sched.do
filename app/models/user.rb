@@ -99,6 +99,10 @@ class User < ActiveRecord::Base
     yammer_staging ? "https://www.staging.yammer.com/" : "https://www.yammer.com/"
   end
 
+  def yammer_group_id
+    nil
+  end
+
   def yammer_user_data
     JSON.parse(
       RestClient.get yammer_endpoint +
