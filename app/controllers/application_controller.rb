@@ -18,7 +18,9 @@ class ApplicationController < ActionController::Base
   end
 
   def current_user
-    @current_user ||= CurrentUser.find(cookies[:encrypted_access_token], session[:name], session[:email])
+    @current_user ||= CurrentUser.find(cookies[:yammer_user_id],
+                                       session[:name],
+                                       session[:email])
   end
 
   def require_yammer_login

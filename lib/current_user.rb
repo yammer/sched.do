@@ -1,6 +1,6 @@
 class CurrentUser
-  def initialize(token, name, email)
-    @token = token
+  def initialize(yammer_user_id, name, email)
+    @yammer_user_id = yammer_user_id
     @name = name
     @email = email
   end
@@ -9,14 +9,14 @@ class CurrentUser
     user || guest || null_user
   end
 
-  def self.find(token, name, email)
-    new(token, name, email).find
+  def self.find(yammer_user_id, name, email)
+    new(yammer_user_id, name, email).find
   end
 
   private
 
   def user
-    User.find_by_encrypted_access_token(@token)
+    User.find_by_yammer_user_id(@yammer_user_id)
   end
 
   def guest
