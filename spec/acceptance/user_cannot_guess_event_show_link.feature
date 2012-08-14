@@ -2,7 +2,7 @@ Feature: User cannot guess event show link
 
   Scenario: User visits the show page by uuid
     Given I sign in and create an event named "Clown party"
-    And I visit the event show page
+    And I visit the event page
     Then I should see "Clown party"
 
 
