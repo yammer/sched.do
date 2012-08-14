@@ -4,7 +4,7 @@ class SessionsController < ApplicationController
   def create
     user = find_or_create_with_auth
     user.fetch_yammer_user_data
-    cookies[:yammer_user_id] = user.yammer_user_id
+    cookies.signed[:yammer_user_id] = user.yammer_user_id
     log_out_guest
 
     redirect_to after_sign_in_path
@@ -13,7 +13,7 @@ class SessionsController < ApplicationController
   def destroy
     @current_user = nil
     log_out_guest
-    cookies[:yammer_user_id] = nil
+    cookies.signed[:yammer_user_id] = nil
     redirect_to root_path
   end
 
