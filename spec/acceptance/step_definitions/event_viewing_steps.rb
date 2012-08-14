@@ -4,7 +4,7 @@ step 'I should see a suggestion of :suggestion' do |suggestion|
   end
 end
 
-step 'I visit an the event show page' do
+step 'I visit the event show page' do
   visit event_url(Event.order(:id).last)
 end
 

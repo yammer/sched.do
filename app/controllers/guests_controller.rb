@@ -5,6 +5,7 @@ class GuestsController < ApplicationController
 
   def new
     @guest = Guest.new
+    @event = Event.find_by_uuid(params[:event_id])
     @guest.email = session.delete(:guest_email)
   end
 

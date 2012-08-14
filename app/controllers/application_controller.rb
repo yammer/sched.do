@@ -36,7 +36,7 @@ class ApplicationController < ActionController::Base
     if current_user.blank?
       session[:return_to] ||= request.fullpath
       session[:guest_email] = params[:guest_email]
-      redirect_to new_guest_url
+      redirect_to new_guest_url(event_id: params[:id])
     end
   end
 
