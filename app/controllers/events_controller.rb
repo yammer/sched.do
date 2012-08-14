@@ -27,7 +27,7 @@ class EventsController < ApplicationController
 
   def show
     @event = Event.find_by_uuid!(params[:id])
-    @suggestions = @event.suggestions.with_votes
+    @suggestions = @event.suggestions
     verify_or_setup_invitation_for_current_user
     setup_invitation_for_event_creator
   end
