@@ -20,6 +20,18 @@ class GuestsController < ApplicationController
     end
   end
 
+  def update
+    @guest = Guest.find_or_initialize_by_email(params[:guest][:email])
+    @guest.name = params[:guest][:name]
+
+    if @guest.save
+      log_in_guest
+      return_to_previous_page
+    else
+      render :new
+    end
+  end
+
   private
 
   def log_in_guest
