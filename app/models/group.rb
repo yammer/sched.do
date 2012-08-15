@@ -6,7 +6,7 @@ class Group < ActiveRecord::Base
   validates :yammer_group_id, :name, presence: true
 
   def notify(invitation)
-
+      PrivateMessager.new(invitation).deliver
   end
 
   def yammer_user?

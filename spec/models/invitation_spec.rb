@@ -37,6 +37,16 @@ describe Invitation do
     user.should have_received(:notify)
   end
 
+  it 'should notify a group after creation' do
+    group = create(:group)
+    group.stubs(:notify)
+    invitation = build(:invitation, invitee: group)
+
+    invitation.save
+
+    group.should have_received(:notify)
+  end
+
   it 'invite_without_notification should not notify the invitee' do
     user = create(:user)
     event = create(:event)

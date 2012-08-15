@@ -17,3 +17,17 @@ describe Group, '#yammer_user_id' do
     build(:group).yammer_user_id.should be_nil
   end
 end
+
+describe Group, '#notify' do
+  it 'it sends a private message notification to the group' do
+    invitee = build_stubbed(:group)
+    invitation = build_stubbed(:invitation_with_group,
+                               invitee: invitee)
+    organizer = invitation.sender
+
+    invitee.notify(invitation)
+
+    FakeYammer.messages_endpoint_hits.should == 1
+    FakeYammer.message.should include(invitation.event.name)
+  end
+end
