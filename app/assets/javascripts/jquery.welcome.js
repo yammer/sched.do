@@ -12,4 +12,12 @@ $(document).ready(function() {
     triggerOnce: 'true',
     offset: '15%'
   });
+
+  // Smooth scrolls from learn more link to steps
+  $('a.learn-more').click(function(){
+      $('html, body').animate({
+          scrollTop: $( $(this).attr('href') ).offset().top
+      }, 500);
+      return false;
+  });
 });

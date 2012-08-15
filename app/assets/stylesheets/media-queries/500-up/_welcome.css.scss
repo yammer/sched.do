@@ -6,10 +6,16 @@ body.welcome {
     div.logo {
       div.post-it {
         max-width: 370px;
-        max-height: 160px;
+        max-height: 200px;
 
         h2 {
           font-size: 1.2em;
+        }
+
+        a.learn-more {
+          max-width: 240px;
+          margin: 30px auto 0px;
+          padding: 10px 0px;
         }
 
         &:before, &:after {
