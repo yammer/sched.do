@@ -49,27 +49,11 @@ div.table-wrapper {
           text-shadow: 0 1px 0 #fff;
 
           &.current-user {
-            @include background-image(linear-gradient($bg-color, darken($bg-color, 6%)));
+            @include background-image(linear-gradient(lighten($success, 5%), darken($success, 0%)));
 
             td {
               color: darken($bg-color, 50%);
               position: relative;
-
-              &:after {
-                @include background-image(linear-gradient(lighten($orange, 10%), darken($orange, 5%)));
-                border: 1px solid darken($orange, 20%);
-                @include border-radius(0 0 4px 4px);
-                @include box-shadow(0 1px 0px #fff, inset 0 1px 0px lighten($orange, 20%));
-                color: #fff;
-                content: "You!";
-                font-size: 11px;
-                padding: 0 0.5em;
-                position: absolute;
-                right: 10px;
-                text-shadow: 0 -1px 0 darken($orange, 40%);
-                top: 0;
-
-              }
             }
           }
 
@@ -354,12 +338,6 @@ div.table-wrapper {
 
     div#invitees table tr.current-user {
       height: 57px;
-
-      td:after {
-        position: inherit;
-        right: -29%;
-        top: -21px;
-      }
     }
 
     div#invitees.blank {
