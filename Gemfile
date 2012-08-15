@@ -12,31 +12,32 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
+gem 'airbrake', '~> 3.1.0'
+gem 'attr_encrypted'
 gem 'awesome_print'
+gem 'bourbon', '~> 2.1.1'
+gem 'delayed_job_active_record'
+gem 'flutie'
 gem 'formtastic'
 gem 'high_voltage'
+gem 'jquery-rails'
+gem 'mail_view'
 gem 'newrelic_rpm'
+gem 'omniauth', '~> 1.0'
+gem 'omniauth-oauth2', '~> 1.0.2'
 gem 'paperclip', '~> 3.0.4'
 gem 'pg'
+gem 'rack-www'
+gem 'rest-client'
 gem 'sass'
 gem 'thin'
+gem 'underscore-rails', '~> 1.3.1'
+gem 'zero-clipboard-rails', '~> 1.0.1'
 
 # We currently use this forked repo as it allows you to nest links to add associations.
 # We can move back to the original gem when the gem fixes a bug where nesting causes
 # infinite looping and the gem correctly adds nested dynamically added objects to the params.
 gem 'cocoon', git: 'git://github.com/jsteiner/cocoon.git', branch: 'scheddo'
-gem 'delayed_job_active_record'
-gem 'flutie'
-gem 'bourbon', '~> 2.1.1'
-gem 'jquery-rails'
-gem 'omniauth', '~> 1.0'
-gem 'omniauth-oauth2', '~> 1.0.2'
-gem 'attr_encrypted'
-gem 'airbrake', '~> 3.1.0'
-gem 'underscore-rails', '~> 1.3.1'
-gem 'mail_view'
-gem 'rest-client'
-gem "zero-clipboard-rails", "~> 1.0.1"
 
 group :development do
   gem 'bundler', '>= 1.2.0.pre'

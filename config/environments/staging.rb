@@ -28,7 +28,7 @@ SchedDo::Application.configure do
   # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for nginx
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  # config.force_ssl = true
+  config.force_ssl = true
 
   # See everything in the log (default is :info)
   # config.log_level = :debug
@@ -44,8 +44,8 @@ SchedDo::Application.configure do
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server
   # config.action_controller.asset_host = "http://assets.example.com"
-  config.action_mailer.asset_host = "scheddo-staging.herokuapp.com"
-  
+  config.action_mailer.asset_host = "www.scheddo-staging.herokuapp.com"
+
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
   # config.assets.precompile += %w( search.js )
 
@@ -66,7 +66,7 @@ SchedDo::Application.configure do
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 
-  config.action_mailer.default_url_options = { :host => 'scheddo-staging.herokuapp.com' }
+  config.action_mailer.default_url_options = { :host => 'www.scheddo-staging.herokuapp.com' }
 
   ActionMailer::Base.smtp_settings = {
     address:        'smtp.sendgrid.net',
@@ -77,4 +77,7 @@ SchedDo::Application.configure do
     domain:         'heroku.com'
   }
   ActionMailer::Base.delivery_method = :smtp
+
+  # Redirects all subdomains to 'www.scheddo-staging.herokuapp.com'
+  config.middleware.use Rack::WWW, :www => true
 end

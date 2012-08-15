@@ -1,5 +1,5 @@
-step 'the OpenGraph image should be :image' do |image|
-  find('meta[property="og:image"]')['content'].should == image
+step 'the OpenGraph image should contain :image' do |image|
+  find('meta[property="og:image"]')['content'].should include(image)
 end
 
 step 'there is an OpenGraph description' do

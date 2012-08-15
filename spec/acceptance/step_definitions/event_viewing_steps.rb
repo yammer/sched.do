@@ -5,13 +5,18 @@ step 'I should see a suggestion of :suggestion' do |suggestion|
 end
 
 step 'I visit the event page' do
-  visit event_url(Event.order(:id).last)
+  visit event_url(Event.last)
+end
+
+step 'I visit the event page for :event_name' do |event_name|
+  event = Event.find_by_name(event_name)
+  visit "/events/#{event.uuid}"
 end
 
 step 'I should not be able to access it by id' do
   create(:event)
   lambda {
-    visit "/events/#{Event.order('id').last.id}"
+    visit "/events/#{Event.last.id}"
   }.should raise_error(ActionController::RoutingError)
 end
 
@@ -49,6 +54,6 @@ step 'I should see multiple suggestions' do
 end
 
 step 'I should see a link to that event' do
-  url = event_url(Event.order('id').last)
-  page.find("#event-url").value.should == url
+  event = Event.last
+  page.find("#event-url").value.should include(event.uuid)
 end
