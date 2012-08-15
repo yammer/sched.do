@@ -13,10 +13,9 @@ class ActivityCreator
     :content_type => :json,
     :accept => :json
   rescue Exception => e
-    Rails.logger.error(e.response.inspect)
+    Rails.logger.error(e.try(:response).try(:inspect))
     Rails.logger.error(generate_json)
     Rails.logger.error(@user.access_token)
-    raise
   end
 
   private
