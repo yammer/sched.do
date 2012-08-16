@@ -8,10 +8,7 @@ class ActivityCreator
   end
 
   def create
-    response = RestClient.post rest_client_url,
-    generate_json,
-    :content_type => :json,
-    :accept => :json
+    post_activity_json
   rescue Exception => e
     Rails.logger.error(e.try(:response).try(:inspect))
     Rails.logger.error(generate_json)
@@ -27,7 +24,7 @@ class ActivityCreator
         action: @action,
         object: {
           url: event_url(@event),
-          type: 'page',
+          type: 'poll',
           title: @event.name,
           image: ActionController::Base.helpers.asset_path('logo.png')
         }
@@ -37,7 +34,15 @@ class ActivityCreator
     }.to_json
   end
 
+  def post_activity_json
+    RestClient.post rest_client_url,
+    generate_json,
+    :content_type => :json,
+    :accept => :json
+  end
+
   def rest_client_url
-    @user.yammer_endpoint + "api/v1/activity.json?access_token=#{@user.access_token}"
+    @user.yammer_endpoint +
+      "api/v1/activity.json?access_token=#{@user.access_token}"
   end
 end

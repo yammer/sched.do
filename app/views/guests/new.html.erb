@@ -1,7 +1,7 @@
 <% if @event %>
   <% content_for :head do %>
       <meta property="og:title" content="<%= @event.name %>" />
-      <meta property="og:type" content="event" />
+      <meta property="og:type" content="poll" />
       <meta property="og:url" content="<%= event_url(@event) %>" />
   <% end %>
 <% end %>
