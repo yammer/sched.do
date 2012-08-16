@@ -20,11 +20,14 @@ class ActivityCreator
   def generate_json
     {
       activity: {
-        actor: { name: @user.name, email: @user.email },
+        actor: {
+          name: @user.name,
+          email: @user.email
+        },
         action: @action,
         object: {
           url: event_url(@event),
-          type: 'page',
+          type: 'poll',
           title: @event.name,
           image: ActionController::Base.helpers.asset_path('logo.png')
         }

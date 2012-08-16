@@ -25,7 +25,7 @@ class Vote < ActiveRecord::Base
   private
 
   def create_yammer_activity_for_new_vote
-    user.create_yammer_activity('update', event)
+    user.create_yammer_activity('vote', event)
   end
 
   def send_confirmation_email
