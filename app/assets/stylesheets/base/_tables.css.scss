@@ -168,6 +168,20 @@ div.table-wrapper {
       margin-left: $table-width-mobile - 1;
       overflow: auto;
 
+      &::-webkit-scrollbar {
+        background-color: $bg-color;
+        border-top: 1px solid darken($bg-color, 20%);
+        height: 7px;
+        -webkit-appearance: none;
+        width: 7px;
+      }
+
+      &::-webkit-scrollbar-thumb {
+          background-color: rgba(0,0,0, 0.5);
+          border-radius: 4px;
+          -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+      }
+
       table {
         @include box-shadow(0 0 20px darken($bg-color, 15%));
 
@@ -319,10 +333,6 @@ div.table-wrapper {
       }
     }
   }
-}
-
-::-webkit-scrollbar:horizontal {
-  display: none;
 }
 
 // A quick fix for https://developer.mozilla.org/en/CSS/box-sizing#Notes
