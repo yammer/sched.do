@@ -54,8 +54,7 @@ class User < ActiveRecord::Base
     response = yammer_user_data
     update_attributes(
       {
-        email: response['contact']['email_addresses'].
-          detect{ |address| address['type'] == 'primary' }['address'],
+        email: parse_email_from_response(response),
         image: response['mugshot_url'],
         name: response['full_name'],
         nickname: response['name'],
@@ -112,5 +111,12 @@ class User < ActiveRecord::Base
         access_token: access_token,
       }.to_query
     )
+  end
+
+  private
+
+  def parse_email_from_response(response)
+    response['contact']['email_addresses'].
+      detect{ |address| address['type'] == 'primary' }['address']
   end
 end
