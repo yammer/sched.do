@@ -18,7 +18,7 @@ describe ActivityCreator do
           action: 'create',
           object: {
             url: Rails.application.routes.url_helpers.event_url(event),
-            type: 'poll',
+            type: 'page',
             title: event.name,
             image: ActionController::Base.helpers.asset_path('logo.png')
           }

@@ -24,7 +24,7 @@ class ActivityCreator
         action: @action,
         object: {
           url: event_url(@event),
-          type: 'poll',
+          type: 'page',
           title: @event.name,
           image: ActionController::Base.helpers.asset_path('logo.png')
         }
