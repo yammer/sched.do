@@ -72,7 +72,8 @@ class EventsController < ApplicationController
   def setup_invitation_for_event_creator
     if current_user.able_to_edit?(@event)
       @invitation = Invitation.new
-      session[:current_event] = @event.id
+      @invitation.invitee = User.new
+      @invitation.event = @event
     end
   end
 end

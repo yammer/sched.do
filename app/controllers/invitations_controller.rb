@@ -2,14 +2,13 @@ class InvitationsController < ApplicationController
   layout 'events'
 
   def create
-    @event = Event.find(session[:current_event])
-    @invitation = Invitation.invite_from_params(@event, params[:invitation])
-    @suggestions = @event.suggestions
+    @invitation = Invitation.new(params[:invitation])
+    @event =  @invitation.event
 
-    if @invitation.errors.any?
-      flash[:error] = @invitation.errors.full_messages.to_sentence
+    if !@invitation.save
+      flash[:error] = @invitation.errors.full_messages.last
     end
 
-    render "events/show"
+    redirect_to @event
   end
 end

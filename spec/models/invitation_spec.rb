@@ -11,6 +11,7 @@ describe Invitation do
 
   it { should validate_presence_of(:event_id) }
   it { should validate_presence_of(:invitee_id) }
+  it { should validate_presence_of(:invitee_id).with_message(/is invalid/) }
   it { should validate_presence_of(:invitee_type) }
 
   it 'should be valid if the event owner is not invited' do
@@ -56,20 +57,6 @@ describe Invitation do
     Invitation.invite_without_notification(event, user)
 
     user.should have_received(:notify).never
-  end
-end
-
-describe Invitation, '#invite' do
-  it 'calls find_or_create_by_event_id_and_invitee_id_and_invitee_type ' do
-    user = create(:user)
-    event = create(:event)
-    Invitation.stubs(:find_or_create_by_event_id_and_invitee_id_and_invitee_type)
-
-    Invitation.invite(event, user)
-
-    Invitation.should have_received(
-      :find_or_create_by_event_id_and_invitee_id_and_invitee_type).
-        with(event.id, user.id, user.class.name)
   end
 end
 
@@ -134,25 +121,14 @@ end
 describe Invitation do
   let (:user) { create(:user) }
   let (:event) { create(:event) }
+  let (:invitation) { build(:invitation) }
   let (:yammer_user) { create(:user) }
   let (:group) { create(:group) }
 
-  it 'returns an invitation if the user exists' do
-    lambda{
-      Invitation.invite(event, user)
-    }.should change(Invitation,:count).by(1)
-  end
-
-  it 'does not create a new invitation if one exists for the event and user' do
-    original_invitation = Invitation.invite(event, user)
-    repeated_invitation = Invitation.invite(event, user)
-    repeated_invitation.should == original_invitation
-  end
-
   context "given a yammer user_id and an email" do
-    it "will create an invitation for the yammer user is possible" do
-
-      invitation = Invitation.invite_from_params(event, {yammer_user_id: yammer_user.yammer_user_id})
+    it "will create an invitation for the yammer user if possible" do
+      invitation.build_invitee( {yammer_user_id: yammer_user.yammer_user_id})
+      invitation.save
 
       yammer_user.invitations.should include(invitation)
     end
@@ -161,8 +137,8 @@ describe Invitation do
       invited_yammer_user_id = 'LIBu6'
       User.find_by_yammer_user_id(invited_yammer_user_id).should be_nil
 
-      invitation =
-        Invitation.invite_from_params(event, {yammer_user_id: invited_yammer_user_id})
+      invitation.build_invitee({yammer_user_id: invited_yammer_user_id})
+      invitation.save
 
       user = User.find_by_yammer_user_id(invited_yammer_user_id)
       user.should_not be_nil
@@ -172,13 +148,15 @@ describe Invitation do
 
   context "given a yammer group_id" do
     it "will create an invitation for an existing yammer group" do
-      invitation = Invitation.invite_from_params(event, yammer_group_id: group.yammer_group_id)
+      invitation.build_invitee(yammer_group_id: group.yammer_group_id)
+      invitation.save
+
       group.invitations.should include(invitation)
     end
 
     it "will create a group and attach an invitation to it if the group does not already exist" do
       yammer_group_name = 'Group Name'
-      invitation = Invitation.invite_from_params(event, yammer_group_id: 'yammer-group-id', name_or_email: yammer_group_name)
+      invitation.build_invitee(yammer_group_id: 'yammer-group-id', name_or_email: yammer_group_name)
       Group.count.should == 1
       Group.first.name.should == yammer_group_name
     end
@@ -187,14 +165,14 @@ describe Invitation do
   context "given a guest email with no current yammer user" do
     it 'it creates a guest' do
       lambda{
-        invitation = Invitation.invite_from_params(event, name_or_email: 'this_email_does_not_exist@example.com')
+        invitation.build_invitee(name_or_email: 'this_email_does_not_exist@example.com')
       }.should change(Guest,:count).by(1)
     end
 
     it 'will not create a new guest if one exists' do
       guest = create(:guest)
       lambda{
-        invitation = Invitation.invite_from_params(event, name_or_email:guest.email)
+        invitation.build_invitee(event, name_or_email:guest.email)
       }.should_not change(Guest,:count)
     end
   end
@@ -202,13 +180,14 @@ describe Invitation do
   context "given a yammer user id" do
     it "creates an invitation is a user is found" do
       user = create(:user)
-      invitation = Invitation.invite_from_params(event, yammer_user_id: user.yammer_user_id)
+      invitation.build_invitee(yammer_user_id: user.yammer_user_id)
+      invitation.save
       user.invitations.should include(invitation)
     end
 
     it "will create a guest if the yammer_user_id is blank" do
       lambda{
-        Invitation.invite_from_params(event, yammer_user_id: '', name_or_email: 'test@example.com')
+        invitation.build_invitee(yammer_user_id: '', name_or_email: 'test@example.com')
       }.should change(Guest,:count).by(1)
     end
   end
@@ -216,7 +195,7 @@ describe Invitation do
   context "with no yammer_user_id and no email" do
     it "should not create an invitation" do
       lambda{ 
-        Invitation.invite_from_params(event, yammer_user_id: '', name_or_email: '')
+        invitation.build_invitee(yammer_user_id: '', name_or_email: '')
       }.should_not change(Invitation,:count)
     end
   end

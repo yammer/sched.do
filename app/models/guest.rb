@@ -12,6 +12,14 @@ class Guest < ActiveRecord::Base
 
   after_initialize :set_should_validate_name
 
+  def self.create_without_name_validation(email)
+    Guest.new.tap do |guest|
+      guest.email = email
+      guest.should_validate_name = false
+      guest.save
+    end
+  end
+
 
   def able_to_edit?(event)
     false
