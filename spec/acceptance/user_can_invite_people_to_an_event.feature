@@ -5,6 +5,11 @@ Feature: User can invite people to an event
     When I invite myself
     Then I should see "You can not invite yourself"
 
+  Scenario: User invites an invalid user
+    Given I sign in and create an event named "Clown party"
+    When I invite "Unknown User" to "Clown party"
+    Then I should see "Invitee is invalid"
+
   Scenario: User invites a guest
     Given I sign in and create an event named "Clown party"
     When I invite "batman@example.com" to "Clown party"
