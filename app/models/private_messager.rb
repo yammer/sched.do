@@ -32,7 +32,7 @@ class PrivateMessager
   end
 
   def post_to_yammer(message)
-    RestClient.post messages_endpoint + "?" +
+    RestClient.delay.post messages_endpoint + "?" +
       message.merge(access_token: @event_owner.access_token).
       to_query, nil
   end
