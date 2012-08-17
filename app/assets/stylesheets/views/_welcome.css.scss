@@ -1,12 +1,50 @@
 body.welcome {
   font-smoothing:subpixel-antialiased;
 
+  div.learn-more-wrapper {
+    bottom: 0px;
+    left: 0px;
+    padding: 0% 10%;
+    position: fixed;
+    right: 0px;
+    text-align: right;
+
+    a.learn-more-fixed {
+      background: lighten(#F7E98D, 6%);
+      border: 1px solid lighten(#d0ad56, 10%);
+      border-bottom: none;
+      @include border-radius(4px 4px 0px 0px);
+      color: #d0ad56;
+      @include inline-block;
+      max-width: 140px;
+      padding: 12px 24px 14px;
+      text-align: center;
+      @include transition(opacity 0.2s linear);
+
+      &.fade-out {
+        opacity: 0;
+      }
+
+      &:hover {
+        background: lighten(#F7E98D, 6%);
+        @include background-image(linear-gradient(lighten(#F9EFAF, 2%), lighten(#F7E98D, 2%)));
+        text-shadow: 0 1px rgba(255,255,255, 0.8);
+      }
+
+      &:active {
+        background: darken(#F7E98D, 3%);
+        @include background-image(linear-gradient(#F9EFAF, #F7E98D));
+        text-shadow: 0 1px rgba(255,255,255, 0.8);
+      }
+    }
+  }
+
   div.welcome {
     background-color: $bg-color;
     @include background-image(linear-gradient(#fff, darken($bg-color, 2%)));
     border-bottom: 1px solid darken($bg-color, 20%);
     @include box-shadow(inset 0 -1px 0px #fff);
-    padding: 8% 10% 10%;
+    padding: 8% 10% 6%;
 
     div.logo {
       @include fill-parent();
