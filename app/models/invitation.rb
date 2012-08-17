@@ -20,11 +20,7 @@ class Invitation < ActiveRecord::Base
   after_create :send_notification, unless: :skip_notification
 
   def self.invite_without_notification(event, invitee)
-    create(
-        event: event,
-        invitee: invitee,
-        skip_notification: true
-      )
+    create(event: event, invitee: invitee, skip_notification: true)
   end
 
   def build_invitee(params, options={})
