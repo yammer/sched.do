@@ -43,6 +43,7 @@ class Invitation < ActiveRecord::Base
   def sender
     event.user
   end
+
   def yammer_group_id
     invitee.try(:yammer_group_id)
   end
