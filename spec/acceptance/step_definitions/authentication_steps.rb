@@ -13,6 +13,11 @@ step 'I sign in as a different user' do
   sign_in
 end
 
+step 'I deny access to Yammer' do
+  mock_deny_yammer_oauth
+  sign_in
+end
+
 step 'I should be redirected to the new event page' do
   page.should have_content "Schedule an Event"
 end

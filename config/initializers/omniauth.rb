@@ -1,5 +1,6 @@
 require Rails.root.join('lib', 'yammer-strategy')
 require Rails.root.join('lib', 'yammer-staging-strategy')
+OmniAuth.config.on_failure = SessionsController.action(:oauth_failure)
 
 Rails.application.config.middleware.use OmniAuth::Builder do
   provider :yammer, ENV['CONSUMER_KEY'], ENV['CONSUMER_SECRET']

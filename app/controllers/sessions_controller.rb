@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-  skip_before_filter :require_yammer_login, only: [:create, :destroy]
+  skip_before_filter :require_yammer_login, only: [:create, :destroy, :oauth_failure]
 
   def create
     user = find_or_create_with_auth
@@ -15,6 +15,11 @@ class SessionsController < ApplicationController
     log_out_guest
     cookies.signed[:yammer_user_id] = nil
     redirect_to root_path
+  end
+
+  def oauth_failure
+    flash[:error] = "You denied access to Yammer"
+    redirect_to request.env["omniauth.origin"] || root_url
   end
 
   private

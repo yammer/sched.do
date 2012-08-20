@@ -26,7 +26,7 @@ end
 
 module AuthenticationHelpers
   def mock_yammer_oauth
-    OmniAuth.config.mock_auth[:yammer].merge!({
+    OmniAuth.config.mock_auth[:yammer] = {
       uid: generate(:yammer_uid),
       info: {
         access_token: generate(:yammer_token),
@@ -38,7 +38,11 @@ module AuthenticationHelpers
         yammer_profile_url: generate(:yammer_profile_url)
       },
         extra: generate(:extra)
-    })
+    }
+  end
+
+  def mock_deny_yammer_oauth
+    OmniAuth.config.mock_auth[:yammer] = :invalid_credentials
   end
 
   def named_fake_yammer(yammer_name)
