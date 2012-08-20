@@ -1,5 +1,5 @@
 $("input[data-role='invitation_name']").autocomplete({
-  minLength: 3,
+  minLength: 1,
   appendTo: '.invitation-autocomplete-suggestions',
   select: function(event, ui) {
     var id;
@@ -20,7 +20,18 @@ $("input[data-role='invitation_name']").autocomplete({
     YammerApi.setAccessToken(access_token);
     YammerApi.autocomplete.get(term, response);
   }
-});
+})
+.data( "autocomplete" )._renderItem = function( ul, item ) {
+  return $( "<li></li>" )
+    .data( "item.autocomplete", item )
+    .append(
+      "<a>" +
+      "<img src='" + item.photo + "'>"
+      + item.label +
+      "</a>"
+    )
+    .appendTo( ul );
+};
 
 function clearAllNearbyDataRoles(target){
   fillInClosestFieldWithDataRole('', target, "yammer_user_id");

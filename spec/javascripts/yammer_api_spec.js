@@ -40,9 +40,9 @@ describe('YammerApi.autocomplete', function(){
       spyOn(YammerApi.autocomplete, 'successCallback').andReturn(autocompleteCallback);
       YammerApi.autocomplete.get(term);
       expect(yam.request).toHaveBeenCalledWith({
-        url: '/api/v1/autocomplete.json',
+        url: '/api/v1/autocomplete/ranked',
         method: 'GET',
-        data: 'prefix=' + term,
+        data: {'prefix':term,'models' :'user:3,group:2'},
         success: autocompleteCallback
       });
     });
@@ -51,24 +51,49 @@ describe('YammerApi.autocomplete', function(){
   describe('.successCallback', function(){
     it('returns a function that passes user info to a provided function', function(){
       var autocompleteCallback = jasmine.createSpy('autocompleteCallback');
-      var yammerData = {"users": [
-        {"id":"1",
-          "full_name":"Henry Smith",
-          "messages":"14",
-          "followers":"5",
-          "name":"henry"},
-          {"id":"2",
-            "full_name":"Bob Jones",
-            "messages":"14",
-            "followers":"5",
-            "name":"henry"}
-      ]};
+      var yammerData = {
+        'user': [
+          {
+            'id':'1',
+            'full_name':'Henry Smith',
+            'photo':'https://c64.assets-yammer.com/images/no_photo_small.gif',
+            'messages':'14',
+            'followers':'5',
+            'ranking':1.0,
+            'name':'henry'
+          },
+          {
+            'id':'2',
+            'full_name':'Bob Jones',
+            'messages':'14',
+            'followers':'5',
+            'photo':'https://c64.assets-yammer.com/images/no_photo_small.gif',
+            'ranking':2.0,
+            'name':'bob'
+          }
+        ]
+      };
 
       var result = YammerApi.autocomplete.successCallback(autocompleteCallback)(yammerData);
-      expect(autocompleteCallback).toHaveBeenCalledWith([
-                                                        { label: 'Henry Smith', value: 'Henry Smith', yammerUserId: '1' },
-                                                        { label: 'Bob Jones', value: 'Bob Jones', yammerUserId: '2' }
-      ]);
+      expect(autocompleteCallback)
+        .toHaveBeenCalledWith(
+          [
+            {
+              label: 'Bob Jones',
+              photo: "https://c64.assets-yammer.com/images/no_photo_small.gif",
+              value: 'Bob Jones',
+              yammerUserId: '2' ,
+              ranking: 2.0
+            },
+            {
+              label: 'Henry Smith',
+              photo: "https://c64.assets-yammer.com/images/no_photo_small.gif",
+              value: 'Henry Smith',
+              yammerUserId: '1',
+              ranking: 1.0
+            },
+          ]
+        );
     });
   });
 });
