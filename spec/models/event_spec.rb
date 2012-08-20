@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe Event do
+  include DelayedJobSpecHelper
+
   it { should belong_to(:user) }
   it { should have_many(:suggestions) }
   it { should have_many(:votes).through(:suggestions) }
@@ -38,6 +40,7 @@ describe Event do
     FakeYammer.activity_endpoint_hits.should == 0
 
     event = create(:event)
+    work_off_delayed_jobs
 
     FakeYammer.activity_endpoint_hits.should == 1
   end

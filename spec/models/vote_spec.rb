@@ -15,11 +15,14 @@ describe Vote, '#event' do
 end
 
 describe Vote, '#create' do
+  include DelayedJobSpecHelper
+
   it 'sends confirmation email to user' do
     mailer = stub('mailer', deliver: true)
     UserMailer.stubs(vote_confirmation: mailer)
 
     vote = create(:vote)
+    work_off_delayed_jobs
 
     UserMailer.should have_received(:vote_confirmation).with(vote)
     mailer.should have_received(:deliver).once
@@ -29,6 +32,7 @@ describe Vote, '#create' do
     FakeYammer.activity_endpoint_hits.should == 0
 
     vote = create(:vote)
+    work_off_delayed_jobs
 
     FakeYammer.activity_endpoint_hits.should == 2
   end

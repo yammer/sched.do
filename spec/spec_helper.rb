@@ -16,7 +16,6 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 Capybara.javascript_driver = :webkit
 
 DatabaseCleaner.strategy = :truncation
-Delayed::Worker.delay_jobs = false
 
 RSpec.configure do |config|
   config.mock_with :mocha

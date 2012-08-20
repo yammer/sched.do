@@ -188,6 +188,8 @@ describe User, '#build_user_vote' do
 end
 
 describe User, '#create_yammer_activity' do
+  include DelayedJobSpecHelper
+
   it 'creates a Yammer activity story' do
     FakeYammer.activity_endpoint_hits.should == 0
     user = build_stubbed(:user)
@@ -195,21 +197,24 @@ describe User, '#create_yammer_activity' do
     event.generate_uuid
 
     user.create_yammer_activity('update', event)
+    work_off_delayed_jobs
 
     FakeYammer.activity_endpoint_hits.should == 1
   end
 end
 
 describe User, '#notify' do
+  include DelayedJobSpecHelper
+
   it 'if the user is out-network, it sends an email notification' do
-    invitee = build_stubbed(:out_network_user)
-    invitation = build_stubbed(:invitation_with_user,
-                               invitee: invitee)
+    invitee = create(:out_network_user)
+    invitation = build(:invitation_with_user, invitee: invitee)
     mailer = stub('mailer', deliver: true)
     UserMailer.stubs(invitation: mailer)
     organizer = invitation.sender
 
     invitee.notify(invitation)
+    work_off_delayed_jobs
 
     organizer.in_network?(invitee).should be_false
     UserMailer.should have_received(:invitation).with(invitee, invitation.event)
@@ -223,6 +228,7 @@ describe User, '#notify' do
     organizer = invitation.sender
 
     invitee.notify(invitation)
+    work_off_delayed_jobs
 
     organizer.in_network?(invitee).should be_true
     FakeYammer.messages_endpoint_hits.should == 1
