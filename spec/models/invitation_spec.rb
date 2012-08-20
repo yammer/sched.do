@@ -10,7 +10,6 @@ describe Invitation do
   it { should allow_mass_assignment_of(:invitee) }
 
   it { should validate_presence_of(:event_id) }
-  it { should validate_presence_of(:invitee_id) }
   it { should validate_presence_of(:invitee_id).with_message(/is invalid/) }
   it { should validate_presence_of(:invitee_type) }
 
