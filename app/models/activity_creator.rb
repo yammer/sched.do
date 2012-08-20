@@ -38,7 +38,7 @@ class ActivityCreator
   end
 
   def post_activity_json
-    RestClient.post rest_client_url,
+    RestClient.delay.post rest_client_url,
     generate_json,
     :content_type => :json,
     :accept => :json
