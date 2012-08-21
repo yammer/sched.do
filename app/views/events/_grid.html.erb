@@ -39,28 +39,26 @@
         <% end %>
 
         <% @event.invitees.each do |invitee| %>
-          <% if current_user == invitee %>
-            <tr class="votable">
-          <% else %>
-            <tr>
-          <% end %>
-          <% @suggestions.each do |suggestion| %>
-            <% if display_invitee_in_grid?(@event, invitee)  %>
-              <% if current_user == invitee %>
-                <%= render 'events/vote', suggestion: suggestion,
-                  vote_for_suggestion: current_user.vote_for_suggestion(suggestion) %>
-              <% else %>
-                <% if invitee.voted_for?(suggestion) %>
-                  <td class="voted">
-                    <%= image_tag('checkmark.png') %>
-                  </td>
+          <% if display_invitee_in_grid?(@event, invitee) %>
+            <tr class="<%= 'votable' if  current_user == invitee %>">
+            <% @suggestions.each do |suggestion| %>
+              <% if display_invitee_in_grid?(@event, invitee)  %>
+                <% if current_user == invitee %>
+                  <%= render 'events/vote', suggestion: suggestion,
+                    vote_for_suggestion: current_user.vote_for_suggestion(suggestion) %>
                 <% else %>
-                  <td></td>
+                  <% if invitee.voted_for?(suggestion) %>
+                    <td class="voted">
+                      <%= image_tag('checkmark.png') %>
+                    </td>
+                  <% else %>
+                    <td></td>
+                  <% end %>
                 <% end %>
               <% end %>
             <% end %>
+            </tr>
           <% end %>
-          </tr>
         <% end %>
       </tbody>
       <tfoot>
