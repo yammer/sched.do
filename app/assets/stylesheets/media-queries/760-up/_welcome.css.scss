@@ -45,6 +45,18 @@ body.welcome {
         text-align: center;
         @include transition(opacity 0.2s linear);
         @include box-shadow(0 -1px 5px 0px rgba($orange, 0.3));
+
+        span.arrow {
+          border: 5px solid transparent;
+          border-top-color: #fff;
+          @include box-shadow(0 -1px 0 0 darken($orange, 40%));
+          @include inline-block;
+          height: 0px;
+          margin-left: 3px;
+          position: relative;
+          top: 3px;
+          width: 0px;
+        }
       }
     }
   }
