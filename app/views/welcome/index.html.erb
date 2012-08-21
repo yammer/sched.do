@@ -2,14 +2,19 @@
     <h1><img src="/assets/welcome-page/welcome-logo.svg" alt="Sched.do" /></h1>
     <div class="post-it">
       <h2>Bringing busy people together.</h2>
-      <a href="#steps" class="learn-more">Learn More</a>
+      <a href="#steps" class="learn-more-postit">Lean More</a>
     </div>
   </div>
 
   <div class="sign-in">
     <%= link_to "Sign in with Yammer", "/auth/yammer", class: "sign-in",  id: "sign-in" %>
   </div>
-  <p style="text-align: center; padding-top: 20px; max-width: 350px; margin: 0 auto; font-style: italic; color: #999">To connect your Yammer Staging account, scroll to the bottom right side of the page and click the light gray Staging link</p>
+  <!--
+     -<p style="text-align: center; padding-top: 20px; max-width: 350px; margin: 0 auto; font-style: italic; color: #999">To connect your Yammer Staging account, scroll to the bottom right side of the page and click the light gray Staging link</p>
+     -->
+  <div class="learn-more-wrapper">
+    <a href="#steps" class="learn-more-fixed">Learn More</a>
+  </div>
 </div>
 
 <section id="steps" class="steps">
@@ -53,8 +58,4 @@
   <footer>
     <%= link_to "staging", "/auth/yammer_staging" %>
   </footer>
-</div>
-
-<div class="learn-more-wrapper">
-  <a href="#steps" class="learn-more-fixed">Learn More</a>
 </div>

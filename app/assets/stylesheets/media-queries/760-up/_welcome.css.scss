@@ -4,11 +4,47 @@ body.welcome {
 
     div.logo {
       div.post-it {
-        padding: 20px 20px 50px;
+        padding: 30px 20px 40px;
 
         h2 {
           font-size: 1.5em;
         }
+
+        a.learn-more-postit {
+          display: none;
+        }
+      }
+    }
+
+    div.learn-more-wrapper {
+      display: block;
+      bottom: 0px;
+      left: 8%;
+      position: fixed;
+      right: 8%;
+      text-align: right;
+
+      &.absolute {
+        position: absolute;
+      }
+
+      &.fade-out {
+        opacity: 0;
+      }
+
+      a.learn-more-fixed {
+        @include button();
+        @include button-color($orange);
+        border-bottom: none;
+        @include border-radius(4px 4px 0px 0px);
+        color: #fff;
+        @include inline-block;
+        max-width: 140px;
+        padding: 12px 24px 14px;
+        text-shadow: 0 -1px 0 darken($orange, 40%);
+        text-align: center;
+        @include transition(opacity 0.2s linear);
+        @include box-shadow(0 -1px 5px 0px rgba($orange, 0.3));
       }
     }
   }

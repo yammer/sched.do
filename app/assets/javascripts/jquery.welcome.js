@@ -8,10 +8,10 @@ $(document).ready(function() {
   // Shows a step after the user scrolls past the previous one
   steps.waypoint(function(event, direction) {
       if (direction === 'down' && $(this).hasClass('first-step')) {
-        $('a.learn-more-fixed').addClass('fade-out');
+        $('div.learn-more-wrapper').addClass('absolute');
       }
       else if ($(this).hasClass('first-step')) {
-        $('a.learn-more-fixed').removeClass('fade-out');
+        $('div.learn-more-wrapper').removeClass('absolute');
       }
 
     $(this).css('visibility', 'visible').addClass('animated');
@@ -24,7 +24,14 @@ $(document).ready(function() {
       $('html, body').animate({
           scrollTop: $( $(this).attr('href') ).offset().top
       }, 500);
-      $(this).addClass('fade-out');
+      $('div.learn-more-wrapper').addClass('absolute');
+      return false;
+  });
+
+  $('a.learn-more-postit').click(function(){
+      $('html, body').animate({
+          scrollTop: $( $(this).attr('href') ).offset().top
+      }, 500);
       return false;
   });
 });
