@@ -2,7 +2,7 @@ class UserMailer < ActionMailer::Base
   default from: '"Sched.do" <no-reply@sched.do>'
 
   def vote_confirmation(vote)
-    @user = vote.votable.user
+    @user = vote.voter
     @event = vote.suggestion.event
     mail(to: @user.email,
       subject: "#{@user.name}, thanks for voting with Sched.do")
@@ -20,7 +20,7 @@ class UserMailer < ActionMailer::Base
   class Preview < MailView
     def vote_confirmation
       vote = Vote.first
-      @user = vote.votable.user
+      @user = vote.voter
       @event = vote.suggestion.event
       UserMailer.vote_confirmation(vote)
     end

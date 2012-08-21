@@ -1,3 +1,9 @@
+step 'I vote for :suggestion_description again' do |suggestion_description|
+  suggestion = Suggestion.find_by_primary!(suggestion_description)
+  page.driver.post('/votes', vote: {suggestion_id: suggestion.id })
+  visit(page.driver.response.header['Location'])
+end
+
 step 'I vote for :suggestion_description' do |suggestion_description|
   vote_for(suggestion_description)
 end

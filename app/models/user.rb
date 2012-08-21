@@ -1,14 +1,11 @@
 class User < ActiveRecord::Base
-  USERS_ENDPOINT = 'https://www.yammer.com/api/v1/users'
-
   serialize :extra, JSON
   attr_accessible :access_token, :encrypted_access_token, :name,
     :yammer_user_id, :yammer_staging
   attr_encrypted :access_token, key: ENV['ACCESS_TOKEN_ENCRYPTION_KEY']
 
   has_many :events
-  has_many :user_votes
-  has_many :votes, through: :user_votes
+  has_many :votes, as: :voter
   has_many :invitations, as: :invitee
 
   validates :name, presence: true
@@ -36,10 +33,6 @@ class User < ActiveRecord::Base
 
   def able_to_edit?(event)
     event.user == self
-  end
-
-  def build_user_vote
-    user_votes.new
   end
 
   def create_yammer_activity(action, event)

@@ -2,8 +2,6 @@ require 'spec_helper'
 
 describe Guest, 'validations' do
   it { should validate_presence_of(:email) }
-  it { should have_many(:guest_votes) }
-  it { should have_many(:votes).through(:guest_votes) }
   it { should have_many(:invitations) }
 
   it "requires a valid e-mail address" do
@@ -59,8 +57,7 @@ end
 describe Guest, '#votes' do
   it "returns the guest's votes if there are any" do
     guest = create(:guest)
-    vote = build(:vote, votable: nil)
-    guest_vote = create(:guest_vote, user: guest, vote: vote)
+    vote = create(:vote, voter: guest)
     guest.votes.should == [vote]
   end
 
@@ -74,8 +71,7 @@ describe Guest, '#vote_for_suggestion' do
   it "returns the guest's vote for the given suggestion if the guest has one" do
     guest = create(:guest)
     suggestion = create(:suggestion)
-    vote = build(:vote, suggestion: suggestion, votable: nil)
-    guest_vote = create(:guest_vote, user: guest, vote: vote)
+    vote = create(:vote, suggestion: suggestion, voter: guest)
     guest.vote_for_suggestion(suggestion).should == vote
   end
 
@@ -86,13 +82,6 @@ describe Guest, '#vote_for_suggestion' do
   end
 end
 
-describe Guest, '#build_user_vote' do
-  it 'return a new GuestVote instance with the correct guest' do
-    guest = create(:guest)
-    guest_vote = guest.build_user_vote
-    guest_vote.user.should == guest
-  end
-end
 
 describe Guest, '#notify' do
   include DelayedJobSpecHelper

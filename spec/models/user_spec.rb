@@ -2,8 +2,6 @@ require 'spec_helper'
 
 describe User, 'validations' do
   it { should have_many(:events) }
-  it { should have_many(:user_votes) }
-  it { should have_many(:votes).through(:user_votes) }
   it { should have_many(:invitations) }
 
   it { should validate_presence_of(:name) }
@@ -103,10 +101,23 @@ describe User, '#image' do
   end
 end
 
+describe User, '#votes' do
+  it "returns the user's votes if there are any" do
+    user = create(:user)
+    vote = create(:vote, voter: user)
+    user.votes.should == [vote]
+  end
+
+  it "returns an empty array if the user has no votes" do
+    user = build(:user)
+    user.votes.should == []
+  end
+end
+
 describe User, '#vote_for_suggestion' do
   it "returns the user's vote for the given suggestion if the user has one" do
     user = create(:user)
-    vote = create(:vote_by_user, user: user)
+    vote = create(:vote, voter: user)
     user.vote_for_suggestion(vote.suggestion).should == vote
   end
 
@@ -120,7 +131,7 @@ end
 describe User, '#voted_for?' do
   it "returns true if the user voted for the suggestion" do
     user = create(:user)
-    vote = create(:vote_by_user, user: user)
+    vote = create(:vote, voter: user)
     user.voted_for?(vote.suggestion).should be_true
   end
 
@@ -175,15 +186,6 @@ describe User, '#yammer_endpoint' do
   it 'returns the Yammer base url if the user is a Yammer user' do
     user = create(:user)
     user.yammer_endpoint.should == "https://www.yammer.com/"
-  end
-end
-
-
-describe User, '#build_user_vote' do
-  it 'returns a new UserVote instance with the correct user_id' do
-    user = create(:user)
-    user_vote = user.build_user_vote
-    user_vote.user_id.should == user.id
   end
 end
 

@@ -7,6 +7,13 @@ Feature: Users can vote on suggestions
     When I vote for "lunch"
     Then I should see that "lunch" has 1 vote
 
+  Scenario: User votes twice for a single suggestion
+    Given I am signed in
+    And I created an event named "Clown party" with a suggestion of "lunch"
+    When I vote for "lunch"
+    And I vote for "lunch" again
+    Then I should see "Sorry, you cannot duplicate votes"
+
   Scenario: User can undo their vote for a suggestion
     Given I am signed in
     And I created an event named "Clown party" with a suggestion of "lunch"

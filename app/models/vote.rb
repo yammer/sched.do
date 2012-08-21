@@ -2,10 +2,15 @@ class Vote < ActiveRecord::Base
   attr_accessible :suggestion_id
 
   belongs_to :suggestion
-  belongs_to :votable, polymorphic: true, dependent: :destroy
+  belongs_to :voter, polymorphic: true
 
   validates :suggestion_id, presence: true
-  validates :votable_id, presence: true
+  validates :voter_id, presence: true
+  validates :voter_type, presence: true
+  validates :suggestion_id, uniqueness: {
+    scope: [:voter_type, :voter_id]
+  }
+
 
   after_create :send_confirmation_email
   after_create :create_yammer_activity_for_new_vote
@@ -18,14 +23,10 @@ class Vote < ActiveRecord::Base
     suggestion.event
   end
 
-  def user
-    votable.user
-  end
-
   private
 
   def create_yammer_activity_for_new_vote
-    user.create_yammer_activity('vote', event)
+    voter.create_yammer_activity('vote', event)
   end
 
   def send_confirmation_email

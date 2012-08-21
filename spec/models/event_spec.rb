@@ -82,7 +82,7 @@ describe Event, '#user_voted?' do
     event = create(:event)
     user = event.user
     suggestion = create(:suggestion, event: event)
-    vote = create(:vote_by_user, user: user, suggestion: suggestion)
+    vote = create(:vote, voter: user, suggestion: suggestion)
 
     event.user_voted?(user).should be_true
   end
@@ -116,7 +116,7 @@ describe Event, '#user_votes' do
     event = create(:event)
     user = event.user
     suggestion = create(:suggestion, event: event)
-    vote = create(:vote_by_user, suggestion: suggestion)
+    vote = create(:vote, suggestion: suggestion)
 
     event.user_votes(user).should_not include(vote)
   end
@@ -125,7 +125,7 @@ describe Event, '#user_votes' do
     event = create(:event)
     user = event.user
     suggestion = create(:suggestion, event: event)
-    vote = create(:vote_by_user, user: user, suggestion: suggestion)
+    vote = create(:vote, voter: user, suggestion: suggestion)
 
     event.user_votes(user).should include(vote)
   end

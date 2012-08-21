@@ -4,9 +4,12 @@ class VotesController < ApplicationController
 
   def create
     vote = Vote.new(params[:vote])
-    user_vote = current_user.build_user_vote
-    user_vote.vote = vote
-    user_vote.save
+    vote.voter = current_user
+
+    if !vote.save
+      flash[:error] = "Sorry, you cannot duplicate votes"
+    end
+
     redirect_to vote.event
   end
 

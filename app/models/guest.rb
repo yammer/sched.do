@@ -2,9 +2,8 @@ class Guest < ActiveRecord::Base
   attr_accessible :name, :email
   attr_accessor :should_validate_name
 
-  has_many :guest_votes
-  has_many :votes, through: :guest_votes
   has_many :invitations, as: :invitee
+  has_many :votes, as: :voter
 
   validates :email, presence: true
   validates :email, format: %r{^[a-z0-9!#\$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#\$%&'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$}i
@@ -23,10 +22,6 @@ class Guest < ActiveRecord::Base
 
   def able_to_edit?(event)
     false
-  end
-
-  def build_user_vote
-    guest_votes.new
   end
 
   def create_yammer_activity(action, event)
@@ -50,7 +45,7 @@ class Guest < ActiveRecord::Base
   end
 
   def vote_for_suggestion(suggestion)
-    votes.find_by_suggestion_id(suggestion.id)
+    votes.where(suggestion_id: suggestion.id).first
   end
 
   def voted_for?(suggestion)

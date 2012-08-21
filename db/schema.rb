@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120813163729) do
+ActiveRecord::Schema.define(:version => 20120821234552) do
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
@@ -114,12 +114,12 @@ ActiveRecord::Schema.define(:version => 20120813163729) do
     t.integer  "suggestion_id", :null => false
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
-    t.integer  "votable_id",    :null => false
-    t.string   "votable_type",  :null => false
+    t.integer  "voter_id",      :null => false
+    t.string   "voter_type",    :null => false
   end
 
   add_index "votes", ["suggestion_id"], :name => "index_votes_on_suggestion_id"
-  add_index "votes", ["votable_id"], :name => "index_votes_on_votable_id"
-  add_index "votes", ["votable_type"], :name => "index_votes_on_votable_type"
+  add_index "votes", ["voter_id"], :name => "index_votes_on_votable_id"
+  add_index "votes", ["voter_type"], :name => "index_votes_on_votable_type"
 
 end
