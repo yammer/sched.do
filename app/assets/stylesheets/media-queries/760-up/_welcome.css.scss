@@ -20,16 +20,12 @@ body.welcome {
       display: block;
       bottom: 0px;
       left: 8%;
-      position: fixed;
+      position: absolute;
       right: 8%;
       text-align: right;
 
-      &.absolute {
-        position: absolute;
-      }
-
-      &.fade-out {
-        opacity: 0;
+      &.fixed {
+        position: fixed;
       }
 
       a.learn-more-fixed {
