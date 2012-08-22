@@ -8,6 +8,15 @@ describe User, 'validations' do
   it { should validate_presence_of(:yammer_user_id) }
   it { should validate_presence_of(:encrypted_access_token) }
 
+  it "requires a valid e-mail address" do
+    should allow_value("person@example.com").for(:email)
+    should allow_value("person-awesome@example.com").for(:email)
+    should allow_value("person-awesome@example.co.ul.com").for(:email)
+    should_not allow_value("person@@example.com").for(:email)
+    should_not allow_value("person").for(:email)
+    should_not allow_value("person @person.com").for(:email)
+  end
+
   context 'encrypted_access_token' do
     it 'encrypts access_token before validation on create' do
       access_token = 'abc123'
@@ -144,7 +153,9 @@ end
 
 describe User, '#guest?' do
   it 'always returns false' do
-    build(:user).should_not be_guest
+    user = build_stubbed(:user)
+
+    user.guest?.should be_false
   end
 end
 

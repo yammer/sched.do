@@ -1,5 +1,12 @@
+# SimpleCov calculates test coverage on rake. Output at 'coverage/index.html'
 require 'simplecov'
-SimpleCov.start
+
+# Start SimpleCov and exclude directories
+SimpleCov.start do
+  add_filter "/support/"
+  add_filter "/initializers/"
+  add_filter "/lib/"
+end
 
 ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)

@@ -7,6 +7,10 @@ step 'I enter my name and email' do
   fill_in_guest_info
 end
 
+step 'I enter my name and an invalid email' do
+  fill_in_guest_info(guest_email: 'bears@')
+end
+
 step 'I should receive a vote confirmation email for :event_name' do |event_name|
   event = Event.find_by_name!(event_name)
   email_body(last_email_sent).should =~ /#{event_url(event)}/

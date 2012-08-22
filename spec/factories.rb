@@ -74,11 +74,8 @@ FactoryGirl.define do
     end
 
     factory :invitation_with_guest_without_name do
-      association :invitee, factory: :guest
+      association :invitee, factory: :guest, name: nil
       invitee_type 'Guest'
-      after :build do |invitation|
-        invitation.invitee.name = nil
-      end
     end
   end
 end

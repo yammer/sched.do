@@ -1,6 +1,6 @@
 class Invitation < ActiveRecord::Base
   attr_accessor :skip_notification, :invitee_params
-  attr_accessible :event, :invitee, 
+  attr_accessible :event, :invitee,
     :invitee_attributes, :event_id, :skip_notification
 
   belongs_to :event
@@ -56,12 +56,12 @@ class Invitation < ActiveRecord::Base
 
   def find_group
     Group.find_or_create_by_yammer_group_id(
-      yammer_group_id: invitee_params[:yammer_group_id], 
+      yammer_group_id: invitee_params[:yammer_group_id],
       name: invitee_params[:name_or_email])
   end
 
   def find_guest
-    Guest.find_by_email(invitee_params[:name_or_email]) || 
+    Guest.find_by_email(invitee_params[:name_or_email]) ||
       Guest.create_without_name_validation(invitee_params[:name_or_email])
   end
 

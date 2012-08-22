@@ -16,7 +16,6 @@ class UserMailer < ActionMailer::Base
       subject: "You have been invited to a Sched.do event!")
   end
 
-
   class Preview < MailView
     def vote_confirmation
       vote = Vote.first

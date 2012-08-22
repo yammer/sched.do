@@ -8,9 +8,10 @@ class User < ActiveRecord::Base
   has_many :votes, as: :voter
   has_many :invitations, as: :invitee
 
+  validates :email, email: true
+  validates :encrypted_access_token, presence: true
   validates :name, presence: true
   validates :yammer_user_id, presence: true
-  validates :encrypted_access_token, presence: true
 
   def self.create_with_auth(auth)
     create(yammer_user_id: auth[:yammer_user_id]).tap do |user|

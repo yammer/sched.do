@@ -15,14 +15,14 @@ describe Invitation do
 
   it 'should be valid if the event owner is not invited' do
     user = create(:user)
-    invitation = build(:invitation, invitee: user)
+    invitation = build_stubbed(:invitation, invitee: user)
 
     invitation.should be_valid
   end
 
   it 'should be invalid if the event owner is invited' do
     event = create(:event)
-    invitation = build(:invitation, event: event, invitee: event.user)
+    invitation = build_stubbed(:invitation, event: event, invitee: event.user)
 
     invitation.should be_invalid
   end
@@ -50,7 +50,6 @@ describe Invitation do
   it 'invite_without_notification should not notify the invitee' do
     user = create(:user)
     event = create(:event)
-
     user.stubs(:notify)
 
     Invitation.invite_without_notification(event, user)
@@ -61,58 +60,69 @@ end
 
 describe Invitation, '#name_or_email' do
   it 'returns a name if the invitee has one' do
-    invitation = build(:invitation_with_user)
+    invitation = build_stubbed(:invitation_with_user)
+
     invitation.name_or_email.should == invitation.invitee.name
   end
 
   it 'returns an email if the invitee has no name' do
-    invitation = build(:invitation_with_guest_without_name)
+    invitation = build_stubbed(:invitation_with_guest_without_name)
+
     invitation.name_or_email.should == invitation.invitee.email
+    invitation.invitee.name.should be_nil
   end
 
   it 'returns nil if there is no invitee' do
-    invitation = build(:invitation)
+    invitation = build_stubbed(:invitation)
+
     invitation.name_or_email.should == nil
   end
 end
 
 describe Invitation, '#sender' do
   it 'should tell you who created the invitations event' do
-    invitation = build(:invitation_with_user)
+    invitation = build_stubbed(:invitation_with_user)
+
     invitation.sender.should == invitation.event.user
   end
 end
 
 describe Invitation, '#yammer_group_id' do
   it 'should return the yammer_group_id if the invitee has one' do
-    invitation = build(:invitation_with_group)
+    invitation = build_stubbed(:invitation_with_group)
+
     invitation.yammer_group_id.should == invitation.invitee.yammer_group_id
   end
 
   it 'should return nil if the invitee has no yammer_group_id' do
-    invitation = build(:invitation_with_guest)
+    invitation = build_stubbed(:invitation_with_guest)
+
     invitation.yammer_group_id.should == nil
   end
 
   it 'should return nil if there is no invitee' do
-    invitation = build(:invitation)
+    invitation = build_stubbed(:invitation)
+
     invitation.yammer_group_id.should == nil
   end
 end
 
 describe Invitation, '#yammer_user_id' do
   it 'should return the yammer_user_id if the invitee has one' do
-    invitation = build(:invitation_with_user)
+    invitation = build_stubbed(:invitation_with_user)
+
     invitation.yammer_user_id.should == invitation.invitee.yammer_user_id
   end
 
   it 'should return nil if the invitee has no yammer_user_id' do
-    invitation = build(:invitation_with_guest)
+    invitation = build_stubbed(:invitation_with_guest)
+
     invitation.yammer_user_id.should == nil
   end
 
   it 'should return nil if there is no invitee' do
-    invitation = build(:invitation)
+    invitation = build_stubbed(:invitation)
+
     invitation.yammer_user_id.should == nil
   end
 end
@@ -126,7 +136,8 @@ describe Invitation do
 
   context "given a yammer user_id and an email" do
     it "will create an invitation for the yammer user if possible" do
-      invitation.build_invitee( {yammer_user_id: yammer_user.yammer_user_id})
+      invitation.build_invitee( { yammer_user_id: yammer_user.yammer_user_id } )
+
       invitation.save
 
       yammer_user.invitations.should include(invitation)
@@ -148,6 +159,7 @@ describe Invitation do
   context "given a yammer group_id" do
     it "will create an invitation for an existing yammer group" do
       invitation.build_invitee(yammer_group_id: group.yammer_group_id)
+
       invitation.save
 
       group.invitations.should include(invitation)
@@ -155,24 +167,32 @@ describe Invitation do
 
     it "will create a group and attach an invitation to it if the group does not already exist" do
       yammer_group_name = 'Group Name'
+
       invitation.build_invitee(yammer_group_id: 'yammer-group-id', name_or_email: yammer_group_name)
+
       Group.count.should == 1
       Group.first.name.should == yammer_group_name
     end
   end
 
   context "given a guest email with no current yammer user" do
-    it 'it creates a guest' do
-      lambda{
-        invitation.build_invitee(name_or_email: 'this_email_does_not_exist@example.com')
-      }.should change(Guest,:count).by(1)
+    it 'creates a guest' do
+      Guest.stubs(:create_without_name_validation)
+
+      invitation.build_invitee(name_or_email: 'george@example.com')
+
+      Guest.should have_received(:create_without_name_validation).
+        with('george@example.com')
     end
 
     it 'will not create a new guest if one exists' do
       guest = create(:guest)
-      lambda{
-        invitation.build_invitee(event, name_or_email:guest.email)
-      }.should_not change(Guest,:count)
+      Guest.stubs(:find_by_email)
+
+      invitation.build_invitee(name_or_email: guest.email)
+
+      Guest.should have_received(:find_by_email).
+        with(guest.email)
     end
   end
 
@@ -180,22 +200,33 @@ describe Invitation do
     it "creates an invitation is a user is found" do
       user = create(:user)
       invitation.build_invitee(yammer_user_id: user.yammer_user_id)
+
       invitation.save
+
       user.invitations.should include(invitation)
     end
 
     it "will create a guest if the yammer_user_id is blank" do
-      lambda{
-        invitation.build_invitee(yammer_user_id: '', name_or_email: 'test@example.com')
-      }.should change(Guest,:count).by(1)
+      Guest.stubs(:create_without_name_validation)
+
+      invitation.build_invitee(
+        yammer_user_id: '',
+        name_or_email: 'george@example.com'
+      )
+
+      Guest.should have_received(:create_without_name_validation).
+        with('george@example.com')
     end
   end
 
   context "with no yammer_user_id and no email" do
     it "should not create an invitation" do
-      lambda{ 
-        invitation.build_invitee(yammer_user_id: '', name_or_email: '')
-      }.should_not change(Invitation,:count)
+      Invitation.count.should == 0
+      invitation.build_invitee(yammer_user_id: '', name_or_email: '')
+
+      invitation.save
+
+      Invitation.count.should == 0
     end
   end
 end

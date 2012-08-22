@@ -6,7 +6,7 @@ class Guest < ActiveRecord::Base
   has_many :votes, as: :voter
 
   validates :email, presence: true
-  validates :email, format: %r{^[a-z0-9!#\$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#\$%&'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$}i
+  validates :email, email: true
   validates :name, presence: true, if: :should_validate_name
 
   after_initialize :set_should_validate_name

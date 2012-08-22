@@ -58,6 +58,69 @@ describe EventsController, '#edit' do
   end
 end
 
+describe EventsController, '#show' do
+  context 'with the user who created the event' do
+    it 'is successful' do
+      user = create(:user)
+      event = create(:event, user: user)
+      sign_in_as(user)
+
+      get :show, id: event.uuid
+
+      response.should be_success
+    end
+  end
+
+  context 'with a user who did not create the event' do
+    before do
+      user = create(:user)
+      event = create(:event, user: user)
+      sign_in_as(create(:user))
+      get :show, id: event.uuid
+    end
+
+    it 'shows the page' do
+      response.should be_success
+    end
+  end
+
+  context 'use an invalid uuid as the user who created the event' do
+    before do
+      user = create(:user)
+      event = create(:event, user: user)
+      fake_uuid = 'fakefake'
+      sign_in_as(user)
+      get :show, id: fake_uuid
+    end
+
+    it 'redirects you to the show page' do
+      response.should redirect_to(root_path)
+    end
+
+    it 'tells the user that they are unauthorized' do
+      should set_the_flash[:error].to(/not authorized/)
+    end
+  end
+
+  context 'use an invalid uuid as a user who did not create the event' do
+    before do
+      user = create(:user)
+      event = create(:event, user: user)
+      sign_in_as(create(:user))
+      fake_uuid = 'fakefake'
+      get :show, id: fake_uuid
+    end
+
+    it 'redirects you to the show page' do
+      response.should redirect_to(root_path)
+    end
+
+    it 'tells the user that they are unauthorized' do
+      should set_the_flash[:error].to(/not authorized/)
+    end
+  end
+end
+
 describe EventsController, '#update' do
   context 'with the user who created the event' do
     let!(:event) { create(:event) }
