@@ -50,9 +50,12 @@ end
 group :development, :test do
   gem 'dotenv'
   gem 'evergreen', require: 'evergreen/rails'
-  gem 'pry'
   gem 'rspec-rails', '~> 2.9.0'
   gem 'sham_rack'
+end
+
+group :development, :test, :tddium_ignore do
+  gem 'pry'
 end
 
 group :test do
