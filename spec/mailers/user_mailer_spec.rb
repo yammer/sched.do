@@ -16,12 +16,12 @@ describe UserMailer, 'vote_confirmation' do
 
     mail = UserMailer.vote_confirmation(vote)
 
-    mail.to.should == [vote.user.email]
+    mail.to.should == [vote.voter.email]
   end
 
   it 'sends the email with the correct subject' do
     vote = build_stubbed(:vote)
-    user_name = vote.user.name
+    user_name = vote.voter.name
 
     mail = UserMailer.vote_confirmation(vote)
 
@@ -30,7 +30,7 @@ describe UserMailer, 'vote_confirmation' do
 
   it 'sends the email with the correct body' do
     vote = build_stubbed(:vote)
-    user_name = vote.user.name
+    user_name = vote.voter.name
     event_name = vote.event.name
 
     mail = UserMailer.vote_confirmation(vote)
@@ -78,12 +78,12 @@ describe UserMailer::Preview, 'vote_confirmation' do
 
     mail = UserMailer::Preview.new.vote_confirmation
 
-    mail.to.should == [vote.user.email]
+    mail.to.should == [vote.voter.email]
   end
 
   it 'sends the email with the correct subject' do
     vote = create(:vote)
-    user_name = vote.user.name
+    user_name = vote.voter.name
     UserMailer.vote_confirmation(vote)
 
     mail = UserMailer::Preview.new.vote_confirmation
@@ -93,7 +93,7 @@ describe UserMailer::Preview, 'vote_confirmation' do
 
   it 'sends the email with the correct body' do
     vote = create(:vote)
-    user_name = vote.user.name
+    user_name = vote.voter.name
     event_name = vote.event.name
     UserMailer.vote_confirmation(vote)
 
