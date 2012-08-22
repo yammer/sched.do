@@ -1,7 +1,7 @@
 <% if vote_for_suggestion %>
   <td>
     <div data-id="<%= suggestion.id %>">
-      <%= semantic_form_for vote_for_suggestion, html: { method: :delete } do |f| %>
+      <%= semantic_form_for vote_for_suggestion, remote: true,  html: { method: :delete, "data-role" => :delete, "data-type" => :json } do |f| %>
         <%= f.input :suggestion_id, as: :hidden, input_html: { value: suggestion.id } %>
         <%= f.action :submit, button_html: { value: "Unvote", class: "unvote" } %>
       <% end %>
@@ -10,8 +10,8 @@
 <% else %>
   <td>
     <div data-id="<%= suggestion.id %>">
-      <%= semantic_form_for suggestion.votes.build do |f| %>
-        <%= f.input :suggestion_id, as: :hidden, input_html: { value: suggestion.id } %>
+      <%= semantic_form_for suggestion.votes.build, remote: true, html: { "data-role" => :create, "data-type" => :json} do |f| %>
+        <%= f.input :suggestion_id, as: :hidden, input_html: { value: suggestion.id }%>
         <%= f.action :submit, button_html: { value: "Vote", class: "vote" } %>
       <% end %>
     </div>

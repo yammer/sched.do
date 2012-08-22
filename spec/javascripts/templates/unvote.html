@@ -1,0 +1,31 @@
+<table>
+  <tbody>
+    <tr class="votable">
+      <td>
+        <div data-id="1">
+          <form action="/votes/1" class="formtastic vote" id="edit_vote_1">
+            <input name="_method" type="hidden" value="delete" />
+            <input class="unvote" name="commit" type="submit" value="Unvote" />
+          </form>
+        </div>
+      </td>
+
+      <td>
+        <div data-id="2">
+          <form action="/votes/2" class="formtastic vote" data-role="delete" id="edit_vote_2">
+            <input name="_method" type="hidden" value="delete" />
+            <input class="unvote" name="commit" type="submit" value="Unvote" />
+          </form>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+
+  <tfoot>
+    <tr>
+      <td class="vote-count" data-id="1">1</td>
+
+      <td class="vote-count" data-id="2">1</td>
+    </tr>
+  </tfoot>
+</table>

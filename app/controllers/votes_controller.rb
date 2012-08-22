@@ -10,13 +10,20 @@ class VotesController < ApplicationController
       flash[:error] = "Sorry, you cannot duplicate votes"
     end
 
-    redirect_to vote.event
+    respond_to do |format|
+      format.html { redirect_to vote.event }
+      format.json { render json: { vote: vote } }
+    end
   end
 
   def destroy
     suggestion = Suggestion.find(params[:vote][:suggestion_id])
     vote = current_user.vote_for_suggestion(suggestion)
     vote.destroy
-    redirect_to suggestion.event
+
+    respond_to do |format|
+      format.html { redirect_to suggestion.event }
+      format.json { render json: { status: :ok }  }
+    end
   end
 end

@@ -1,0 +1,32 @@
+<div class="flash">
+</div>
+
+<table>
+  <tbody>
+    <tr class="votable">
+      <td>
+        <div data-id="1">
+          <form action="/votes" class="formtastic vote" data-role="create">
+            <input class="vote" name="commit" type="submit" value="Vote" />
+          </form>
+        </div>
+      </td>
+
+      <td>
+        <div data-id="2">
+          <form action="/votes" class="vote" data-role="create">
+            <input class="vote" name="commit" type="submit" value="Vote" />
+          </form>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+
+  <tfoot>
+    <tr>
+      <td class="vote-count" data-id="1">0</td>
+
+      <td class="vote-count" data-id="2">0</td>
+    </tr>
+  </tfoot>
+</table>

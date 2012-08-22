@@ -1,5 +1,9 @@
 module VotingHelpers
   def assert_vote_count(suggestion_primary, vote_count)
+    wait_until {
+      Suggestion.find_by_primary(suggestion_primary).present?
+    }
+
     suggestion = Suggestion.find_by_primary!(suggestion_primary)
 
     within '.grid' do
@@ -8,6 +12,10 @@ module VotingHelpers
   end
 
   def vote_for(suggestion_primary)
+    wait_until {
+      Suggestion.find_by_primary(suggestion_primary).present?
+    }
+
     suggestion = Suggestion.find_by_primary!(suggestion_primary)
 
     within '.grid' do
