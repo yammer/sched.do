@@ -241,18 +241,18 @@ div.table-wrapper {
 
                     &.vote {
                       background: rgba(231, 244, 247, 0.3);
-                      background-image: url(checkmark-dimmed.png);
-                      background-position: center 10px;
+                      background-image: url(checkmark-dimmed.svg);
+                      background-position: center center;
                       background-repeat: no-repeat;
-                      background-size: 32px;
+                      background-size: 40px;
                     }
 
                     &.unvote {
                       background: darken($success, 25%);
-                      background-image: url(checkmark.png);
-                      background-position: center 10px;
+                      background-image: url(checkmark.svg);
+                      background-position: center center;
                       background-repeat: no-repeat;
-                      background-size: 32px;
+                      background-size: 40px;
                       @include transition(none);
                     }
                   }
@@ -265,10 +265,10 @@ div.table-wrapper {
                     input[type="submit"] {
                       &.vote {
                         background: darken($success, 10%);
-                        background-image: url(checkmark.png);
-                        background-position: center 10px;
+                        background-image: url(checkmark.svg);
+                        background-position: center center;
                         background-repeat: no-repeat;
-                        background-size: 32px;
+                        background-size: 40px;
                       }
 
                       &.unvote {
