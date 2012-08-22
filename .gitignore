@@ -25,3 +25,4 @@ vendor/bundler_gems
 /public/assets
 bin/
 coverage
+.tddium*
