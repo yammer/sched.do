@@ -26,8 +26,8 @@ $("input[data-role='invitation_name']").autocomplete({
     .data( "item.autocomplete", item )
     .append(
       "<a>" +
-      "<img src='" + item.photo + "'>"
-      + item.label +
+      "<div  class='autocomplete-avatar' style='background-image: url(" + item.photo + ")'></div>" +
+      "<span class='name'>" + item.label + "</span>" +
       "</a>"
     )
     .appendTo( ul );
