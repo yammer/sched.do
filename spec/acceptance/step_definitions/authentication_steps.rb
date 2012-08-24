@@ -22,17 +22,17 @@ step 'I sign out' do
 end
 
 step 'I am signed in as a guest' do
-  visit new_guest_path
+  visit new_guest_path(event_id: Event.last.uuid)
   fill_in_guest_info
 end
 
 step 'I am signed in as the guest :guest_email' do |guest_email|
-  visit new_guest_path
+  visit new_guest_path(event_id: Event.last.uuid)
   fill_in_guest_info(guest_email)
 end
 
 step 'I am signed in as the guest :guest_email named :guest_name' do |guest_email, guest_name|
-  visit new_guest_path
+  visit new_guest_path(event_id: Event.last.uuid)
   fill_in_guest_info(guest_email, guest_name)
 end
 

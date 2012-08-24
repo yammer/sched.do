@@ -6,7 +6,6 @@ class SessionsController < ApplicationController
     user.fetch_yammer_user_data
     cookies.signed[:yammer_user_id] = user.yammer_user_id
     log_out_guest
-    set_referer_session_variable
 
     redirect_to after_sign_in_path
   end
@@ -43,21 +42,5 @@ class SessionsController < ApplicationController
   def log_out_guest
     session[:name] = nil
     session[:email] = nil
-  end
-
-  def set_referer_session_variable
-    begin
-      referer = request.env["HTTP_REFERER"]
-
-      if referer.include?('www.yammer.com')
-        session[:referer] = 'yammer'
-      elsif referer.include?('www.staging.yammer.com')
-        session[:referer] = 'staging'
-      else
-        session[:referer] = nil
-      end
-    rescue NoMethodError
-      session[:referer] = nil
-    end
   end
 end

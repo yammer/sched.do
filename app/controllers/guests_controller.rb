@@ -7,11 +7,13 @@ class GuestsController < ApplicationController
     @guest = Guest.new
     @event = Event.find_by_uuid(params[:event_id])
     @guest.email = session.delete(:guest_email)
+    @referred_from_yammer = session[:referred_from_yammer]
   end
 
   def create
     @guest = Guest.find_or_initialize_by_email(params[:guest][:email])
     @guest.name = params[:guest][:name]
+    @event = Event.find_by_uuid(params[:event_id])
 
     if @guest.save
       log_in_guest

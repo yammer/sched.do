@@ -33,6 +33,8 @@ class ApplicationController < ActionController::Base
   end
 
   def require_guest_or_yammer_login
+    set_referred_from_yammer
+
     if current_user.blank?
       session[:return_to] ||= request.fullpath
       session[:guest_email] = params[:guest_email]
@@ -42,5 +44,19 @@ class ApplicationController < ActionController::Base
 
   def previous_page
     session.delete(:return_to) || root_url
+  end
+
+  private
+
+  def referred_from_yammer?
+    referring_site.include?('yammer.com')
+  end
+
+  def referring_site
+    request.env["HTTP_REFERER"].to_s
+  end
+
+  def set_referred_from_yammer
+    session[:referred_from_yammer] = referred_from_yammer?
   end
 end

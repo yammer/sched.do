@@ -10,33 +10,38 @@
   <p class="sign-in-message">Sign in to Sched.do and help <%= @event.user.name %> pick a time for "<%= @event.name %>".</p>
 
   <%= link_to "Sign in with Yammer", "/auth/yammer", class: "sign-in",  id: "sign-in" %>
-  <p class="sign-in-tip">Or enter your name and email.</p>
 
-  <%= semantic_form_for @guest do |f| %>
-    <%= f.inputs do %>
-      <%= f.text_field :name, label: false, placeholder: 'Name' %>
+  <% if not @referred_from_yammer %>
+    <p class="sign-in-tip">Or enter your name and email.</p>
 
-      <div class="errors">
-        <% if @guest.errors[:name].present? %>
-          <div class="inline-errors">
-            <%= @guest.errors[:name].first %>
-          </div>
-        <% end %>
-      </div>
+    <%= semantic_form_for @guest do |f| %>
+      <%= f.inputs do %>
+        <%= hidden_field_tag :event_id, params[:event_id] %>
+        <%= f.text_field :name, label: false, placeholder: 'Name' %>
 
-      <%= f.text_field :email, label: false, placeholder: 'Email' %>
-      <div class="errors">
-        <% if @guest.errors[:email].present? %>
-          <div class="inline-errors">
-            <%= @guest.errors[:email].first %>
-          </div>
-        <% end %>
-      </div>
-    <% end %>
-    <%= f.actions do %>
-      <%= f.action :submit, label: 'Begin Voting', button_html: { class: "cta" } %>
+        <div class="errors">
+          <% @guest.errors[:name].each do |name_error| %>
+            <div class="inline-errors">
+              <%= name_error %>
+            </div>
+          <% end %>
+        </div>
+
+        <%= f.text_field :email, label: false, placeholder: 'Email' %>
+        <div class="errors">
+          <% @guest.errors[:email].each do |email_error| %>
+            <div class="inline-errors">
+              <%= email_error %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+      <%= f.actions do %>
+        <%= f.action :submit, label: 'Begin Voting', button_html: { class: "cta" } %>
+      <% end %>
     <% end %>
   <% end %>
+
 </div>
 
 <div class="staging-signin-spacer"></div>
