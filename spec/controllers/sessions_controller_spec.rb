@@ -25,9 +25,73 @@ describe SessionsController, '#create' do
     session[:email].should be_nil
   end
 
+  context 'when coming from yammer.com' do
+    before do
+      stub_previous_site_as_yammer
+      stub_omniauth_env
+      post :create
+    end
+
+    it 'sets the referer variable as yammer' do
+      session[:referer].should == 'yammer'
+    end
+  end
+
+  context 'when coming from staging.yammer.com' do
+    before do
+      stub_previous_site_as_yammer_staging
+      stub_omniauth_env
+      post :create
+    end
+
+    it 'sets the referer variable as yammer-staging' do
+      session[:referer].should == 'staging'
+    end
+  end
+
+  context 'when coming from a non-yammer site' do
+    before do
+      stub_previous_site_as_non_yammer
+      stub_omniauth_env
+      post :create
+    end
+
+    it 'does not set the referer variable' do
+      session[:referer].should be_nil
+    end
+  end
+
+  context 'when coming to sched.do from a fresh browser' do
+    before do
+      stub_previous_site_as_nil
+      stub_omniauth_env
+      post :create
+    end
+
+    it 'does not set the referer variable' do
+      session[:referer].should be_nil
+    end
+  end
+
   private
 
   def stub_omniauth_env
     request.env['omniauth.auth'] = OmniAuth.mock_auth_for(:yammer)
+  end
+
+  def stub_previous_site_as_nil
+    request.env["HTTP_REFERER"] = nil
+  end
+
+  def stub_previous_site_as_non_yammer
+    request.env["HTTP_REFERER"] = 'http://learn.thoughtbot.com/'
+  end
+
+  def stub_previous_site_as_yammer
+    request.env["HTTP_REFERER"] = 'https://www.yammer.com/company.com/'
+  end
+
+  def stub_previous_site_as_yammer_staging
+    request.env["HTTP_REFERER"] = 'https://www.staging.yammer.com/company.com/'
   end
 end
