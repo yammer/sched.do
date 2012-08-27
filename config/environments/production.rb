@@ -76,7 +76,4 @@ SchedDo::Application.configure do
     domain:         'heroku.com'
   }
   ActionMailer::Base.delivery_method = :smtp
-
-  # Redirects all subdomains to 'www.sched.do'
-  config.middleware.use Rack::WWW, :www => true
 end

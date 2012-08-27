@@ -189,8 +189,6 @@ GEM
       rack
     rack-test (0.6.1)
       rack (>= 1.0)
-    rack-www (1.5.0)
-      rack
     rails (3.2.8)
       actionmailer (= 3.2.8)
       actionpack (= 3.2.8)
@@ -322,7 +320,6 @@ DEPENDENCIES
   pg
   pry
   quiet_assets
-  rack-www
   rails (~> 3.2)
   rest-client
   rspec-rails (~> 2.9.0)
