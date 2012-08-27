@@ -15,18 +15,18 @@
       <%= f.text_field :name, label: false, placeholder: 'Name' %>
 
       <div class="errors">
-        <% @guest.errors[:name].each do |name_error| %>
+        <% if @guest.errors[:name].present? %>
           <div class="inline-errors">
-            <%= name_error %>
+            <%= @guest.errors[:name].first %>
           </div>
         <% end %>
       </div>
 
       <%= f.text_field :email, label: false, placeholder: 'Email' %>
       <div class="errors">
-        <% @guest.errors[:email].each do |email_error| %>
+        <% if @guest.errors[:email].present? %>
           <div class="inline-errors">
-            <%= email_error %>
+            <%= @guest.errors[:email].first %>
           </div>
         <% end %>
       </div>
