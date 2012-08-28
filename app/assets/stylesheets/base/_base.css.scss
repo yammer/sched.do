@@ -77,9 +77,6 @@ header {
 }
 
 div.main-content {
-  @include box-sizing(border-box);
-  min-height: 100%;
-  max-height: 100%;
   overflow: hidden;
   padding: 20px 10px;
 }
