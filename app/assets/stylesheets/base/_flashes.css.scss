@@ -2,6 +2,8 @@ div.flash {
   width: 100%;
   max-width: $max-width*0.97;
   margin: 0 auto;
+  position: relative;
+  z-index: 1;
 }
 
 

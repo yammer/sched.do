@@ -1,6 +1,12 @@
 div.guest-sign-in {
   @extend .sheet;
 
+  p.sign-in-message {
+    border-bottom: 1px solid darken($bg-color, 10%);
+    margin: 0px;
+    padding-bottom: 15px;
+  }
+
   a.sign-in {
     @extend .button;
     @extend .yammer-button;
@@ -12,7 +18,9 @@ div.guest-sign-in {
   }
 
   p.sign-in-tip {
+    color: darken($bg-color, 20%);
     font-size: 0.9em;
+    font-style: italic;
     text-align: center;
   }
 
@@ -27,6 +35,13 @@ div.guest-sign-in {
       }
     }
   }
+}
+
+.staging-signin-spacer {
+  height: 30px;
+  max-width: 100%;
+  margin: 0 auto;
+  position: relative;
 }
 
 a.staging-login {

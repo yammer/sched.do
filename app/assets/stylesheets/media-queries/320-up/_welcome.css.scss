@@ -1,11 +1,14 @@
 body.welcome {
   div.welcome  {
     div.logo {
-      h1 {
-        img {
-          height: auto;
-          width: 450px;
-          margin-bottom: 1em;
+      hgroup {
+        margin-bottom: 2em;
+
+        h1 {
+          img {
+            height: auto;
+            width: 450px;
+          }
         }
       }
 

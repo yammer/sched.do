@@ -17,8 +17,21 @@ body.welcome {
       @include fill-parent();
       text-align: center;
 
-      h1 {
-        margin-bottom: -10px;
+      hgroup {
+        margin-bottom: 15px;
+
+        h1 {
+          margin: 0;
+
+          img {
+            margin: 0;
+          }
+        }
+
+        h2 {
+          font-size: 1.2em;
+          font-style: italic;
+        }
       }
 
       div.post-it {

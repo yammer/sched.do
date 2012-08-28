@@ -7,8 +7,10 @@
 <% end %>
 
 <div class="guest-sign-in">
+  <p class="sign-in-message">Sign in to Sched.do and help plan "<%= @event.name %>", created by <%= @event.user.name %>.</p>
+
   <%= link_to "Sign in with Yammer", "/auth/yammer", class: "sign-in",  id: "sign-in" %>
-  <p class="sign-in-tip">&hellip;or enter your name and email to vote</p>
+  <p class="sign-in-tip">Or enter your name and email.</p>
 
   <%= semantic_form_for @guest do |f| %>
     <%= f.inputs do %>
@@ -36,5 +38,7 @@
     <% end %>
   <% end %>
 </div>
+
+<div class="staging-signin-spacer"></div>
 
 <%= link_to "staging", "/auth/yammer_staging", :class => "staging-login" %>

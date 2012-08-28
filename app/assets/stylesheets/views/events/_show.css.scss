@@ -7,6 +7,7 @@ div.show-event {
     padding: 1.6em 0 0.7em;
     position: relative;
     text-align: center;
+    z-index: 0;
 
     h1.event-name {
       display: inline-block;
