@@ -1,4 +1,5 @@
 class Vote < ActiveRecord::Base
+  VOTE_EMAIL_DELAY = 3.minutes
   attr_accessible :suggestion_id
 
   belongs_to :suggestion
@@ -30,6 +31,18 @@ class Vote < ActiveRecord::Base
   end
 
   def send_confirmation_email
-    UserMailer.delay(run_at: 3.minutes.from_now).vote_confirmation(self)
+    if no_recent_votes
+      UserMailer.delay(run_at: VOTE_EMAIL_DELAY.from_now).vote_confirmation(self)
+    end
+  end
+
+  private
+
+  def no_recent_votes
+    voter.
+      votes.
+      where(['id != ?', id]).
+      where(['created_at > ?', VOTE_EMAIL_DELAY.ago]).
+      empty?
   end
 end

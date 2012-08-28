@@ -66,6 +66,24 @@ describe Vote, '#create' do
     mailer.should have_received(:deliver).once
   end
 
+  it 'sends only one per user email every 3 minutes' do
+    user = create(:user)
+    mailer = stub('mailer', deliver: true)
+    UserMailer.stubs(vote_confirmation: mailer)
+
+    first_vote = create(:vote, voter: user)
+    second_vote = create(:vote, voter: user)
+
+    Timecop.freeze(3.minutes.from_now) do
+      work_off_delayed_jobs
+    end
+
+    UserMailer.should have_received(:vote_confirmation).
+      with(first_vote).once
+    UserMailer.should have_received(:vote_confirmation).
+      with(second_vote).never
+    mailer.should have_received(:deliver).once
+  end
   it 'updates Yammer activity ticker after voting' do
     FakeYammer.activity_endpoint_hits.should == 0
 
