@@ -34,13 +34,33 @@ end
 
 describe Vote, '#create' do
   include DelayedJobSpecHelper
+  before do
+    Delayed::Worker.delay_jobs = true
+  end
 
-  it 'sends confirmation email to user' do
+  after do
+    Delayed::Worker.delay_jobs = false
+  end
+
+  it 'does not send confirmation email to the voter right away' do
     mailer = stub('mailer', deliver: true)
     UserMailer.stubs(vote_confirmation: mailer)
 
     vote = create(:vote)
     work_off_delayed_jobs
+
+    UserMailer.should have_received(:vote_confirmation).with(vote).never
+    mailer.should have_received(:deliver).never
+  end
+
+  it 'sends a confirmation email to the voter 3 minutes later' do
+   mailer = stub('mailer', deliver: true)
+   UserMailer.stubs(vote_confirmation: mailer)
+
+    vote = create(:vote)
+    Timecop.freeze(3.minutes.from_now) do
+      work_off_delayed_jobs
+    end
 
     UserMailer.should have_received(:vote_confirmation).with(vote)
     mailer.should have_received(:deliver).once
