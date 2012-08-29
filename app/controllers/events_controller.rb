@@ -4,18 +4,18 @@ class EventsController < ApplicationController
 
   def new
     @event = current_user.events.build
-    @suggestions = populate_suggestions_for(@event)
+    @event.build_suggestions
   end
 
   def create
     @event = current_user.events.new(params[:event])
-    @event.suggestions = @event.suggestions.select(&:valid?)
+    @event.build_suggestions
 
     if @event.save
       redirect_to @event
     else
       flash[:error] = "Please complete all required fields."
-      @suggestions = populate_suggestions_for(@event)
+      @event.build_suggestions
       render :new
     end
   end
@@ -23,7 +23,7 @@ class EventsController < ApplicationController
   def show
     begin
       @event = Event.find_by_uuid!(params[:id])
-      @suggestions = @event.suggestions
+      @event.build_suggestions
       verify_or_setup_invitation_for_current_user
       setup_invitation_for_event_creator
     rescue ActiveRecord::RecordNotFound
@@ -60,13 +60,6 @@ class EventsController < ApplicationController
   end
 
   private
-
-  def populate_suggestions_for(event)
-    if event.suggestions.empty?
-      2.times { event.suggestions.build }
-    end
-    event.suggestions
-  end
 
   def setup_invitation_for_event_creator
     if current_user.able_to_edit?(@event)

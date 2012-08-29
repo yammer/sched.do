@@ -4,7 +4,7 @@
 
     <div class="suggestions">
       <p>Suggest Dates &amp; Times</p>
-      <%= f.semantic_fields_for(:suggestions, @suggestions) do |suggestion_form| %>
+      <%= f.semantic_fields_for(:suggestions, @event.suggestions) do |suggestion_form| %>
         <%= render 'existing_suggestion_fields', f: suggestion_form %>
       <% end %>
     </div>

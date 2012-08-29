@@ -14,11 +14,17 @@ class Event < ActiveRecord::Base
   validates :user_id, presence: true
   validates :uuid, presence: true
 
-  accepts_nested_attributes_for :suggestions, reject_if: :all_blank,
+  accepts_nested_attributes_for :suggestions,
     allow_destroy: true
 
   after_create :create_yammer_activity_for_new_event
   before_validation :generate_uuid, :on => :create
+  before_validation :reject_blank_suggestions
+
+  def build_suggestions
+    suggestions[0] ||= Suggestion.new
+    suggestions[1] ||= Suggestion.new
+  end
 
   def invitees
     group = [user] + users + guests
@@ -51,6 +57,13 @@ class Event < ActiveRecord::Base
 
   def user_votes(user)
     user.votes.joins(:suggestion).where(suggestions: { event_id: self } )
+  end
+
+  def reject_blank_suggestions
+    suggestions.reject! do |suggestion|
+        suggestion  != suggestions.first &&
+        suggestion.attributes.all? { |k, v| v.blank? }
+   end
   end
 
   def to_param

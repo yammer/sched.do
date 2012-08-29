@@ -31,11 +31,6 @@ describe Event do
     event.should be_invalid
   end
 
-  it 'rejects blank suggestions' do
-    nested_attributes_options = Event.nested_attributes_options[:suggestions]
-    nested_attributes_options[:reject_if].call({ primary: '' }).should be_true
-  end
-
   it 'updates Yammer activity ticker after creation' do
     FakeYammer.activity_endpoint_hits.should == 0
 
@@ -48,6 +43,38 @@ describe Event do
   it 'has a uuid after creation' do
     event = create(:event)
     event.uuid.length.should eq(8)
+  end
+
+  it 'runs #reject_blank_suggestions on validate' do
+    event = build(:event)
+    Event.any_instance.stubs(:reject_blank_suggestions)
+
+    event.valid?
+
+    Event.any_instance.should have_received(:reject_blank_suggestions)
+  end
+end
+
+describe Event, '#build_suggestions' do
+  it 'builds 2 suggestions' do
+    event = build(:event)
+    event.build_suggestions
+
+    event.suggestions.length.should == 2
+    event.suggestions.each do |suggestion|
+      suggestion.should be_a Suggestion
+    end
+  end
+  it 'does not replace suggestions if they were already set' do
+    event = build(:event)
+    first_suggestion = Suggestion.new
+    second_suggestion = Suggestion.new
+    event.suggestions = [first_suggestion, second_suggestion]
+
+    event.build_suggestions
+
+    event.suggestions[0].should == first_suggestion
+    event.suggestions[1].should == second_suggestion
   end
 end
 
@@ -128,5 +155,36 @@ describe Event, '#user_votes' do
     vote = create(:vote, voter: user, suggestion: suggestion)
 
     event.user_votes(user).should include(vote)
+  end
+end
+
+describe Event, '#reject_blank_suggestions' do
+  it 'does not reject the first suggestion' do
+    event = build(:event)
+    first_suggestion = Suggestion.new
+    second_suggestion = Suggestion.new
+    third_suggestion = Suggestion.new
+    event.suggestions = [first_suggestion,
+      second_suggestion,
+      third_suggestion]
+
+    event.reject_blank_suggestions
+
+    event.suggestions.should include(first_suggestion)
+  end
+
+  it 'rejects all blank suggestions except for the first' do
+    event = build(:event)
+    first_suggestion = Suggestion.new
+    second_suggestion = Suggestion.new
+    third_suggestion = Suggestion.new
+    event.suggestions = [first_suggestion,
+      second_suggestion,
+      third_suggestion]
+
+    event.reject_blank_suggestions
+
+    event.suggestions.should_not include(second_suggestion)
+    event.suggestions.should_not include(third_suggestion)
   end
 end
