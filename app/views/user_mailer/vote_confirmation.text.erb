@@ -6,6 +6,6 @@ You voted for:
   "<%= vote.suggestion.primary %><%= "," if vote.suggestion.secondary.present? %> <%= vote.suggestion.secondary %>"
 <% end %>
 
-To change your vote or find out how other people have voted, <%= link_to "click here", event_url(@event) %>.
+To change your vote or find out how other people have voted, <%= link_to "click here", event_url(@event, guest_email: @user.email) %>.
 
 *Did you know you can send your own polls for free? Use sched.do to plan events easily and collect feedback fast on virtually any topic. Learn more at <%= link_to "#{root_url}", root_url %>.

@@ -36,3 +36,11 @@ step 'I go to another site before I view the :event_name event' do |event_name|
   page.driver.header 'Referer', 'https://www.google.com'
   visit event_path(event)
 end
+
+step 'I should see my email address :email_address prepopulated' do |email|
+  find_field('guest_email').value.should == email
+end
+
+step 'I should see my name :name prepopulated' do |name|
+  find_field('guest_name').value.should == name
+end
