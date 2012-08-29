@@ -12,7 +12,7 @@ class UserMailer < ActionMailer::Base
     @guest = guest
     @event = event
     mail(to: @guest.email,
-      from: %{"#{event.user.name} via Sched.do " <no-reply@sched.do>"},
+      from: %{"#{event.user.name} via Sched.do" <no-reply@sched.do>},
       subject: "You have been invited to a Sched.do event!")
   end
 
