@@ -23,7 +23,6 @@ class EventsController < ApplicationController
   def show
     begin
       @event = Event.find_by_uuid!(params[:id])
-      @event.build_suggestions
       verify_or_setup_invitation_for_current_user
       setup_invitation_for_event_creator
     rescue ActiveRecord::RecordNotFound
