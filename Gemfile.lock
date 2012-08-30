@@ -120,6 +120,7 @@ GEM
     high_voltage (1.2.0)
     highline (1.6.14)
     hike (1.2.1)
+    hirefireapp (0.0.8)
     httparty (0.8.3)
       multi_json (~> 1.0)
       multi_xml
@@ -310,6 +311,7 @@ DEPENDENCIES
   formtastic
   heroku
   high_voltage
+  hirefireapp
   jquery-rails
   launchy
   mail_view
