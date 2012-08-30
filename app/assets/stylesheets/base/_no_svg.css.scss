@@ -1,82 +1,62 @@
 html.no-svg {
-  // _welcome
+
+  // Welcome Index
   body.welcome {
     div.welcome {
-      div.sign-in {
-        a.sign-in {
-          @include background-image(url(yammer-logo.png));
-        }
-      }
-    }
-
-    div.footer-sign-in {
-      a.sign-in {
+      div.sign-in a.sign-in {
         @include background-image(url(yammer-logo.png));
       }
     }
-  }
 
-  // event new
-  div.new-event {
-    div.nested-fields.primary {
-      a.remove_fields {
-        @include background-image(url(delete-icon.png));
-      }
-    }
-
-    div.nested-fields.secondary {
-      a.remove_fields {
-        @include background-image(url(delete-icon-small.png));
-      }
+    div.footer-sign-in a.sign-in {
+      @include background-image(url(yammer-logo.png));
     }
   }
 
-  //vote table
-  div.table-wrapper {
-    div.scroll-notice {
-      @include background-image(url(more-arrow.png));
+  // Event New
+  div.new-event div.nested-fields.primary a.remove_fields {
+    @include background-image(url(delete-icon.png));
+
+    &:hover {
+      @include background-image(url(delete-icon.png));
     }
+  }
 
-    div#invitees {
-      &.options {
-        table {
-          tr {
-            &.votable {
-              td {
-                form.vote {
-                  li.action {
-                    input[type="submit"] {
-                      &.vote {
-                        background-image: url(checkmark-dimmed.png);
-                      }
+  div.new-event div.nested-fields.secondary a.remove_fields {
+    @include background-image(url(delete-icon-small.png));
 
-                      &.unvote {
-                        background-image: url(checkmark.png);
-                      }
-                    }
-                  }
-                }
-
-                &:hover {
-                  form.vote {
-                    li.action {
-                      input[type="submit"] {
-                        &.vote {
-                          background-image: url(checkmark.png);
-                        }
-
-                        &.unvote {
-                          background-image: url(cross.png);
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
+    &:hover {
+      @include background-image(url(delete-icon-small.png));
     }
+  }
+
+  // Vote Table
+  div.table-wrapper div.scroll-notice {
+    @include background-image(url(more-arrow.png));
+  }
+
+  div.table-wrapper div.options table tr.votable td form.vote li.action input[type="submit"].vote {
+    background-image: url(checkmark-dimmed.png);
+  }
+
+  div.table-wrapper div.options table tr.votable td:hover {
+    form.vote li.action input[type="submit"].vote {
+      background-image: url(checkmark.png);
+    }
+  }
+
+  div.table-wrapper div.options table tr.votable td form.vote li.action input[type="submit"].unvote {
+    background-image: url(checkmark.png);
+  }
+
+  div.table-wrapper div.options table tr.votable td:hover {
+    form.vote li.action input[type="submit"].unvote {
+      background-image: url(cross.png);
+    }
+  }
+
+  // Autocomplete Drop Down
+  ul.ui-autocomplete li.ui-menu-item a.ui-state-hover {
+    @include background-image(url(add-sign.png));
   }
 }

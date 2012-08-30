@@ -82,6 +82,8 @@ div.new-event {
         background-color: rgb(220,220,220);
         @include background-image(url(delete-icon.svg), linear-gradient(rgb(230,230,230), rgb(210,210,210)));
         background-position: center, left;
+        -ms-background-position-x: center;
+        -ms-background-position-y: center;
         background-repeat: no-repeat;
         border: 1px solid rgb(190,190,190);
         @include border-radius(20px);
@@ -101,6 +103,7 @@ div.new-event {
         width: 16px;
 
         &:hover {
+          background-color: rgb(210,210,210);
           @include background-image(url(delete-icon.svg), linear-gradient(rgb(220,220,220), rgb(200,200,200)));
         }
       }
@@ -121,6 +124,7 @@ div.new-event {
         top: -8px;
 
         &:hover {
+          @include background-image(url(delete-icon-small.svg));
           background-color: darken($bg-color, 35%);
         }
       }

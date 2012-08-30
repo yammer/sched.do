@@ -10,6 +10,7 @@ ul.ui-autocomplete {
     margin: 0;
 
     a {
+      background-color: #555;
       @include background-image(linear-gradient(#555, #393939));
       border: 1px solid #000;
       border-bottom: none;
@@ -26,8 +27,11 @@ ul.ui-autocomplete {
       @include transition(padding 0.15s linear);
 
       &.ui-state-hover {
+        background-color: $orange;
         @include background-image(url(add-sign.svg), linear-gradient(lighten($orange, 5%), darken($orange, 5%) 80%, $orange));
         background-position: 0.6em, center;
+        -ms-background-position-x: 8px;
+        -ms-background-position-y: center;
         background-repeat: no-repeat;
         border: 1px solid darken($orange, 20%);
         border-bottom: none;

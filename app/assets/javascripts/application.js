@@ -16,4 +16,5 @@
 //= require cocoon
 //= require underscore
 //= require zero-clipboard
+//= require modernizr
 //= require_tree .

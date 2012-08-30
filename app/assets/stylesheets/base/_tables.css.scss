@@ -71,6 +71,7 @@ div.table-wrapper {
           text-shadow: 0 1px 0 #fff;
 
           &.current-user {
+            background-color: lighten($success, 3%);
             @include background-image(linear-gradient(lighten($success, 5%), darken($success, 0%)));
 
             td {
@@ -263,7 +264,8 @@ div.table-wrapper {
                     text-indent: -9999px;
 
                     &.vote {
-                      background: rgba(231, 244, 247, 0.3);
+                      background: rgb(247, 251, 252);
+                      background-color: rgba(231, 244, 247, 0.3);
                       background-image: url(checkmark-dimmed.svg);
                       background-position: center center;
                       background-repeat: no-repeat;
@@ -296,10 +298,10 @@ div.table-wrapper {
 
                       &.unvote {
                         background: saturate(darken($failure, 30%), 20%);
-                        background-image: url(cross.png);
-                        background-position: center 12px;
+                        background-image: url(cross.svg);
+                        background-position: center center;
                         background-repeat: no-repeat;
-                        background-size: 32px;
+                        background-size: 40px;
                         @include box-shadow(inset 0 1px 2px darken($orange, 10%));
                       }
                     }
@@ -311,8 +313,13 @@ div.table-wrapper {
         }
 
         td {
+          border-right:1px solid darken($bg-color, 20%) ;
           height: 56px;
           padding: 0;
+
+          &:last-child {
+            border: none;
+          }
 
           &.voted, &:nth-child(even).voted {
             background: darken($success, 25%);
