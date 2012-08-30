@@ -26,6 +26,7 @@
   padding-right: 0px;
   text-shadow: 0 -1px 0 darken(#48AEF1, 40%);
 
+
   &:hover {
     background-color: lighten(#48AEF1, 5%);
     @include background-image(url(yammer-logo.svg),linear-gradient(#48AFF3, lighten(#228ed5, 5%)));

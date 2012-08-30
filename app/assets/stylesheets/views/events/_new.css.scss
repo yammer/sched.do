@@ -121,7 +121,6 @@ div.new-event {
         top: -8px;
 
         &:hover {
-          @include background-image(url(delete-icon-small.svg));
           background-color: darken($bg-color, 35%);
         }
       }

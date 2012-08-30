@@ -1,0 +1,82 @@
+html.no-svg {
+  // _welcome
+  body.welcome {
+    div.welcome {
+      div.sign-in {
+        a.sign-in {
+          @include background-image(url(yammer-logo.png));
+        }
+      }
+    }
+
+    div.footer-sign-in {
+      a.sign-in {
+        @include background-image(url(yammer-logo.png));
+      }
+    }
+  }
+
+  // event new
+  div.new-event {
+    div.nested-fields.primary {
+      a.remove_fields {
+        @include background-image(url(delete-icon.png));
+      }
+    }
+
+    div.nested-fields.secondary {
+      a.remove_fields {
+        @include background-image(url(delete-icon-small.png));
+      }
+    }
+  }
+
+  //vote table
+  div.table-wrapper {
+    div.scroll-notice {
+      @include background-image(url(more-arrow.png));
+    }
+
+    div#invitees {
+      &.options {
+        table {
+          tr {
+            &.votable {
+              td {
+                form.vote {
+                  li.action {
+                    input[type="submit"] {
+                      &.vote {
+                        background-image: url(checkmark-dimmed.png);
+                      }
+
+                      &.unvote {
+                        background-image: url(checkmark.png);
+                      }
+                    }
+                  }
+                }
+
+                &:hover {
+                  form.vote {
+                    li.action {
+                      input[type="submit"] {
+                        &.vote {
+                          background-image: url(checkmark.png);
+                        }
+
+                        &.unvote {
+                          background-image: url(cross.png);
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

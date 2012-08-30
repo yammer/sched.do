@@ -85,7 +85,7 @@
             <% if @event.user_owner?(invitee) %>
               <td class="event-creator">
                 <div class="avatar" style="background-image: url(<%= invitee.image %>)"></div>
-                <img src="/assets/bullhorn.svg" >
+                <img src="/assets/bullhorn.svg" data-png-fallback="/assets/bullhorn.png">
             <% else %>
               <td>
                 <div class="avatar" style="background-image: url(<%= invitee.image %>)"></div>
