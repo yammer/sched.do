@@ -14,3 +14,12 @@ step "I should see :field filled in with :value" do |field, expected_value|
   end
   value.should == expected_value
 end
+
+step 'I should see :error under the title' do |error|
+  find("#event_name + p").should have_content(error)
+end
+
+step 'I should see :error under the first suggestion' do |error|
+  find("#event_suggestions_attributes_0_primary + p").
+    should have_content(error)
+end

@@ -36,7 +36,7 @@ FactoryGirl.define do
     name 'Clown party'
     user
 
-    before(:create) do |event|
+    before :create do |event|
       event.suggestions << build(:suggestion, event: event)
     end
 

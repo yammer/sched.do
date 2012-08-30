@@ -56,3 +56,10 @@ Feature: User can create an event
     Given I am signed in
     When I create an event
     Then I should see a link to that event
+
+  Scenario: User trys to create an event without a date or a title
+    Given I am signed in
+    And I visit the new event page
+    When I press "Create event"
+    Then I should see "This field is required" under the title
+    And I should see "This field is required" under the first suggestion

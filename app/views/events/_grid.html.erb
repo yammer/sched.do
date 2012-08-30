@@ -19,7 +19,7 @@
     <table class="touch-scrollable">
       <thead>
         <tr>
-          <% @suggestions.each do |suggestion| %>
+          <% @event.suggestions.each do |suggestion| %>
             <th data-id="<%= suggestion.id %>">
               <%= suggestion.primary %>
               <span class="secondary">
@@ -33,7 +33,7 @@
 
         <% if current_user.able_to_edit?(@event) %>
           <tr id="blank">
-            <% @suggestions.each do |suggestion| %>
+            <% @event.suggestions.each do |suggestion| %>
               <td></td>
             <% end %>
           </tr>
@@ -42,7 +42,7 @@
         <% @event.invitees.each do |invitee| %>
           <% if display_invitee_in_grid?(@event, invitee) %>
             <tr class="<%= 'votable' if  current_user == invitee %>">
-            <% @suggestions.each do |suggestion| %>
+            <% @event.suggestions.each do |suggestion| %>
               <% if display_invitee_in_grid?(@event, invitee)  %>
                 <% if current_user == invitee %>
                   <%= render 'events/vote', suggestion: suggestion,
@@ -64,7 +64,7 @@
       </tbody>
       <tfoot>
         <tr>
-          <% @suggestions.each do |suggestion| %>
+          <% @event.suggestions.each do |suggestion| %>
             <td class="vote-count" data-id="<%= suggestion.id %>">
               <%= suggestion.vote_count %>
             </td>
