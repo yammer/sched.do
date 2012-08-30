@@ -47,6 +47,7 @@ describe Event do
 
   it 'runs #reject_blank_suggestions on validate' do
     event = build(:event)
+
     Event.any_instance.stubs(:reject_blank_suggestions)
 
     event.valid?
@@ -65,6 +66,7 @@ describe Event, '#build_suggestions' do
       suggestion.should be_a Suggestion
     end
   end
+
   it 'does not replace suggestions if they were already set' do
     event = build(:event)
     first_suggestion = Suggestion.new

@@ -61,9 +61,9 @@ class Event < ActiveRecord::Base
 
   def reject_blank_suggestions
     suggestions.reject! do |suggestion|
-        suggestion  != suggestions.first &&
+      suggestion  != suggestions.first &&
         suggestion.attributes.all? { |k, v| v.blank? }
-   end
+    end
   end
 
   def to_param
