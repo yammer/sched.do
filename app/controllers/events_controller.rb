@@ -34,6 +34,7 @@ class EventsController < ApplicationController
   def edit
     begin
       @event = current_user.events.find_by_uuid!(params[:id])
+      @event.build_suggestions
     rescue ActiveRecord::RecordNotFound
       flash[:error] = "Sorry, you are not authorized to edit that event."
       redirect_to root_path
@@ -42,13 +43,13 @@ class EventsController < ApplicationController
 
   def update
     begin
-      event = current_user.events.find_by_uuid!(params[:id])
-      event.attributes = params[:event]
+      @event = current_user.events.find_by_uuid!(params[:id])
+      @event.attributes = params[:event]
 
-      if event.save
-        redirect_to event
+      if @event.save
+        redirect_to @event
       else
-        @event = event
+        @event.build_suggestions
         flash[:failure] = "Please check the errors and try again."
         render :edit
       end

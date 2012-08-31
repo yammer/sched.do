@@ -6,7 +6,7 @@ Feature: User can edit suggestions for event
     When I click "Edit"
     When I suggest "dinner"
     And I press "Update event"
-    And I should see a suggestion of "dinner"
+    Then I should see a suggestion of "dinner"
 
   Scenario: User tries to edit event suggestion with invalid data
     Given I am signed in
@@ -15,6 +15,15 @@ Feature: User can edit suggestions for event
     And I suggest an empty string
     And I press "Update event"
     Then I should see that the event was not successfully updated
+
+  @javascript
+  Scenario: User removes all suggestion fields
+    Given I am signed in
+    And I created an event named "Clown party" with a suggestion of "lunch"
+    When I click "Edit"
+    And I destroy the first suggestion
+    And I press "Update event"
+    Then I should see "This field is required" under the first suggestion
 
   Scenario: User tries to edit an event that they did not create
     Given I am signed in

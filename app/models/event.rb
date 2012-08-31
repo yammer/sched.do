@@ -9,7 +9,6 @@ class Event < ActiveRecord::Base
   has_many :guests, through: :invitations, source: :invitee, source_type: 'Guest'
   has_many :groups, through: :invitations, source: :invitee, source_type: 'Group'
 
-  validate :has_suggestions?
   validates :name, presence: { message: 'This field is required' }
   validates :user_id, presence: true
   validates :uuid, presence: true
@@ -19,7 +18,7 @@ class Event < ActiveRecord::Base
 
   after_create :create_yammer_activity_for_new_event
   before_validation :generate_uuid, :on => :create
-  before_validation :reject_blank_suggestions
+  before_validation :reject_blank_suggestions, :set_first_suggestion
 
   def build_suggestions
     suggestions[0] ||= Suggestion.new
@@ -37,10 +36,6 @@ class Event < ActiveRecord::Base
 
   def generate_uuid
     self.uuid = SecureRandom.hex(4)
-  end
-
-  def has_suggestions?
-    errors[:base] << "Enter a suggestion" if suggestions.blank?
   end
 
   def user_owner?(user)
@@ -61,8 +56,16 @@ class Event < ActiveRecord::Base
 
   def reject_blank_suggestions
     suggestions.reject! do |suggestion|
-      suggestion  != suggestions.first &&
-        suggestion.attributes.all? { |k, v| v.blank? }
+      suggestion.attributes.all? { |k, v| k == 'event_id' || v.blank? }
+    end
+  end
+
+  def set_first_suggestion
+    if suggestions.all? do |suggestion|
+      suggestion.marked_for_destruction? ||
+      suggestion.blank?
+    end
+      suggestions[0] = Suggestion.new
     end
   end
 

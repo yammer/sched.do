@@ -54,6 +54,15 @@ describe Event do
 
     Event.any_instance.should have_received(:reject_blank_suggestions)
   end
+
+  it 'runs #set_first_suggestion on validate' do
+    event = build(:event)
+    Event.any_instance.stubs(:set_first_suggestion)
+
+    event.valid?
+
+    Event.any_instance.should have_received(:set_first_suggestion)
+  end
 end
 
 describe Event, '#build_suggestions' do
@@ -161,32 +170,25 @@ describe Event, '#user_votes' do
 end
 
 describe Event, '#reject_blank_suggestions' do
-  it 'does not reject the first suggestion' do
+  it 'rejects all blank suggestions' do
     event = build(:event)
     first_suggestion = Suggestion.new
     second_suggestion = Suggestion.new
-    third_suggestion = Suggestion.new
-    event.suggestions = [first_suggestion,
-      second_suggestion,
-      third_suggestion]
+    event.suggestions = [first_suggestion, second_suggestion]
 
     event.reject_blank_suggestions
 
-    event.suggestions.should include(first_suggestion)
-  end
-
-  it 'rejects all blank suggestions except for the first' do
-    event = build(:event)
-    first_suggestion = Suggestion.new
-    second_suggestion = Suggestion.new
-    third_suggestion = Suggestion.new
-    event.suggestions = [first_suggestion,
-      second_suggestion,
-      third_suggestion]
-
-    event.reject_blank_suggestions
-
+    event.suggestions.should_not include(first_suggestion)
     event.suggestions.should_not include(second_suggestion)
-    event.suggestions.should_not include(third_suggestion)
+  end
+end
+
+describe Event, '#set_first_suggestion' do
+  it 'sets the first suggestion' do
+    event = build(:event)
+
+    event.set_first_suggestion
+
+    event.suggestions[0].should be_a Suggestion
   end
 end
