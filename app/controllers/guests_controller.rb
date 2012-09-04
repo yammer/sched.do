@@ -4,7 +4,7 @@ class GuestsController < ApplicationController
   skip_before_filter :require_yammer_login
 
   def new
-    @guest = Guest.find_or_create_by_email(session.delete(:guest_email))
+    @guest = Guest.find_or_initialize_by_email(session.delete(:guest_email))
     @event = Event.find_by_uuid(params[:event_id])
     @referred_from_yammer = session[:referred_from_yammer]
   end
