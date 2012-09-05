@@ -7,6 +7,7 @@ class GuestsController < ApplicationController
     @guest = Guest.find_or_initialize_by_email(session.delete(:guest_email))
     @event = Event.find_by_uuid(params[:event_id])
     @referred_from_yammer = session[:referred_from_yammer]
+    session[:return_to]  = event_url(@event)
   end
 
   def create
@@ -16,7 +17,7 @@ class GuestsController < ApplicationController
 
     if @guest.save
       log_in_guest
-      return_to_previous_page
+      redirect_to previous_page
     else
       render :new
     end
@@ -27,9 +28,5 @@ class GuestsController < ApplicationController
   def log_in_guest
     session[:name] = params[:guest][:name]
     session[:email] = params[:guest][:email]
-  end
-
-  def return_to_previous_page
-    redirect_to previous_page
   end
 end

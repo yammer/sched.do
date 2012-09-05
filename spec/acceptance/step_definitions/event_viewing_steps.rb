@@ -29,6 +29,11 @@ step 'I should not see an edit link' do
   page.should have_no_css('a', text: 'Edit')
 end
 
+step 'I should be on the :event_name event page' do |event_name|
+  event = Event.find_by_name!(event_name)
+  current_url.should == event_url(event)
+end
+
 step 'I should see an event named :event_name with a suggestion of :suggestion' do |event_name, suggestion|
   page.should have_css('.event-name', text: event_name)
 

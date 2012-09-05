@@ -36,6 +36,11 @@ step 'I am signed in as the guest :guest_email named :guest_name' do |guest_emai
   fill_in_guest_info(guest_email, guest_name)
 end
 
+step 'I view the login form for the :event event' do |event_name|
+  event = Event.find_by_name!(event_name)
+  visit new_guest_url(event_id: event.uuid)
+end
+
 step 'I should not see a sign out button' do
   page.should have_no_content 'Sign out'
 end
