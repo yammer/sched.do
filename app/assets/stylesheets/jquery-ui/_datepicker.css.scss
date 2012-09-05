@@ -1,3 +1,10 @@
+// Remove this when it is possible to override z-index on jquery-ui-datepicker
+// Related: http://bugs.jqueryui.com/ticket/5479
+
+#ui-datepicker-div {
+  z-index: 10 !important;
+}
+
 .ui-datepicker {
   @include box-sizing(border-box);
   display: none;
