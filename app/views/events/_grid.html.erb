@@ -39,7 +39,7 @@
           </tr>
         <% end %>
 
-        <% @event.invitees.each do |invitee| %>
+        <% @event.invitees_with_current_user_first.each do |invitee| %>
           <% if display_invitee_in_grid?(@event, invitee) %>
             <tr class="<%= 'votable' if  current_user == invitee %>">
             <% @event.suggestions.each do |suggestion| %>
@@ -78,7 +78,7 @@
     <table>
       <tbody>
 
-        <% @event.invitees.each do |invitee| %>
+        <% @event.invitees_with_current_user_first.each do |invitee| %>
           <% if display_invitee_in_grid?(@event, invitee) %>
             <tr class="<%= 'current-user' if  current_user == invitee %>">
 

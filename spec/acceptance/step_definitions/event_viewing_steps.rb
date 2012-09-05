@@ -57,3 +57,13 @@ step 'I should see a link to that event' do
   event = Event.last
   page.find("#event-url").value.should include(event.uuid)
 end
+
+step 'I should see an event with the following invitees in order:' do |table|
+  expected_invitee_order = table.raw.flatten
+
+  actual_invitee_order = page.all('.user-name').map do |name|
+    name.text.gsub("\n", ' ').strip
+  end
+
+  actual_invitee_order.should == expected_invitee_order
+end

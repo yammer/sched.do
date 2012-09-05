@@ -9,7 +9,7 @@ FactoryGirl.define do
   sequence(:yammer_user_name) { |n| "Yammer User #{n}" }
 
   factory :user do
-    name 'Joe'
+    sequence(:name) { |n| "Joe User #{n}" }
     email
     sequence(:access_token) { |n| "abc12#{n}" }
     sequence(:yammer_user_id) { |n| n.to_s }
@@ -24,7 +24,7 @@ FactoryGirl.define do
 
   factory :guest do
     email
-    name 'Joe'
+    sequence(:name) { |n| "Joe Guest #{n}" }
   end
 
   factory :group do
@@ -42,6 +42,13 @@ FactoryGirl.define do
 
     after :stub do |event|
       event.generate_uuid
+    end
+
+    factory :event_with_invitees do
+      after :create do |event|
+        event.users << build(:user)
+        event.guests << build(:guest)
+      end
     end
   end
 

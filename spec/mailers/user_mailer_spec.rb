@@ -30,7 +30,8 @@ describe UserMailer, 'vote_confirmation' do
 
   it 'sends the email with the correct body' do
     vote = build_stubbed(:vote)
-    user_name = vote.voter.name
+    event = vote.event
+    user_name = event.user.name
     event_name = vote.event.name
 
     mail = UserMailer.vote_confirmation(vote)
@@ -93,7 +94,8 @@ describe UserMailer::Preview, 'vote_confirmation' do
 
   it 'sends the email with the correct body' do
     vote = create(:vote)
-    user_name = vote.voter.name
+    event = vote.event
+    user_name = event.user.name
     event_name = vote.event.name
     UserMailer.vote_confirmation(vote)
 
