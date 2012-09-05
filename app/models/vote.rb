@@ -1,5 +1,4 @@
 class Vote < ActiveRecord::Base
-  VOTE_EMAIL_DELAY = 3.minutes
   attr_accessible :suggestion_id
 
   belongs_to :suggestion
@@ -12,12 +11,10 @@ class Vote < ActiveRecord::Base
     scope: [:voter_type, :voter_id]
   }
 
-
-  after_create :send_confirmation_email
-  after_create :create_yammer_activity_for_new_vote
+  after_create :queue_vote_created_job
 
   def self.none
-    where( id: nil)
+    where(id: nil)
   end
 
   def event
@@ -26,23 +23,7 @@ class Vote < ActiveRecord::Base
 
   private
 
-  def create_yammer_activity_for_new_vote
-    voter.create_yammer_activity('vote', event)
-  end
-
-  def send_confirmation_email
-    if no_recent_votes
-      UserMailer.delay(run_at: VOTE_EMAIL_DELAY.from_now).vote_confirmation(self)
-    end
-  end
-
-  private
-
-  def no_recent_votes
-    voter.
-      votes.
-      where(['id != ?', id]).
-      where(['created_at > ?', VOTE_EMAIL_DELAY.ago]).
-      empty?
+  def queue_vote_created_job
+    VoteCreatedJob.enqueue(self)
   end
 end

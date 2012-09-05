@@ -24,20 +24,12 @@ describe Event do
 
     event.should be_valid
   end
+
   it "should not allow the event to have no suggestions" do
     event = create(:event)
     event.suggestions.destroy_all
 
     event.should be_invalid
-  end
-
-  it 'updates Yammer activity ticker after creation' do
-    FakeYammer.activity_endpoint_hits.should == 0
-
-    event = create(:event)
-    work_off_delayed_jobs
-
-    FakeYammer.activity_endpoint_hits.should == 1
   end
 
   it 'has a uuid after creation' do
@@ -140,7 +132,7 @@ describe Event, '#user_owner?' do
 end
 
 describe Event, '#user_votes' do
-    it 'does not return an event\'s votes for a user unless they voted' do
+  it 'does not return an event\'s votes for a user unless they voted' do
     event = create(:event)
     user = event.user
     suggestion = create(:suggestion, event: event)
@@ -177,5 +169,15 @@ describe Event, '#set_first_suggestion' do
     event.set_first_suggestion
 
     event.suggestions[0].should be_a Suggestion
+  end
+end
+
+describe Event, '#enqueue_event_created_job' do
+  it 'creates a delayed job' do
+    EventCreatedJob.stubs(:enqueue)
+
+    event = create(:event)
+
+    EventCreatedJob.should have_received(:enqueue).with(event)
   end
 end

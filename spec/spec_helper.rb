@@ -29,6 +29,7 @@ RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Default
   config.include EmailSpec::Helpers
   config.include EmailSpec::Matchers
+  config.include DelayedJob::Matchers
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
@@ -40,14 +41,20 @@ RSpec.configure do |config|
   # rspec-rails.
   config.infer_base_class_for_anonymous_controllers = false
 
-  # Clean before acceptance tests are run, otherwise JS scenarios leave records
-  # in the database.
+  # Delay some jobs under Rspec
+  Delayed::Worker.delay_jobs = true
+
+  # Acceptance tests before block
   config.before(:each, type: :request) do
+    # Clean before are run, otherwise JS scenarios leave records in the database.
     DatabaseCleaner.clean
     ActionMailer::Base.deliveries.clear
     Dotenv.load
+    # Do not run Delayed Jobs during acceptance testing
+    Delayed::Worker.delay_jobs = false
   end
 
+  # Unit tests before block
   config.before(:each) do
     FakeYammer.reset
   end

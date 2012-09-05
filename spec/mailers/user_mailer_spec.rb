@@ -10,6 +10,66 @@ describe UserMailer do
   end
 end
 
+describe UserMailer, 'event_created_confirmation' do
+  it 'sends the email to the correct recipient' do
+    event = build_stubbed(:event)
+    creator = event.user
+
+    mail = UserMailer.event_created_confirmation(event)
+
+    mail.to.should == [creator.email]
+  end
+
+  it 'sends the email with the correct subject' do
+    event = build_stubbed(:event)
+    creator = event.user
+
+    mail = UserMailer.event_created_confirmation(event)
+
+    mail.subject.should == "You created #{event.name} on Sched.do"
+  end
+
+  it 'sends the email with the correct body' do
+    event = build_stubbed(:event)
+    creator = event.user
+
+    mail = UserMailer.event_created_confirmation(event)
+
+    mail.body.encoded.should include (creator.name)
+    mail.body.encoded.should include (event.name)
+  end
+end
+
+describe UserMailer, 'invitation' do
+  it 'sends the email to the correct recipient' do
+    guest = build_stubbed(:guest)
+    event = build_stubbed(:event)
+
+    mail = UserMailer.invitation(guest, event)
+
+    mail.to.should == [guest.email]
+  end
+
+  it 'sends the email with the correct subject' do
+    guest = build_stubbed(:guest)
+    event = build_stubbed(:event)
+
+    mail = UserMailer.invitation(guest, event)
+
+    mail.subject.should == 'You have been invited to a Sched.do event!'
+  end
+
+  it 'sends the email with the correct body' do
+    guest = build_stubbed(:guest)
+    event = build_stubbed(:event)
+
+    mail = UserMailer.invitation(guest, event)
+
+    mail.body.encoded.should include (guest.name)
+    mail.body.encoded.should include (event.name)
+  end
+end
+
 describe UserMailer, 'vote_confirmation' do
   it 'sends the email to the correct recipient' do
     vote = build_stubbed(:vote)
@@ -41,30 +101,63 @@ describe UserMailer, 'vote_confirmation' do
   end
 end
 
-describe UserMailer, 'invitation' do
+describe UserMailer::Preview, 'event_created_confirmation' do
   it 'sends the email to the correct recipient' do
-    guest = build_stubbed(:guest)
-    event = build_stubbed(:event)
+    event = create(:event)
+    creator = event.user
 
-    mail = UserMailer.invitation(guest, event)
+    mail = UserMailer::Preview.new.event_created_confirmation(event)
+
+    mail.to.should == [creator.email]
+  end
+
+  it 'sends the email with the correct subject' do
+    event = create(:event)
+    creator = event.user
+
+    mail = UserMailer::Preview.new.event_created_confirmation(event)
+
+    mail.subject.should == "You created #{event.name} on Sched.do"
+  end
+
+  it 'sends the email with the correct body' do
+    event = create(:event)
+    creator = event.user
+
+    mail = UserMailer::Preview.new.event_created_confirmation(event)
+
+    mail.body.encoded.should include (creator.name)
+    mail.body.encoded.should include (event.name)
+  end
+end
+
+describe UserMailer::Preview, 'invitation' do
+  it 'sends the email to the correct recipient' do
+    guest = create(:guest)
+    event = create(:event)
+    UserMailer.invitation(guest, event)
+
+    mail = UserMailer::Preview.new.invitation
 
     mail.to.should == [guest.email]
   end
 
   it 'sends the email with the correct subject' do
-    guest = build_stubbed(:guest)
-    event = build_stubbed(:event)
+    guest = create(:guest)
+    event = create(:event)
+    UserMailer.invitation(guest, event)
 
-    mail = UserMailer.invitation(guest, event)
+    mail = UserMailer::Preview.new.invitation
 
     mail.subject.should == 'You have been invited to a Sched.do event!'
   end
 
   it 'sends the email with the correct subject' do
-    guest = build_stubbed(:guest)
-    event = build_stubbed(:event)
+    guest = create(:guest)
+    event = create(:event)
+    UserMailer.invitation(guest, event)
 
-    mail = UserMailer.invitation(guest, event)
+    mail = UserMailer::Preview.new.invitation
 
     mail.body.encoded.should include (guest.name)
     mail.body.encoded.should include (event.name)
@@ -103,39 +196,5 @@ describe UserMailer::Preview, 'vote_confirmation' do
 
     mail.body.encoded.should include(user_name)
     mail.body.encoded.should include(event_name)
-  end
-end
-
-describe UserMailer::Preview, 'invitation' do
-  it 'sends the email to the correct recipient' do
-    guest = create(:guest)
-    event = create(:event)
-    UserMailer.invitation(guest, event)
-
-    mail = UserMailer::Preview.new.invitation
-
-    mail.to.should == [guest.email]
-  end
-
-  it 'sends the email with the correct subject' do
-    guest = create(:guest)
-    event = create(:event)
-    UserMailer.invitation(guest, event)
-
-    mail = UserMailer::Preview.new.invitation
-
-    mail.subject.should == 'You have been invited to a Sched.do event!'
-  end
-
-  it 'sends the email with the correct subject' do
-    guest = create(:guest)
-    event = create(:event)
-    UserMailer.invitation(guest, event)
-
-    mail = UserMailer::Preview.new.invitation
-
-    mail.body.encoded.should include (guest.name)
-    mail.body.encoded.should include (event.name)
-    mail.body.encoded.should include (event.name)
   end
 end

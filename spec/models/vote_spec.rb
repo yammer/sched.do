@@ -10,7 +10,7 @@ describe Vote do
   it 'is valid if the user has not already voted for the suggestion' do
     vote = build(:vote)
 
-    vote.should be_valid 
+    vote.should be_valid
   end
 
   it 'is not valid if the user has already voted for the suggestion' do
@@ -33,63 +33,11 @@ describe Vote, '#event' do
 end
 
 describe Vote, '#create' do
-  include DelayedJobSpecHelper
-  before do
-    Delayed::Worker.delay_jobs = true
-  end
-
-  after do
-    Delayed::Worker.delay_jobs = false
-  end
-
-  it 'does not send confirmation email to the voter right away' do
-    mailer = stub('mailer', deliver: true)
-    UserMailer.stubs(vote_confirmation: mailer)
+  it 'creates a delayed job' do
+    VoteCreatedJob.stubs(:enqueue)
 
     vote = create(:vote)
-    work_off_delayed_jobs
 
-    UserMailer.should have_received(:vote_confirmation).with(vote).never
-    mailer.should have_received(:deliver).never
-  end
-
-  it 'sends a confirmation email to the voter 3 minutes later' do
-   mailer = stub('mailer', deliver: true)
-   UserMailer.stubs(vote_confirmation: mailer)
-
-    vote = create(:vote)
-    Timecop.freeze(3.minutes.from_now) do
-      work_off_delayed_jobs
-    end
-
-    UserMailer.should have_received(:vote_confirmation).with(vote)
-    mailer.should have_received(:deliver).once
-  end
-
-  it 'sends only one per user email every 3 minutes' do
-    user = create(:user)
-    mailer = stub('mailer', deliver: true)
-    UserMailer.stubs(vote_confirmation: mailer)
-
-    first_vote = create(:vote, voter: user)
-    second_vote = create(:vote, voter: user)
-
-    Timecop.freeze(3.minutes.from_now) do
-      work_off_delayed_jobs
-    end
-
-    UserMailer.should have_received(:vote_confirmation).
-      with(first_vote).once
-    UserMailer.should have_received(:vote_confirmation).
-      with(second_vote).never
-    mailer.should have_received(:deliver).once
-  end
-  it 'updates Yammer activity ticker after voting' do
-    FakeYammer.activity_endpoint_hits.should == 0
-
-    vote = create(:vote)
-    work_off_delayed_jobs
-
-    FakeYammer.activity_endpoint_hits.should == 2
+    VoteCreatedJob.should have_received(:enqueue).with(vote)
   end
 end

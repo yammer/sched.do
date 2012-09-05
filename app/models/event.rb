@@ -16,7 +16,7 @@ class Event < ActiveRecord::Base
   accepts_nested_attributes_for :suggestions, reject_if: :all_blank,
     allow_destroy: true
 
-  after_create :create_yammer_activity_for_new_event
+  after_create :enqueue_event_created_job
   before_validation :generate_uuid, :on => :create
   before_validation :set_first_suggestion
 
@@ -66,7 +66,7 @@ class Event < ActiveRecord::Base
 
   private
 
-  def create_yammer_activity_for_new_event
-    user.create_yammer_activity('create', self)
+  def enqueue_event_created_job
+    EventCreatedJob.enqueue(self)
   end
 end

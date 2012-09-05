@@ -19,7 +19,6 @@ class Guest < ActiveRecord::Base
     end
   end
 
-
   def able_to_edit?(event)
     false
   end

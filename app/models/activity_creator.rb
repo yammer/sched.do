@@ -9,10 +9,6 @@ class ActivityCreator
 
   def create
     post_activity_json
-  # rescue Exception => e
-  #   Rails.logger.error(e.try(:response).try(:inspect))
-  #   Rails.logger.error(generate_json)
-  #   Rails.logger.error(@user.access_token)
   end
 
   private
@@ -42,7 +38,7 @@ class ActivityCreator
   end
 
   def post_activity_json
-    RestClient.delay.post rest_client_url, generate_json, json_arguments
+    RestClient.post rest_client_url, generate_json, json_arguments
   end
 
   def rest_client_url
