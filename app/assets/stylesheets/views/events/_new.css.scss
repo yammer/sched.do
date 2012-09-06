@@ -47,6 +47,7 @@ div.new-event {
     position: relative;
 
     &.primary {
+      background-color: $bg-color;
       @include background-image(linear-gradient(lighten($bg-color, 0.5%), darken($bg-color, 0.5%) 20%));
       border: 1px solid darken($bg-color, 10%);
       @include border-radius(4px);
@@ -80,6 +81,7 @@ div.new-event {
 
       a.remove_fields {
         background-color: rgb(220,220,220);
+        @include background-image(url(delete-icon.svg));
         @include background-image(url(delete-icon.svg), linear-gradient(rgb(230,230,230), rgb(210,210,210)));
         background-position: center, left;
         -ms-background-position-x: center;
@@ -124,8 +126,8 @@ div.new-event {
         top: -8px;
 
         &:hover {
-          @include background-image(url(delete-icon-small.svg));
           background-color: darken($bg-color, 35%);
+          @include background-image(url(delete-icon-small.svg));
         }
       }
     }
@@ -174,10 +176,12 @@ div.event-url {
 
       input {
         &.hover {
+          background-color: darken($bg-color, 6%);
           @include background-image(linear-gradient(lighten($bg-color, 10%), darken($bg-color, 2%)));
         }
 
         &.active {
+          background-color: darken($bg-color, 4%);
           @include background-image(linear-gradient(darken($bg-color, 5%), lighten($bg-color, 10%)));
         }
       }

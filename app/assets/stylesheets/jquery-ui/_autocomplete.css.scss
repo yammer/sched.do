@@ -28,6 +28,7 @@ ul.ui-autocomplete {
 
       &.ui-state-hover {
         background-color: $orange;
+        @include background-image(url(add-sign.svg));
         @include background-image(url(add-sign.svg), linear-gradient(lighten($orange, 5%), darken($orange, 5%) 80%, $orange));
         background-position: 0.6em, center;
         -ms-background-position-x: 8px;

@@ -12,6 +12,7 @@
 .yammer-button {
   background-color: #48AEF1;
   @include button-color(#48AEF1);
+  @include background-image(url(yammer-logo.svg));
   @include background-image(url(yammer-logo.svg),linear-gradient(#48AFF3, #228ed5));
   background-position: 20px center, 0 0;
   -ms-background-position-x: 20px;
@@ -36,7 +37,7 @@
 }
 
 .sheet {
-  background-color: $bg-color;
+  background-color: #fff;
   @include background-image(linear-gradient(top, darken($bg-color, 5%), $bg-color 1%, #fff 20%));
   border: 1px solid darken($bg-color, 10%);
   border-top: none;

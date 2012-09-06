@@ -16,6 +16,7 @@ div.table-wrapper {
 
   div.scroll-notice {
     background: rgb(240,240,240);
+    @include background-image(url(more-arrow.svg));
     @include background-image(url(more-arrow.svg), linear-gradient(180deg, rgb(230,230,230) 0%, rgb(240,240,240) 80%, rgb(245,245,245) 100%));
     background-position: 0.1em, center;
     background-repeat: no-repeat;
@@ -66,6 +67,7 @@ div.table-wrapper {
         table-layout: fixed;
 
         tr {
+          background-color: $bg-color;
           @include background-image(linear-gradient(#fff, $bg-color));
           border-bottom: 1px solid darken($bg-color, 20%);
           text-shadow: 0 1px 0 #fff;
@@ -81,6 +83,7 @@ div.table-wrapper {
           }
 
           &.total {
+            background-color: darken($bg-color, 3%);
             @include background-image(linear-gradient($bg-color, darken($bg-color, 6%)));
 
             td {
@@ -148,6 +151,7 @@ div.table-wrapper {
     }
 
     &.search-box {
+      background-color: $bg-color;
       @include background-image(linear-gradient(#fff, darken($bg-color, 2%)));
       border: 1px solid darken($bg-color, 20%);
       @include border-radius(4px 0 0 0);
@@ -210,6 +214,7 @@ div.table-wrapper {
         @include box-shadow(0 0 20px darken($bg-color, 15%));
 
         th {
+          background-color: $bg-color;
           @include background-image(linear-gradient(#fff, darken($bg-color, 2%)));
           border-bottom: 1px solid darken($bg-color, 20%);
           border-right:1px solid darken($bg-color, 20%);
@@ -225,6 +230,7 @@ div.table-wrapper {
           }
 
           &:nth-child(even) {
+            background-color: darken($bg-color, 3%);
             @include background-image(linear-gradient($bg-color, darken($bg-color, 6%)));
           }
 
@@ -313,7 +319,7 @@ div.table-wrapper {
         }
 
         td {
-          border-right:1px solid darken($bg-color, 20%) ;
+          border-right: 1px solid darken($bg-color, 12%) ;
           height: 56px;
           padding: 0;
 
@@ -348,6 +354,7 @@ div.table-wrapper {
             border: 0;
 
             td {
+              background-color: $bg-color;
               @include background-image(linear-gradient(#fff, darken($bg-color, 2%)));
               @include box-shadow(inset 0 1px 0 #fff);
               color: $blue;
@@ -355,6 +362,7 @@ div.table-wrapper {
               text-align: center;
 
               &:nth-child(even) {
+                background-color: darken($bg-color, 3%);
                 @include background-image(linear-gradient($bg-color, darken($bg-color, 6%)));
               }
             }
