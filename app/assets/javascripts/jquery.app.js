@@ -33,10 +33,14 @@ $(document).ready(function() {
     });
 
     primary.hover(function(){
-      $(this).find('div.times > a.remove_fields').css('display', 'block');
+      if(forms.find('div.nested-fields.primary:not(.deleted)').length != 1){
+        $(this).find('div.times > a.remove_fields').css('display', 'block');
+      }
     },
     function(){
-      $(this).find('div.times > a.remove_fields').hide();
+      if(forms.find('div.nested-fields.primary').length != 1){
+        $(this).find('div.times > a.remove_fields').hide();
+      }
     });
   }
 

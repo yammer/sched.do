@@ -9,12 +9,10 @@ class EventsController < ApplicationController
 
   def create
     @event = current_user.events.new(params[:event])
-    @event.build_suggestions
 
     if @event.save
       redirect_to @event
     else
-      flash[:error] = "Please complete all required fields."
       @event.build_suggestions
       render :new
     end
@@ -50,7 +48,6 @@ class EventsController < ApplicationController
         redirect_to @event
       else
         @event.build_suggestions
-        flash[:failure] = "Please check the errors and try again."
         render :edit
       end
     rescue ActiveRecord::RecordNotFound

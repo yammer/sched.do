@@ -45,17 +45,7 @@ describe Event do
     event.uuid.length.should eq(8)
   end
 
-  it 'runs #reject_blank_suggestions on validate' do
-    event = build(:event)
-
-    Event.any_instance.stubs(:reject_blank_suggestions)
-
-    event.valid?
-
-    Event.any_instance.should have_received(:reject_blank_suggestions)
-  end
-
-  it 'runs #set_first_suggestion on validate' do
+ it 'runs #set_first_suggestion on validate' do
     event = build(:event)
     Event.any_instance.stubs(:set_first_suggestion)
 
@@ -166,20 +156,6 @@ describe Event, '#user_votes' do
     vote = create(:vote, voter: user, suggestion: suggestion)
 
     event.user_votes(user).should include(vote)
-  end
-end
-
-describe Event, '#reject_blank_suggestions' do
-  it 'rejects all blank suggestions' do
-    event = build(:event)
-    first_suggestion = Suggestion.new
-    second_suggestion = Suggestion.new
-    event.suggestions = [first_suggestion, second_suggestion]
-
-    event.reject_blank_suggestions
-
-    event.suggestions.should_not include(first_suggestion)
-    event.suggestions.should_not include(second_suggestion)
   end
 end
 

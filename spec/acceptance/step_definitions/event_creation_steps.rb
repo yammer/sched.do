@@ -80,13 +80,6 @@ step 'I remove the first suggestion' do
   click_link 'Remove Suggestion'
 end
 
-step 'I destroy the first suggestion' do
-  click_link 'Remove Suggestion'
-  wait_until do
-   page.has_css?("[id$=destroy][value='1']")
- end
-end
-
 step 'I sign in and fill in the event name' do
   sign_in
   fill_in 'event_name', with: 'something'
