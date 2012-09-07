@@ -2,6 +2,7 @@ class GuestsController < ApplicationController
   layout 'events'
 
   skip_before_filter :require_yammer_login
+  before_filter :authorize
 
   def new
     @guest = Guest.find_or_initialize_by_email(session.delete(:guest_email))
@@ -24,6 +25,11 @@ class GuestsController < ApplicationController
   end
 
   private
+  def authorize
+    if signed_in?
+      redirect_to event_path(params[:event_id])
+    end
+  end
 
   def log_in_guest
     session[:name] = params[:guest][:name]

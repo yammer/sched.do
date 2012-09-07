@@ -22,3 +22,9 @@ Feature: Guest is shown appropriate login option
     And "guest@example.com" follows the link "change your vote" in his email
     Then I should see my email address "guest@example.com" prepopulated
     And I should see my name "Joe Schmoe" prepopulated
+  
+  Scenario: Guest is already logged in
+    Given someone created an event named "Clown party" with a suggestion of "lunch"
+    When I am signed in
+    And I view the login form for the "Clown party" event
+    Then I should be on the "Clown party" event page

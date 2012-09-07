@@ -11,8 +11,6 @@ class ApplicationController < ActionController::Base
     @current_user = user
   end
 
-  private
-
   def signed_in?
     current_user.yammer_user?
   end
