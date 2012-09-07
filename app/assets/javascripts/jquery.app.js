@@ -1,3 +1,15 @@
+ var setNextDatePicker = function () {
+    nextDateField = $(this)
+            .parent()
+            .parent()
+            .parent()
+            .next()
+            .find('input[data-role="primary-suggestion"]');
+    nextDate = $(this).datepicker('getDate');
+    nextDate.setDate(nextDate.getDate()+1);
+    $(nextDateField).datepicker("option", "defaultDate", nextDate);
+}
+
 $(document).ready(function() {
 
   var datepicker = function(){
@@ -7,6 +19,7 @@ $(document).ready(function() {
       prevText: "◀",
       dateFormat: 'D, M dd yy',
       constrainInput: false,
+      onSelect: setNextDatePicker
     });
   };
 
