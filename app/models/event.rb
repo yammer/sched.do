@@ -55,7 +55,9 @@ class Event < ActiveRecord::Base
   end
 
   def set_first_suggestion
-    suggestions[0] ||= Suggestion.new
+    if suggestions[0].blank? || suggestions[0].marked_for_destruction?
+      suggestions[0] = Suggestion.new
+    end
   end
 
   def to_param
