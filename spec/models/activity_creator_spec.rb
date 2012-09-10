@@ -51,7 +51,7 @@ describe ActivityCreator do
           image: ActionController::Base.helpers.asset_path('logo.png')
         }
       },
-      message: 'Fake message for testing purposes',
+      message: '',
       users: event.invitees_for_json
     }.to_json
   end
