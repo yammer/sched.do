@@ -23,7 +23,6 @@ gem 'formtastic'
 gem 'high_voltage', '~> 1.2.0'
 gem 'hirefireapp'
 gem 'jquery-rails'
-gem 'mail_view'
 gem 'newrelic_rpm'
 gem 'omniauth', '~> 1.0'
 gem 'omniauth-oauth2', '~> 1.0.2'
@@ -51,6 +50,7 @@ end
 group :development, :test do
   gem 'dotenv'
   gem 'evergreen', require: 'evergreen/rails'
+  gem 'mail_view'
   gem 'rspec-rails', '~> 2.9.0'
   gem 'sham_rack'
 end
