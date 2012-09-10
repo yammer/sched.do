@@ -9,6 +9,7 @@ module DelayedJob
         @handler = handler
         @attributes = {}
         @priority = 0
+        @run_at = Time.now
         @failure_message = ''
       end
 
@@ -30,6 +31,11 @@ module DelayedJob
 
       def priority(priority)
         @priority = priority
+        self
+      end
+
+      def run_at(run_at)
+        @run_at = run_at
         self
       end
 

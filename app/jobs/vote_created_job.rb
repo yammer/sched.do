@@ -3,7 +3,7 @@ class VoteCreatedJob < Struct.new(:vote_id)
   ACTION = 'vote'
 
   def self.enqueue(vote)
-    Delayed::Job.enqueue new(vote.id), priority: PRIORITY
+    Delayed::Job.enqueue(new(vote.id), priority: PRIORITY)
   end
 
   def perform
@@ -15,6 +15,15 @@ class VoteCreatedJob < Struct.new(:vote_id)
 
   def event
     vote.event
+  end
+
+  def no_recent_votes
+    voter.
+      votes.
+      where(['id != ?', vote.id]).
+      where(['created_at > ?', VOTE_EMAIL_DELAY.ago]).
+      where(['created_at < ?', vote.created_at]).
+      empty?
   end
 
   def vote
