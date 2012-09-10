@@ -48,6 +48,11 @@ class EventsController < ApplicationController
         redirect_to @event
       else
         @event.build_suggestions
+
+        if @event.errors[:suggestions]
+          flash[:error] = @event.errors.messages[:suggestions].to_sentence
+        end
+
         render :edit
       end
     rescue ActiveRecord::RecordNotFound

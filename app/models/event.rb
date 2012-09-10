@@ -9,6 +9,7 @@ class Event < ActiveRecord::Base
   has_many :guests, through: :invitations, source: :invitee, source_type: 'Guest'
   has_many :groups, through: :invitations, source: :invitee, source_type: 'Group'
 
+  validate :has_suggestions?
   validates :name, presence: { message: 'This field is required' }
   validates :user_id, presence: true
   validates :uuid, presence: true
@@ -23,6 +24,12 @@ class Event < ActiveRecord::Base
   def build_suggestions
     suggestions[0] ||= Suggestion.new
     suggestions[1] ||= Suggestion.new
+  end
+
+  def has_suggestions?
+    if has_at_least_one_suggestion?
+      errors.add(:suggestions, "An event must have at least one suggestion")
+    end
   end
 
   def invitees
@@ -55,9 +62,7 @@ class Event < ActiveRecord::Base
   end
 
   def set_first_suggestion
-    if suggestions[0].blank? || suggestions[0].marked_for_destruction?
-      suggestions[0] = Suggestion.new
-    end
+    suggestions[0] ||= Suggestion.new
   end
 
   def to_param
@@ -68,5 +73,9 @@ class Event < ActiveRecord::Base
 
   def enqueue_event_created_job
     EventCreatedJob.enqueue(self)
+  end
+
+  def has_at_least_one_suggestion?
+    suggestions.reject(&:marked_for_destruction?).size == 0
   end
 end

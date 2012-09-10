@@ -160,16 +160,6 @@ describe Event, '#set_first_suggestion' do
 
     event.suggestions[0].should be_a Suggestion
   end
-
-  it 'sets the first suggestion if it is marked for destruction' do
-    event = build(:event)
-    suggestion = stub('suggestion', marked_for_destruction?: true)
-    event.suggestions[0] = suggestion
-
-    event.set_first_suggestion
-
-    event.suggestions[0].should be_a Suggestion
-  end
 end
 
 describe Event, '#enqueue_event_created_job' do
