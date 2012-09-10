@@ -314,7 +314,7 @@ DEPENDENCIES
   foreman (~> 0.46.0)
   formtastic
   heroku
-  high_voltage
+  high_voltage (~> 1.2.0)
   hirefireapp
   jquery-rails
   launchy
