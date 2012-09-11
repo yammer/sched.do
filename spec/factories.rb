@@ -64,6 +64,8 @@ FactoryGirl.define do
 
   factory :invitation do
     event
+    association :invitee, factory: :user
+    invitee_type 'User'
 
     factory :invitation_with_user do
       association :invitee, factory: :user
@@ -77,11 +79,6 @@ FactoryGirl.define do
 
     factory :invitation_with_guest do
       association :invitee, factory: :guest
-      invitee_type 'Guest'
-    end
-
-    factory :invitation_with_guest_without_name do
-      association :invitee, factory: :guest, name: nil
       invitee_type 'Guest'
     end
   end

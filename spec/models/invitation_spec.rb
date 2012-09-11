@@ -40,7 +40,7 @@ describe Invitation do
   it 'should notify a group after creation' do
     group = create(:group)
     group.stubs(:notify)
-    invitation = build(:invitation, invitee: group)
+    invitation = build(:invitation_with_group, invitee: group)
 
     invitation.save
 
@@ -66,14 +66,16 @@ describe Invitation, '#name_or_email' do
   end
 
   it 'returns an email if the invitee has no name' do
-    invitation = build_stubbed(:invitation_with_guest_without_name)
+    invitation = build_stubbed(:invitation_with_guest)
+    guest = invitation.invitee
+    guest.name = nil
 
     invitation.name_or_email.should == invitation.invitee.email
     invitation.invitee.name.should be_nil
   end
 
   it 'returns nil if there is no invitee' do
-    invitation = build_stubbed(:invitation)
+    invitation = build_stubbed(:invitation, invitee: nil)
 
     invitation.name_or_email.should == nil
   end
@@ -121,7 +123,7 @@ describe Invitation, '#yammer_user_id' do
   end
 
   it 'should return nil if there is no invitee' do
-    invitation = build_stubbed(:invitation)
+    invitation = build_stubbed(:invitation, invitee: nil)
 
     invitation.yammer_user_id.should == nil
   end
