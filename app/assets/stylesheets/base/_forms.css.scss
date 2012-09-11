@@ -1,7 +1,12 @@
 ::-webkit-input-placeholder {
   color: $placeholder-color;
 }
+
 :-moz-placeholder {
+  color:  $placeholder-color !important;
+}
+
+:-ms-placeholder {
   color:  $placeholder-color !important;
 }
 
