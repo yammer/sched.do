@@ -76,12 +76,15 @@ describe Preview, 'vote_confirmation' do
 
   it 'sends the email with the correct subject' do
     vote = create(:vote)
+    suggestion = vote.suggestion
+    event = suggestion.event
     user_name = vote.voter.name
     UserMailer.vote_confirmation(vote)
 
     mail = Preview.new.vote_confirmation
 
-    mail.subject.should == "#{user_name}, thanks for voting with Sched.do"
+    mail.subject.should ==
+      %{Thanks for voting on "#{truncate(event.name, length: 23)}" on Sched.do}
   end
 
   it 'sends the email with the correct body' do

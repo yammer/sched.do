@@ -81,6 +81,8 @@ describe UserMailer, 'vote_confirmation' do
 
   it 'sends the email with the correct subject' do
     vote = build_stubbed(:vote)
+    suggestion = vote.suggestion
+    event = suggestion.event
     user_name = vote.voter.name
 
     mail = UserMailer.vote_confirmation(vote)
