@@ -85,7 +85,8 @@ describe UserMailer, 'vote_confirmation' do
 
     mail = UserMailer.vote_confirmation(vote)
 
-    mail.subject.should == "#{user_name}, thanks for voting with Sched.do"
+    mail.subject.should == 
+      %{Thanks for voting on "#{truncate(event.name, length: 23)}" on Sched.do}
   end
 
   it 'sends the email with the correct body' do

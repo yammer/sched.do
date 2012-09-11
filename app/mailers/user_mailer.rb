@@ -1,4 +1,5 @@
 class UserMailer < ActionMailer::Base
+  include ActionView::Helpers::TextHelper
   default from: %{"Sched.do" <no-reply@sched.do>}
 
   def event_created_confirmation(event)
@@ -21,6 +22,6 @@ class UserMailer < ActionMailer::Base
     @user = vote.voter
     @event = vote.suggestion.event
     mail(to: @user.email,
-      subject: "#{@user.name}, thanks for voting with Sched.do")
+      subject: %{Thanks for voting on "#{truncate(@event.name, length: 23)}" on Sched.do})
   end
 end
