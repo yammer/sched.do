@@ -1,34 +1,28 @@
-Sched.do
-=========
+#Sched.do
 
 Create events. Have your friends vote on them. See what times work for
 everybody.
 
-This app will show off Yammer integration such as messaging your friends,
-messaging groups, and open graph integration.
+This app showcases Yammer integration such as adding activity messages,
+messaging your friends, messaging groups, and open graph integration.
 
-Infrastructure
---------------
+##Requirements
+###Ruby and Rails
 
 This is a Rails 3.2 app running on Ruby 1.9.3 and deployed to Heroku's Cedar
 stack. It has an RSpec and Turnip test suite which should be run before
 committing to the master branch.
 
-Please remember that this will be open-sourced at some point, so don't commit
-any passwords or API keys. Those should go in config variables like
-`ENV['API_KEY']`.
+Please remember this is open-source, so don't commit any passwords or API keys.
+Those should go in config variables like `ENV['API_KEY']`.
 
-Laptop setup
-------------
 
-Clone the app:
+##Laptop setup
 
-    git clone git@github.com:yammer/sched.do.git
+Fork the repo and clone the app:
 
-Set up the Heroku remotes:
+    git clone git@github.com:[GIT_USERNAME]/sched.do.git
 
-    git remote add staging git@heroku.com:scheddo-staging.git
-    git remote add production git@heroku.com:scheddo-prod.git
 
 Install Bundler 1.2.0.pre or higher:
 
@@ -44,7 +38,7 @@ Set up the app:
 Edit your .env file:
 
     cp sample.env .env
-    vi .env # Real CONSUMER_KEY value etc. are in Trajectory
+    vi .env #Use the keys given to you by Yammer
 
 Run the server with foreman:
 
@@ -56,8 +50,7 @@ Go to the server:
 
     http://localhost:3000
 
-Running tests
--------------
+##Running tests
 
 Run the whole test suite with:
 
@@ -69,12 +62,12 @@ Run individual specs like:
 
 Tab complete to make it even faster!
 
-When a spec file has many specs, you sometimes want to run just what you're working on. In that case, specify a line number:
+When a spec file has many specs, you sometimes want to run just what you're
+working on. In that case, specify a line number:
 
     rspec spec/models/user_spec.rb:8
 
-Development process
--------------------
+##Development process
 
 To run the app in development mode, use Foreman.
 
@@ -98,19 +91,22 @@ tests to make sure everything's passing. Then, implement the feature.
 
 Open up the Github repo, change into your feature-branch branch. Press the "Pull
 request" button. It should automatically choose the commits that are different
-between master and your feature-branch. Create a pull request and share the link
-in Campfire with the team. When someone else gives you the thumbs-up, you can
-merge into master:
+between master and your feature-branch. Create a pull request on your forked
+repository, then set the Head Repo to the original sched.do codebase.
 
-    git fetch origin
-    git rebase origin/master
-    git checkout master
-    git merge --ff-only feature-branch # If this fails, ensure rebasing worked.
-    git push origin master
+Be sure to submit complete test coverage for your change/new feature and a clear
+description of the issue you're addressing.
 
-For more details and screenshots of the feature branch code review process, read [this blog post](http://robots.thoughtbot.com/post/2831837714/feature-branch-code-reviews).
+For more details and screenshots of the feature branch code review process,
+read [this blog post](http://robots.thoughtbot.com/post/2831837714/feature-branch-code-reviews).
 
-Most importantly
-----------------
+##Most importantly
+
 
 Have fun!
+
+
+##License
+
+Paperclip is Copyright © 2012 Yammer, inc. It is free software and may be
+redistributed under the terms specified in the [LICENSE.md](https://github.com/thoughtbot/paperclip/blob/master/LICENSE.md) file.
