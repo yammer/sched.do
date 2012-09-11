@@ -19,9 +19,11 @@ class VoteConfirmationEmailJob < Struct.new(:vote_id)
   def no_votes_within_delay_window
     voter.
       votes.
-      where(['id != ?', vote.id]).
-      where(['created_at >= ?', vote.created_at]).
-      where(['created_at < ?', (vote.created_at + DELAY)]).
+      joins(suggestion: :event).
+      where(['votes.id != ?', vote.id]).
+      where(['events.id = ?',  vote.event.id]).
+      where(['votes.created_at >= ?', vote.created_at]).
+      where(['votes.created_at <= ?', (vote.created_at + DELAY)]).
       empty?
   end
 

@@ -22,7 +22,7 @@ describe VoteConfirmationEmailJob, '#perform' do
     vote = build_stubbed(:vote)
     Vote.stubs find: vote
 
-    VoteConfirmationEmailJob.new.perform
+    VoteConfirmationEmailJob.new(vote.id).perform
 
     Timecop.freeze(3.minutes.from_now) do
       UserMailer.should have_received(:vote_confirmation).with(vote)
@@ -34,7 +34,11 @@ describe VoteConfirmationEmailJob, '#perform' do
     UserMailer.stubs vote_confirmation: mailer
 
     first_vote = create(:vote)
-    second_vote = create(:vote, voter: first_vote.voter)
+    event = first_vote.suggestion.event
+    second_suggestion = create(:suggestion, event: event)
+    second_vote = create(:vote,
+      voter: first_vote.voter,
+      suggestion: second_suggestion)
     work_off_delayed_jobs
     Timecop.travel(3.minutes.from_now) do
       work_off_delayed_jobs
