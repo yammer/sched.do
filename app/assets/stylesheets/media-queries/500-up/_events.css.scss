@@ -3,13 +3,18 @@ div.new-event {
     &.primary {
       padding: 1em;
       @include row();
+      display: table;
+      width: 100%;
 
       div.date {
-        @include columns(6);
+        //@include columns(6);
+        display: table-cell;
+        padding-right: 1em;
       }
 
       div.times {
-        @include columns(6);
+        //@include columns(6);
+        display: table-cell;
         margin-top: 0;
         padding-top: 0;
         border-top: none;
