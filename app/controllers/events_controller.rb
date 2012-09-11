@@ -19,45 +19,30 @@ class EventsController < ApplicationController
   end
 
   def show
-    begin
-      @event = EventDecorator.find_by_uuid!(params[:id])
-      verify_or_setup_invitation_for_current_user
-      setup_invitation_for_event_creator
-    rescue ActiveRecord::RecordNotFound
-      flash[:error] = "Sorry, you are not authorized to view that event."
-      redirect_to root_path
-    end
+    @event = EventDecorator.find_by_uuid!(params[:id])
+    verify_or_setup_invitation_for_current_user
+    setup_invitation_for_event_creator
   end
 
   def edit
-    begin
-      @event = current_user.events.find_by_uuid!(params[:id])
-      @event.build_suggestions
-    rescue ActiveRecord::RecordNotFound
-      flash[:error] = "Sorry, you are not authorized to edit that event."
-      redirect_to root_path
-    end
+    @event = current_user.events.find_by_uuid!(params[:id])
+    @event.build_suggestions
   end
 
   def update
-    begin
-      @event = current_user.events.find_by_uuid!(params[:id])
-      @event.attributes = params[:event]
+    @event = current_user.events.find_by_uuid!(params[:id])
+    @event.attributes = params[:event]
 
-      if @event.save
-        redirect_to @event
-      else
-        @event.build_suggestions
+    if @event.save
+      redirect_to @event
+    else
+      @event.build_suggestions
 
-        if @event.errors[:suggestions]
-          flash[:error] = @event.errors.messages[:suggestions].to_sentence
-        end
-
-        render :edit
+      if @event.errors[:suggestions]
+        flash[:error] = @event.errors.messages[:suggestions].to_sentence
       end
-    rescue ActiveRecord::RecordNotFound
-      redirect_to root_path
-      flash[:error] = "Sorry, you are not authorized to edit that event."
+
+      render :edit
     end
   end
 

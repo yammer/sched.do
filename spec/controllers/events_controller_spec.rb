@@ -41,19 +41,14 @@ describe EventsController, '#edit' do
   end
 
   context 'with a user who did not create the event' do
-    before do
+    it "should raise ActiveRecord::RecordNotFound" do
       user = create(:user)
       event = create(:event, user: user)
       sign_in_as(create(:user))
-      get :edit, id: event.uuid
-    end
 
-    it 'redirects to the home page' do
-      response.should redirect_to(root_path)
-    end
+      sign_in_as(create(:user))
 
-    it 'tells the user that they are unauthorized' do
-      should set_the_flash[:error].to(/not authorized/)
+      lambda { get :update, id: event.uuid }.should raise_error(ActiveRecord::RecordNotFound)
     end
   end
 end
@@ -90,33 +85,18 @@ describe EventsController, '#show' do
       event = create(:event, user: user)
       fake_uuid = 'fakefake'
       sign_in_as(user)
-      get :show, id: fake_uuid
-    end
-
-    it 'redirects you to the show page' do
-      response.should redirect_to(root_path)
-    end
-
-    it 'tells the user that they are unauthorized' do
-      should set_the_flash[:error].to(/not authorized/)
+      lambda { get :show, id: fake_uuid }.should raise_error(ActiveRecord::RecordNotFound)
     end
   end
 
   context 'use an invalid uuid as a user who did not create the event' do
-    before do
+    it "should raise ActiveRecord::RecordNotFound" do
       user = create(:user)
       event = create(:event, user: user)
       sign_in_as(create(:user))
       fake_uuid = 'fakefake'
-      get :show, id: fake_uuid
-    end
 
-    it 'redirects you to the show page' do
-      response.should redirect_to(root_path)
-    end
-
-    it 'tells the user that they are unauthorized' do
-      should set_the_flash[:error].to(/not authorized/)
+      lambda { get :show, id: fake_uuid }.should raise_error(ActiveRecord::RecordNotFound)
     end
   end
 end
@@ -137,19 +117,11 @@ describe EventsController, '#update' do
   end
 
   context 'with a user who did not create the event' do
-    before do
+    it "should raise ActiveRecord::RecordNotFound" do
       user = create(:user)
       event = create(:event, user: user)
       sign_in_as(create(:user))
-      put :update, id: event.uuid
-    end
-
-    it 'redirects to the home page' do
-      response.should redirect_to(root_path)
-    end
-
-    it 'tells the user that they are unauthorized' do
-      should set_the_flash[:error].to(/not authorized/)
+      lambda { put :update, id: event.uuid }.should raise_error(ActiveRecord::RecordNotFound)
     end
   end
 end
