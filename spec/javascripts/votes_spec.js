@@ -22,7 +22,8 @@ describe ('vote callback', function(){
     expect($('#test .vote input[value=delete]').length).toEqual(1)
   });
 
-  it ('changes the input class to unvote', function(){
+  it ('changes the input class to unvote when you mouse out', function(){
+    $('#test .vote input').mouseout()
     expect($('#test .vote input').hasClass("unvote")).toEqual(true)
   });
 
@@ -52,7 +53,8 @@ describe ('unvote callback', function(){
     expect($('#test #edit_vote_1 input[value=delete]').length).toEqual(0)
   });
 
-  it ('changes the input class to vote', function(){
+  it ('changes the input class to vote when you mouse out', function(){
+    $('#test .vote input').mouseout()
     expect($('#test .vote input').hasClass("vote")).toEqual(true)
   });
 

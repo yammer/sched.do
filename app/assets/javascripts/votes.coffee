@@ -15,7 +15,8 @@ window.voteCallback = (data) ->
   $(this).attr('data-role','delete')
   $(this).attr('action',"/votes/#{data.vote.id}")
   $(this).append($('<input name="_method" type="hidden" value="delete" />'))
-  $(this).find('input.vote').removeClass("vote").addClass("unvote")
+  $(this).find('input.vote').one 'mouseout', ->
+    $(this).removeClass("vote").addClass("unvote")
   id = $(this).parent().data('id')
   $(".vote-count[data-id=#{id}]").text(parseInt($(".vote-count[data-id=#{id}]").text()) + 1 )
 
@@ -25,7 +26,8 @@ window.unvoteCallback = (data) ->
   $(this).attr('data-role','create')
   $(this).attr('action',"/votes")
   $(this).find('input[value=delete]').remove()
-  $(this).find('input.unvote').removeClass("unvote").addClass("vote")
+  $(this).find('input.vote').one 'mouseout', ->
+    $(this).find('input.unvote').removeClass("unvote").addClass("vote")
   id = $(this).parent().data('id')
   $(".vote-count[data-id=#{id}]").text(parseInt($(".vote-count[data-id=#{id}]").text()) - 1 )
 
