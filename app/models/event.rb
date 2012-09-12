@@ -33,11 +33,11 @@ class Event < ActiveRecord::Base
   end
 
   def invitees
-    (users + guests).sort{ |a, b| b.created_at <=> a.created_at }
+    (users + guests).sort { |a, b| b.created_at <=> a.created_at }
   end
 
   def invitees_with_creator
-    ([user] + invitees).sort{ |a, b| b.created_at <=> a.created_at }
+    [user] + invitees
   end
 
   def invitees_for_json

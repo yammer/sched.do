@@ -59,14 +59,16 @@ describe UserMailer, 'invitation' do
     mail.subject.should == 'You have been invited to a Sched.do event!'
   end
 
-  it 'sends the email with the correct body' do
+  it 'sends the email with the correct body when invitees present' do
     guest = build_stubbed(:guest)
-    event = build_stubbed(:event)
+    event = create(:event_with_invitees)
+    first_invitee = event.invitees.first
 
     mail = UserMailer.invitation(guest, event)
 
-    mail.body.encoded.should include (guest.name)
-    mail.body.encoded.should include (event.name)
+    mail.body.encoded.should include(guest.name)
+    mail.body.encoded.should include(event.name)
+    mail.body.encoded.should include(first_invitee.name)
   end
 end
 
@@ -87,7 +89,7 @@ describe UserMailer, 'vote_confirmation' do
 
     mail = UserMailer.vote_confirmation(vote)
 
-    mail.subject.should == 
+    mail.subject.should ==
       %{Thanks for voting on "#{truncate(event.name, length: 23)}" on Sched.do}
   end
 

@@ -12,7 +12,7 @@ class UserMailer < ActionMailer::Base
 
   def invitation(guest, event)
     @guest = guest
-    @event = event
+    @event = EventDecorator.decorate(event)
     mail(to: @guest.email,
       from: %{"#{@event.user.name} via Sched.do" <no-reply@sched.do>},
       subject: "You have been invited to a Sched.do event!")

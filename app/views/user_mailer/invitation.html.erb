@@ -1,7 +1,6 @@
 <h1 class="h1" style="color: #30AADE;display: block;font-family: Helvetica, sans-serif;font-size: 24px;font-weight: normal;line-height: 100%;margin-top: 10px;margin-right: 0;margin-bottom: 25px;margin-left: 0;text-align: left;"><%= @guest.name || @guest.email %> You’re invited!</h1>
 
-<p><strong><%= @event.user.name %></strong> needs your help to plan "<%= link_to @event.name, event_url(@event, guest_email: @guest.email), html_options = {:style => "color: #EC6E4D"} %>"</p>
-
+<p><strong><%= @event.user.name %></strong> needs help from you<%= @event.first_invitee_for_invitation %>and others to plan "<%= link_to truncate(@event.name, length: 28), event_url(@event, guest_email: @guest.email), html_options = {:style => "color: #EC6E4D"} %>"</p>
 
 <p>Here are your options:</p>
 

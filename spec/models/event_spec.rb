@@ -108,17 +108,6 @@ describe Event, '#invitees_with_creator' do
 
     event.invitees_with_creator.should =~ invitees
   end
-
-  it "returns invitees with the newest first" do
-    event = create(:event)
-    first_invitee = create(:invitation_with_user, event: event).invitee
-    second_invitee = create(:invitation_with_user, event: event).invitee
-    owner = event.user
-
-    event.reload
-
-    event.invitees_with_creator.should == [second_invitee, first_invitee, owner]
-  end
 end
 
 describe Event, '#user_voted?' do

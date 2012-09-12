@@ -23,3 +23,22 @@ describe EventDecorator, '#invitees_with_current_user_first' do
     sorted_invitees.should include(event_creator)
   end
 end
+
+describe EventDecorator, '#first_invitee_for_invitation' do
+  it 'returns a space if no invitees' do
+    event = build_stubbed(:event)
+
+    string = EventDecorator.new(event).first_invitee_for_invitation
+
+    string.should == ' '
+  end
+
+  it 'returns the first invitee if one exists' do
+    event = create(:event_with_invitees)
+    first_invitee = event.invitees.first
+
+    string = EventDecorator.new(event).first_invitee_for_invitation
+
+    string.should == ", #{first_invitee.name}, "
+  end
+end
