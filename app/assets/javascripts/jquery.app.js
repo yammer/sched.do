@@ -159,4 +159,6 @@ $(document).ready(function() {
       span.css('font-size','1em');
     }
   });
+
+  $('input, textarea').placeholder();
 });
