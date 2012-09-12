@@ -10,10 +10,6 @@
   color:  $placeholder-color !important;
 }
 
-.placeholder {
-  color:  $placeholder-color !important;
-}
-
 form {
   fieldset {
     background: transparent;
@@ -79,6 +75,10 @@ form {
     &:focus {
       @include box-shadow(inset 0 0px 5px darken($bg-color, 20%));
     }
+
+    &.placeholder {
+      color:  $placeholder-color;
+    }
   }
 
   &.ui-autocomplete-input {
@@ -93,6 +93,10 @@ form {
     font-size: 0.95em;
     line-height: 1.5em;
     padding: 1.5em;
+
+    &.placeholder {
+      color:  $placeholder-color;
+    }
   }
 
   #{$all-text-inputs} {
