@@ -88,3 +88,11 @@ end
 step 'my network should see an activity message announcing the event' do
   FakeYammer.activity_endpoint_hits.should == 1
 end
+
+step 'I enter :secondary in the first secondary field' do |secondary|
+  fill_in "event_suggestions_attributes_0_secondary", with: secondary
+end
+
+step 'I should see :expected_time in the first secondary field' do |expected_time|
+  find("#event_suggestions_attributes_0_secondary").value.should == expected_time
+end
