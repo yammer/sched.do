@@ -16,6 +16,18 @@ end
 describe VoteConfirmationEmailJob, '#perform' do
   include DelayedJobSpecHelper
 
+  it 'does not send the email immediately' do
+    mailer = stub('mailer', deliver: true)
+    UserMailer.stubs vote_confirmation: mailer
+    vote = build_stubbed(:vote)
+    Vote.stubs find: vote
+
+    VoteConfirmationEmailJob.enqueue(vote)
+    work_off_delayed_jobs
+
+    UserMailer.should have_received(:vote_confirmation).with(vote).never
+  end
+
   it 'sends the email three minutes after the job is enqueued' do
     mailer = stub('mailer', deliver: true)
     UserMailer.stubs vote_confirmation: mailer
