@@ -1,4 +1,5 @@
-#Sched.do
+Sched.do
+========
 
 Create events. Have your friends vote on them. See what times work for
 everybody.
@@ -6,9 +7,8 @@ everybody.
 This app showcases Yammer integration such as adding activity messages,
 messaging your friends, messaging groups, and open graph integration.
 
-##Requirements
-###Ruby and Rails
-
+Requirements
+--------------
 This is a Rails 3.2 app running on Ruby 1.9.3 and deployed to Heroku's Cedar
 stack. It has an RSpec and Turnip test suite which should be run before
 committing to the master branch.
@@ -17,7 +17,8 @@ Please remember this is open-source, so don't commit any passwords or API keys.
 Those should go in config variables like `ENV['API_KEY']`.
 
 
-##Laptop setup
+Laptop setup
+------------
 
 Fork the repo and clone the app:
 
@@ -50,7 +51,8 @@ Go to the server:
 
     http://localhost:3000
 
-##Running tests
+Running tests
+-------------
 
 Run the whole test suite with:
 
@@ -67,7 +69,8 @@ working on. In that case, specify a line number:
 
     rspec spec/models/user_spec.rb:8
 
-##Development process
+Development process
+-------------------
 
 To run the app in development mode, use Foreman.
 
@@ -100,13 +103,11 @@ description of the issue you're addressing.
 For more details and screenshots of the feature branch code review process,
 read [this blog post](http://robots.thoughtbot.com/post/2831837714/feature-branch-code-reviews).
 
-##Most importantly
-
-
+Most importantly
+----------------
 Have fun!
 
-
-##License
-
-Paperclip is Copyright © 2012 Yammer, inc. It is free software and may be
-redistributed under the terms specified in the [LICENSE.md](https://github.com/thoughtbot/paperclip/blob/master/LICENSE.md) file.
+License
+-------
+sched.do is Copyright © 2012 Yammer, inc. It is free software and may be
+redistributed under the terms specified in the [LICENSE.md](https://github.com/yammer/sched.do/blob/master/LICENSE.md) file.
