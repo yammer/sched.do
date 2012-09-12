@@ -49,15 +49,26 @@ ul.ui-autocomplete {
         border: 1px solid rgb(20,20,20);
         @include border-radius(3px);
         @include box-shadow(inset 0 1px 0 0 rgba(255,255,255, 0.3), 0 1px 0 0 rgba(255,255,255, 0.2));
-        height: 24px;
+        height: 30px;
         margin-right: 8px;
         @include inline-block;
         vertical-align: middle;
-        width: 24px;
+        width: 30px;
       }
 
-      span.name {
+      div.profile {
+        height: 32px;
+        @include inline-block;
         vertical-align: middle;
+
+        div.name, div.job-title {
+          line-height: 1.1em;
+        }
+
+        div.job-title {
+          text-transform: lowercase;
+          font-size: 0.8em;
+        }
       }
     }
 

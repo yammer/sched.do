@@ -24,7 +24,8 @@ YammerApi = {
             value: userObject.full_name,
             photo: userObject.photo,
             yammerUserId: userObject.id,
-            ranking: userObject.ranking
+            ranking: userObject.ranking,
+            jobTitle: userObject.job_title
           };
         })
 

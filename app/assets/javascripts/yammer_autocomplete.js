@@ -28,7 +28,10 @@ if($("input[data-role='invitation_name']").length){
       .append(
         "<a>" +
         "<div  class='autocomplete-avatar' style='background-image: url(" + item.photo + ")'></div>" +
-        "<span class='name'>" + item.label + "</span>" +
+        "<div class='profile'>" +
+        "<div class='name'>" + item.label + "</div>" +
+        "<div class='job-title'>" + item.jobTitle + "</div>" +
+        "</div>" +
         "</a>"
       )
       .appendTo( ul );

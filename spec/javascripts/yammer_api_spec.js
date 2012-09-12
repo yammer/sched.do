@@ -60,7 +60,8 @@ describe('YammerApi.autocomplete', function(){
             'messages':'14',
             'followers':'5',
             'ranking':1.0,
-            'name':'henry'
+            'name':'henry',
+            'job_title':'designer'
           },
           {
             'id':'2',
@@ -69,7 +70,7 @@ describe('YammerApi.autocomplete', function(){
             'followers':'5',
             'photo':'https://c64.assets-yammer.com/images/no_photo_small.gif',
             'ranking':2.0,
-            'name':'bob'
+            'job_title':'developer'
           }
         ]
       };
@@ -82,6 +83,7 @@ describe('YammerApi.autocomplete', function(){
               label: 'Bob Jones',
               photo: "https://c64.assets-yammer.com/images/no_photo_small.gif",
               value: 'Bob Jones',
+              jobTitle: 'developer',
               yammerUserId: '2' ,
               ranking: 2.0
             },
@@ -89,6 +91,7 @@ describe('YammerApi.autocomplete', function(){
               label: 'Henry Smith',
               photo: "https://c64.assets-yammer.com/images/no_photo_small.gif",
               value: 'Henry Smith',
+              jobTitle: 'designer',
               yammerUserId: '1',
               ranking: 1.0
             },
