@@ -3,15 +3,22 @@
   <a href="/" class="logo">
     <img src="/assets/navbar-logo.svg" data-png-fallback="/assets/navbar-logo.png" alt="Sched.do" />
   </a>
-  <% if current_user.present? %>
-    <nav>
-      <ul>
+  <nav>
+    <ul>
+      <li>
+        <% if current_user.guest? %>
+          <%= link_to 'Create Poll', "#sign-in-modal", id: "new-event", name: "sign-in-modal" %>
+        <% else %>
+          <%= link_to 'Create Poll', new_event_path, id: "new-event" %>
+        <% end %>
+      </li>
+      <% if current_user.present? %>
         <li>
           <%= link_to 'Sign out', sign_out_path %>
         </li>
+      <% end %>
       </ul>
     </nav>
-  <% end %>
 </div>
 </header>
 <%= render 'shared/flashes' -%>

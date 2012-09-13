@@ -11,6 +11,8 @@
 }
 
 $(document).ready(function() {
+  $("#new-event").leanModal({closeButton: ".modal-close"})
+
 
   var datepicker = function(){
     // Displays a date picker when suggetsion field is focused

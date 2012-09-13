@@ -24,11 +24,13 @@
 @import 'base/flashes';
 @import 'base/animations';
 @import 'base/tables';
+@import 'base/modals';
 
 //jQuery-UI
 @import 'jquery-ui/base';
 @import 'jquery-ui/datepicker';
 @import 'jquery-ui/autocomplete';
+@import 'lean-modal';
 
 //Views
 @import 'views/welcome';
