@@ -10,12 +10,12 @@ YammerApi = {
         url: '/api/v1/autocomplete/ranked',
         method: 'GET',
         data: {'prefix':term,'models' :'user:3,group:2'},
-        success: YammerApi.autocomplete.successCallback(autocompleteCallback)
+        success: YammerApi.autocomplete.successCallback(autocompleteCallback, term)
       };
       yam.request(options);
     },
 
-    successCallback: function(autocompleteCallback){
+    successCallback: function(autocompleteCallback, term){
       return function(yammerData){
         var users = _(yammerData.user)
         .map(function(userObject) {
@@ -25,7 +25,8 @@ YammerApi = {
             photo: userObject.photo,
             yammerUserId: userObject.id,
             ranking: userObject.ranking,
-            jobTitle: userObject.job_title
+            jobTitle: userObject.job_title,
+            type: 'user'
           };
         })
 
@@ -41,7 +42,8 @@ YammerApi = {
               value: groupObject.full_name,
               photo: groupObject.photo,
               yammerGroupId: groupObject.id,
-              ranking: groupObject.ranking
+              ranking: groupObject.ranking,
+              type: 'group'
             };
           })
 
@@ -50,7 +52,15 @@ YammerApi = {
             return -group.ranking;
           });
 
-        autocompleteCallback(users.concat(groups));
+        email = {
+          label: term,
+          value: term,
+          type: 'email'
+        }
+
+        users_groups_and_email = users.concat(groups)
+        users_groups_and_email.push(email)
+        autocompleteCallback(users_groups_and_email);
       };
     }
   }

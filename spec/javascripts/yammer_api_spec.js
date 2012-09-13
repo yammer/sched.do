@@ -51,6 +51,7 @@ describe('YammerApi.autocomplete', function(){
   describe('.successCallback', function(){
     it('returns a function that passes user info to a provided function', function(){
       var autocompleteCallback = jasmine.createSpy('autocompleteCallback');
+      var term = 'foobar'
       var yammerData = {
         'user': [
           {
@@ -71,11 +72,18 @@ describe('YammerApi.autocomplete', function(){
             'photo':'https://c64.assets-yammer.com/images/no_photo_small.gif',
             'ranking':2.0,
             'job_title':'developer'
+          }],
+        'group': [
+          {
+            'id':'1',
+            'full_name':'Group 1',
+            'photo':'https://c64.assets-yammer.com/images/no_photo_small.gif',
+            'ranking':2.0,
           }
         ]
       };
 
-      var result = YammerApi.autocomplete.successCallback(autocompleteCallback)(yammerData);
+      var result = YammerApi.autocomplete.successCallback(autocompleteCallback,term)(yammerData);
       expect(autocompleteCallback)
         .toHaveBeenCalledWith(
           [
@@ -85,6 +93,7 @@ describe('YammerApi.autocomplete', function(){
               value: 'Bob Jones',
               jobTitle: 'developer',
               yammerUserId: '2' ,
+              type: 'user',
               ranking: 2.0
             },
             {
@@ -93,10 +102,24 @@ describe('YammerApi.autocomplete', function(){
               value: 'Henry Smith',
               jobTitle: 'designer',
               yammerUserId: '1',
+              type: 'user',
               ranking: 1.0
             },
-          ]
-        );
+            {
+              label: 'Group 1',
+              photo: "https://c64.assets-yammer.com/images/no_photo_small.gif",
+              value: 'Group 1',
+              yammerGroupId: '1',
+              type: 'group',
+              ranking: 2.0
+            },
+            {
+              label: term,
+              value: term,
+              type: 'email'
+            }
+            ]
+       );
     });
   });
 });

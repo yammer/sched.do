@@ -1,5 +1,61 @@
 if($("input[data-role='invitation_name']").length){
-  $("input[data-role='invitation_name']").autocomplete({
+  $.widget("custom.yammerAutocomplete", $.ui.autocomplete, {
+    _renderMenu: function( ul, items ) {
+      headers = {
+        "user":"people",
+        "group":"groups"
+      }
+      email = items.pop();
+      var self = this;
+      var currentType = "";
+      $.each( items, function( index, item ) {
+        if ( item.type != currentType ) {
+          ul.append("<li class='ui-autocomplete-type'>" +
+            "<div  class='category-icon "+
+            headers[item.type] + "-icon'></div>" +
+            "<span class='title'>" + headers[item.type] +
+            "</span></li>");
+          currentType = item.type;
+        }
+        self._renderItem( ul, item );
+      });
+      self._renderEmail( ul, email);
+    },
+    _renderEmail: function( ul, email ){
+    return $("<li></li>")
+      .data("item.autocomplete", email)
+      .append(
+        "<a class='email'>" +
+        "<span>Email:</span>" + email.label +
+        "</a>"
+      )
+      .appendTo(ul);
+
+    },
+    _renderItem: function(ul, item) {
+
+    if (item.jobTitle) {
+      var jobTitle = "<p class='job-title'>" + (item.jobTitle) + "</p>";
+    } else {
+      var jobTitle = "";
+    };
+
+    return $( "<li></li>" )
+      .data("item.autocomplete", item)
+      .append(
+        "<a>" +
+        "<div  class='autocomplete-avatar' style='background-image: url(" + item.photo + ")'></div>" +
+        "<div class='outer-wrapper'><div class='profile'><div class='inner-wrapper'>" +
+        "<p class='name'>" + item.label + "</p>" + jobTitle +
+        "</div></div></div>" +
+        "</a>"
+      )
+      .appendTo(ul);
+  }
+  });
+
+
+  $("input[data-role='invitation_name']").yammerAutocomplete({
     minLength: 1,
     appendTo: '.invitation-autocomplete-suggestions',
     open: function(event, ui){
@@ -28,20 +84,6 @@ if($("input[data-role='invitation_name']").length){
       YammerApi.autocomplete.get(term, response);
     }
   })
-  .data( "autocomplete" )._renderItem = function( ul, item ) {
-    return $( "<li></li>" )
-      .data( "item.autocomplete", item )
-      .append(
-        "<a>" +
-        "<div  class='autocomplete-avatar' style='background-image: url(" + item.photo + ")'></div>" +
-        "<div class='profile'>" +
-        "<p class='name'>" + item.label + "</p>" +
-        "<p class='job-title'>" + ( item.jobTitle || "" ) + "</p>" +
-        "</div>" +
-        "</a>"
-      )
-      .appendTo( ul );
-  };
 }
 
 function clearAllNearbyDataRoles(target){
