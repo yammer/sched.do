@@ -5,7 +5,7 @@ class VoteConfirmationEmailJob < Struct.new(:vote_id)
   def self.enqueue(vote)
     Delayed::Job.enqueue(
       new(vote.id),
-      run_at: DELAY.from_now.getutc,
+      run_at: DELAY.from_now,
       priority: PRIORITY
     )
   end
