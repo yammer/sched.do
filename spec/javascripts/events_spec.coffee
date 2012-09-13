@@ -10,6 +10,8 @@ describe "window.parse_time", ->
     "1pm": "1:00pm"
     "14:46" : "2:46pm"
     "one": "one"
+    "24:00": "24:00"
+    "38:00": "38:00"
 
   it "parses times correctly", ->
     for time, parsedTime of times
