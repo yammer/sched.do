@@ -46,8 +46,8 @@ FactoryGirl.define do
 
     factory :event_with_invitees do
       after :create do |event|
-        event.users << build(:user)
         event.guests << build(:guest)
+        event.users << build(:user)
       end
     end
   end

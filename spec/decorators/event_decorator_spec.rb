@@ -33,6 +33,17 @@ describe EventDecorator, '#first_invitee_for_invitation' do
     string.should == ' '
   end
 
+  it 'returns the first invitee with a name' do
+    event = create(:event_with_invitees)
+    guest = event.invitees.first
+    guest.name = nil
+    user = event.invitees.second
+
+    string = EventDecorator.new(event).first_invitee_for_invitation
+
+    string.should == ", #{user.name}, "
+  end
+
   it 'returns the first invitee if one exists' do
     event = create(:event_with_invitees)
     first_invitee = event.invitees.first
