@@ -3,9 +3,9 @@ require 'spec_helper'
 describe ActivityCreator do
   it 'posts to the Yammer API on create' do
     RestClient.stubs(:post)
-    user = build_stubbed_user
     action = 'vote'
-    event = build_stubbed_event
+    event = build_stubbed(:event_with_invitees)
+    user = build_stubbed_user
 
     ActivityCreator.new(user, action, event).create
 
@@ -18,14 +18,6 @@ describe ActivityCreator do
   end
 
   private
-
-  def build_stubbed_event
-    event = build_stubbed(:event)
-    event.generate_uuid
-    invitees = [ build_stubbed(:user), build_stubbed(:user) ]
-    event.stubs(:invitees).returns(invitees)
-    event
-  end
 
   def build_stubbed_user
     user = build_stubbed(

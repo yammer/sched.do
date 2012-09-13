@@ -72,28 +72,52 @@ describe Event, '#build_suggestions' do
 end
 
 describe Event, '#invitees' do
-  it 'returns the event creator and users and guests invited to the event' do
+  it 'returns the users and guests invited to an event' do
     event = create(:event)
-    invitees = [event.user]
-    invitees += create_list(:invitation_with_user, 2, event: event).map(&:invitee)
-    invitees += create_list(:invitation_with_guest, 2, event: event).map(&:invitee)
+    invitees = create_list(:invitation_with_user, 2, event: event).
+      map(&:invitee)
+    invitees += create_list(:invitation_with_guest, 2, event: event).
+      map(&:invitee)
+
     event.reload
 
     event.invitees.should =~ invitees
-  end
-
-  it 'returns only the event creator if there are no invitees' do
-    event = build(:event)
-    event.invitees.should == [event.user]
   end
 
   it "returns invitees with the newest first" do
     event = create(:event)
     first_invitee = create(:invitation_with_user, event: event).invitee
     second_invitee = create(:invitation_with_user, event: event).invitee
+
     event.reload
 
-    event.invitees.should == [second_invitee, first_invitee, event.user]
+    event.invitees.should == [second_invitee, first_invitee]
+  end
+end
+
+describe Event, '#invitees_with_creator' do
+  it 'returns the creator, users, and guests invited to an event' do
+    event = create(:event)
+    invitees = [event.user]
+    invitees += create_list(:invitation_with_user, 2, event: event).
+      map(&:invitee)
+    invitees += create_list(:invitation_with_guest, 2, event: event).
+      map(&:invitee)
+
+    event.reload
+
+    event.invitees_with_creator.should =~ invitees
+  end
+
+  it "returns invitees with the newest first" do
+    event = create(:event)
+    first_invitee = create(:invitation_with_user, event: event).invitee
+    second_invitee = create(:invitation_with_user, event: event).invitee
+    owner = event.user
+
+    event.reload
+
+    event.invitees_with_creator.should == [second_invitee, first_invitee, owner]
   end
 end
 

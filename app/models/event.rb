@@ -33,12 +33,15 @@ class Event < ActiveRecord::Base
   end
 
   def invitees
-    group = [user] + users + guests
-    group.sort{|a, b| b.created_at <=> a.created_at }
+    (users + guests).sort{ |a, b| b.created_at <=> a.created_at }
+  end
+
+  def invitees_with_creator
+    ([user] + invitees).sort{ |a, b| b.created_at <=> a.created_at }
   end
 
   def invitees_for_json
-    invitees.map { |i| { name: i.name, email: i.email } }
+    invitees_with_creator.map { |i| { name: i.name, email: i.email } }
   end
 
   def generate_uuid
