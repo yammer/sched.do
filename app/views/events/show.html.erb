@@ -6,6 +6,9 @@
 
 <div class="show-event">
   <div class="event-header">
+    <div id="created_by">
+      Created by: <%= @event.user.name %>
+    </div>
     <h1 class="event-name">
       <%= @event.name %>
     </h1>
