@@ -110,4 +110,4 @@ Have fun!
 License
 -------
 sched.do is Copyright © 2012 Yammer, inc. It is free software and may be
-redistributed under the terms specified in the [LICENSE.md](https://github.com/yammer/sched.do/blob/master/LICENSE.md) file.
+redistributed under the terms specified in the [LICENSE](https://github.com/yammer/sched.do/blob/master/LICENSE) file.
