@@ -64,11 +64,16 @@ header {
 
       ul {
         margin: 0;
+
         li {
+          @include inline-block;
           vertical-align: middle;
 
           a, a:link, a:visited {
             @extend .button;
+
+            &.create-poll {
+            }
           }
         }
       }
