@@ -20,7 +20,11 @@ class Invitation < ActiveRecord::Base
   after_create :send_notification, unless: :skip_notification
 
   def self.invite_without_notification(event, invitee)
-    create(event: event, invitee: invitee, skip_notification: true)
+    create(
+      event: event,
+      invitee: invitee,
+      skip_notification: true
+    )
   end
 
   def build_invitee(params, options={})
@@ -29,11 +33,9 @@ class Invitation < ActiveRecord::Base
   end
 
   def invitee_is_not_event_owner
-    errors[:base] << "You can not invite yourself" if invitee == event.try(:user)
-  end
-
-  def name_or_email
-    invitee.try(:name) || invitee.try(:email)
+    if invitee == event.try(:user)
+      errors[:base] << 'You can not invite yourself'
+    end
   end
 
   def send_notification
@@ -44,42 +46,56 @@ class Invitation < ActiveRecord::Base
     event.user
   end
 
-  def yammer_group_id
-    invitee.try(:yammer_group_id)
-  end
-
-  def yammer_user_id
-    invitee.try(:yammer_user_id)
-  end
-
   private
+
+  def event_creator
+    event.user
+  end
+
+  def existing_invitee
+    User.find_by_email(name_or_email_param) ||
+    Guest.find_by_email(name_or_email_param)
+  end
 
   def find_group
     Group.find_or_create_by_yammer_group_id(
-      yammer_group_id: invitee_params[:yammer_group_id],
-      name: invitee_params[:name_or_email])
+      yammer_group_id: yammer_group_id_param,
+      name: name_or_email_param
+    )
   end
 
-  def find_guest
-    Guest.find_by_email(invitee_params[:name_or_email]) ||
-      Guest.create_without_name_validation(invitee_params[:name_or_email])
+  def find_user_by_email_or_create_guest
+    existing_invitee ||
+      Guest.create_without_name_validation(name_or_email_param)
   end
 
   def find_or_create_invitee
-    if invitee_params[:yammer_user_id].present?
-      find_user
-    elsif invitee_params[:yammer_group_id].present?
+    if yammer_user_id_param.present?
+      find_or_create_user
+    elsif yammer_group_id_param.present?
       find_group
     else
-      find_guest
+      find_user_by_email_or_create_guest
     end
   end
 
-  def find_user
+  def find_or_create_user
     User.find_or_create_with_auth(
-        access_token: event.user.access_token,
-        yammer_staging: event.user.yammer_staging?,
-        yammer_user_id: invitee_params[:yammer_user_id]
+        access_token: event_creator.access_token,
+        yammer_staging: event_creator.yammer_staging?,
+        yammer_user_id: yammer_user_id_param
     )
+  end
+
+  def name_or_email_param
+    invitee_params[:name_or_email]
+  end
+
+  def yammer_group_id_param
+    invitee_params[:yammer_group_id]
+  end
+
+  def yammer_user_id_param
+    invitee_params[:yammer_user_id]
   end
 end

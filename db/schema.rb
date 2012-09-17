@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120821234552) do
+ActiveRecord::Schema.define(:version => 20120918204532) do
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(:version => 20120821234552) do
     t.string   "uuid",       :limit => 8, :null => false
   end
 
+  add_index "events", ["name"], :name => "index_events_on_name"
   add_index "events", ["user_id"], :name => "index_events_on_user_id"
   add_index "events", ["uuid"], :name => "index_events_on_uuid"
 
@@ -84,6 +85,7 @@ ActiveRecord::Schema.define(:version => 20120821234552) do
   end
 
   add_index "suggestions", ["event_id"], :name => "index_suggestions_on_event_id"
+  add_index "suggestions", ["primary"], :name => "index_suggestions_on_primary"
 
   create_table "user_votes", :force => true do |t|
     t.integer "user_id", :null => false
@@ -106,7 +108,9 @@ ActiveRecord::Schema.define(:version => 20120821234552) do
     t.integer  "yammer_network_id",                         :null => false
   end
 
+  add_index "users", ["email"], :name => "index_users_on_email"
   add_index "users", ["encrypted_access_token"], :name => "index_users_on_encrypted_access_token"
+  add_index "users", ["name"], :name => "index_users_on_name"
   add_index "users", ["yammer_network_id"], :name => "index_users_on_yammer_network_id"
   add_index "users", ["yammer_user_id"], :name => "index_users_on_yammer_user_id"
 
