@@ -26,36 +26,21 @@ describe Invitation do
 
     invitation.should be_invalid
   end
+end
 
-  it 'notifies the invitee after creation' do
-    user = create(:user)
-    user.stubs(:notify)
-    invitation = build(:invitation, invitee: user)
-
-    invitation.save
-
-    user.should have_received(:notify)
-  end
-
-  it 'notifies a group after creation' do
-    group = create(:group)
-    group.stubs(:notify)
-    invitation = build(:invitation_with_group, invitee: group)
-
-    invitation.save
-
-    group.should have_received(:notify)
+describe Invitation, '#create' do
+  it 'creates a delayed job' do
+    InvitationCreatedJob.stubs(:enqueue)
   end
 
   it 'invite_without_notification does not notify the invitee' do
     user = create(:user)
     event = create(:event)
-    user.stubs(:notify)
+    user.stubs(:deliver_email_or_private_message)
 
     Invitation.invite_without_notification(event, user)
 
-    user.should have_received(:notify).never
-  end
+    user.should have_received(:deliver_email_or_private_message).never  end
 end
 
 describe Invitation, 'build_invitee' do

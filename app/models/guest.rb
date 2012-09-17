@@ -39,16 +39,28 @@ class Guest < ActiveRecord::Base
     UserMailer.delay.invitation(self, invitation.event)
   end
 
+  def deliver_email_or_private_message(message, sender, object)
+    UserMailer.send(message, object).deliver
+  end
+
   def set_should_validate_name
     @should_validate_name = true
   end
 
   def vote_for_suggestion(suggestion)
-    votes.where(suggestion_id: suggestion.id).first
+    votes.find_by_suggestion_id(suggestion.id)
   end
 
-  def voted_for?(suggestion)
+  def voted_for_suggestion?(suggestion)
     vote_for_suggestion(suggestion).present?
+  end
+
+  def voted_for_event?(event)
+    votes_for_event(event).exists?
+  end
+
+  def votes_for_event(event)
+    event.votes.where(voter_id: self, voter_type: self.class.name)
   end
 
   def yammer_group_id

@@ -7,6 +7,7 @@ SchedDo::Application.routes.draw do
   resources :votes, only: [:create, :destroy]
   resources :invitations, only: [:create, :update]
   resources :guests, only: [:new, :create, :update]
+  resources :reminders, only: [:create]
 
   root to: "welcome#index"
 

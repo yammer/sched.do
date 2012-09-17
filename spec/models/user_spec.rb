@@ -51,16 +51,15 @@ describe User, '.find_or_create_with_access_token_and_yammer_user_id' do
     new_yammer_user_id = 321123
     access_token = 'PUH98h'
     yammer_staging = false
-    User.count.should == 0
-
-    User.find_or_create_with_auth(
+    lambda {
+      User.find_or_create_with_auth(
       access_token: access_token,
       yammer_staging: yammer_staging,
       yammer_user_id: new_yammer_user_id
-    )
+      )
+    }.should change(User,:count).by(1)
 
     user = User.last
-    User.count.should == 1
     user.yammer_user_id.should == new_yammer_user_id
     user.access_token.should == access_token
     user.yammer_staging.should == yammer_staging
@@ -137,17 +136,32 @@ describe User, '#vote_for_suggestion' do
   end
 end
 
-describe User, '#voted_for?' do
+describe User, '#voted_for_suggestion?' do
   it "returns true if the user voted for the suggestion" do
     user = create(:user)
     vote = create(:vote, voter: user)
-    user.voted_for?(vote.suggestion).should be_true
+    user.voted_for_suggestion?(vote.suggestion).should be_true
   end
 
   it "returns false if the user did not vote for the suggestion" do
     user = create(:user)
     suggestion = create(:suggestion)
-    user.voted_for?(suggestion).should be_false
+    user.voted_for_suggestion?(suggestion).should be_false
+  end
+end
+
+describe User, '#voted_for_event?' do
+  it "returns true if the user voted for the event" do
+    user = create(:user)
+    vote = create(:vote, voter: user)
+    user.voted_for_event?(vote.event).should be_true
+  end
+
+  it "returns false if the user did not vote for the event" do
+    user = create(:user)
+    event = create(:event)
+
+    user.voted_for_event?(event).should be_false
   end
 end
 
@@ -216,7 +230,7 @@ describe User, '#create_yammer_activity' do
   end
 end
 
-describe User, '#notify' do
+describe User, '#deliver_email_or_private_message' do
   include DelayedJobSpecHelper
 
   it 'if the user is out-network, it sends an email notification' do
@@ -225,12 +239,17 @@ describe User, '#notify' do
     mailer = stub('mailer', deliver: true)
     UserMailer.stubs(invitation: mailer)
     organizer = invitation.sender
+    event = invitation.event
 
-    invitee.notify(invitation)
+    invitee.deliver_email_or_private_message(
+      :invitation,
+      event.user,
+      invitation
+    )
     work_off_delayed_jobs
 
     organizer.in_network?(invitee).should be_false
-    UserMailer.should have_received(:invitation).with(invitee, invitation.event)
+    UserMailer.should have_received(:invitation).with(invitation)
     mailer.should have_received(:deliver).once
   end
 
@@ -240,7 +259,11 @@ describe User, '#notify' do
                                invitee: invitee)
     organizer = invitation.sender
 
-    invitee.notify(invitation)
+    invitee.deliver_email_or_private_message(
+      :reminder,
+      invitation.event.user,
+      invitation
+    )
     work_off_delayed_jobs
 
     organizer.in_network?(invitee).should be_true

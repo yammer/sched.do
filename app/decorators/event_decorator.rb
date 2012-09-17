@@ -5,6 +5,10 @@ class EventDecorator < Draper::Base
     invitees_with_creator.unshift(current_user).uniq
   end
 
+  def invitees_who_have_not_voted_count
+    invitees_with_creator.count{ |invitee| not invitee.voted_for_event?(self) }
+  end
+
   def first_invitee_for_invitation
     if invitees?
       first_invitee_name_with_commas

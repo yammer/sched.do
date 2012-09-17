@@ -48,7 +48,7 @@
                   <%= render 'events/vote', suggestion: suggestion,
                     vote_for_suggestion: current_user.vote_for_suggestion(suggestion) %>
                 <% else %>
-                  <% if invitee.voted_for?(suggestion) %>
+                  <% if invitee.voted_for_suggestion?(suggestion) %>
                     <td class="voted">
                       <%= image_tag('checkmark.png') %>
                     </td>

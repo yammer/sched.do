@@ -68,11 +68,11 @@ class User < ActiveRecord::Base
     self[:image] || 'http://' + ENV['HOSTNAME'] + '/assets/no_photo.png'
   end
 
-  def notify(invitation)
-    if invitation.sender.in_network?(invitation.invitee)
-      PrivateMessager.new(invitation).deliver
+  def deliver_email_or_private_message(message, sender, object)
+    if in_network?(sender)
+      PrivateMessenger.new(self, message, object).deliver
     else
-      UserMailer.delay.invitation(self, invitation.event)
+      UserMailer.send(message, object).deliver
     end
   end
 
@@ -80,8 +80,16 @@ class User < ActiveRecord::Base
     votes.find_by_suggestion_id(suggestion.id)
   end
 
-  def voted_for?(suggestion)
+  def voted_for_suggestion?(suggestion)
     vote_for_suggestion(suggestion).present?
+  end
+
+  def voted_for_event?(event)
+    votes_for_event(event).exists?
+  end
+
+  def votes_for_event(event)
+    event.votes.where(voter_id: self, voter_type: self.class.name)
   end
 
   def yammer_user?

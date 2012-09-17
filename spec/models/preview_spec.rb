@@ -32,9 +32,8 @@ end
 
 describe Preview, 'invitation' do
   it 'sends the email to the correct recipient' do
-    guest = create(:guest)
-    event = create(:event)
-    UserMailer.invitation(guest, event)
+    invitation = create(:invitation_with_guest)
+    guest = invitation.invitee
 
     mail = Preview.new.invitation
 
@@ -42,9 +41,7 @@ describe Preview, 'invitation' do
   end
 
   it 'sends the email with the correct subject' do
-    guest = create(:guest)
-    event = create(:event)
-    UserMailer.invitation(guest, event)
+    invitation = create(:invitation_with_guest)
 
     mail = Preview.new.invitation
 
@@ -52,9 +49,9 @@ describe Preview, 'invitation' do
   end
 
   it 'sends the email with the correct subject' do
-    guest = create(:guest)
-    event = create(:event)
-    UserMailer.invitation(guest, event)
+    invitation = create(:invitation_with_guest)
+    event = invitation.event
+    guest = invitation.invitee
 
     mail = Preview.new.invitation
 

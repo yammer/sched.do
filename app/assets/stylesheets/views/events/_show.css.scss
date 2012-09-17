@@ -15,6 +15,10 @@ div.show-event {
       font-size: 2em;
     }
 
+    .reminders {
+      text-align: right;
+    }
+
     a.edit-button {
       @extend .button;
       display: inline-block;

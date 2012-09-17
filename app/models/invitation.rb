@@ -17,7 +17,7 @@ class Invitation < ActiveRecord::Base
     scope: [:invitee_type, :event_id]
   }
 
-  after_create :send_notification, unless: :skip_notification
+  after_create :queue_invitation_created_job, unless: :skip_notification
 
   def self.invite_without_notification(event, invitee)
     create(
@@ -38,15 +38,25 @@ class Invitation < ActiveRecord::Base
     end
   end
 
-  def send_notification
-    invitee.notify(self)
-  end
-
   def sender
     event.user
   end
 
+  def send_invitation
+    invitee.deliver_email_or_private_message(:invitation, sender, self)
+  end
+
+  def send_reminder
+    if not invitee.voted_for_event?(event)
+      invitee.deliver_email_or_private_message(:reminder, sender, self)
+    end
+  end
+
   private
+
+  def yammer_group_id
+    invitee.try(:yammer_group_id)
+  end
 
   def event_creator
     event.user
@@ -97,5 +107,9 @@ class Invitation < ActiveRecord::Base
 
   def yammer_user_id_param
     invitee_params[:yammer_user_id]
+  end
+
+  def queue_invitation_created_job
+    InvitationCreatedJob.enqueue(self)
   end
 end

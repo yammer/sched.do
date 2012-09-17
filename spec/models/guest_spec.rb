@@ -28,6 +28,55 @@ describe Guest, 'image' do
   end
 end
 
+
+describe Guest, '#vote_for_suggestion' do
+  it "returns the user's vote for the given suggestion if the user has one" do
+    user = create(:user)
+    vote = create(:vote, voter: user)
+
+    user.vote_for_suggestion(vote.suggestion).should == vote
+  end
+
+  it 'returns nil if the user has not voted on the suggestion' do
+    user = create(:user)
+    suggestion = create(:suggestion)
+
+    user.vote_for_suggestion(suggestion).should be_nil
+  end
+end
+
+describe Guest, '#voted_for_suggestion?' do
+  it "returns true if the user voted for the suggestion" do
+    user = create(:user)
+    vote = create(:vote, voter: user)
+
+    user.voted_for_suggestion?(vote.suggestion).should be_true
+  end
+
+  it "returns false if the user did not vote for the suggestion" do
+    user = create(:user)
+    suggestion = create(:suggestion)
+
+    user.voted_for_suggestion?(suggestion).should be_false
+  end
+end
+
+describe User, '#voted_for_event?' do
+  it "returns true if the guest voted for the event" do
+    guest = create(:guest)
+    vote = create(:vote, voter: guest)
+
+    guest.voted_for_event?(vote.event).should be_true
+  end
+
+  it "returns false if the guest did not vote for the event" do
+    guest = create(:guest)
+    event = create(:event)
+
+    guest.voted_for_event?(event).should be_false
+  end
+end
+
 describe Guest, '#yammer_user?' do
   it 'always returns false' do
     build(:guest).should_not be_yammer_user
@@ -66,22 +115,6 @@ describe Guest, '#votes' do
     guest.votes.should == []
   end
 end
-
-describe Guest, '#vote_for_suggestion' do
-  it "returns the guest's vote for the given suggestion if the guest has one" do
-    guest = create(:guest)
-    suggestion = create(:suggestion)
-    vote = create(:vote, suggestion: suggestion, voter: guest)
-    guest.vote_for_suggestion(suggestion).should == vote
-  end
-
-  it 'returns nil if the guest has not voted on the suggestion' do
-    guest = build(:guest)
-    suggestion = create(:suggestion)
-    guest.vote_for_suggestion(suggestion).should be_nil
-  end
-end
-
 
 describe Guest, '#notify' do
   include DelayedJobSpecHelper

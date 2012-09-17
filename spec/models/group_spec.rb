@@ -21,16 +21,18 @@ describe Group, '#yammer_user_id' do
   end
 end
 
-describe Group, '#notify' do
+describe Group, '#deliver_email_or_private_message' do
   include DelayedJobSpecHelper
 
-  it 'it sends a private message notification to the group' do
-    invitee = build_stubbed(:group)
-    invitation = build_stubbed(:invitation_with_group,
-                               invitee: invitee)
-    organizer = invitation.sender
+  it 'it sends a private message' do
+    group = create(:group)
+    invitation = build(:invitation_with_group, invitee: group)
 
-    invitee.notify(invitation)
+    group.deliver_email_or_private_message(
+      :invitation,
+      invitation.event.user,
+      invitation
+    )
     work_off_delayed_jobs
 
     FakeYammer.messages_endpoint_hits.should == 1

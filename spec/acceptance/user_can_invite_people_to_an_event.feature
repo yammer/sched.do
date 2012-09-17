@@ -21,14 +21,14 @@ Feature: User can invite people to an event
     And a user exists with a name of "Joe Smith" and yammer_network_id of "1"
     When I invite the Yammer user "Joe Smith" to "Clown party"
     Then I should see "Joe Smith" in the list of invitees
-    And "Joe Smith" should receive a private message
+    And "Joe Smith" should receive 1 private message
 
   Scenario: User invites a Yammer user by email address
     Given I sign in and create an event named "Clown party"
     And a user exists with a name of "Bruce Wayne" and email of "batman@example.com"
     When I invite "batman@example.com" to "Clown party"
     Then I should see "Bruce Wayne" in the list of invitees
-    And "Bruce Wayne" should receive a private message
+    And "Bruce Wayne" should receive 1 private message
 
   Scenario: User invites a Yammer user out-network using their name
     Given I sign in and create an event named "Clown party"

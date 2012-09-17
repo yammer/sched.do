@@ -42,29 +42,32 @@ end
 
 describe UserMailer, 'invitation' do
   it 'sends the email to the correct recipient' do
-    guest = build_stubbed(:guest)
-    event = build_stubbed(:event)
+    invitation = create(:invitation_with_guest)
+    guest = invitation.invitee
+    event = invitation.event
 
-    mail = UserMailer.invitation(guest, event)
+    mail = UserMailer.invitation(invitation)
 
     mail.to.should == [guest.email]
   end
 
   it 'sends the email with the correct subject' do
-    guest = build_stubbed(:guest)
-    event = build_stubbed(:event)
+    invitation = create(:invitation_with_guest)
+    guest = invitation.invitee
+    event = invitation.event
 
-    mail = UserMailer.invitation(guest, event)
+    mail = UserMailer.invitation(invitation)
 
     mail.subject.should == 'You have been invited to a Sched.do event!'
   end
 
   it 'sends the email with the correct body when invitees present' do
-    guest = build_stubbed(:guest)
-    event = create(:event_with_invitees)
+    invitation = create(:invitation_with_guest)
+    guest = invitation.invitee
+    event = invitation.event
     first_invitee = event.invitees.first
 
-    mail = UserMailer.invitation(guest, event)
+    mail = UserMailer.invitation(invitation)
 
     mail.body.encoded.should include(guest.name)
     mail.body.encoded.should include(event.name)
