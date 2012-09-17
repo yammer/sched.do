@@ -93,6 +93,7 @@ $(document).ready(function() {
   bind_to_changed_primary_fields();
 
   $('#new_event ol').bind("insertion-callback", function() {
+    set_default_date();
     bind_to_new_time_fields();
     bind_to_changed_primary_fields();
   });
@@ -114,6 +115,18 @@ $(document).ready(function() {
         $(this).val(primary_suggestion_value);
       });
     });
+  }
+
+  function set_default_date(){
+   previousDate = $('input[data-role="primary-suggestion"]')
+      .eq(-2)
+      .datepicker('getDate')
+    if(previousDate){
+      previousDate.setDate(previousDate.getDate()+1);
+      setTimeout( function(){
+        $('input[data-role="primary-suggestion"]:last').datepicker("option", "defaultDate", previousDate);
+      }, 10);
+    }
   }
 
   // Select event URL on click
