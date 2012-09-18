@@ -28,6 +28,27 @@ div.show-event {
     }
   }
 
+  .created-by {
+    padding: 10px 0px;
+
+    > span {
+      vertical-align: middle;
+    }
+
+    div.avatar {
+      background: rgb(255,255,255);
+      background-position: center center;
+      background-size: cover;
+      border: 1px solid darken($bg-color, 35%);
+      @include border-radius(3px);
+      @include box-shadow(inset 0 1px 0 0 rgba(255,255,255, 0.3), 0 1px 0 0 rgba(255,255,255, 1));
+      height: 18px;
+      @include inline-block;
+      vertical-align: middle;
+      width: 18px;
+    }
+  }
+
   ul.suggestions {
     margin: 5% 0;
 

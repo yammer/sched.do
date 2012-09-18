@@ -74,7 +74,7 @@ step 'I should see an event with the following invitees in order:' do |table|
 end
 
 step 'I should see :user_name within the created by section' do |user_name|
-  within '#created_by' do
+  within '.created-by' do
     page.should have_content user_name
   end
 end

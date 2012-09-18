@@ -6,9 +6,6 @@
 
 <div class="show-event">
   <div class="event-header">
-    <div id="created_by">
-      Created by: <%= @event.user.name %>
-    </div>
     <h1 class="event-name">
       <%= @event.name %>
     </h1>
@@ -22,6 +19,12 @@
       <%= link_to 'Remind Them!', reminders_path(event_id: @event), method: :post %>
     </div>
   </div>
+
+  <section class="created-by">
+    <span><i>Created by:</i></span>
+    <div class="avatar" style="background-image: url(<%= @event.user.image %>)"></div>
+    <span><%= @event.user.name %></span>
+  </section>
 
   <%= render partial: 'events/grid' %>
 
