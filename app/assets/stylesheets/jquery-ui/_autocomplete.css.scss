@@ -47,6 +47,7 @@ ul.ui-autocomplete {
         @include inline-block;
         overflow: hidden;
         vertical-align: middle;
+        width: 210px;
 
         > p {
           margin: 0px;
@@ -55,6 +56,7 @@ ul.ui-autocomplete {
         p.name {
           line-height: 1.1em;
           font-weight: bold;
+          overflow: hidden;
           white-space: nowrap;
           text-overflow: ellipsis;
         }
@@ -62,6 +64,7 @@ ul.ui-autocomplete {
         p.job-title {
           text-transform: lowercase;
           line-height: 1em;
+          overflow: hidden;
           white-space: nowrap;
           text-overflow: ellipsis;
         }
