@@ -188,5 +188,6 @@ $(document).ready(function() {
     }
   });
 
+  // Pollyfill for input placeholder text
   $('input, textarea').placeholder();
 });

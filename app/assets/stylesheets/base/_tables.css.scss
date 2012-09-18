@@ -172,6 +172,10 @@ div.table-wrapper {
 
         input#auto-complete {
           padding-right: 4.5em;
+
+          &.autocomplete-true {
+            @include border-radius(4px 4px 0px 0px);
+          }
         }
 
         .add-invitee {

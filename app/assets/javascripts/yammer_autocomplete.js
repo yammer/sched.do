@@ -2,6 +2,12 @@ if($("input[data-role='invitation_name']").length){
   $("input[data-role='invitation_name']").autocomplete({
     minLength: 1,
     appendTo: '.invitation-autocomplete-suggestions',
+    open: function(event, ui){
+          $('#auto-complete').addClass("autocomplete-true")
+    },
+    close: function(event, ui){
+          $('#auto-complete').removeClass("autocomplete-true")
+    },
     select: function(event, ui) {
       var id;
       var dataRole;
