@@ -1,7 +1,11 @@
-<div class="modal" id="sign-in-modal">
-  <%= link_to "Sign in with Yammer", "/auth/yammer", class: "sign-in",  id: "sign-in" %>
-  <a href="#close" class="modal-close">X</a>
-<div>
-  You must be signed in with Yammer to create polls.
-</div>
+<div class="modal-window" id="sign-in-modal">
+  <div class="inner">
+    <h2>To create your own Sched.do polls you must be signed in with Yammer.</h2>
+    <%= link_to "Sign in with Yammer", "/auth/yammer", class: "sign-in",  id: "sign-in" %>
+  </div>
+  <a href="#close" class="modal-close">
+    <div class="close-inner">
+      <img src="/assets/modal-close-icon.svg" data-png-fallback="/assets/modal-close-icon.png" alt="close">
+    </div>
+  </a>
 </div>

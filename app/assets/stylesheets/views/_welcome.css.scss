@@ -105,7 +105,6 @@ body.welcome {
         &.sign-in {
           @extend .button;
           @extend .yammer-button;
-
           margin-bottom: 0;
         }
       }

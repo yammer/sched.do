@@ -1,3 +1,76 @@
-#sign-in-modal {
-  display: none
+#lean_overlay {
+    background: transparent;
+    //@include background-image(radial-gradient(50% 30%, circle cover, rgba(0,0,0, 0.3), rgba(0,0,0, 0.8)));
+    display: none;
+    height:100%;
+    left: 0px;
+    position: fixed;
+    top: 0px;
+    width:100%;
+    z-index:100;
+}
+
+.modal-window {
+  background: rgba(0, 0, 0, 0.6);
+  @include border-radius(5px);
+  @include box-shadow(0 15px 80px 15px rgba(0,0,0, 0.5));
+  display: none;
+  left: 50%;
+  padding: 5px;
+  position: absolute;
+  width: 500px;
+  z-index: 1000;
+
+  .inner {
+    background: rgb(255,255,255);
+    @include border-radius(3px);
+    padding: 40px 30px;
+    text-align: center;
+  }
+
+  .sign-in {
+    display: block;
+    @extend .button;
+    @extend .yammer-button;
+    max-width: 350px;
+    margin-bottom: 0px;
+    text-align: center;
+  }
+
+  .modal-close {
+    background: rgba(0,0,0, 0.6);
+    @include border-radius(20px);
+    @include box-sizing(border-box);
+    @include box-shadow(0 2px 6px 0 rgba(0,0,0, 0.25));
+    cursor: pointer;
+    height: 34px;
+    padding: 3px;
+    position: absolute;
+    right: -9px;
+    text-align: center;
+    @include transition(all 0.15s ease-out);
+    text-shadow: 0 1px rgba(255,255,255, 0.8);
+    top: -9px;
+    width: 34px;
+    z-index: 3;
+
+    .close-inner {
+      background: rgba(255,255,255, 0.8);
+      @include border-radius(20px);
+      height: 100%;
+      text-align: center;
+      width: 100%;
+
+      img {
+        @include inline-block;
+        margin-top: 4px;
+      }
+    }
+
+    &:hover {
+      .close-inner {
+        background-color: rgba(255,255,255, 1);
+      }
+    }
+  }
 }
