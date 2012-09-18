@@ -13,6 +13,9 @@
 $(document).ready(function() {
   $("#new-event").leanModal({closeButton: ".modal-close"})
 
+  var placeholderPollyfill = function() {
+    $('input, textarea').placeholder();
+  }
 
   var datepicker = function(){
     // Displays a date picker when suggetsion field is focused
@@ -79,6 +82,7 @@ $(document).ready(function() {
     datepicker();
     addRemovalAnimation();
     showRemoveIcons();
+    placeholderPollyfill();
 
     // Animate new nodes
     var lastNode =  forms.find('div.nested-fields.primary:not(".initial"):last');
@@ -188,6 +192,6 @@ $(document).ready(function() {
     }
   });
 
-  // Pollyfill for input placeholder text
-  $('input, textarea').placeholder();
+  placeholderPollyfill();
+
 });
