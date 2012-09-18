@@ -29,8 +29,8 @@ if($("input[data-role='invitation_name']").length){
         "<a>" +
         "<div  class='autocomplete-avatar' style='background-image: url(" + item.photo + ")'></div>" +
         "<div class='profile'>" +
-        "<div class='name'>" + item.label + "</div>" +
-        "<div class='job-title'>" + item.jobTitle + "</div>" +
+        "<p class='name'>" + item.label + "</p>" +
+        "<p class='job-title'>" + item.jobTitle + "</p>" +
         "</div>" +
         "</a>"
       )

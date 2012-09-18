@@ -1,6 +1,6 @@
 ul.ui-autocomplete {
   border: none;
-  @include box-shadow(0 2px 8px darken($bg-color, 20%));
+  @include box-shadow(0 2px 12px rgba(0,0,0, 0.15));
   background: transparent;
   margin-top: 2px;
 
@@ -10,91 +10,73 @@ ul.ui-autocomplete {
     margin: 0;
 
     a {
-      background-color: #555;
-      @include background-image(linear-gradient(#555, #393939));
-      border: 1px solid #000;
+      background-color: #fff;
+      border: 1px solid darken($bg-color, 20%);
       border-bottom: none;
       @include border-radius(0);
-      @include box-shadow(inset 0 1px 0 #888);
-      color: #fff;
+      color: darken($bg-color, 50%);
       cursor: pointer;
       display: block;
       font-size: 0.9em;
       padding: 0.6em 0.7em;
       position: relative;
       text-decoration: none;
-      text-shadow: 0 -1px 0 #000;
-      @include transition(padding 0.15s linear);
+      text-shadow: 0 1px 0 rgba(255,255,255, 0.5);
 
       &.ui-state-hover {
-        background-color: $orange;
-        @include background-image(url(add-sign.svg));
-        @include background-image(url(add-sign.svg), linear-gradient(lighten($orange, 5%), darken($orange, 5%) 80%, $orange));
-        background-position: 0.6em, center;
-        -ms-background-position-x: 8px;
-        -ms-background-position-y: center;
-        background-repeat: no-repeat;
-        border: 1px solid darken($orange, 20%);
+        background-color: $success;
+        @include background-image(linear-gradient(#fff, darken($success, 2%)));
         border-bottom: none;
-        border-top-color: #000;
-        @include box-shadow(inset 0 1px 0px lighten($orange, 20%));
-        color: #fff ;
-        padding-left: 2.1em;
-        text-shadow: 0 -1px 0px darken($orange,40%);
       }
 
       div.autocomplete-avatar {
         background-position: center center;
         background-size: cover;
-        border: 1px solid rgb(20,20,20);
+        border: 1px solid darken($bg-color, 20%);
         @include border-radius(3px);
         @include box-shadow(inset 0 1px 0 0 rgba(255,255,255, 0.3), 0 1px 0 0 rgba(255,255,255, 0.2));
-        height: 30px;
+        height: 32px;
         margin-right: 8px;
         @include inline-block;
         vertical-align: middle;
-        width: 30px;
+        width: 32px;
       }
 
       div.profile {
-        height: 32px;
+        height: 34px;
         @include inline-block;
+        overflow: hidden;
         vertical-align: middle;
 
-        div.name, div.job-title {
-          line-height: 1.1em;
+        > p {
+          margin: 0px;
         }
 
-        div.job-title {
+        p.name {
+          line-height: 1.1em;
+          font-weight: bold;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+
+        p.job-title {
           text-transform: lowercase;
-          font-size: 0.8em;
+          line-height: 1em;
+          white-space: nowrap;
+          text-overflow: ellipsis;
         }
       }
     }
 
     &:first-child {
       a {
-        @include border-radius(4px 4px 0 0);
-
-        &.ui-state-hover {
-          border-top: 1px solid darken($orange, 20%);
-        }
+        border-top: none;
       }
     }
 
     &:last-child {
       a {
-        @include border-radius(0 0 4px 4px);
-
-        &.ui-state-hover {
-          border-bottom: 1px solid darken($orange, 20%);
-        }
-      }
-    }
-
-    &:only-child {
-      a {
-        @include border-radius(4px);
+        border-bottom: 1px solid darken($bg-color, 20%);
       }
     }
   }
