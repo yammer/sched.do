@@ -15,10 +15,6 @@ div.show-event {
       font-size: 2em;
     }
 
-    .reminders {
-      text-align: right;
-    }
-
     a.edit-button {
       @extend .button;
       display: inline-block;
@@ -48,6 +44,12 @@ div.show-event {
       width: 18px;
     }
   }
+
+  .reminders {
+    padding: 10px 0px;
+    float: right;
+  }
+
 
   ul.suggestions {
     margin: 5% 0;

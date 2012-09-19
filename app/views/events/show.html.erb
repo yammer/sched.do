@@ -12,13 +12,15 @@
     <% if current_user.able_to_edit?(@event) %>
       <%= link_to 'Edit', edit_event_path(@event), class: "edit-button" %>
     <% end %>
-    <div class="reminders">
-      <%= @event.invitees_with_creator.count %> people invited
-      |
-      <%= @event.invitees_who_have_not_voted_count %> have not voted
-      <%= link_to 'Remind Them!', reminders_path(event_id: @event), method: :post %>
-    </div>
   </div>
+
+  <section class="reminders">
+    <%= @event.invitees_with_creator.count %> people invited
+    |
+    <%= @event.invitees_who_have_not_voted_count %> have not voted
+    <%= link_to 'Remind Them!', reminders_path(event_id: @event), method: :post %>
+  </section>
+
 
   <section class="created-by">
     <span><i>Created by:</i></span>
