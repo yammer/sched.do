@@ -1,6 +1,7 @@
 <%= semantic_form_for(@event) do |f| %>
   <%= f.inputs do %>
     <%= f.input :name, label: false, placeholder: "What do you want to schedule? (e.g. Company Picnic)" %>
+    Characters Left: <span class="text-counter"></span>
 
     <div class="suggestions">
       <p>Suggest Dates &amp; Times</p>

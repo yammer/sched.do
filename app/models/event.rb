@@ -1,4 +1,6 @@
 class Event < ActiveRecord::Base
+  EVENT_NAME_MAX = 28
+
   attr_accessible :name, :suggestion, :suggestions_attributes, :uuid
 
   belongs_to :owner, :foreign_key => 'user_id', :class_name => "User"
@@ -11,6 +13,7 @@ class Event < ActiveRecord::Base
 
   validate :has_suggestions?
   validates :name, presence: { message: 'This field is required' }
+  validates :name, length: { maximum: EVENT_NAME_MAX }
   validates :user_id, presence: true
   validates :uuid, presence: true
 

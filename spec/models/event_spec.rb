@@ -1,5 +1,7 @@
 require 'spec_helper'
 
+EVENT_NAME_MAX = 28
+
 describe Event do
   include DelayedJobSpecHelper
 
@@ -13,6 +15,7 @@ describe Event do
 
   it { should validate_presence_of(:name).with_message(/This field is required/) }
   it { should validate_presence_of(:user_id) }
+  it { should ensure_length_of(:name).is_at_most(EVENT_NAME_MAX) }
 
   it { should allow_mass_assignment_of(:suggestion) }
   it { should allow_mass_assignment_of(:suggestions_attributes) }

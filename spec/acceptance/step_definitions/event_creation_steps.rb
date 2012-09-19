@@ -96,3 +96,15 @@ end
 step 'I should see :expected_time in the first secondary field' do |expected_time|
   find("#event_suggestions_attributes_0_secondary").value.should == expected_time
 end
+
+step 'I should see :message in the text counter' do |message|
+  find(".text-counter").should have_content(message)
+end
+
+step 'I enter :name in the name field' do |name|
+  fill_in "event_name", with: name
+end
+
+step 'I should see :message in the name field' do |message|
+  find("#event_name").value.should == message
+end
