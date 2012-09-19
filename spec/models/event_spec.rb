@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Event do
   include DelayedJobSpecHelper
 
-  it { should belong_to(:user) }
+  it { should belong_to(:owner) }
   it { should have_many(:suggestions) }
   it { should have_many(:votes).through(:suggestions) }
   it { should have_many(:invitations) }
@@ -98,7 +98,7 @@ end
 describe Event, '#invitees_with_creator' do
   it 'returns the creator, users, and guests invited to an event' do
     event = create(:event)
-    invitees = [event.user]
+    invitees = [event.owner]
     invitees += create_list(:invitation_with_user, 2, event: event).
       map(&:invitee)
     invitees += create_list(:invitation_with_guest, 2, event: event).
@@ -113,7 +113,7 @@ end
 describe Event, '#user_voted?' do
   it 'returns true if the user has voted on the event' do
     event = create(:event)
-    user = event.user
+    user = event.owner
     suggestion = create(:suggestion, event: event)
     vote = create(:vote, voter: user, suggestion: suggestion)
 
@@ -122,7 +122,7 @@ describe Event, '#user_voted?' do
 
   it 'returns false if the user has not voted on the event' do
     event = create(:event)
-    user = event.user
+    user = event.owner
     suggestion = create(:suggestion, event: event)
 
     event.user_voted?(user).should be_false
@@ -132,7 +132,7 @@ end
 describe Event, '#user_owner?' do
   it 'returns true if the user is the owner of the event' do
     event = create(:event)
-    user = event.user
+    user = event.owner
 
     event.should be_user_owner(user)
   end
@@ -147,7 +147,7 @@ end
 describe Event, '#user_votes' do
   it 'does not return an event\'s votes for a user unless they voted' do
     event = create(:event)
-    user = event.user
+    user = event.owner
     suggestion = create(:suggestion, event: event)
     vote = create(:vote, suggestion: suggestion)
 
@@ -156,7 +156,7 @@ describe Event, '#user_votes' do
 
   it 'returns an events votes for a specific user if they voted' do
     event = create(:event)
-    user = event.user
+    user = event.owner
     suggestion = create(:suggestion, event: event)
     vote = create(:vote, voter: user, suggestion: suggestion)
 

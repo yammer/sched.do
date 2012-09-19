@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Preview, 'event_created_confirmation' do
   it 'sends the email to the correct recipient' do
     event = create(:event)
-    creator = event.user
+    creator = event.owner
 
     mail = Preview.new.event_created_confirmation(event)
 
@@ -12,7 +12,7 @@ describe Preview, 'event_created_confirmation' do
 
   it 'sends the email with the correct subject' do
     event = create(:event)
-    creator = event.user
+    creator = event.owner
 
     mail = Preview.new.event_created_confirmation(event)
 
@@ -21,7 +21,7 @@ describe Preview, 'event_created_confirmation' do
 
   it 'sends the email with the correct body' do
     event = create(:event)
-    creator = event.user
+    creator = event.owner
 
     mail = Preview.new.event_created_confirmation(event)
 
@@ -87,7 +87,7 @@ describe Preview, 'vote_confirmation' do
   it 'sends the email with the correct body' do
     vote = create(:vote)
     event = vote.event
-    user_name = event.user.name
+    user_name = event.owner.name
     event_name = vote.event.name
     UserMailer.vote_confirmation(vote)
 

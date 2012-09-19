@@ -30,7 +30,7 @@ describe Group, '#deliver_email_or_private_message' do
 
     group.deliver_email_or_private_message(
       :invitation,
-      invitation.event.user,
+      invitation.event.owner,
       invitation
     )
     work_off_delayed_jobs

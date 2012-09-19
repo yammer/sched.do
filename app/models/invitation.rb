@@ -33,13 +33,13 @@ class Invitation < ActiveRecord::Base
   end
 
   def invitee_is_not_event_owner
-    if invitee == event.try(:user)
+    if invitee == event.try(:owner)
       errors[:base] << 'You can not invite yourself'
     end
   end
 
   def sender
-    event.user
+    event.owner
   end
 
   def send_invitation
@@ -59,7 +59,7 @@ class Invitation < ActiveRecord::Base
   end
 
   def event_creator
-    event.user
+    event.owner
   end
 
   def existing_invitee

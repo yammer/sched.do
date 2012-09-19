@@ -2,7 +2,7 @@
   Thanks for voting!
 </h1>
 
-<p>Thanks for helping <strong><%= @event.user.name %></strong> with “<%= link_to @event.name, event_url(@event), html_options = { :style => "color: #EC6E4D"} %>”.</p>
+<p>Thanks for helping <strong><%= @event.owner.name %></strong> with “<%= link_to @event.name, event_url(@event), html_options = { :style => "color: #EC6E4D"} %>”.</p>
 
 <p>You voted for:</p>
 

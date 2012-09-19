@@ -18,6 +18,6 @@ class EventCreatedJob < Struct.new(:event_id)
   end
 
   def user
-    event.user
+    event.owner
   end
 end

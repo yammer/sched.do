@@ -11,28 +11,28 @@ class PrivateMessenger
   def reminder
     @invitation = @message_object
     @event = @invitation.event
-    @sender = @invitation.event.user
+    @sender = @invitation.event.owner
     @message_body = reminder_message_body
   end
 
   def group_reminder
     @invitation = @message_object
     @event = @invitation.event
-    @sender = @invitation.event.user
+    @sender = @invitation.event.owner
     @message_body = reminder_message_body
   end
 
   def invitation
     @invitation = @message_object
     @event = @invitation.event
-    @sender = @invitation.event.user
+    @sender = @invitation.event.owner
     @message_body = invitation_message_body
   end
 
   def group_invitation
     @invitation = @message_object
     @event = @invitation.event
-    @sender = @invitation.event.user
+    @sender = @invitation.event.owner
     @message_body = group_invitation_message_body
   end
 
@@ -48,7 +48,7 @@ class PrivateMessenger
 
   def reminder_message_body
     <<-BODY.strip_heredoc
-      Reminder: Help out #{@event.user.name} by voting on "#{@event.name}".
+      Reminder: Help out #{@event.owner.name} by voting on "#{@event.name}".
 
       Please click this link to view the options and vote: #{event_url(@event)}
 
@@ -64,7 +64,7 @@ class PrivateMessenger
 
 
       Thanks in advance!
-      -#{@event.user.name}
+      -#{@event.owner.name}
 
       *This poll was sent using Sched.do. Create your own polls for free at #{root_url}
     BODY

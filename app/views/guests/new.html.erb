@@ -7,7 +7,7 @@
 <% end %>
 
 <div class="guest-sign-in">
-  <p class="sign-in-message">Sign in to Sched.do and help <%= @event.user.name %> decide on "<%= @event.name %>".</p>
+  <p class="sign-in-message">Sign in to Sched.do and help <%= @event.owner.name %> decide on "<%= @event.name %>".</p>
 
   <%= link_to "Sign in with Yammer", "/auth/yammer", class: "sign-in",  id: "sign-in" %>
 

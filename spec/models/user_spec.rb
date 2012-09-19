@@ -85,8 +85,8 @@ end
 describe User, '#able_to_edit?' do
   it 'returns true if the user created the event' do
     event = create(:event)
-    user = event.user
-    event.user.should be_able_to_edit(event)
+    user = event.owner
+    event.owner.should be_able_to_edit(event)
   end
 
   it 'returns false if the user did not create the event' do
@@ -243,7 +243,7 @@ describe User, '#deliver_email_or_private_message' do
 
     invitee.deliver_email_or_private_message(
       :invitation,
-      event.user,
+      event.owner,
       invitation
     )
     work_off_delayed_jobs
@@ -261,7 +261,7 @@ describe User, '#deliver_email_or_private_message' do
 
     invitee.deliver_email_or_private_message(
       :reminder,
-      invitation.event.user,
+      invitation.event.owner,
       invitation
     )
     work_off_delayed_jobs

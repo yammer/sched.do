@@ -33,7 +33,7 @@ describe EventsController, '#edit' do
   context 'with the user who created the event' do
     it 'is successful' do
       user = create(:user)
-      event = create(:event, user: user)
+      event = create(:event, owner: user)
       sign_in_as(user)
       get :edit, id: event.uuid
       response.should be_success
@@ -43,7 +43,7 @@ describe EventsController, '#edit' do
   context 'with a user who did not create the event' do
     it "should raise ActiveRecord::RecordNotFound" do
       user = create(:user)
-      event = create(:event, user: user)
+      event = create(:event, owner: user)
       sign_in_as(create(:user))
 
       sign_in_as(create(:user))
@@ -57,7 +57,7 @@ describe EventsController, '#show' do
   context 'with the user who created the event' do
     it 'is successful' do
       user = create(:user)
-      event = create(:event, user: user)
+      event = create(:event, owner: user)
       sign_in_as(user)
 
       get :show, id: event.uuid
@@ -69,7 +69,7 @@ describe EventsController, '#show' do
   context 'with a user who did not create the event' do
     before do
       user = create(:user)
-      event = create(:event, user: user)
+      event = create(:event, owner: user)
       sign_in_as(create(:user))
       get :show, id: event.uuid
     end
@@ -82,7 +82,7 @@ describe EventsController, '#show' do
   context 'use an invalid uuid as the user who created the event' do
     before do
       user = create(:user)
-      event = create(:event, user: user)
+      event = create(:event, owner: user)
       fake_uuid = 'fakefake'
       sign_in_as(user)
       lambda { get :show, id: fake_uuid }.should raise_error(ActiveRecord::RecordNotFound)
@@ -92,7 +92,7 @@ describe EventsController, '#show' do
   context 'use an invalid uuid as a user who did not create the event' do
     it "should raise ActiveRecord::RecordNotFound" do
       user = create(:user)
-      event = create(:event, user: user)
+      event = create(:event, owner: user)
       sign_in_as(create(:user))
       fake_uuid = 'fakefake'
 
@@ -104,7 +104,7 @@ end
 describe EventsController, '#update' do
   context 'with the user who created the event' do
     let!(:event) { create(:event) }
-    let!(:user) { event.user }
+    let!(:user) { event.owner }
 
     before do
       sign_in_as(user)
@@ -119,7 +119,7 @@ describe EventsController, '#update' do
   context 'with a user who did not create the event' do
     it "should raise ActiveRecord::RecordNotFound" do
       user = create(:user)
-      event = create(:event, user: user)
+      event = create(:event, owner: user)
       sign_in_as(create(:user))
       lambda { put :update, id: event.uuid }.should raise_error(ActiveRecord::RecordNotFound)
     end

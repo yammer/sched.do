@@ -16,7 +16,7 @@ describe EventDecorator, '#invitees_with_current_user_first' do
 
   it 'includes the event creator' do
     event = build_stubbed(:event_with_invitees)
-    event_creator = event.user
+    event_creator = event.owner
 
     sorted_invitees = EventDecorator.new(event).invitees_with_current_user_first
 

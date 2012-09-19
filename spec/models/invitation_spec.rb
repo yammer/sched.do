@@ -22,7 +22,7 @@ describe Invitation do
 
   it 'is invalid if the event owner is invited' do
     event = create(:event)
-    invitation = build_stubbed(:invitation, event: event, invitee: event.user)
+    invitation = build_stubbed(:invitation, event: event, invitee: event.owner)
 
     invitation.should be_invalid
   end
@@ -164,7 +164,7 @@ describe Invitation, '#invitee_is_not_event_owner' do
   it 'sends an error if the invitee is the event owner' do
     invitation = create(:invitation)
     event = invitation.event
-    user = event.user
+    user = event.owner
 
     invitation.build_invitee(yammer_user_id: user.yammer_user_id)
     invitation.save
@@ -188,6 +188,6 @@ describe Invitation, '#sender' do
   it 'tell you who created the invitations event' do
     invitation = build_stubbed(:invitation_with_user)
 
-    invitation.sender.should == invitation.event.user
+    invitation.sender.should == invitation.event.owner
   end
 end

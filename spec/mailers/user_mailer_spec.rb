@@ -13,7 +13,7 @@ end
 describe UserMailer, 'event_created_confirmation' do
   it 'sends the email to the correct recipient' do
     event = build_stubbed(:event)
-    creator = event.user
+    creator = event.owner
 
     mail = UserMailer.event_created_confirmation(event)
 
@@ -22,7 +22,7 @@ describe UserMailer, 'event_created_confirmation' do
 
   it 'sends the email with the correct subject' do
     event = build_stubbed(:event)
-    creator = event.user
+    creator = event.owner
 
     mail = UserMailer.event_created_confirmation(event)
 
@@ -31,7 +31,7 @@ describe UserMailer, 'event_created_confirmation' do
 
   it 'sends the email with the correct body' do
     event = build_stubbed(:event)
-    creator = event.user
+    creator = event.owner
 
     mail = UserMailer.event_created_confirmation(event)
 
@@ -99,7 +99,7 @@ describe UserMailer, 'vote_confirmation' do
   it 'sends the email with the correct body' do
     vote = build_stubbed(:vote)
     event = vote.event
-    user_name = event.user.name
+    user_name = event.owner.name
     event_name = vote.event.name
 
     mail = UserMailer.vote_confirmation(vote)

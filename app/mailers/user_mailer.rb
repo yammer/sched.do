@@ -4,7 +4,7 @@ class UserMailer < ActionMailer::Base
 
   def event_created_confirmation(event)
     @event = event
-    @creator = @event.user
+    @creator = @event.owner
     mail(
       to: @creator.email,
       subject: "You created #{@event.name} on Sched.do"
@@ -16,7 +16,7 @@ class UserMailer < ActionMailer::Base
     @event = EventDecorator.decorate(invitation.event)
     mail(
       to: @guest.email,
-      from: from_text(@event.user.name),
+      from: from_text(@event.owner.name),
       subject: "You have been invited to a Sched.do event!"
     )
   end
@@ -26,8 +26,8 @@ class UserMailer < ActionMailer::Base
     @event = EventDecorator.decorate(invitation.event)
     mail(
       to: @guest.email,
-      from: from_text(@event.user.name),
-      subject: %{Reminder: Help out #{@event.user.name} by voting on "#{@event.name}"}
+      from: from_text(@event.owner.name),
+      subject: %{Reminder: Help out #{@event.owner.name} by voting on "#{@event.name}"}
     )
   end
 

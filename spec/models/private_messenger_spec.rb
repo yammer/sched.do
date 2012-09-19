@@ -5,7 +5,7 @@ describe PrivateMessenger, "#reminder" do
     user = create(:user)
     invitee = create(:user)
     message = :reminder
-    event = create(:event, user: user)
+    event = create(:event, owner: user)
     invitation = build(:invitation, event: event, invitee: invitee)
 
     PrivateMessenger.new(user, message, invitation).deliver
@@ -21,14 +21,14 @@ describe PrivateMessenger, "#group_reminder" do
     user = create(:user)
     group = create(:group)
     message = :group_reminder
-    event = create(:event, user: user)
+    event = create(:event, owner: user)
     invitation = build(:invitation, event: event, invitee: group)
 
     PrivateMessenger.new(user, message, invitation).deliver
 
     FakeYammer.messages_endpoint_hits.should == 1
     FakeYammer.message.should include("Reminder")
-    FakeYammer.message.should include(event.user.name)
+    FakeYammer.message.should include(event.owner.name)
   end
 end
 
@@ -37,7 +37,7 @@ describe PrivateMessenger, "#group_invitation" do
     user = create(:user)
     group = create(:group)
     message = :group_invitation
-    event = create(:event, user: user)
+    event = create(:event, owner: user)
     invitation = build(:invitation, event: event, invitee: group)
 
     PrivateMessenger.new(group, message, invitation).deliver
@@ -52,7 +52,7 @@ describe PrivateMessenger, "#invitation" do
   it 'sends a invitation' do
     user = create(:user)
     message = :invitation
-    event = create(:event, user: user)
+    event = create(:event, owner: user)
     invitation = build(:invitation, event: event)
 
     PrivateMessenger.new(user, message, invitation).deliver

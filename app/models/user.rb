@@ -33,7 +33,7 @@ class User < ActiveRecord::Base
   end
 
   def able_to_edit?(event)
-    event.user == self
+    event.owner == self
   end
 
   def create_yammer_activity(action, event)

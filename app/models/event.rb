@@ -1,7 +1,7 @@
 class Event < ActiveRecord::Base
   attr_accessible :name, :suggestion, :suggestions_attributes, :uuid
 
-  belongs_to :user
+  belongs_to :owner, :foreign_key => 'user_id', :class_name => "User"
   has_many :suggestions
   has_many :votes, through: :suggestions
   has_many :invitations
@@ -37,7 +37,7 @@ class Event < ActiveRecord::Base
   end
 
   def invitees_with_creator
-    [user] + invitees
+    [owner] + invitees
   end
 
   def invitees_for_json
@@ -49,7 +49,7 @@ class Event < ActiveRecord::Base
   end
 
   def user_owner?(user)
-    self.user == user
+    self.owner == user
   end
 
   def user_invited?(user)

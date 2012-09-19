@@ -27,7 +27,7 @@ describe EventCreatedJob, '#perform' do
   it 'creates a Yammer activity message' do
     event = build_stubbed(:event)
     Event.stubs(find: event)
-    user = event.user
+    user = event.owner
     action = EventCreatedJob::ACTION
     activity_creator = stub('activity_creator', create: true)
     ActivityCreator.stubs(new: activity_creator)

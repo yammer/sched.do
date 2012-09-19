@@ -1,6 +1,6 @@
 <%= @guest.name || @guest.email %>, You’re invited!
 
-<%= @event.user.name %> needs help from you<%= @event.first_invitee_for_invitation %>and others to plan "<%= link_to @event.name, event_url(@event, guest_email: @guest.email) %>".
+<%= @event.owner.name %> needs help from you<%= @event.first_invitee_for_invitation %>and others to plan "<%= link_to @event.name, event_url(@event, guest_email: @guest.email) %>".
 
 Here are your options:
 
@@ -10,4 +10,4 @@ Here are your options:
 
 lick here to vote: <%= link_to @event.name, event_url(@event, guest_email: @guest.email) %>
 
-<%= @event.user.name %> sent this poll in just seconds using Sched.do. Create your own polls for free at <%= link_to "#{root_url}", root_url %>.
+<%= @event.owner.name %> sent this poll in just seconds using Sched.do. Create your own polls for free at <%= link_to "#{root_url}", root_url %>.
