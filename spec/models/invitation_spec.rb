@@ -19,6 +19,7 @@ describe Invitation do
 
     invitation.should be_valid
   end
+<<<<<<< HEAD
 
   it 'is invalid if the event owner is invited' do
     event = create(:event)
@@ -26,6 +27,8 @@ describe Invitation do
 
     invitation.should be_invalid
   end
+=======
+>>>>>>> Remove owner can not invite self validation
 end
 
 describe Invitation, '#create' do
@@ -157,30 +160,6 @@ describe Invitation, 'build_invitee' do
 
       Invitation.count.should == 0
     end
-  end
-end
-
-describe Invitation, '#invitee_is_not_event_owner' do
-  it 'sends an error if the invitee is the event owner' do
-    invitation = create(:invitation)
-    event = invitation.event
-    user = event.owner
-
-    invitation.build_invitee(yammer_user_id: user.yammer_user_id)
-    invitation.save
-
-    invitation.errors.messages[:base].first.should ==
-      'You can not invite yourself'
-  end
-
-  it 'sends no error if the invitee is not the event owner' do
-    invitation = create(:invitation)
-    user = create(:user)
-
-    invitation.build_invitee(yammer_user_id: user.yammer_user_id)
-    invitation.save
-
-    invitation.errors.messages[:base].should be_nil
   end
 end
 

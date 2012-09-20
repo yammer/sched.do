@@ -10,7 +10,6 @@ class Invitation < ActiveRecord::Base
 
   validates :event_id, presence: true
   validates :invitee_type, presence: true
-  validate  :invitee_is_not_event_owner
   validates :invitee_id, presence: { message: "is invalid" }
   validates :invitee_id, uniqueness: {
     message: "has already been invited",
@@ -30,12 +29,6 @@ class Invitation < ActiveRecord::Base
   def build_invitee(params, options={})
     self.invitee_params = params
     self.invitee = find_or_create_invitee
-  end
-
-  def invitee_is_not_event_owner
-    if invitee == event.try(:owner)
-      errors[:base] << 'You can not invite yourself'
-    end
   end
 
   def sender
