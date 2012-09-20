@@ -1,12 +1,16 @@
 class EventDecorator < Draper::Base
   decorates :event
 
-  def invitees_with_current_user_first
-    invitees_with_creator.unshift(current_user).uniq
+  def other_invitees_count
+    (invitees.count - 1).abs
   end
 
-  def invitees_who_have_not_voted_count
-    invitees_with_creator.count{ |invitee| not invitee.voted_for_event?(self) }
+  def invitees_with_current_user_first
+    invitees.unshift(current_user).uniq
+  end
+
+  def other_invitees_who_have_not_voted_count
+    (invitees_who_have_not_voted.length - 1).abs
   end
 
   def first_invitee_for_invitation
@@ -37,5 +41,9 @@ class EventDecorator < Draper::Base
 
   def invitees?
     invitees.count > 0
+  end
+
+  def invitees_who_have_not_voted
+    invitees.select{ |invitee| not invitee.voted_for_event?(self) }
   end
 end

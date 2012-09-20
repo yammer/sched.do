@@ -15,7 +15,7 @@ describe EventDecorator, '#invitees_with_current_user_first' do
   end
 
   it 'includes the event creator' do
-    event = build_stubbed(:event_with_invitees)
+    event = create(:event_with_invitees)
     event_creator = event.owner
 
     sorted_invitees = EventDecorator.new(event).invitees_with_current_user_first
@@ -33,7 +33,7 @@ describe EventDecorator, '#invitees_who_have_not_voted_count' do
     suggestion = create(:suggestion, event: event)
     vote = create(:vote, voter: invitees.last, suggestion: suggestion)
 
-    decorated_event.invitees_who_have_not_voted_count.should == 2
+    decorated_event.other_invitees_who_have_not_voted_count.should == 1
   end
 end
 

@@ -21,6 +21,7 @@ class Event < ActiveRecord::Base
     allow_destroy: true
 
   after_create :enqueue_event_created_job
+  after_create :invite_owner
   before_validation :generate_uuid, :on => :create
   before_validation :set_first_suggestion
 
@@ -39,12 +40,12 @@ class Event < ActiveRecord::Base
     (users + guests).sort { |a, b| b.created_at <=> a.created_at }
   end
 
-  def invitees_with_creator
-    [owner] + invitees
+  def invitees_for_json
+    invitees.map { |i| { name: i.name, email: i.email } }
   end
 
-  def invitees_for_json
-    invitees_with_creator.map { |i| { name: i.name, email: i.email } }
+  def invite_owner
+    Invitation.invite_without_notification(self, owner)
   end
 
   def generate_uuid

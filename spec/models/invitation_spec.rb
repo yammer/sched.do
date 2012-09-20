@@ -19,16 +19,16 @@ describe Invitation do
 
     invitation.should be_valid
   end
-<<<<<<< HEAD
 
-  it 'is invalid if the event owner is invited' do
+  it 'is invalid if the invitee was already invited' do
     event = create(:event)
-    invitation = build_stubbed(:invitation, event: event, invitee: event.owner)
+    user = create(:user)
 
-    invitation.should be_invalid
+    first_invitation = create(:invitation, event: event, invitee: user)
+    second_invitation = build_stubbed(:invitation, event: event, invitee: user)
+
+    second_invitation.should be_invalid
   end
-=======
->>>>>>> Remove owner can not invite self validation
 end
 
 describe Invitation, '#create' do
@@ -152,13 +152,12 @@ describe Invitation, 'build_invitee' do
 
   context 'with no yammer_user_id and no email' do
     it 'does not create an invitation' do
-      Invitation.count.should == 0
       invitation = build(:invitation)
 
-      invitation.build_invitee(yammer_user_id: '', name_or_email: '')
-      invitation.save
-
-      Invitation.count.should == 0
+      expect {
+        invitation.build_invitee(yammer_user_id: '', name_or_email: '')
+        invitation.save
+      }.not_to change(Invitation, :count)
     end
   end
 end

@@ -20,13 +20,14 @@
       <div class="avatar" style="background-image: url(<%= @event.owner.image %>)"></div>
       <span><%= @event.owner.name %></span>
     </div>
-
-    <div class="reminder">
-      <span><%= @event.invitees_with_creator.count %> people invited</span>
-      <span class="divider">|</span>
-      <span><%= @event.invitees_who_have_not_voted_count %> have not voted</span>
-      <%= link_to 'Remind Them!', reminders_path(event_id: @event), method: :post, class: "remind-all" %>
-    </div>
+    <% if @event.other_invitees_count > 0 %>
+      <div class="reminder">
+        <span><%= pluralize(@event.other_invitees_count, "other person") %> invited</span>
+        <span class="divider">|</span>
+        <span><%= pluralize(@event.other_invitees_who_have_not_voted_count, 'has not voted','have not voted') %></span>
+        <%= link_to 'Remind Them!', reminders_path(event_id: @event), method: :post, class: "remind-all" %>
+      </div>
+    <% end %>
   </section>
 
   <%= render partial: 'events/grid' %>

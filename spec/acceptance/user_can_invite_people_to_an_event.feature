@@ -5,6 +5,13 @@ Feature: User can invite people to an event
     When I invite "Unknown User" to "Clown party"
     Then I should see "Invitee is invalid"
 
+  Scenario: User invites a user twice
+    Given I sign in and create an event named "Clown party"
+    And a user exists with a name of "Joe Smith"
+    When I invite the Yammer user "Joe Smith" to "Clown party"
+    And I invite the Yammer user "Joe Smith" to "Clown party"
+    Then I should see "Invitee has already been invited"
+
   Scenario: User invites a guest by email address
     Given I sign in and create an event named "Clown party"
     When I invite "batman@example.com" to "Clown party"

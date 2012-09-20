@@ -72,12 +72,19 @@ describe Event, '#build_suggestions' do
     event.suggestions[0].should == first_suggestion
     event.suggestions[1].should == second_suggestion
   end
+
+  it 'adds the owner as the first invitee upon event creation' do
+    event = create(:event)
+
+    event.invitees.first.should == event.owner
+  end
 end
 
 describe Event, '#invitees' do
   it 'returns the users and guests invited to an event' do
     event = create(:event)
-    invitees = create_list(:invitation_with_user, 2, event: event).
+    invitees = [ event.owner ]
+    invitees += create_list(:invitation_with_user, 2, event: event).
       map(&:invitee)
     invitees += create_list(:invitation_with_guest, 2, event: event).
       map(&:invitee)
@@ -94,22 +101,7 @@ describe Event, '#invitees' do
 
     event.reload
 
-    event.invitees.should == [second_invitee, first_invitee]
-  end
-end
-
-describe Event, '#invitees_with_creator' do
-  it 'returns the creator, users, and guests invited to an event' do
-    event = create(:event)
-    invitees = [event.owner]
-    invitees += create_list(:invitation_with_user, 2, event: event).
-      map(&:invitee)
-    invitees += create_list(:invitation_with_guest, 2, event: event).
-      map(&:invitee)
-
-    event.reload
-
-    event.invitees_with_creator.should =~ invitees
+    event.invitees.should == [second_invitee, first_invitee, event.owner]
   end
 end
 

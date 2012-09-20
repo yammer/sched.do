@@ -6,7 +6,7 @@ if Rails.env.development? || Rails.env.test?
     end
 
     def invitation
-      invitation = Invitation.first
+      invitation = Invitation.last
       UserMailer.invitation(invitation)
     end
 
