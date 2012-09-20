@@ -9,6 +9,10 @@ class EventDecorator < Draper::Base
     invitees.unshift(current_user).uniq
   end
 
+  def invitations_excluding_current_user
+    invitations.reject { |invitation| invitation.invitee == current_user }
+  end
+
   def other_invitees_who_have_not_voted_count
     (invitees_who_have_not_voted.length - 1).abs
   end

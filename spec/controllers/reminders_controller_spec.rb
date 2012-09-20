@@ -11,10 +11,10 @@ describe RemindersController, '#create' do
     Event.should have_received(:find_by_uuid!).with("5").once
   end
 
-  it 'sends a reminder message to all models passed in the collection' do
-    user = create(:user)
-    sign_in_as(user)
-
+  it 'sends a reminder to invited users, but not to the current user' do
+    current_user = create(:user)
+    sign_in_as(current_user)
+    EventDecorator.any_instance.stubs(current_user: current_user)
     guest = create(:guest)
     user = create(:user)
     event = create_event_with_invitees(guest, user)
@@ -24,6 +24,7 @@ describe RemindersController, '#create' do
 
     guest.should have_received(:deliver_email_or_private_message).once
     user.should have_received(:deliver_email_or_private_message).once
+    current_user.should have_received(:deliver_email_or_private_message).never
   end
 
   def create_event_with_invitees(guest, user)

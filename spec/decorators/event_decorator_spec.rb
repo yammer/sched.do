@@ -37,6 +37,23 @@ describe EventDecorator, '#invitees_who_have_not_voted_count' do
   end
 end
 
+
+describe EventDecorator, '#invitations_excluding_current_user' do
+  it 'returns all invitations excluding the invitation for the current user' do
+    event = create(:event)
+    decorated_event = EventDecorator.new(event)
+    owner_invitation = event.invitations.first
+    owner = owner_invitation.invitee
+    EventDecorator.any_instance.stubs(current_user: owner)
+    new_invitation = create(:invitation_with_user, event: event)
+
+    invitations = decorated_event.invitations_excluding_current_user
+
+    invitations.should include new_invitation
+    invitations.should_not include owner_invitation
+  end
+end
+
 describe EventDecorator, '#first_invitee_for_invitation' do
   it 'returns a space if no invitees' do
     event = build_stubbed(:event)
