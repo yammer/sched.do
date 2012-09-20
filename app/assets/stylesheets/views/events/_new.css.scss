@@ -1,6 +1,19 @@
 div.new-event {
   @extend .sheet;
 
+  .char-limit {
+    p {
+      color: darken($bg-color, 25%);
+      font-size: 0.8em;
+      font-style: italic;
+      margin-top: -8px;
+
+      span.text-counter {
+        color: darken($bg-color, 50%);
+      }
+    }
+  }
+
   div.suggestions {
     margin-top: 15px;
     padding-top: 15px;
