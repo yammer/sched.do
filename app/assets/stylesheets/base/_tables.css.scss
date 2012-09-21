@@ -50,30 +50,55 @@ div.table-wrapper {
     &#invitees {
       background: #fff;
       border: 1px solid darken($bg-color, 20%);
+      @include border-radius(4px 0 0 0);
       @include box-sizing(border-box);
+      @include box-shadow(1px 0px 0px rgba(darken($bg-color, 50%), 0.1));
       left: 0;
-      overflow: hidden;
       position: absolute;
-      top: 75px;
+      top: 0px;
+      @include user-select();
       width: $table-width-mobile;
 
       &.blank {
-        top: 145px;
+        top: 0px;
+      }
+
+      th {
+        //background-color: darken($bg-color, 3%);
+        background-color: $bg-color;
+        //@include background-image(linear-gradient($bg-color, darken($bg-color, 6%)));
+  //background-color: darken($bg-color, 2%);
+  //@include background-image(linear-gradient(#fff, darken($bg-color, 2%)));
+        border-bottom: 1px solid darken($bg-color, 20%);
+        @include box-sizing(border-box);
+        @include border-radius(4px 0 0 0);
+        font-family: $bariol;
+        height: 74px;
+        padding: 0 17px;
+        text-align: center;
+        text-shadow: 0 1px 0 #fff;
+
+
+        span.secondary {
+          display: block;
+          font-weight: normal;
+        }
       }
 
       table {
-        @include box-shadow(0 0 20px darken($bg-color, 15%));
         table-layout: fixed;
 
         tr {
-          background-color: $bg-color;
-          @include background-image(linear-gradient(#fff, $bg-color));
+          //background-color: $bg-color;
+          //@include background-image(linear-gradient(#fff, $bg-color));
           border-bottom: 1px solid darken($bg-color, 20%);
+              @include box-shadow(inset 0 1px 0 rgba(255,255,255, 1));
           text-shadow: 0 1px 0 #fff;
 
           &.current-user {
-            background-color: lighten($success, 3%);
-            @include background-image(linear-gradient(lighten($success, 5%), darken($success, 0%)));
+            background-color: darken($bg-color, 3%);
+            //background-color: lighten($success, 3%);
+            //@include background-image(linear-gradient(lighten($success, 5%), darken($success, 0%)));
 
             td {
               color: darken($bg-color, 50%);
@@ -138,6 +163,7 @@ div.table-wrapper {
 
     &.grid-help {
       color: darken($bg-color, 25%);
+      display:none;
       font-size: 0.8em;
       padding: 0.7em 0.5em;
       position: absolute;
@@ -149,51 +175,9 @@ div.table-wrapper {
       }
     }
 
-    &.search-box {
-      background-color: $bg-color;
-      @include background-image(linear-gradient(#fff, darken($bg-color, 2%)));
-      border: 1px solid darken($bg-color, 20%);
-      @include border-radius(4px 0 0 0);
-      @include box-shadow(inset 0 -1px 0px #fff);
-      @include box-sizing(border-box);
-      left: 0;
-      padding: 10px;
-      position: absolute;
-      top: 75px;
-      width: $table-width-mobile;
-
-      form#invitations {
-        fieldset {
-          border: none;
-          padding: 0;
-          position: relative;
-        }
-
-        input#auto-complete {
-          padding-right: 4.5em;
-
-          &.autocomplete-true {
-            @include border-radius(4px 4px 0px 0px);
-          }
-        }
-
-        .add-invitee {
-          @include button-color(darken($success, 10%));
-          display:  none;
-          font-size: 0.8em;
-          padding: 0.2em 0.5em;
-          position: absolute;
-          right: 0.8em;
-          top: 0.9em;
-          width: auto;
-          z-index: 9999;
-        }
-      }
-    }
-
     &.options {
       border: 1px solid darken($bg-color, 20%);
-      @include border-radius(4px 4px 0 0);
+      @include border-radius(0px 4px 0 0);
       @include box-sizing(border-box);
       margin-left: $table-width-mobile - 1;
       overflow: auto;
@@ -217,8 +201,9 @@ div.table-wrapper {
         @include box-shadow(0 0 20px darken($bg-color, 15%));
 
         th {
-          background-color: $bg-color;
-          @include background-image(linear-gradient(#fff, darken($bg-color, 2%)));
+          //background-color: $bg-color;
+          background-color: #fff;
+          //@include background-image(linear-gradient(#fff, darken($bg-color, 0%)));
           border-bottom: 1px solid darken($bg-color, 20%);
           border-right:1px solid darken($bg-color, 20%);
           @include box-sizing(border-box);
@@ -233,23 +218,16 @@ div.table-wrapper {
           }
 
           &:nth-child(even) {
-            background-color: darken($bg-color, 3%);
-            @include background-image(linear-gradient($bg-color, darken($bg-color, 6%)));
+            //background-color: darken($bg-color, 3%);
+            //@include background-image(linear-gradient($bg-color, darken($bg-color, 6%)));
+            background-color: $bg-color;
+  //background-color: darken($bg-color, 2%);
+  //@include background-image(linear-gradient(#fff, darken($bg-color, 3%)));
           }
 
           span.secondary {
             display: block;
             font-weight: normal;
-          }
-        }
-
-        tbody {
-          tr#blank {
-            height:70px;
-
-            td:nth-child(even) {
-              background-color: lighten($bg-color, 1%);
-            }
           }
         }
 
@@ -322,7 +300,9 @@ div.table-wrapper {
         }
 
         td {
-          border-right: 1px solid darken($bg-color, 12%) ;
+          background: #fff;
+          //border-right: 1px solid darken($bg-color, 12%);
+          border-right: 1px solid darken($bg-color, 8%);
           height: 56px;
           padding: 0;
 
@@ -344,7 +324,8 @@ div.table-wrapper {
           }
 
           &:nth-child(even) {
-            background: rgba(229, 248, 252, 0.5);
+            //background: rgba(229, 248, 252, 0.5);
+            background: $bg-color;
           }
 
           img {

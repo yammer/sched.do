@@ -11,10 +11,6 @@
     <% end %>
   </div>
 
-  <% if current_user.able_to_edit?(@event) %>
-    <%= render 'events/add_invitation' %>
-  <% end %>
-
   <div class="options">
     <table class="touch-scrollable">
       <thead>
@@ -30,28 +26,19 @@
         </tr>
       </thead>
       <tbody>
-
-        <% if current_user.able_to_edit?(@event) %>
-          <tr id="blank">
-            <% @event.suggestions.each do |suggestion| %>
-              <td></td>
-            <% end %>
-          </tr>
-        <% end %>
-
         <% @event.invitees_for_grid.each do |invitee| %>
           <tr class="<%= 'votable' if  current_user == invitee %>">
-          <% @event.suggestions.each do |suggestion| %>
-            <% if current_user == invitee %>
-              <%= render 'events/vote', suggestion: suggestion,
-                vote_for_suggestion: current_user.vote_for_suggestion(suggestion) %>
-            <% else %>
-              <% if invitee.voted_for_suggestion?(suggestion) %>
-                <td class="voted">
-                  <%= image_tag('checkmark.png') %>
-                </td>
+            <% @event.suggestions.each do |suggestion| %>
+              <% if current_user == invitee %>
+                <%= render 'events/vote', suggestion: suggestion,
+                  vote_for_suggestion: current_user.vote_for_suggestion(suggestion) %>
               <% else %>
-                <td></td>
+                <% if invitee.voted_for_suggestion?(suggestion) %>
+                  <td class="voted">
+                    <%= image_tag('checkmark.png') %>
+                  </td>
+                <% else %>
+                  <td></td>
               <% end %>
             <% end %>
           <% end %>
@@ -72,6 +59,16 @@
 
   <div id="invitees" <% if current_user.able_to_edit?(@event) %>class="blank"<% end %>>
     <table>
+      <thead>
+        <tr>
+          <th>
+            The Invitees
+            <span class="secondary">
+              <%= @event.other_invitees_count %> total
+            </span>
+          </th>
+        </tr>
+      </thead>
       <tbody>
 
         <% @event.invitees_for_grid.each do |invitee| %>
@@ -101,10 +98,14 @@
 </div>
 
 <% if @event.groups.any? & current_user.able_to_edit?(@event)  %>
-  <ul id="groups">
+  <section class="invited-yammer-groups">
     <h4>Invited Yammer Groups</h4>
-    <% @event.groups.each do |group| %>
-      <li><%= group.name %></li>
-    <% end %>
-  </ul>
+    <ul id="groups">
+      <% @event.groups.each do |group| %>
+        <li>
+          <div class="group-name"><%= group.name %></div>
+        </li>
+      <% end %>
+    </ul>
+  <section>
 <% end %>

@@ -12,6 +12,8 @@
 
 $(document).ready(function() {
   $("#new-event").leanModal({closeButton: ".modal-close"})
+  $("a[rel*=yammer-invite]").leanModal({closeButton: ".modal-close"})
+  $("a[rel*=email-invite]").leanModal({closeButton: ".modal-close"})
 
   var placeholderPollyfill = function() {
     $('input, textarea').placeholder();
@@ -149,28 +151,17 @@ $(document).ready(function() {
   var clip = new ZeroClipboard.Client();
 
   clip.addEventListener( 'mouseDown', function(client) {
-    clip.setText( $('input#event-url').val());
-    $('input#copy-url').val('URL Copied!');
+    clip.setText( $('div.copy-event-url').data('event-url'));
+    $('div.copy-event-url').text('URL Is Copied');
   });
 
-  if( $('#event-url').length > 0) {
-    clip.glue( 'copy-url', 'copy-url-container' );
+  if( $('#copy-event-url').length > 0) {
+    clip.glue( 'copy-event-url', 'copy-url-container' );
   }
 
   $(window).resize(function(){
     clip.reposition();
   });
-
-  // Display "Invite" button on auto-complete
-  $('#auto-complete').keyup(function(){
-    var inviteButton = $(this).parents("form").find('.add-invitee');
-    if($(this).val() != ""){
-      inviteButton.show();
-    } else {
-      inviteButton.hide();
-    }
-  });
-
 
   // Shrink invitee name/email text size if it is too large to fit in the table cell
   $('div#invitees td span').each(function(){

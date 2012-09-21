@@ -30,15 +30,18 @@
       </div>
   </section>
 
+  <% if current_user.able_to_edit?(@event) %>
+    <%= render 'events/add_invitation' %>
+  <% end %>
+
   <%= render partial: 'events/grid' %>
 
-  <div class="event-url">
-    <p>You can also share this URL directly with your invitees to have them vote:</p>
-    <form>
-      <input id="event-url" readonly="readonly" class="read-only"  type="url" value="<%= event_url(@event) %>" />
-      <div id="copy-url-container">
-        <input id="copy-url" type="button" value="Copy event URL" data-title="You can also share this URL directly with your guests" type="url" value="<%= event_url(@event) %>"/>
-      </div>
-    </form>
-  </div>
+  <% if !current_user.able_to_edit?(@event) %>
+    <section class="invitee-sharing">
+      <h4>Share this poll:</h4>
+      <a href="#yammer-invite-modal" rel="yammer-invite" name="yammer-invite-modal" class="yammer-invite"><img src="/assets/email.svg" data-png-fallback="/assets/email.png">Yammer</a>
+      <a href="#email-invite-modal" rel="email-invite" name="email-invite-modal" class="email-invite"><img src="/assets/email.svg" data-png-fallback="/assets/email.png">Email</a>
+      <a href="#" class="copy-url"><img src="/assets/email.svg" data-png-fallback="/assets/email.png">Copy Event URL</a>
+    </section>
+  <% end %>
 </div>

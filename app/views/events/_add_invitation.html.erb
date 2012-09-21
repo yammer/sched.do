@@ -1,7 +1,10 @@
-  <div class="search-box">
+<section class="search-box">
+  <h4>Invite people to your event:</h4>
   <%= semantic_form_for(@invitation, html: { id: 'invitations'}) do |form| %>
     <%= form.inputs do %>
-      <%= text_field_tag "invitation[invitee_attributes][name_or_email]", nil, 'data-role' => 'invitation_name', placeholder: "+ Add invitees...", id: "auto-complete"   %>
+      <div class="invitee-input">
+        <%= text_field_tag "invitation[invitee_attributes][name_or_email]", nil, 'data-role' => 'invitation_name', placeholder: "enter an email, yammer group or yammer contact", id: "auto-complete"   %>
+      </div>
       <%= form.input :event_id, as: :hidden %>
       <%= form.semantic_fields_for :invitee do |invitee_form| %>
         <%= invitee_form.input :yammer_user_id, as: :hidden, input_html: { 'data-role' => 'yammer_user_id' } %>
@@ -11,4 +14,10 @@
       <div class="invitation-autocomplete-suggestions"></div>
     <% end %>
   <% end %>
+
+  <div class="alt-invite">
+    <div id="copy-url-container">
+      <div id="copy-event-url" class="copy-event-url" data-event-url="<%= event_url(@event) %>"><img src="/assets/email.svg" data-png-fallback="/assets/email.png">Copy Event URL</div>
+    </div>
   </div>
+</section>

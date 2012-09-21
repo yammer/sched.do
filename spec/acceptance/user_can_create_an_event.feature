@@ -52,11 +52,6 @@ Feature: User can create an event
     When I try to create an event with invalid data
     Then I should see multiple suggestions
 
-  Scenario: User sees event link after creating event
-    Given I am signed in
-    When I create an event
-    Then I should see a link to that event
-
   Scenario: User trys to create an event without a date or a title
     Given I am signed in
     And I visit the new event page

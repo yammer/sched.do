@@ -26,7 +26,8 @@ div.show-event {
 
   section.sub-head {
     @include clearfix;
-    padding: 10px 0px;
+    margin-bottom: 20px;
+    padding: 20px 0px 0px;
 
     span {
       font-size: 0.8em;
@@ -54,11 +55,132 @@ div.show-event {
       float: right;
 
       a.remind-all {
-        @extend .orange-button;
+        @extend .blue-button;
         @include border-radius(3px);
         font-size: 0.8em;
         padding: 2px 5px;
         vertical-align: middle;
+      }
+    }
+  }
+
+  section.search-box, section.invitee-sharing {
+    background-color: $bg-color;
+    @include background-image(linear-gradient(#fff, darken($bg-color, 2%)));
+    border: 1px solid darken($bg-color, 20%);
+    @include border-radius(4px);
+    @include box-shadow(inset 0 -1px 0px #fff);
+    @include box-sizing(border-box);
+    left: 0;
+    margin-bottom: 20px;
+    padding: 15px;
+    position: relative;
+    @include transition(all 0.2s linear);
+
+    &:hover {
+      @include box-shadow(inset 0 -1px 0px #fff, 0 0 15px rgba(darken($bg-color, 15%), 0.5));
+    }
+
+    form#invitations {
+      fieldset {
+        border: none;
+        margin: 0px;
+        padding: 0;
+        position: relative;
+
+        ol {
+          li {
+            &.action {
+              position: absolute;
+              right: 0em;
+              top: 0px;
+            }
+          }
+        }
+      }
+
+      div.invitee-input {
+        margin: 0px 80px 0px 0px;
+
+        input#auto-complete {
+          @include border-radius(4px 0px 0px 4px);
+          @include background-image(none);
+          border-right: none;
+          font-size: 0.8em;
+          float: left;
+          height: 34px;
+          padding: 0.6em 0.8em;
+
+          &.autocomplete-true {
+            @include border-radius(4px 0px 0px 0px);
+          }
+        }
+      }
+
+      .add-invitee {
+        @include button-color(darken($success, 10%));
+        @include border-radius(0px 4px 4px 0px);
+        height: 34px;
+        margin: 0px;
+        padding: 0.2em 0.8em;
+        width: 81px;
+        z-index: 9999;
+      }
+    }
+
+    .alt-invite {
+      display: none;
+      height: 34px;
+      right: 15px;
+      position: absolute;
+      top: 15px;
+
+      #copy-url-container {
+        position: relative;
+      }
+
+      a.email-invite, div.copy-event-url {
+        @extend .button;
+        @include box-sizing(border-box);
+        cursor: pointer;
+        height: 100%;
+        @include inline-block;
+
+        &.copy-event-url {
+          width: 140px;
+          padding-left: 0px;
+          padding-right: 0px;
+          text-align: center;
+        }
+
+        img {
+          display: none;
+          margin: 0em 0.4em 0.1em 0em;
+          vertical-align: middle;
+        }
+      }
+    }
+
+    &.invitee-sharing {
+      h4 {
+        @include inline-block;
+        margin-right: 10px;
+        position: static;
+        vertical-align: middle;
+      }
+
+      a.email-invite, a.yammer-invite, a.copy-url {
+        @extend .button;
+        @include box-sizing(border-box);
+        height: 100%;
+        @include inline-block;
+        margin-right: 6px;
+        padding: 5px 12px 4px;
+
+        img {
+          margin: 0em 0.4em 0.1em 0em;
+          vertical-align: middle;
+        }
       }
     }
   }
@@ -117,29 +239,40 @@ div.show-event {
     }
   }
 
-  ul#groups {
-    border-top: 1px solid darken($bg-color, 10%);
-    margin-bottom: 0;
-    margin-top: 20px;
-    padding: 10px;
+  section.invited-yammer-groups {
+    border: 1px solid darken($bg-color, 20%);
 
     h4 {
-      margin-bottom: 16px;
+      background-color: $bg-color;
+      border-bottom: 1px solid darken($bg-color, 20%);
+      margin-bottom: 0px;
+      padding: 10px 15px;
     }
 
-    li {
-      background: darken($bg-color, 3%);
-      background-image: url(group.svg);
-      background-position: 10px center;
-      background-repeat: no-repeat;
-      @include border-radius(4px);
-      display: inline-block;
-      @include fill-parent();
-      font-size: 0.9em;
-      list-style: none;
-      margin-bottom: 10px;
-      margin-right: 10px;
-      padding: 0.5em 1em 0.5em 30px;
+    ul#groups {
+      margin: 0;
+      padding: 0px 10px;
+
+      li {
+        border-bottom: 1px solid darken($bg-color, 10%);
+        list-style: none;
+        padding: 0.8em 0px;
+
+        &:last-child {
+          border-bottom: none;
+        }
+
+        div.group-name {
+          background: darken($bg-color, 3%);
+          background-image: url(group.svg);
+          background-position: 10px center;
+          background-repeat: no-repeat;
+          @include border-radius(4px);
+          font-size: 0.9em;
+          @include inline-block;
+          padding: 0.5em 1em 0.5em 30px;
+        }
+      }
     }
   }
 

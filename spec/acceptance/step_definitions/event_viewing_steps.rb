@@ -58,11 +58,6 @@ step 'I should see multiple suggestions' do
   all("input[data-role='primary-suggestion']").size.should be > 1
 end
 
-step 'I should see a link to that event' do
-  event = Event.last
-  page.find("#event-url").value.should include(event.uuid)
-end
-
 step 'I should see an event with the following invitees in order:' do |table|
   expected_invitee_order = table.raw.flatten
 
