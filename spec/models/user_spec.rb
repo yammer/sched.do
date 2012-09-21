@@ -95,6 +95,38 @@ describe User, '#able_to_edit?' do
   end
 end
 
+describe User, '#find_existing_yammer_user_id' do
+  it 'creates and returns a yammer user if one exists' do
+    yammer_user_email = 'ralph@example.com'
+    access_token = '123456'
+
+    result = User.find_existing_yammer_user_id(yammer_user_email, access_token)
+
+    result.should_not be_nil
+  end
+
+  it 'hits the Yammer API to find an existing user' do
+    yammer_user_email = 'ralph@example.com'
+    access_token = '123456'
+
+    expect {
+      result = User.find_existing_yammer_user_id(
+        yammer_user_email,
+        access_token
+      )
+    }.to change(FakeYammer, :user_search_by_email_hits).by(1)
+  end
+
+  it 'returns nil if no yammer user exists' do
+    yammer_user_email = 'not_ralph@example.com'
+    access_token = '123456'
+
+    result = User.find_existing_yammer_user_id(yammer_user_email, access_token)
+
+    result.should be_nil
+  end
+end
+
 describe User, '#image' do
   it 'returns the placeholder if there is no image' do
     user = build_stubbed(:user, image: nil)
@@ -174,7 +206,7 @@ describe User, '#guest?' do
 end
 
 describe User, '#fetch_yammer_user_data' do
-  it 'should query the Yammer Users API for Yammer Production data' do
+  it 'queries the Yammer Users API for Yammer Production data' do
     user = User.new(yammer_user_id: 123456,
                     access_token: 'Tokenz',
                     yammer_staging: false)
@@ -228,6 +260,17 @@ describe User, '#create_yammer_activity' do
 
     FakeYammer.activity_endpoint_hits.should == 1
   end
+
+  it 'posts to the Yammer activity API' do
+    user = build_stubbed(:user)
+    event = build_stubbed(:event)
+    event.generate_uuid
+
+    expect {
+      user.create_yammer_activity('update', event)
+      work_off_delayed_jobs
+    }.to change(FakeYammer, :activity_endpoint_hits).by(1)
+  end
 end
 
 describe User, '#deliver_email_or_private_message' do
@@ -253,7 +296,7 @@ describe User, '#deliver_email_or_private_message' do
     mailer.should have_received(:deliver).once
   end
 
-  it 'if the user is in-network, it sends a private message notification' do
+  it 'sends a private message notification, if the user is in-network' do
     invitee = build_stubbed(:user)
     invitation = build_stubbed(:invitation_with_user,
                                invitee: invitee)
@@ -267,7 +310,21 @@ describe User, '#deliver_email_or_private_message' do
     work_off_delayed_jobs
 
     organizer.in_network?(invitee).should be_true
-    FakeYammer.messages_endpoint_hits.should == 1
     FakeYammer.message.should include(invitation.event.name)
+  end
+
+  it 'hits the Yammer messages API, if the user is in-network' do
+    invitee = build_stubbed(:user)
+    invitation = build_stubbed(:invitation_with_user,
+                               invitee: invitee)
+
+    expect {
+      invitee.deliver_email_or_private_message(
+        :reminder,
+        invitation.event.owner,
+        invitation
+      )
+      work_off_delayed_jobs
+    }.to change(FakeYammer, :messages_endpoint_hits).by(1)
   end
 end

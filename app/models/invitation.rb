@@ -1,7 +1,7 @@
 class Invitation < ActiveRecord::Base
   attr_accessor :skip_notification, :invitee_params
-  attr_accessible :event, :invitee,
-    :invitee_attributes, :event_id, :skip_notification
+  attr_accessible :event, :invitee, :invitee_attributes, :event_id,
+    :skip_notification
 
   belongs_to :event
   belongs_to :invitee, polymorphic: true
@@ -47,17 +47,36 @@ class Invitation < ActiveRecord::Base
 
   private
 
-  def yammer_group_id
-    invitee.try(:yammer_group_id)
+  def access_token
+    event_creator.access_token
+  end
+
+  def create_guest
+    Guest.create_without_name_validation(name_or_email_param)
   end
 
   def event_creator
     event.owner
   end
 
-  def existing_invitee
+  def existing_scheddo_user
     User.find_by_email(name_or_email_param) ||
     Guest.find_by_email(name_or_email_param)
+  end
+
+  def find_existing_yammer_user
+    yammer_user_id = User.find_existing_yammer_user_id(
+      name_or_email_param,
+      access_token
+    )
+
+    if yammer_user_id
+      User.find_or_create_with_auth(
+        access_token: access_token,
+        yammer_staging: yammer_staging?,
+        yammer_user_id: yammer_user_id
+      )
+    end
   end
 
   def find_group
@@ -65,11 +84,6 @@ class Invitation < ActiveRecord::Base
       yammer_group_id: yammer_group_id_param,
       name: name_or_email_param
     )
-  end
-
-  def find_user_by_email_or_create_guest
-    existing_invitee ||
-      Guest.create_without_name_validation(name_or_email_param)
   end
 
   def find_or_create_invitee
@@ -84,25 +98,35 @@ class Invitation < ActiveRecord::Base
 
   def find_or_create_user
     User.find_or_create_with_auth(
-        access_token: event_creator.access_token,
-        yammer_staging: event_creator.yammer_staging?,
+        access_token: access_token,
+        yammer_staging: yammer_staging?,
         yammer_user_id: yammer_user_id_param
     )
+  end
+
+  def find_user_by_email_or_create_guest
+    existing_scheddo_user ||
+      find_existing_yammer_user ||
+      create_guest
   end
 
   def name_or_email_param
     invitee_params[:name_or_email]
   end
 
+  def queue_invitation_created_job
+    InvitationCreatedJob.enqueue(self)
+  end
+
   def yammer_group_id_param
     invitee_params[:yammer_group_id]
   end
 
-  def yammer_user_id_param
-    invitee_params[:yammer_user_id]
+  def yammer_staging?
+    event_creator.yammer_staging?
   end
 
-  def queue_invitation_created_job
-    InvitationCreatedJob.enqueue(self)
+  def yammer_user_id_param
+    invitee_params[:yammer_user_id]
   end
 end

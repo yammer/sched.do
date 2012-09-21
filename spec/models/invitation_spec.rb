@@ -83,11 +83,14 @@ describe Invitation, 'build_invitee' do
       group.invitations.should include(invitation)
     end
 
-    it 'will create a group and attach an invitation to it if the group does not already exist' do
+    it 'will create and invite a group if the group does not already exist' do
       yammer_group_name = 'Group Name'
       invitation = create(:invitation)
 
-      invitation.build_invitee(yammer_group_id: 'yammer-group-id', name_or_email: yammer_group_name)
+      invitation.build_invitee(
+        yammer_group_id: 'yammer-group-id',
+        name_or_email: yammer_group_name
+      )
 
       Group.count.should == 1
       Group.first.name.should == yammer_group_name
@@ -107,7 +110,7 @@ describe Invitation, 'build_invitee' do
       Guest.should have_received(:find_by_email).with(guest.email).never
     end
 
-    it 'will not create a new guest if one exists' do
+    it 'find a guest by email if one exists' do
       invitation = create(:invitation)
       guest = build_stubbed(:guest)
       Guest.stubs(:find_by_email)
@@ -115,6 +118,28 @@ describe Invitation, 'build_invitee' do
       invitation.build_invitee(name_or_email: guest.email)
 
       Guest.should have_received(:find_by_email).with(guest.email)
+    end
+
+    it 'search for an existing User by email' do
+      invitation = create(:invitation)
+      user_email = 'ralph@thoughtbot.com'
+      User.stubs(:find_by_email)
+
+      invitation.build_invitee(name_or_email: user_email)
+
+      User.should have_received(:find_by_email).with(user_email)
+    end
+
+    it 'searches for existing Yammer users if they exist' do
+      invitation = create(:invitation)
+      access_token = invitation.sender.access_token
+      invitee_email = 'horace@example.com'
+      User.stubs(:find_existing_yammer_user_id)
+
+      invitation.build_invitee(name_or_email: invitee_email)
+
+      User.should have_received(:find_existing_yammer_user_id).
+        with(invitee_email, access_token)
     end
 
     it 'creates a guest' do
