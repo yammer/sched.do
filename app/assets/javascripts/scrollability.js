@@ -82,8 +82,17 @@ function onLoad() {
     // exports.flashIndicators();
 }
 
-document.addEventListener(isTouch ? 'touchstart' : 'mousedown', onTouchStart, false);
-window.addEventListener('load', onLoad, false);
+// Internet Explorer 8 Compatibility:
+// check availability of document.addEventListener
+// http://rubayathasan.com/tutorial/ie8-addeventlistener-alternative-example/
+
+if(document.addEventListener){
+  document.addEventListener(isTouch ? 'touchstart' : 'mousedown', onTouchStart, false);
+}
+
+if(window.addEventListener){
+  window.addEventListener('load', onLoad, false);
+}
 
 function onTouchStart(event) {
     var touch = isTouch ? event.touches[0] : event;
