@@ -6,5 +6,6 @@ Feature: User can remind all invitees to vote
     When I invite the Yammer user "Joe Smith" to "Clown party"
     And I invite "batman@example.com" to "Clown party"
     And I click "Remind Them!"
-    Then "batman@example.com" should have 2 emails
+    Then I should see "Reminders Sent" in the notice flash
+    And "batman@example.com" should have 2 emails
     And "Joe Smith" should receive a private reminder message
