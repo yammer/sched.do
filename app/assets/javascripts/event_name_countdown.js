@@ -1,19 +1,21 @@
 $(document).ready(function(){
-  var left = 28
-  $('.text-counter').text(left);
+  var max = $("meta[property=event_name_max_length]").attr("content")
+  var characters_remaining = max
+
+  $('.text-counter').text(characters_remaining);
 
   $('#event_name').keyup(function () {
 
-    left = 28 - $(this).val().length;
+    characters_remaining = max - $(this).val().length;
 
-    if(left < 0){
+    if(characters_remaining < 0){
       $('.text-counter').addClass("overlimit");
     }
 
-    if(left >= 0){
+    if(characters_remaining >= 0){
       $('.text-counter').removeClass("overlimit");
     }
 
-    $('.text-counter').text(left);
+    $('.text-counter').text(characters_remaining);
   });
 });

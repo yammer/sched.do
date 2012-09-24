@@ -97,14 +97,26 @@ step 'I should see :expected_time in the first secondary field' do |expected_tim
   find("#event_suggestions_attributes_0_secondary").value.should == expected_time
 end
 
-step 'I should see :message in the text counter' do |message|
-  find(".text-counter").should have_content(message)
+step 'I should see the appropriate change in the character counter' do
+  max = Event::EVENT_NAME_MAX_LENGTH
+  expected_length = max - 10
+  find(".text-counter").should have_content(expected_length)
+end
+
+step 'I should see :count in the text counter' do |count|
+  find(".text-counter").should have_content(count)
 end
 
 step 'I enter :name in the name field' do |name|
   fill_in "event_name", with: name
 end
 
-step 'I should see :message in the name field' do |message|
-  find("#event_name").value.should == message
+step 'I enter a long name in the Event title field' do
+  name = '1234567890' * 10
+  fill_in "event_name", with: name
+end
+
+step 'I should see a truncated name in the Event title field' do
+  max = Event::EVENT_NAME_MAX_LENGTH
+  find("#event_name").value.length.should == max
 end

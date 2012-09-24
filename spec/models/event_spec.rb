@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-EVENT_NAME_MAX = 28
-
 describe Event do
   include DelayedJobSpecHelper
+
+  EVENT_NAME_MAX_LENGTH = Event::EVENT_NAME_MAX_LENGTH
 
   it { should belong_to(:owner) }
   it { should have_many(:suggestions) }
@@ -13,9 +13,10 @@ describe Event do
   it { should have_many(:guests).through(:invitations) }
   it { should have_many(:groups).through(:invitations) }
 
-  it { should validate_presence_of(:name).with_message(/This field is required/) }
+  it { should validate_presence_of(:name).
+       with_message(/This field is required/) }
   it { should validate_presence_of(:user_id) }
-  it { should ensure_length_of(:name).is_at_most(EVENT_NAME_MAX) }
+  it { should ensure_length_of(:name).is_at_most(EVENT_NAME_MAX_LENGTH) }
 
   it { should allow_mass_assignment_of(:suggestion) }
   it { should allow_mass_assignment_of(:suggestions_attributes) }
