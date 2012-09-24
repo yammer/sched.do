@@ -18,6 +18,11 @@ Most importantly
 ----------------
 Have fun!
 
+Selected Licenses
+-------------------------
+[jQuery UI](http://jqueryui.com/) is used under the [MIT License](http://jquery-ui.googlecode.com/svn/tags/latest/MIT-LICENSE.txt)
+
+[jQuery Waypoints](http://imakewebthings.com/jquery-waypoints/) is used under the [MIT License](https://github.com/imakewebthings/jquery-waypoints/blob/master/MIT-license.txt)
 
 License
 -------
