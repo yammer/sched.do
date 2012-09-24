@@ -5,6 +5,15 @@ describe Group do
   it { should validate_presence_of(:name) }
 end
 
+describe Group, '#voted_for_event?' do
+  it 'always returns false' do
+    group = build_stubbed(:group)
+    event = build_stubbed(:event)
+
+    group.voted_for_event?(event).should be_false
+  end
+end
+
 describe Group, '#yammer_user?' do
   it 'always returns false' do
     group = build_stubbed(:group)

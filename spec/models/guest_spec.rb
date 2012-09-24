@@ -95,7 +95,6 @@ describe Guest, '#yammer_group_id' do
   end
 end
 
-
 describe Guest, '#able_to_edit?' do
   it 'always returns false' do
     event = build(:event)

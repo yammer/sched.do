@@ -9,6 +9,10 @@ class Group < ActiveRecord::Base
      PrivateMessenger.new(self, "group_#{message}", object).deliver
   end
 
+  def voted_for_event?(_)
+    false
+  end
+
   def yammer_user?
    false
   end
