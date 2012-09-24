@@ -37,11 +37,11 @@ class PrivateMessenger
   end
 
   def deliver
-    post_to_yammer({
-      body: @message_body,
-      direct_to_id: @recipient.yammer_user_id,
-      og_url: event_url(@event)
-    })
+    if @recipient.yammer_user_id
+      send_user_message
+    else
+      send_group_message
+    end
   end
 
   private
@@ -92,8 +92,16 @@ class PrivateMessenger
 
   def send_group_message
     post_to_yammer({
-      body: group_message_body,
+      body: @message_body,
       group_id: @recipient.yammer_group_id,
+      og_url: event_url(@event)
+    })
+  end
+
+  def send_user_message
+    post_to_yammer({
+      body: @message_body,
+      direct_to_id: @recipient.yammer_user_id,
       og_url: event_url(@event)
     })
   end
