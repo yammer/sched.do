@@ -55,7 +55,6 @@ div.table-wrapper {
       overflow: hidden;
       position: absolute;
       top: 75px;
-      @include user-select();
       width: $table-width-mobile;
 
       &.blank {
