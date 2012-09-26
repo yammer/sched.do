@@ -36,12 +36,13 @@ header {
     padding: 0 10px;
 
     a.logo {
+      background-color: darken($bg-color, 2%);
+      @include background-image(linear-gradient(#fff, darken($bg-color, 2%)));
+      display: block;
       float: left;
 
       img {
         $border: 1px solid darken($bg-color, 8%);
-        background-color: lighten($bg-color, 5%);
-        @include background-image(linear-gradient(rgba(255,255,255, 1),rgba(255,255,255, 0.3)));
         border-left: $border;
         border-right: $border;
         @include box-shadow(-1px 0 0 #fff, 1px 0 0 #fff);
@@ -73,6 +74,7 @@ header {
             @extend .button;
 
             &.create-poll {
+              //@extend .blue-button;
             }
           }
         }

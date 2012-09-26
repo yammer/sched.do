@@ -5,11 +5,6 @@
   </a>
   <nav>
     <ul>
-      <% if current_user.present? %>
-        <li>
-          <%= link_to 'Sign out', sign_out_path %>
-        </li>
-      <% end %>
       <li>
         <% if current_user.guest? %>
           <%= link_to 'Create Poll', "#sign-in-modal", id: "new-event", name: "sign-in-modal" %>
@@ -17,6 +12,11 @@
           <%= link_to 'Create Poll', new_event_path, id: "new-event", class: "create-poll" %>
         <% end %>
       </li>
+      <% if current_user.present? %>
+        <li>
+          <%= link_to 'Sign out', sign_out_path %>
+        </li>
+      <% end %>
       </ul>
     </nav>
 </div>

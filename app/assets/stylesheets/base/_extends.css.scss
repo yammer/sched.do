@@ -9,6 +9,14 @@
   text-shadow: 0 -1px 0 darken($orange, 40%);
 }
 
+.blue-button {
+  background-color: #48AEF1;
+  @include button-color(#48AEF1);
+  @include background-image(linear-gradient(#48AFF3, #228ed5));
+  color: #fff;
+  text-shadow: 0 -1px 0 darken(#48AEF1, 40%);
+}
+
 .yammer-button {
   background-color: #48AEF1;
   @include button-color(#48AEF1);

@@ -24,7 +24,7 @@
         <span><%= pluralize(@event.other_invitees_count, "other person") %> invited</span>
         <span class="divider">|</span>
         <span><%= pluralize(@event.other_invitees_who_have_not_voted_count, 'has not voted','have not voted') %></span>
-        <% if @event.other_invitees_count > 0 %>
+        <% if @event.other_invitees_who_have_not_voted_count > 0 %>
           <%= link_to 'Remind Them!', reminders_path(event_id: @event), method: :post, class: "remind-all" %>
         <% end %>
       </div>
