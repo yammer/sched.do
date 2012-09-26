@@ -1,5 +1,5 @@
 class Event < ActiveRecord::Base
-  EVENT_NAME_MAX_LENGTH = 70
+  NAME_MAX_LENGTH = 70
 
   attr_accessible :name, :suggestion, :suggestions_attributes, :uuid
 
@@ -13,7 +13,7 @@ class Event < ActiveRecord::Base
 
   validate :has_suggestions?
   validates :name, presence: { message: 'This field is required' }
-  validates :name, length: { maximum: EVENT_NAME_MAX_LENGTH }
+  validates :name, length: { maximum: NAME_MAX_LENGTH }
   validates :user_id, presence: true
   validates :uuid, presence: true
 

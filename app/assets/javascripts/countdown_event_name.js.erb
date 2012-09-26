@@ -1,5 +1,5 @@
 $(document).ready(function(){
-  var max = $("meta[property=event_name_max_length]").attr("content")
+  var max = <%= Event::NAME_MAX_LENGTH %>
   var characters_remaining = max
 
   $('.text-counter').text(characters_remaining);

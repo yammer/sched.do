@@ -98,7 +98,7 @@ step 'I should see :expected_time in the first secondary field' do |expected_tim
 end
 
 step 'I should see the appropriate change in the character counter' do
-  max = Event::EVENT_NAME_MAX_LENGTH
+  max = Event::NAME_MAX_LENGTH
   expected_length = max - 10
   find(".text-counter").should have_content(expected_length)
 end
@@ -117,6 +117,6 @@ step 'I enter a long name in the Event title field' do
 end
 
 step 'I should see a truncated name in the Event title field' do
-  max = Event::EVENT_NAME_MAX_LENGTH
+  max = Event::NAME_MAX_LENGTH
   find("#event_name").value.length.should == max
 end
