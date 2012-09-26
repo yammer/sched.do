@@ -32,7 +32,11 @@
 
   <% if current_user.able_to_edit?(@event) %>
     <%= render 'events/add_invitation' %>
-  <% else %>
+  <% end %>
+
+  <%= render partial: 'events/grid' %>
+
+  <% if !current_user.able_to_edit?(@event) %>
     <section class="invitee-sharing">
       <h4>Share this poll:</h4>
       <a href="#yammer-invite-modal" rel="yammer-invite" name="yammer-invite-modal" class="yammer-invite"><img src="/assets/email.svg" data-png-fallback="/assets/email.png">Yammer</a>
@@ -40,6 +44,4 @@
       <a href="#" class="copy-url"><img src="/assets/email.svg" data-png-fallback="/assets/email.png">Copy Event URL</a>
     </section>
   <% end %>
-
-  <%= render partial: 'events/grid' %>
 </div>
