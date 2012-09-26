@@ -39,27 +39,23 @@
           </tr>
         <% end %>
 
-        <% @event.invitees_with_current_user_first.each do |invitee| %>
-          <% if display_invitee_in_grid?(@event, invitee) %>
-            <tr class="<%= 'votable' if  current_user == invitee %>">
-            <% @event.suggestions.each do |suggestion| %>
-              <% if display_invitee_in_grid?(@event, invitee)  %>
-                <% if current_user == invitee %>
-                  <%= render 'events/vote', suggestion: suggestion,
-                    vote_for_suggestion: current_user.vote_for_suggestion(suggestion) %>
-                <% else %>
-                  <% if invitee.voted_for_suggestion?(suggestion) %>
-                    <td class="voted">
-                      <%= image_tag('checkmark.png') %>
-                    </td>
-                  <% else %>
-                    <td></td>
-                  <% end %>
-                <% end %>
+        <% @event.invitees_for_grid.each do |invitee| %>
+          <tr class="<%= 'votable' if  current_user == invitee %>">
+          <% @event.suggestions.each do |suggestion| %>
+            <% if current_user == invitee %>
+              <%= render 'events/vote', suggestion: suggestion,
+                vote_for_suggestion: current_user.vote_for_suggestion(suggestion) %>
+            <% else %>
+              <% if invitee.voted_for_suggestion?(suggestion) %>
+                <td class="voted">
+                  <%= image_tag('checkmark.png') %>
+                </td>
+              <% else %>
+                <td></td>
               <% end %>
             <% end %>
-            </tr>
           <% end %>
+          </tr>
         <% end %>
       </tbody>
       <tfoot>
@@ -78,24 +74,22 @@
     <table>
       <tbody>
 
-        <% @event.invitees_with_current_user_first.each do |invitee| %>
-          <% if display_invitee_in_grid?(@event, invitee) %>
-            <tr class="<%= 'current-user' if  current_user == invitee %>">
+        <% @event.invitees_for_grid.each do |invitee| %>
+          <tr class="<%= 'current-user' if  current_user == invitee %>">
 
-            <% if @event.user_owner?(invitee) %>
-              <td class="event-creator">
-                <div class="avatar" style="background-image: url(<%= invitee.image %>)"></div>
-                <img src="/assets/bullhorn.svg" data-png-fallback="/assets/bullhorn.png">
-            <% else %>
-              <td>
-                <div class="avatar" style="background-image: url(<%= invitee.image %>)"></div>
-            <% end %>
-                <span class="user-name">
-                  <%= invitee.name || invitee.email %>
-                </span>
-              </td>
-            </tr>
+          <% if @event.user_owner?(invitee) %>
+            <td class="event-creator">
+              <div class="avatar" style="background-image: url(<%= invitee.image %>)"></div>
+              <img src="/assets/bullhorn.svg" data-png-fallback="/assets/bullhorn.png">
+          <% else %>
+            <td>
+              <div class="avatar" style="background-image: url(<%= invitee.image %>)"></div>
           <% end %>
+              <span class="user-name">
+                <%= invitee.name || invitee.email %>
+              </span>
+            </td>
+          </tr>
         <% end %>
 
         <tr class="total">
