@@ -97,7 +97,7 @@ end
 
 describe User, '#find_existing_yammer_user_id' do
   it 'creates and returns a yammer user if one exists' do
-    yammer_user_email = 'ralph@example.com'
+    yammer_user_email = 'bruce@example.com'
     access_token = '123456'
 
     result = User.find_existing_yammer_user_id(yammer_user_email, access_token)
@@ -106,7 +106,7 @@ describe User, '#find_existing_yammer_user_id' do
   end
 
   it 'hits the Yammer API to find an existing user' do
-    yammer_user_email = 'ralph@example.com'
+    yammer_user_email = 'bruce@example.com'
     access_token = '123456'
 
     expect {

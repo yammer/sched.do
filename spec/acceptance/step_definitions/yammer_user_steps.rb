@@ -5,6 +5,8 @@ step 'no sched.do user exists with email :email' do |email|
 end
 
 step 'a Yammer user exists named :name with email :email' do |name, email|
+  FakeYammer.yammer_user_name = name
+  FakeYammer.yammer_email = email
   url = 'https://www.yammer.com/api/v1/users/by_email.json?email=' + email
   returned = RestClient.get url
   returned.code.should == 200

@@ -7,10 +7,10 @@ Feature: Guest is shown appropriate login option
     Then I should not be prompted to enter my name and email
 
   Scenario: Guest is not shown name and email fields if they are a Yammer user
-    Given I am signed in as "mason@example.com"
+    Given I am signed in as "ralph@example.com"
     And someone created an event named "Clown party"
     And I view the login form for the "Clown party" event
-    And I fill in the guest fields with "mason@example.com" and "Mason"
+    And I fill in the guest fields with "ralph@example.com" and "Ralph Robot"
     Then I should see "Please sign in with your Yammer account" in the notice flash
     And I should not be prompted to enter my name and email
 
