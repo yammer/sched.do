@@ -10,11 +10,11 @@ class EventDecorator < Draper::Base
   end
 
   def invitations_excluding_current_user
-    invitations.reject { |invitation| invitation.invitee == current_user }
+    invitations.reject { |i| i.invitee == current_user }
   end
 
   def other_invitees_who_have_not_voted_count
-    (invitees_who_have_not_voted.length - 1).abs
+    invitees_who_have_not_voted.reject { |i| i == current_user }.length
   end
 
   def first_invitee_for_invitation
