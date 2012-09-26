@@ -3,11 +3,12 @@ class GuestsController < ApplicationController
 
   skip_before_filter :require_yammer_login
   before_filter :authorize
+  before_filter :check_for_existing_yammer_user, only: :create
 
   def new
     @guest = Guest.find_or_initialize_by_email(session.delete(:guest_email))
     @event = Event.find_by_uuid(params[:event_id])
-    @referred_from_yammer = session[:referred_from_yammer]
+    @show_guest_login = show_guest_login?
     session[:return_to]  = event_url(@event)
   end
 
@@ -15,6 +16,7 @@ class GuestsController < ApplicationController
     @guest = Guest.find_or_initialize_by_email(params[:guest][:email])
     @guest.name = params[:guest][:name]
     @event = Event.find_by_uuid(params[:event_id])
+    @show_guest_login = show_guest_login?
 
     if @guest.save
       log_in_guest
@@ -31,8 +33,20 @@ class GuestsController < ApplicationController
     end
   end
 
+  def check_for_existing_yammer_user
+    if User.find_by_email(params[:guest][:email])
+      session[:existing_yammer_user] = true
+      redirect_to new_guest_path(event_id: params[:event_id]), notice: "Please sign in with your Yammer account"
+    end
+  end
+
   def log_in_guest
     session[:name] = params[:guest][:name]
     session[:email] = params[:guest][:email]
+  end
+
+  def show_guest_login?
+    not (session.delete(:referred_from_yammer) ||
+      session.delete(:existing_yammer_user))
   end
 end

@@ -11,7 +11,7 @@
 
   <%= link_to "Sign in with Yammer", "/auth/yammer", class: "sign-in",  id: "sign-in" %>
 
-  <% if not @referred_from_yammer %>
+  <% if @show_guest_login %>
     <p class="sign-in-tip">Or enter your name and email.</p>
 
     <%= semantic_form_for @guest do |f| %>

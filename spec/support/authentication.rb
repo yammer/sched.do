@@ -25,12 +25,13 @@ module TurnipAuthenticationHelpers
 end
 
 module AuthenticationHelpers
-  def mock_yammer_oauth
+  def mock_yammer_oauth(email=nil)
+    email ||= generate(:email)
     OmniAuth.config.mock_auth[:yammer] = {
       uid: generate(:yammer_uid),
       info: {
         access_token: generate(:yammer_token),
-        email: generate(:email),
+        email: email,
         image: generate(:image),
         name: generate(:yammer_user_name),
         nickname: generate(:yammer_nickname),

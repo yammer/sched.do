@@ -2,6 +2,11 @@ step 'I have a Yammer account' do
   mock_yammer_oauth
 end
 
+step 'I am signed in as :email' do |email|
+  mock_yammer_oauth(email)
+  sign_in
+end
+
 step 'I am signed in' do
   mock_yammer_oauth
   sign_in
