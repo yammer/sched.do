@@ -54,12 +54,11 @@ div.show-event {
       float: right;
 
       a.remind-all {
+        @extend .orange-button;
+        @include border-radius(3px);
         font-size: 0.8em;
+        padding: 2px 5px;
         vertical-align: middle;
-
-        &:hover {
-          text-decoration: underline;
-        }
       }
     }
   }
