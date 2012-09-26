@@ -1,5 +1,5 @@
 $(document).ready(function(){
-  var max = <%= Event::NAME_MAX_LENGTH %>
+  var max = 70
   var characters_remaining = max
 
   $('.text-counter').text(characters_remaining);
