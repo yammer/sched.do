@@ -34,7 +34,7 @@ class User < ActiveRecord::Base
 
     response = RestClient.get url
 
-    if response.present?
+    if response.present? && JSON.parse(response)[0].present?
       JSON.parse(response)[0]['id']
     end
   end
