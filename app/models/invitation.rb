@@ -65,16 +65,14 @@ class Invitation < ActiveRecord::Base
   end
 
   def find_existing_yammer_user
-    yammer_user_id = User.find_existing_yammer_user_id(
-      name_or_email_param,
-      access_token
-    )
+    id_finder = YammerUserIdFinder.new(access_token, name_or_email_param)
+    user_id = id_finder.find
 
-    if yammer_user_id
+    if user_id
       User.find_or_create_with_auth(
         access_token: access_token,
         yammer_staging: yammer_staging?,
-        yammer_user_id: yammer_user_id
+        yammer_user_id: user_id
       )
     end
   end

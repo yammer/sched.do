@@ -11,8 +11,8 @@ class FakeYammer < Sinatra::Base
     self.activity_endpoint_hits = 0
     self.messages_endpoint_hits = 0
     self.users_endpoint_hits = 0
-    self.yammer_user_name = 'Ralph Robot'
     self.user_search_by_email_hits = 0
+    self.yammer_user_name = 'Ralph Robot'
     self.yammer_email = 'ralph@example.com'
   end
 
@@ -30,7 +30,7 @@ class FakeYammer < Sinatra::Base
   get '/api/v1/users/by_email.json' do
     self.user_search_by_email_hits += 1
 
-    if params[:email] == 'bruce@example.com'
+    if params[:email] == self.yammer_email
       json_for_user_email_search
     else
       nil

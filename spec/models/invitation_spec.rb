@@ -47,8 +47,8 @@ describe Invitation, '#create' do
 end
 
 describe Invitation, 'build_invitee' do
-  context 'given a yammer user_id and an email' do
-    it 'will create an invitation for the yammer user if possible' do
+  context 'given a Yammer user_id and an email' do
+    it 'will create an invitation for the Yammer user if possible' do
       yammer_user = create(:user)
       invitation = create(:invitation)
 
@@ -72,8 +72,8 @@ describe Invitation, 'build_invitee' do
     end
   end
 
-  context 'given a yammer group_id' do
-    it 'will create an invitation for an existing yammer group' do
+  context 'given a Yammer group_id' do
+    it 'will create an invitation for an existing Yammer group' do
       group = create(:group)
       invitation = create(:invitation)
 
@@ -97,12 +97,12 @@ describe Invitation, 'build_invitee' do
     end
   end
 
-  context 'given an email with no current yammer user id or group id' do
+  context 'given an email with no current yammer_user_id or group_id' do
     it 'searches for a user by email' do
+      invitation = create(:invitation)
       guest = build_stubbed(:guest)
       user = build_stubbed(:user)
       User.stubs(:find_by_email)
-      invitation = create(:invitation)
 
       invitation.build_invitee(name_or_email: user.email)
 
@@ -110,7 +110,7 @@ describe Invitation, 'build_invitee' do
       Guest.should have_received(:find_by_email).with(guest.email).never
     end
 
-    it 'find a guest by email if one exists' do
+    it 'searches for a Guest by email if no User exists' do
       invitation = create(:invitation)
       guest = build_stubbed(:guest)
       Guest.stubs(:find_by_email)
@@ -120,26 +120,31 @@ describe Invitation, 'build_invitee' do
       Guest.should have_received(:find_by_email).with(guest.email)
     end
 
-    it 'search for an existing User by email' do
-      invitation = create(:invitation)
-      user_email = 'ralph@thoughtbot.com'
-      User.stubs(:find_by_email)
-
-      invitation.build_invitee(name_or_email: user_email)
-
-      User.should have_received(:find_by_email).with(user_email)
-    end
-
-    it 'searches for existing Yammer users if they exist' do
+    it 'searches for existing Yammer users' do
       invitation = create(:invitation)
       access_token = invitation.sender.access_token
-      invitee_email = 'horace@example.com'
-      User.stubs(:find_existing_yammer_user_id)
+      invitee_email = 'ralph@example.com'
+      YammerUserIdFinder.any_instance.stubs(:find)
 
       invitation.build_invitee(name_or_email: invitee_email)
 
-      User.should have_received(:find_existing_yammer_user_id).
-        with(invitee_email, access_token)
+      YammerUserIdFinder.any_instance.should have_received(:find)
+    end
+
+    it 'creates a User if it finds an existing Yammer user' do
+      invitation = create(:invitation)
+      access_token = invitation.sender.access_token
+      yammer_staging = false
+      invitee_email = 'ralph@example.com'
+      invitee_user_id = 1488374236
+      User.stubs(:find_or_create_with_auth)
+
+      invitation.build_invitee(name_or_email: invitee_email)
+
+      User.should have_received(:find_or_create_with_auth).
+        with(access_token: access_token,
+             yammer_staging: yammer_staging,
+             yammer_user_id: invitee_user_id)
     end
 
     it 'creates a guest' do
@@ -153,7 +158,7 @@ describe Invitation, 'build_invitee' do
     end
   end
 
-  context 'given a yammer user id' do
+  context 'given a Yammer user id' do
     it 'creates an invitation is a user is found' do
       user = create(:user)
       invitation = create(:invitation)
