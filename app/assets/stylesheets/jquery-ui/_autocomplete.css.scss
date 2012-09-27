@@ -10,7 +10,7 @@ ul.ui-autocomplete {
     margin: 0;
 
     a {
-      background-color: #fff;
+      background-color: #FFF;
       border: 1px solid darken($bg-color, 20%);
       border-bottom: none;
       @include border-radius(0);
@@ -24,9 +24,7 @@ ul.ui-autocomplete {
       text-shadow: 0 1px 0 rgba(255,255,255, 0.5);
 
       &.ui-state-hover {
-        //background-color: $success;
-        //@include background-image(linear-gradient($success, darken($success, 2%)));
-        @include background-image(linear-gradient(rgb(253,253,253), rgb(240,240,240)));
+        @include background-image(linear-gradient(90deg, darken(#FFFFF5, 4%), lighten(#FFFFF5, 0%)));
         border-bottom: none;
       }
 
@@ -86,6 +84,7 @@ ul.ui-autocomplete {
     &:last-child {
       a {
         border-bottom: 1px solid darken($bg-color, 20%);
+        @include border-radius(0 0 4px 4px);
       }
     }
   }
