@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe YammerUserIdFinder, '#find' do
-  it 'returns a yammer user id if one exists' do
-    yammer_user_email = 'bruce@example.com'
+  it 'returns a Yammer user id if one exists' do
+    yammer_user_email = 'ralph@example.com'
     access_token = '123456'
     id = 1488374236
 
@@ -12,7 +12,7 @@ describe YammerUserIdFinder, '#find' do
     result.should == id
   end
 
-  it 'returns nil if no yammer user exists' do
+  it 'returns nil if no Yammer user exists' do
     yammer_user_email = 'noone@example.com'
     access_token = '123456'
 
@@ -22,7 +22,7 @@ describe YammerUserIdFinder, '#find' do
   end
 
   it 'hits the Yammer API to find an existing user' do
-    yammer_user_email = 'bruce@example.com'
+    yammer_user_email = 'anyone@example.com'
     access_token = '123456'
 
     expect {
