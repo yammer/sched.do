@@ -95,38 +95,6 @@ describe User, '#able_to_edit?' do
   end
 end
 
-describe User, '#find_existing_yammer_user_id' do
-  it 'creates and returns a yammer user if one exists' do
-    yammer_user_email = 'bruce@example.com'
-    access_token = '123456'
-
-    result = User.find_existing_yammer_user_id(yammer_user_email, access_token)
-
-    result.should_not be_nil
-  end
-
-  it 'hits the Yammer API to find an existing user' do
-    yammer_user_email = 'bruce@example.com'
-    access_token = '123456'
-
-    expect {
-      result = User.find_existing_yammer_user_id(
-        yammer_user_email,
-        access_token
-      )
-    }.to change(FakeYammer, :user_search_by_email_hits).by(1)
-  end
-
-  it 'returns nil if no yammer user exists' do
-    yammer_user_email = 'not_ralph@example.com'
-    access_token = '123456'
-
-    result = User.find_existing_yammer_user_id(yammer_user_email, access_token)
-
-    result.should be_nil
-  end
-end
-
 describe User, '#image' do
   it 'returns the placeholder if there is no image' do
     user = build_stubbed(:user, image: nil)

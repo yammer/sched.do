@@ -1,6 +1,4 @@
 class User < ActiveRecord::Base
-  SEARCH_BY_EMAIL_URL = 'https://www.yammer.com/api/v1/users/by_email.json'
-
   serialize :extra, JSON
   attr_accessible :access_token, :encrypted_access_token, :name,
     :yammer_user_id, :yammer_staging
@@ -21,21 +19,6 @@ class User < ActiveRecord::Base
       user.yammer_staging = auth[:yammer_staging]
       user.fetch_yammer_user_data
       user.save!
-    end
-  end
-
-  def self.find_existing_yammer_user_id(email, access_token)
-    url = SEARCH_BY_EMAIL_URL + "?" +
-      {
-        email: URI.escape(email),
-        access_token: access_token
-      }.
-      to_query
-
-    response = RestClient.get url
-
-    if response.present? && JSON.parse(response)[0].present?
-      JSON.parse(response)[0]['id']
     end
   end
 
