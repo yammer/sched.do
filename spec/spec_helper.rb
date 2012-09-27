@@ -59,4 +59,9 @@ RSpec.configure do |config|
   config.before(:each) do
     FakeYammer.reset
   end
+
+  # Unit tests after block
+  config.after(:each) do
+    DatabaseCleaner.clean
+  end
 end

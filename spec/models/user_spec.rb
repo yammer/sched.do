@@ -32,7 +32,7 @@ describe User, 'validations' do
   end
 end
 
-describe User, '.find_or_create_with_access_token_and_yammer_user_id' do
+describe User, '.find_or_create_with_auth' do
   it 'finds a user if one already exists using the yammer_user_id' do
     user = create(:user)
     sent_access_token = 'ZZZZZZZ'
@@ -63,6 +63,45 @@ describe User, '.find_or_create_with_access_token_and_yammer_user_id' do
     user.yammer_user_id.should == new_yammer_user_id
     user.access_token.should == access_token
     user.yammer_staging.should == yammer_staging
+  end
+
+  it 'calls associate_guest_invitations' do
+    new_yammer_user_id = 321123
+    access_token = 'PUH98h'
+    yammer_staging = false
+    User.any_instance.stubs(:associate_guest_invitations)
+
+    User.find_or_create_with_auth(
+      access_token: access_token,
+      yammer_staging: yammer_staging,
+      yammer_user_id: new_yammer_user_id
+    )
+
+    User.any_instance.should have_received(:associate_guest_invitations)
+  end
+end
+
+describe User, '#associate_guest_invitations' do
+  it 'associates all guest invitations with this user' do
+    invitation = create(:invitation_with_guest)
+    guest = invitation.invitee
+    guest_invitation_ids = guest.invitations.map(&:id)
+    user = create(:user, email: guest.email)
+
+    user.associate_guest_invitations
+
+    user.invitations.map(&:id).should == guest_invitation_ids
+  end
+
+  it 'deletes the guest which we found' do
+    invitation = create(:invitation_with_guest)
+    guest = invitation.invitee
+    user = create(:user, email: guest.email)
+
+    user.associate_guest_invitations
+
+    guest_check = Guest.find_by_email(guest.email)
+    guest_check.should be_nil
   end
 end
 

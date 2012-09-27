@@ -28,12 +28,22 @@ class User < ActiveRecord::Base
 
     user.tap do |user|
       user.access_token = auth[:access_token]
+      user.associate_guest_invitations
       user.save!
     end
   end
 
   def able_to_edit?(event)
     event.owner == self
+  end
+
+  def associate_guest_invitations
+    guest = Guest.find_by_email(email)
+
+    if guest
+      self.invitations = guest.invitations
+      guest.destroy
+    end
   end
 
   def create_yammer_activity(action, event)
