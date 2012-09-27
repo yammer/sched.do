@@ -56,7 +56,6 @@ div.table-wrapper {
       left: 0;
       position: absolute;
       top: 0px;
-      @include user-select();
       width: $table-width-mobile;
 
       &.blank {
