@@ -9,25 +9,86 @@ div.show-event {
     text-align: center;
     z-index: 0;
 
-    h1.event-name {
-      display: inline-block;
-      font-family: $bariol-light;
-      font-size: 2em;
+    .event-name {
+      @include inline-block;
+      position: relative;
+      vertical-align: middle;
+
+      > h1 {
+        @include inline-block;
+        cursor: pointer;
+        font-family: $bariol-light;
+        font-size: 2em;
+        //height: 40px;
+        margin: 0px;
+        padding: 2px 0 2px;
+        vertical-align: middle;
+      }
+
+      > input {
+        @extend h1;
+        background: rgb(254, 255, 223);
+        border: 1px solid rgb(250, 238, 147);
+        @include border-radius(3px);
+        @include box-shadow(inset 0 0 3px 0 rgba(255, 239, 126, 1));
+        @include box-sizing(border-box);
+        display: none;
+        font-family: $bariol-light;
+        font-size: 2em;
+        padding: 2px 0.2em 0px;
+        text-align: center;
+      }
+
+      .edit-title {
+        background: rgb(60,60,60);
+        border: 1px solid rgb(40,40,40);
+        @include border-radius(3px);
+        color: #fff;
+        display: none;
+        font-family: $sans;
+        font-size: 13px;
+        font-size: 0.8rem;
+        left: 50%;
+        line-height: $lh;
+        margin-left: -43px;
+        padding: 3px 0px 4px;
+        position: absolute;
+        text-align: center;
+        bottom: -26px;
+        width: 84px;
+
+        .nub {
+          border: 8px solid transparent;
+          border-bottom-color: rgb(60,60,60);
+          height: 0px;
+          left: 50%;
+          margin-left: -8px;
+          position: absolute;
+          top: -16px;
+          width: 0px;
+        }
+      }
+
+      &:hover {
+        .edit-title {
+          display: block;
+        }
+      }
     }
 
     a.edit-button {
       @extend .button;
-      display: inline-block;
-      margin-left: 10px;
-      padding: 0.2em 1em;
-      vertical-align: text-bottom;
+      @include inline-block;
+      margin: 3px 10px;
+      padding: 0.2em 1em 0;
+      vertical-align: middle;
     }
   }
 
   section.sub-head {
     @include clearfix;
     margin-bottom: 20px;
-    padding: 20px 0px 0px;
+    padding: 10px 0px 0px;
 
     span {
       font-size: 0.8em;

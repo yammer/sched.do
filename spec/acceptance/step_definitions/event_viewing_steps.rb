@@ -4,6 +4,12 @@ step 'I should see a suggestion of :suggestion' do |suggestion|
   end
 end
 
+step 'I should see :title in the header' do |title|
+  within '.event-name' do
+    page.should have_content title
+  end
+end
+
 step 'I visit the event page' do
   visit event_url(Event.last)
 end

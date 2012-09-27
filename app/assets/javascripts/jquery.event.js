@@ -38,4 +38,26 @@ $(document).ready(function() {
   $(window).resize(function() {
     setLabel();
   });
+
+  $('.event-name h1').click(function(){
+    $(this).hide();
+    $('.event-name input').show().focus();
+  });
+
+  $('.event-name input').blur(function(){
+    $.ajax(
+      {
+        type: 'PUT',
+        dataType:'json',
+        url: document.URL,
+        data: { event: { name: $(this).val() } },
+      }
+      ).success(function(){
+          $('.event-name h1').text($('.event-name input').val());
+          $('.event-name input').hide();
+          $('.event-name h1').show();
+        }
+        );
+
+  })
 });

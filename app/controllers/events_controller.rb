@@ -35,7 +35,10 @@ class EventsController < ApplicationController
     @event.attributes = params[:event]
 
     if @event.save
-      redirect_to @event
+      respond_to do |format|
+        format.html { redirect_to @event }
+        format.json { render json: { status: :ok } }
+      end
     else
       @event.build_suggestions
 

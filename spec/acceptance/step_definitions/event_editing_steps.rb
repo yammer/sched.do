@@ -1,3 +1,15 @@
+step 'I click on the event title' do
+  find('.event-name h1').click
+end
+
+step 'I fill in the title with :event_name' do |event_name|
+  find('.event-name input').set(event_name)
+end
+
+step 'I blur the title field' do
+  page.execute_script("$('.event-name input').trigger('blur');")
+end
+
 step 'I should see that the event was not successfully updated' do
   find('#flash-failure').should have_content 'Please check the errors and try again.'
 end
