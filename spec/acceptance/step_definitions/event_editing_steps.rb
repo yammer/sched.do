@@ -6,3 +6,7 @@ step 'I update the message with the text :message_text' do |message_text|
   find('#event_message').set(message_text)
   find('#event_submit_action input').click
 end
+
+step 'I edit the event' do
+  find('.edit-button').click
+end

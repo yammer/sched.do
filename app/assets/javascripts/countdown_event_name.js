@@ -8,14 +8,9 @@ $(document).ready(function(){
 
     characters_remaining = max - $(this).val().length;
 
-    if(characters_remaining < 0){
-      $('.text-counter').addClass("overlimit");
-    }
-
-    if(characters_remaining >= 0){
-      $('.text-counter').removeClass("overlimit");
-    }
-
     $('.text-counter').text(characters_remaining);
   });
+
+  $('#event_name').keyup();
+
 });
