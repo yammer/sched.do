@@ -38,7 +38,7 @@ class SessionsController < ApplicationController
 
   def find_or_create_with_auth
     User.find_or_create_with_auth(
-        access_token: auth[:info][:access_token],
+        access_token: auth[:credentials][:token],
         yammer_staging: auth[:provider] == "yammer_staging",
         yammer_user_id: auth[:uid]
     )

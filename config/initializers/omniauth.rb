@@ -1,4 +1,3 @@
-require Rails.root.join('lib', 'yammer-strategy')
 require Rails.root.join('lib', 'yammer-staging-strategy')
 OmniAuth.config.on_failure = SessionsController.action(:oauth_failure)
 OmniAuth.config.logger = Rails.logger

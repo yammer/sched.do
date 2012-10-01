@@ -30,7 +30,6 @@ module AuthenticationHelpers
     OmniAuth.config.mock_auth[:yammer] = {
       uid: generate(:yammer_uid),
       info: {
-        access_token: generate(:yammer_token),
         email: email,
         image: generate(:image),
         name: generate(:yammer_user_name),
@@ -38,7 +37,10 @@ module AuthenticationHelpers
         yammer_network_id: 1,
         yammer_profile_url: generate(:yammer_profile_url)
       },
-        extra: generate(:extra)
+      credentials: {
+        token: FactoryGirl.generate(:yammer_token)
+      },
+      extra: generate(:extra)
     }
   end
 
