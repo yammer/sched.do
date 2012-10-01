@@ -1,6 +1,8 @@
 Sched.do
 ========
 
+![tddium_badge](https://api.tddium.com/scheddo/sched.do/badges/2918.png)
+
 Create events. Have your friends vote on them. See what times work for
 everybody.
 
