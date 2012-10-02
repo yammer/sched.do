@@ -1,0 +1,27 @@
+<div class="show-event">
+  <%= render partial: 'events/header' %>
+  <%= render 'events/add_invitation' %>
+
+  <div class="table-wrapper grid">
+    <div class="scroll-notice"></div>
+
+    <div class="grid-help">
+      <h4>Invite People</h4>
+      <p>Who do you want to invite?</p>
+    </div>
+
+    <%= render partial: 'events/grid' %>
+  </div>
+  <% if @event.groups.any? %>
+    <section class="invited-yammer-groups">
+      <h4>Invited Yammer Groups</h4>
+      <ul id="groups">
+        <% @event.groups.each do |group| %>
+          <li>
+            <div class="group-name"><%= group.name %></div>
+          </li>
+        <% end %>
+      </ul>
+    <section>
+  <% end %>
+</div>

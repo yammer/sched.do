@@ -86,3 +86,27 @@ describe EventDecorator, '#first_invitee_for_invitation' do
     string.should == ", #{first_invitee.name}, "
   end
 end
+
+describe EventDecorator, '#role' do
+  it 'returns :owner if the user is the owner of the event' do
+    user = build_stubbed(:user)
+    event = build_stubbed(:event)
+    decorated_event = EventDecorator.new(event)
+    Event.any_instance.stubs(user_owner?: true)
+
+    role = decorated_event.role(user)
+
+    role.should == :owner
+  end
+
+  it 'returns :guest if the user is not the owner of the event' do
+    user = build_stubbed(:user)
+    event = build_stubbed(:event)
+    decorated_event = EventDecorator.new(event)
+    Event.any_instance.stubs(user_owner?: false)
+
+    role = decorated_event.role(user)
+
+    role.should == :invitee
+  end
+end

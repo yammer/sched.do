@@ -1,111 +1,84 @@
-<div class="table-wrapper grid">
-  <div class="scroll-notice"></div>
-
-  <div class="grid-help">
-    <% if current_user.able_to_edit?(@event) %>
-      <h4>Invite People</h4>
-      <p>Who do you want to invite?</p>
-    <% else %>
-      <h4>Cast Your Vote</h4>
-      <p>What options suit you best?</p>
-    <% end %>
-  </div>
-
-  <div class="options">
-    <table class="touch-scrollable">
-      <thead>
-        <tr>
-          <% @event.suggestions.each do |suggestion| %>
-            <th data-id="<%= suggestion.id %>">
-              <%= suggestion.primary %>
-              <span class="secondary">
-                <%= suggestion.secondary %>
-              </span>
-            </th>
-          <% end %>
-        </tr>
-      </thead>
-      <tbody>
-        <% @event.invitees_for_grid.each do |invitee| %>
-          <tr class="<%= 'votable' if  current_user == invitee %>">
-            <% @event.suggestions.each do |suggestion| %>
-              <% if current_user == invitee %>
-                <%= render 'events/vote', suggestion: suggestion,
-                  vote_for_suggestion: current_user.vote_for_suggestion(suggestion) %>
-              <% else %>
-                <% if invitee.voted_for_suggestion?(suggestion) %>
-                  <td class="voted">
-                    <%= image_tag('checkmark.png') %>
-                  </td>
-                <% else %>
-                  <td></td>
-              <% end %>
-            <% end %>
-          <% end %>
-          </tr>
-        <% end %>
-      </tbody>
-      <tfoot>
-        <tr>
-          <% @event.suggestions.each do |suggestion| %>
-            <td class="vote-count" data-id="<%= suggestion.id %>">
-              <%= suggestion.vote_count %>
-            </td>
-          <% end %>
-        </tr>
-      </tfoot>
-    </table>
-  </div>
-
-  <div id="invitees" <% if current_user.able_to_edit?(@event) %>class="blank"<% end %>>
-    <table>
-      <thead>
-        <tr>
-          <th>
-            The Invitees
+<div class="options">
+  <table class="touch-scrollable">
+    <thead>
+      <tr>
+        <% @event.suggestions.each do |suggestion| %>
+          <th data-id="<%= suggestion.id %>">
+            <%= suggestion.primary %>
             <span class="secondary">
-              <%= @event.other_invitees_count %> total
+              <%= suggestion.secondary %>
             </span>
           </th>
-        </tr>
-      </thead>
-      <tbody>
-
-        <% @event.invitees_for_grid.each do |invitee| %>
-          <tr class="<%= 'current-user' if  current_user == invitee %>">
-
-          <% if @event.user_owner?(invitee) %>
-            <td class="event-creator">
-              <div class="avatar" style="background-image: url(<%= invitee.image %>)"></div>
-              <img src="/assets/bullhorn.svg" data-png-fallback="/assets/bullhorn.png">
-          <% else %>
-            <td>
-              <div class="avatar" style="background-image: url(<%= invitee.image %>)"></div>
-          <% end %>
-              <span class="user-name">
-                <%= invitee.name || invitee.email %>
-              </span>
-            </td>
-          </tr>
         <% end %>
-
-        <tr class="total">
-         <td>Total Votes</td>
+      </tr>
+    </thead>
+    <tbody>
+      <% @event.invitees_for_grid.each do |invitee| %>
+        <tr class="<%= 'votable' if  current_user == invitee %>">
+          <% @event.suggestions.each do |suggestion| %>
+            <% if current_user == invitee %>
+              <%= render 'events/vote', suggestion: suggestion,
+                vote_for_suggestion: current_user.vote_for_suggestion(suggestion) %>
+            <% else %>
+              <% if invitee.voted_for_suggestion?(suggestion) %>
+                <td class="voted">
+                  <%= image_tag('checkmark.png') %>
+                </td>
+              <% else %>
+                <td></td>
+            <% end %>
+          <% end %>
+        <% end %>
         </tr>
-      </tbody>
-    </table>
-  </div>
+      <% end %>
+    </tbody>
+    <tfoot>
+      <tr>
+        <% @event.suggestions.each do |suggestion| %>
+          <td class="vote-count" data-id="<%= suggestion.id %>">
+            <%= suggestion.vote_count %>
+          </td>
+        <% end %>
+      </tr>
+    </tfoot>
+  </table>
 </div>
 
-<% if @event.groups.any? & current_user.able_to_edit?(@event)  %>
-  <section class="invited-yammer-groups">
-    <h4>Invited Yammer Groups</h4>
-    <ul id="groups">
-      <% @event.groups.each do |group| %>
-        <li>
-          <div class="group-name"><%= group.name %></div>
-        </li>
+<div id="invitees" <% if current_user.able_to_edit?(@event) %>class="blank"<% end %>>
+  <table>
+    <thead>
+      <tr>
+        <th>
+          The Invitees
+          <span class="secondary">
+            <%= @event.other_invitees_count %> total
+          </span>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <% @event.invitees_for_grid.each do |invitee| %>
+        <tr class="<%= 'current-user' if  current_user == invitee %>">
+
+        <% if @event.user_owner?(invitee) %>
+          <td class="event-creator">
+            <div class="avatar" style="background-image: url(<%= invitee.image %>)"></div>
+            <img src="/assets/bullhorn.svg" data-png-fallback="/assets/bullhorn.png">
+        <% else %>
+          <td>
+            <div class="avatar" style="background-image: url(<%= invitee.image %>)"></div>
+        <% end %>
+            <span class="user-name">
+              <%= invitee.name || invitee.email %>
+            </span>
+          </td>
+        </tr>
       <% end %>
-    </ul>
-  <section>
-<% end %>
+
+      <tr class="total">
+       <td>Total Votes</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

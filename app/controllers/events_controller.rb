@@ -22,6 +22,7 @@ class EventsController < ApplicationController
     @event = EventDecorator.find_by_uuid!(params[:id])
     verify_or_setup_invitation_for_current_user
     setup_invitation_for_event_creator
+    render "events/show/#{@event.role(current_user)}"
   end
 
   def edit

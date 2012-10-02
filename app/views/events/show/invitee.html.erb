@@ -1,0 +1,20 @@
+<div class="show-event">
+  <%= render partial: 'events/header' %>
+  <section class="invitee-sharing">
+    <h4>Share this poll with others:</h4>
+    <a href="#yammer-invite-modal" rel="yammer-invite" name="yammer-invite-modal" class="yammer-invite"><img src="/assets/email.svg" data-png-fallback="/assets/email.png">Yammer</a>
+    <a href="#email-invite-modal" rel="email-invite" name="email-invite-modal" class="email-invite"><img src="/assets/email.svg" data-png-fallback="/assets/email.png">Email</a>
+    <a href="#" class="copy-url"><img src="/assets/email.svg" data-png-fallback="/assets/email.png">Copy Event URL</a>
+  </section>
+
+  <div class="table-wrapper grid">
+    <div class="scroll-notice"></div>
+
+    <div class="grid-help">
+      <h4>Cast Your Vote</h4>
+      <p>What options suit you best?</p>
+    </div>
+
+    <%= render partial: 'events/grid' %>
+  </div>
+</div>
