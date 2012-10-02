@@ -1,16 +1,28 @@
 <section class="search-box">
   <h4>Invite people to your event:</h4>
-  <%= semantic_form_for(@invitation, html: { id: 'invitations'}) do |form| %>
+  <%= semantic_form_for(@invitation, html: { id: 'invitations' }) do |form| %>
     <%= form.inputs do %>
       <div class="invitee-input">
-        <%= text_field_tag "invitation[invitee_attributes][name_or_email]", nil, 'data-role' => 'invitation_name', placeholder: "enter an email, Yammer group or Yammer contact", id: "auto-complete"   %>
+        <%= text_field_tag "invitation[invitee_attributes][name_or_email]",
+          nil,
+          'data-role' => 'invitation_name',
+          placeholder: 'enter an email, Yammer group or Yammer contact',
+          id: 'auto-complete' %>
       </div>
       <%= form.input :event_id, as: :hidden %>
+
       <%= form.semantic_fields_for :invitee do |invitee_form| %>
-        <%= invitee_form.input :yammer_user_id, as: :hidden, input_html: { 'data-role' => 'yammer_user_id' } %>
-        <%= invitee_form.input :yammer_group_id, as: :hidden, input_html: { 'data-role' => 'yammer_group_id' } %>
+        <%= invitee_form.input :yammer_user_id,
+          as: :hidden,
+          input_html: { 'data-role' => 'yammer_user_id' } %>
+
+        <%= invitee_form.input :yammer_group_id,
+          as: :hidden,
+          input_html: { 'data-role' => 'yammer_group_id' } %>
       <% end %>
-      <%= form.action :submit, label: "+ Invite", button_html: {class: "add-invitee"} %>
+
+      <%= form.action :submit, label: "+ Invite",
+        button_html: { class: "add-invitee" } %>
       <div class="invitation-autocomplete-suggestions"></div>
     <% end %>
   <% end %>
