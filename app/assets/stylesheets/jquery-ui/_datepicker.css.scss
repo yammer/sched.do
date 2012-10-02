@@ -9,6 +9,7 @@
   @include box-sizing(border-box);
   display: none;
   padding: 1em;
+  height: 280px;
 
   &::before {
     background: #000;
