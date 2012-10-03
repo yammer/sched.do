@@ -1,8 +1,28 @@
 require 'spec_helper'
 
+describe EventDecorator, '#other_invitees_count' do
+  it 'returns 0 if no one has been invited' do
+    event = create(:event)
+    decorated_event = EventDecorator.new(event)
+
+    count = decorated_event.other_invitees_count
+
+    count.should == 0
+  end
+
+  it 'returns 2 if 2 other people have been invited' do
+    event = create(:event_with_invitees)
+    decorated_event = EventDecorator.new(event)
+
+    count = decorated_event.other_invitees_count
+
+    count.should == 2
+  end
+end
+
 describe EventDecorator, '#invitees_with_current_user_first' do
   it 'creates an array of invitees, with the current user first' do
-    event = build_stubbed(:event_with_invitees)
+    event = create(:event_with_invitees)
     unsorted_invitees = event.invitees
     current_user = unsorted_invitees.second
     EventDecorator.any_instance.stubs(current_user: current_user)

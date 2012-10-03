@@ -2,7 +2,7 @@ class EventDecorator < Draper::Base
   decorates :event
 
   def other_invitees_count
-    (invitees.count - 1).abs
+    invitees.count - 1
   end
 
   def invitees_for_grid
