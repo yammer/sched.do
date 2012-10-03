@@ -1,9 +1,14 @@
 class RemindersController < ApplicationController
   def create
-    event = Event.find_by_uuid!(params[:event_id])
-    decorated_event = EventDecorator.new(event)
-    decorated_event.invitations_excluding_current_user.map(&:send_reminder)
-    flash[:notice] = "Reminders Sent"
-    redirect_to event
+    @reminder = Reminder.new(params[:reminder])
+    @reminder.sender = current_user
+
+    if @reminder.save
+      flash[:notice] = "Reminders sent"
+    else
+      flash[:error] = "There was an error sending reminders"
+    end
+
+    redirect_to event_path(params[:event_id])
   end
 end

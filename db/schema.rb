@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120918204532) do
+ActiveRecord::Schema.define(:version => 20121003163630) do
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
@@ -75,6 +75,20 @@ ActiveRecord::Schema.define(:version => 20120918204532) do
 
   add_index "invitations", ["event_id"], :name => "index_invitations_on_event_id"
   add_index "invitations", ["invitee_id"], :name => "index_invitations_on_invitee_id"
+
+  create_table "reminders", :force => true do |t|
+    t.integer  "sender_id",     :null => false
+    t.string   "sender_type",   :null => false
+    t.integer  "receiver_id",   :null => false
+    t.string   "receiver_type", :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  add_index "reminders", ["receiver_id"], :name => "index_reminders_on_receiver_id"
+  add_index "reminders", ["receiver_type"], :name => "index_reminders_on_receiver_type"
+  add_index "reminders", ["sender_id"], :name => "index_reminders_on_sender_id"
+  add_index "reminders", ["sender_type"], :name => "index_reminders_on_sender_type"
 
   create_table "suggestions", :force => true do |t|
     t.integer  "event_id",                   :null => false

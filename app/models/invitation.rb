@@ -35,11 +35,11 @@ class Invitation < ActiveRecord::Base
     event.owner
   end
 
-  def send_invitation
+  def deliver_invitation
     invitee.deliver_email_or_private_message(:invitation, sender, self)
   end
 
-  def send_reminder
+  def deliver_reminder
     if not invitee.voted_for_event?(event)
       invitee.deliver_email_or_private_message(:reminder, sender, self)
     end

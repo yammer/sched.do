@@ -62,6 +62,11 @@ FactoryGirl.define do
     event
   end
 
+  factory :reminder do
+    sender factory: :user
+    receiver factory: :event
+  end
+
   factory :invitation do
     event
     association :invitee, factory: :user

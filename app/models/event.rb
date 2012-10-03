@@ -30,6 +30,10 @@ class Event < ActiveRecord::Base
     suggestions[1] ||= Suggestion.new
   end
 
+  def deliver_reminders_from(user)
+    invitations_without(user).map(&:deliver_reminder)
+  end
+
   def has_suggestions?
     if has_at_least_one_suggestion?
       errors.add(:suggestions, "An event must have at least one suggestion")
@@ -84,5 +88,9 @@ class Event < ActiveRecord::Base
 
   def has_at_least_one_suggestion?
     suggestions.reject(&:marked_for_destruction?).size == 0
+  end
+
+  def invitations_without(user)
+    invitations.reject { |i| i.invitee == user }
   end
 end

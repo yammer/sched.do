@@ -1,41 +1,31 @@
 require 'spec_helper'
 
 describe RemindersController, '#create' do
-  it 'finds an Event' do
+  it 'creates a Reminder' do
     user = create(:user)
-    sign_in_as(user)
-    Event.stubs(:find_by_uuid!).returns(Event.new)
-
-    post :create, { event_id: 5 }
-
-    Event.should have_received(:find_by_uuid!).with("5").once
-  end
-
-  it 'sends a reminder to invited users, but not to the current user' do
-    current_user = create(:user)
-    sign_in_as(current_user)
-    EventDecorator.any_instance.stubs(current_user: current_user)
-    guest = create(:guest)
-    user = create(:user)
-    event = create_event_with_invitees(guest, user)
-    Event.stubs(find_by_uuid!: event)
-
-    post :create
-
-    guest.should have_received(:deliver_email_or_private_message).once
-    user.should have_received(:deliver_email_or_private_message).once
-    current_user.should have_received(:deliver_email_or_private_message).never
-  end
-
-  def create_event_with_invitees(guest, user)
     event = create(:event)
+    sign_in_as(user)
+    reminder = Reminder.new
+    Reminder.stubs(new: reminder)
+    Reminder.any_instance.stubs(:save)
 
-    guest.stubs(:deliver_email_or_private_message)
-    user.stubs(:deliver_email_or_private_message)
+    post :create, event_id: event
 
-    event.users << user
-    event.guests << guest
+    Reminder.should have_received(:new)
+    Reminder.any_instance.should have_received(:save)
+  end
 
-    event
+  it 'sets the Reminder sender to current_user' do
+    user = create(:user)
+    event = create(:event)
+    sign_in_as(user)
+    reminder = Reminder.new
+    Reminder.stubs(new: reminder)
+    Reminder.any_instance.stubs(:save)
+
+    post :create, event_id: event
+
+    reminder.sender.should == user
+    Reminder.any_instance.should have_received(:save)
   end
 end

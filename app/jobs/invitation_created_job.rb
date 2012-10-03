@@ -7,7 +7,7 @@ class InvitationCreatedJob < Struct.new(:invitation_id)
   end
 
   def perform
-    invitation.send_invitation
+    invitation.deliver_invitation
   end
 
   private
