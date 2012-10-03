@@ -31,6 +31,12 @@ step 'I sign out' do
   sign_out
 end
 
+step 'I am signed in as :name and I view the page for :event' do |name, event|
+  step %(a Yammer user exists named "#{name}" with email "temp@example.com")
+  step %(I am signed in as "temp@example.com")
+  step %(I visit the event page for "#{event}")
+end
+
 step 'I am signed in as a guest' do
   visit new_guest_path(event_id: Event.last.uuid)
   step 'I fill in the fields then submit'

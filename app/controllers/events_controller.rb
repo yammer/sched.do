@@ -22,7 +22,7 @@ class EventsController < ApplicationController
     @event = EventDecorator.find_by_uuid!(params[:id])
     verify_or_setup_invitation_for_current_user
     setup_invitation_for_event_creator
-    render "events/show/#{@event.role(current_user)}"
+    render "events/show/#{current_user_class}"
   end
 
   def edit
@@ -49,8 +49,12 @@ class EventsController < ApplicationController
 
   private
 
+  def current_user_class
+    current_user.class.name.downcase
+  end
+
   def setup_invitation_for_event_creator
-    if current_user.able_to_edit?(@event)
+    if current_user.yammer_user?
       @invitation = Invitation.new
       @invitation.invitee = User.new
       @invitation.event = @event

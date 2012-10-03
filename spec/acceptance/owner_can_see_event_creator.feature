@@ -5,4 +5,3 @@ Feature: Owner can tell who created an Event
     When I create an event named "Clown party" with a suggestion of "lunch"
     Then I view the "Clown party" event
     And I should see 'Britton' within the created by section
-

@@ -1,5 +1,5 @@
 <div class="show-event">
-  <%= render partial: 'events/header' %>
+  <%= render 'events/header' %>
   <%= render 'events/add_invitation' %>
 
   <div class="table-wrapper grid">
@@ -10,7 +10,7 @@
       <p>Who do you want to invite?</p>
     </div>
 
-    <%= render partial: 'events/grid' %>
+    <%= render 'events/grid' %>
   </div>
   <% if @event.groups.any? %>
     <section class="invited-yammer-groups">

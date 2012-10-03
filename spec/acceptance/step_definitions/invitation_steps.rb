@@ -31,6 +31,12 @@ step 'I invite :email to :event_name' do |email, event_name|
   click_button 'add-invitee'
 end
 
+step 'someone invites :email to :event_name' do |email, event_name|
+  event = Event.find_by_name!(event_name)
+  invitation = Invitation.new(event: event)
+  invitation.build_invitee(name_or_email: email).save
+end
+
 step 'I should see :name in the list of invitees' do |name|
   within '#invitees' do
     page.should have_content name

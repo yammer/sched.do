@@ -29,14 +29,6 @@ class EventDecorator < Draper::Base
     end
   end
 
-  def role(user)
-    if event.user_owner?(user)
-      :owner
-    else
-      :invitee
-    end
-  end
-
   private
 
   def current_user
