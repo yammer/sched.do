@@ -6,17 +6,12 @@
   <nav>
     <ul>
       <li>
-        <% if current_user.guest? %>
-          <%= link_to 'Create Poll', "#sign-in-modal", id: "new-event", name: "sign-in-modal" %>
-        <% else %>
+        <% if current_user.yammer_user? %>
           <%= link_to 'Create Poll', new_event_path, id: "new-event", class: "create-poll" %>
+        <% else %>
+          <%= link_to 'Create Poll', "#sign-in-modal", id: "new-event", name: "sign-in-modal" %>
         <% end %>
       </li>
-      <% if current_user.yammer_user? %>
-        <li>
-          <%= link_to 'Sign out', sign_out_path %>
-        </li>
-      <% end %>
       </ul>
     </nav>
 </div>

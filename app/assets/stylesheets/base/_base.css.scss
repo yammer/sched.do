@@ -84,6 +84,34 @@ header {
 }
 
 div.main-content {
-  overflow: hidden;
-  padding: 20px 10px 120px 10px;
+  overflow-x: hidden;
+  padding: 20px 10px;
+}
+
+div.footer-spacer {
+  height: 100px;
+  width: 100%;
+}
+
+footer {
+  background: lighten($bg-color, 2%);
+  border-top: 1px solid darken($bg-color, 10%);
+  bottom: 0px;
+  @include clearfix;
+  @include box-sizing(border-box);
+  @include box-shadow(inset 0 1px 4px 0 rgba(darken($bg-color, 10%), 0.4));
+  padding: 15px 10px 15px;
+  position: absolute;
+  text-align: center;
+  width: 100%;
+
+  a:link, a:visited, span {
+    color: darken($bg-color, 25%);
+    font-size: 0.8em;
+    margin: 0 6px;
+  }
+
+  a:link:hover, a:visited:hover {
+    color: darken($bg-color, 50%);
+  }
 }

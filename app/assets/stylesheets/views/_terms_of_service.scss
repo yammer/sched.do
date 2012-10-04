@@ -1,0 +1,12 @@
+.tos {
+  @extend .sheet;
+
+  h1 {
+    border-bottom: 1px solid darken($bg-color, 10%);
+    font-family: $bariol-light;
+    font-size: 2em;
+    margin-bottom: 1em;
+    padding-bottom: 0.7em;
+    text-align: center;
+  }
+}

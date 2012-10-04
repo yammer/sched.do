@@ -1,6 +1,11 @@
 body.welcome {
   font-smoothing:subpixel-antialiased;
 
+  div.agree-to-tos {
+    display: none;
+    @extend %tos-agreement;
+  }
+
   div.welcome {
     background-color: $bg-color;
     @include background-image(linear-gradient(#fff, darken($bg-color, 2%)));
@@ -106,7 +111,7 @@ body.welcome {
     div.sign-in {
       @extend div.logo;
 
-      a {
+      > a {
         display: block;
 
         &.sign-in {
@@ -200,20 +205,7 @@ body.welcome {
       @extend .button;
       @extend .yammer-button;
       display: block;
-    }
-
-    footer {
-      padding: 40px 20px 20px;
-      text-align: right;
-
-      a {
-        color: rgb(190,190,190);
-        @include transition(all, 0.15s, linear);
-
-        &:hover {
-          color: rgb(140,140,140);
-        }
-      }
+      margin-bottom: 0px;
     }
   }
 }

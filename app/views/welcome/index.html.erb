@@ -14,6 +14,13 @@
 
   <div class="sign-in">
     <%= link_to "Sign in with Yammer", "/auth/yammer", class: "sign-in",  id: "sign-in" %>
+    <div class="agree-to-tos">
+      <label>
+        <input type="checkbox">
+        I agree to the
+        <%= link_to "terms of service", "/tos" %>
+      </label>
+    </div>
   </div>
   <div class="learn-more-wrapper">
     <a href="#steps" class="learn-more-fixed">Learn More <span class="arrow"></span></a>
@@ -58,7 +65,11 @@
 
 <div class="footer-sign-in">
   <%= link_to "Sign in with Yammer", "/auth/yammer", class: "sign-in",  id: "sign-in" %>
-  <footer>
-    <%= link_to "staging", "/auth/yammer_staging" %>
-  </footer>
+  <div class="agree-to-tos">
+    <label>
+      <input type="checkbox">
+      I agree to the
+      <%= link_to "terms of service", "/tos" %>
+    </label>
+  </div>
 </div>

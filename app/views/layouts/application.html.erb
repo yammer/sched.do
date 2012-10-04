@@ -32,6 +32,18 @@
   </head>
   <body class="<%= body_class %>">
     <%= content_for?(:content) ? yield(:content) : yield %>
+    <div class="footer-spacer"></div>
+    <footer>
+      <div class="inner">
+        <span class="copy-right">&copy;2012 Sched.do</span>
+        <%= link_to 'Terms of Service', "https://www.yammer.com/about/terms/", target:"_blank" %>
+        <% if current_user.present? %>
+          <%= link_to 'Sign out', sign_out_path %>
+        <% else %>
+          <%= link_to "Staging", "/auth/yammer_staging" %>
+        <% end %>
+      </div>
+    </footer>
     <%= render 'shared/javascript' %>
   </body>
 </html>

@@ -42,6 +42,10 @@ div.guest-sign-in {
     }
   }
 
+  .signin-with-yammer {
+    margin-bottom: 25px;
+  }
+
   a.sign-in {
     @extend .button;
     @extend .yammer-button;
@@ -50,6 +54,12 @@ div.guest-sign-in {
     padding: 0.6em 0 0.6em 1em;
     font-size: 1em;
     @include fill-parent();
+    margin-bottom: 0px;
+  }
+
+  div.agree-to-tos {
+    display: none;
+    @extend %tos-agreement;
   }
 
   p.sign-in-tip {
