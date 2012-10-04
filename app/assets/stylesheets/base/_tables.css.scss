@@ -63,11 +63,8 @@ div.table-wrapper {
       }
 
       th {
-        //background-color: darken($bg-color, 3%);
-        background-color: $bg-color;
-        //@include background-image(linear-gradient($bg-color, darken($bg-color, 6%)));
-  //background-color: darken($bg-color, 2%);
-  //@include background-image(linear-gradient(#fff, darken($bg-color, 2%)));
+        background-color: darken($bg-color, 3%);
+        @include background-image(linear-gradient($bg-color, darken($bg-color, 6%)));
         border-bottom: 1px solid darken($bg-color, 20%);
         @include box-sizing(border-box);
         @include border-radius(4px 0 0 0);
@@ -88,16 +85,12 @@ div.table-wrapper {
         table-layout: fixed;
 
         tr {
-          //background-color: $bg-color;
-          //@include background-image(linear-gradient(#fff, $bg-color));
           border-bottom: 1px solid darken($bg-color, 20%);
-              @include box-shadow(inset 0 1px 0 rgba(255,255,255, 1));
+          @include box-shadow(inset 0 1px 0 rgba(255,255,255, 1));
           text-shadow: 0 1px 0 #fff;
 
           &.current-user {
             background-color: darken($bg-color, 3%);
-            //background-color: lighten($success, 3%);
-            //@include background-image(linear-gradient(lighten($success, 5%), darken($success, 0%)));
 
             td {
               color: darken($bg-color, 50%);
@@ -201,9 +194,9 @@ div.table-wrapper {
         @include box-shadow(0 0 20px darken($bg-color, 15%));
 
         th {
-          //background-color: $bg-color;
-          background-color: #fff;
-          //@include background-image(linear-gradient(#fff, darken($bg-color, 0%)));
+          background-color: $bg-color;
+          @include background-image(linear-gradient(#fff, darken($bg-color, 2%)));
+          @include box-shadow(inset 0 1px 0 #fff);
           border-bottom: 1px solid darken($bg-color, 20%);
           border-right:1px solid darken($bg-color, 20%);
           @include box-sizing(border-box);
@@ -218,11 +211,8 @@ div.table-wrapper {
           }
 
           &:nth-child(even) {
-            //background-color: darken($bg-color, 3%);
-            //@include background-image(linear-gradient($bg-color, darken($bg-color, 6%)));
-            background-color: $bg-color;
-  //background-color: darken($bg-color, 2%);
-  //@include background-image(linear-gradient(#fff, darken($bg-color, 3%)));
+            background-color: darken($bg-color, 3%);
+            @include background-image(linear-gradient($bg-color, darken($bg-color, 6%)));
           }
 
           span.secondary {
@@ -301,10 +291,29 @@ div.table-wrapper {
 
         td {
           background: #fff;
-          //border-right: 1px solid darken($bg-color, 12%);
           border-right: 1px solid darken($bg-color, 8%);
           height: 56px;
           padding: 0;
+
+          &.send-reminder {
+            text-align: center;
+
+            div.reminder-wrapper {
+              a.remind {
+                background: lighten($bg-color, 1%);
+                @include inline-block;
+                color: darken($bg-color, 20%);
+                border: 1px solid darken($bg-color, 2%);
+                @include border-radius(3px);
+                font-size: 0.8em;
+                padding: 3px 8px;
+
+                &:hover {
+                  @extend .blue-button;
+                }
+              }
+            }
+          }
 
           &:last-child {
             border: none;
@@ -323,7 +332,6 @@ div.table-wrapper {
           }
 
           &:nth-child(even) {
-            //background: rgba(229, 248, 252, 0.5);
             background: $bg-color;
           }
 
@@ -359,28 +367,29 @@ div.table-wrapper {
 // A quick fix for https://developer.mozilla.org/en/CSS/box-sizing#Notes
 @-moz-document url-prefix() {
   div.table-wrapper  {
-    div.search-box, div#invitees {
-      top: 76px;
+    div#invitees table {
+
+      thead {
+        height: 76px;
+      }
 
       tr.invitee td {
         height: 57px;
       }
+
+      tr.current-user {
+        height: 57px;
+      }
     }
 
-    div#invitees table tr.current-user {
-      height: 57px;
-    }
+    div.options table {
+      td {
+        padding: 0;
+      }
 
-    div#invitees.blank {
-      top: 146px;
-    }
-
-    div.options table td {
-      padding: 0;
-    }
-
-    div.options table thead th {
-      height: 76px;
+      thead th {
+        height: 76px;
+      }
     }
   }
 }

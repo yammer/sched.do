@@ -33,12 +33,14 @@
         </tr>
       <% else %>
         <tr>
-            <td colspan=<%= @event.invitees.count %>>
+            <td class="send-reminder" colspan=<%= @event.suggestions.count %>>
               <% if invitee != current_user %>
-                <%= link_to "Remind #{invitee.name} to vote", reminders_path(reminder:
-                                                                             { receiver_id: @event.invitation_for(invitee),
-                                                                               receiver_type: @event.invitation_for(invitee).class.name
-                }, event_id: @event.uuid), method: :post %>
+                <div class="reminder-wrapper">
+                  <%= link_to "Remind #{invitee.name} to vote", reminders_path(reminder:
+                                                                               { receiver_id: @event.invitation_for(invitee),
+                                                                                 receiver_type: @event.invitation_for(invitee).class.name
+                  }, event_id: @event.uuid), method: :post, class: "remind" %>
+                </div>
               <% end %>
           </td>
         </tr>
