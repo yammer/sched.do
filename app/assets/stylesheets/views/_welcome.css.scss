@@ -134,8 +134,10 @@ body.welcome {
         display: block;
         font-family: $bariol;
         font-size: 1.5em;
+        height: 626px;
         list-style: none;
         margin: 0 auto;
+        overflow: hidden;
         padding: 10%;
         visibility: hidden;
 
