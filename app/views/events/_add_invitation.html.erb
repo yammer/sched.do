@@ -21,8 +21,7 @@
           input_html: { 'data-role' => 'yammer_group_id' } %>
       <% end %>
 
-      <%= form.action :submit, label: "+ Invite",
-        button_html: { class: "add-invitee" } %>
+      <%= form.action :submit, button_html: { id: "add-invitee" } %>
       <div class="invitation-autocomplete-suggestions"></div>
     <% end %>
   <% end %>

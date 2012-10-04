@@ -77,6 +77,7 @@ if($("input[data-role='invitation_name']").length){
         dataRole = "yammer_group_id";
       };
       fillInClosestFieldWithDataRole(id, event.target, dataRole);
+      $(this).parents('form').submit();
     },
     source: function(request, response) {
       var term = request.term;

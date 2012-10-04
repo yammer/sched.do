@@ -117,14 +117,8 @@ div.show-event {
         }
       }
 
-      .add-invitee {
-        @include button-color(darken($success, 10%));
-        @include border-radius(0px 4px 4px 0px);
-        height: 34px;
-        margin: 0px;
-        padding: 0.2em 0.8em;
-        width: 81px;
-        z-index: 9999;
+      #add-invitee {
+        display: none;
       }
     }
 
