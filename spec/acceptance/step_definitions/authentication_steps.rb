@@ -33,17 +33,17 @@ end
 
 step 'I am signed in as a guest' do
   visit new_guest_path(event_id: Event.last.uuid)
-  fill_in_guest_info
+  step 'I fill in the fields then submit'
 end
 
 step 'I am signed in as the guest :guest_email' do |guest_email|
   visit new_guest_path(event_id: Event.last.uuid)
-  fill_in_guest_info(guest_email)
+  step %(I fill in the fields with "#{guest_email}" and "nil" then submit)
 end
 
-step 'I am signed in as the guest :guest_email named :guest_name' do |guest_email, guest_name|
+step 'I am signed in as the guest :email named :name' do |email, name|
   visit new_guest_path(event_id: Event.last.uuid)
-  fill_in_guest_info(guest_email, guest_name)
+  step %(I fill in the fields with "#{email}" and "#{name}" then submit)
 end
 
 step 'I view the login form for the :event event' do |event_name|
@@ -68,4 +68,16 @@ step 'I log out and sign back in again' do
   step "I sign out"
   step "I visit the homepage"
   step "I click 'Sign in with Yammer'"
+end
+
+step 'I fill in the fields then submit' do
+  step %(I fill in the fields with "#{nil}" and "#{nil}" then submit)
+end
+
+step 'I fill in the fields with :email and :name then submit' do |email, name|
+  email ||= 'joe@example.com'
+  name ||= 'Joe Schmoe'
+  fill_in 'guest_name', with: name
+  fill_in 'guest_email', with: email
+  click_button 'Begin Voting'
 end

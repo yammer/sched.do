@@ -26,7 +26,20 @@ class GuestsController < ApplicationController
     end
   end
 
+  def update
+    guest = Guest.find_by_email!(params[:guest][:email])
+    @event = Event.find_by_uuid!(params[:event_id])
+
+    if guest.update_attributes(params[:guest])
+      log_in_guest
+      redirect_to event_url(@event)
+    else
+      render :new
+    end
+  end
+
   private
+
   def authorize
     if signed_in?
       redirect_to event_path(params[:event_id])

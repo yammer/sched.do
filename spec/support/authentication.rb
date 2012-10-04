@@ -8,14 +8,6 @@ module TurnipAuthenticationHelpers
     click_link 'Sign out'
   end
 
-  def fill_in_guest_info(guest_email = 'joe@example.com', guest_name = 'Joe Schmoe')
-    within '#new_guest' do
-      fill_in 'guest_name', with: guest_name
-      fill_in 'guest_email', with: guest_email
-      click_button 'Begin Voting'
-    end
-  end
-
   def as_random_user
     mock_yammer_oauth
     sign_in

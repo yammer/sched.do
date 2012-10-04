@@ -12,16 +12,13 @@ step 'I should not be prompted to enter my name and email' do
   page.should_not have_css('#guest_email')
 end
 
-step 'I enter my name and email' do
-  fill_in_guest_info
-end
-
 step 'I enter my name and an invalid email' do
-  fill_in_guest_info(guest_email: 'bears@')
+  guest_email = 'bears@'
+  step %(I fill in the fields with "#{guest_email}" and "nil" then submit)
 end
 
 step 'I fill in the guest fields with :email and :name' do |email, name|
-  fill_in_guest_info(email, name)
+  step %(I fill in the fields with "#{email}" and "#{name}" then submit)
 end
 
 step 'I should receive a vote confirmation email for :event_name' do |event_name|

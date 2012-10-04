@@ -22,7 +22,7 @@ Feature: Guest is shown appropriate login option
   Scenario: Guest name and email are prepopulated when clicking links
     Given someone created an event named "Clown party" with a suggestion of "lunch"
     And "guest@example.com" was invited to the event "Clown party"
-    And I am signed in as the guest "guest@example.com"
+    And I am signed in as the guest "guest@example.com" named "Joe Schmoe"
     When I view the "Clown party" event
     When I vote for "lunch"
     Then I should receive a vote confirmation email with a link to "Clown party"

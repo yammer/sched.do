@@ -47,10 +47,12 @@ RSpec.configure do |config|
 
   # Acceptance tests before block
   config.before(:each, type: :request) do
-    # Clean before are run, otherwise JS scenarios leave records in the database.
+
+    # Clean before each run, otherwise JS scenarios leave records in the db
     DatabaseCleaner.clean
     ActionMailer::Base.deliveries.clear
     Dotenv.load
+
     # Do not run Delayed Jobs during acceptance testing
     Delayed::Worker.delay_jobs = false
   end

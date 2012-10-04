@@ -14,7 +14,7 @@ Feature: Guests can vote on suggestions
     And "guest@example.com" was invited to the event "Clown party"
     And I am signed in as the guest "guest@example.com"
     When I view the "Clown party" event
-    When I vote for "lunch"
+    And I vote for "lunch"
     Then I should receive a vote confirmation email with a link to "Clown party"
 
   Scenario: Guest can undo their vote for a suggestion
