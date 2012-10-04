@@ -45,6 +45,10 @@ class Invitation < ActiveRecord::Base
     end
   end
 
+  def deliver_reminders_from(_)
+    deliver_reminder
+  end
+
   private
 
   def access_token

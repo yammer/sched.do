@@ -180,3 +180,41 @@ describe Event, '#enqueue_event_created_job' do
     EventCreatedJob.should have_received(:enqueue).with(event)
   end
 end
+
+
+describe Event, '#invitation_for' do
+  it 'returns the inviation for this user' do
+    invitation = create(:invitation)
+    invitee = invitation.invitee
+    event = invitation.event
+
+    event.invitation_for(invitee).should == invitation
+  end
+end
+
+describe Event, '#deliver_reminders_from' do
+  it 'sends a reminder to invited users, but not to the sender' do
+    sender = create(:user)
+    guest = create(:guest)
+    user = create(:user)
+    event = create_event_with_invitees(guest, user)
+
+    event.deliver_reminders_from(sender)
+
+    guest.should have_received(:deliver_email_or_private_message).once
+    user.should have_received(:deliver_email_or_private_message).once
+    sender.should have_received(:deliver_email_or_private_message).never
+  end
+end
+
+def create_event_with_invitees(guest, user)
+  event = create(:event)
+
+  guest.stubs(:deliver_email_or_private_message)
+  user.stubs(:deliver_email_or_private_message)
+
+  event.users << user
+  event.guests << guest
+
+  event
+end

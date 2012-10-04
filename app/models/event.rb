@@ -52,6 +52,13 @@ class Event < ActiveRecord::Base
     Invitation.invite_without_notification(self, owner)
   end
 
+  def invitation_for(user)
+    Invitation.where(event_id: self,
+                    invitee_id: user,
+                    invitee_type: user.class.name
+                    ).first
+  end
+
   def generate_uuid
     self.uuid = SecureRandom.hex(4)
   end

@@ -199,3 +199,16 @@ describe Invitation, '#sender' do
     invitation.sender.should == invitation.event.owner
   end
 end
+
+describe Invitation, '#deliver_reminders_from' do
+  it 'sends a reminder to the invitee' do
+    invitation = create(:invitation)
+    invitee = invitation.invitee
+    invitee.stubs(:deliver_email_or_private_message)
+    sender = create(:user)
+
+    invitation.deliver_reminders_from(sender)
+
+    invitee.should have_received(:deliver_email_or_private_message).once
+  end
+end

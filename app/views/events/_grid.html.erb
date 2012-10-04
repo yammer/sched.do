@@ -14,22 +14,35 @@
     </thead>
     <tbody>
       <% @event.invitees_for_grid.each do |invitee| %>
-        <tr class="<%= 'votable' if  current_user == invitee %>">
-          <% @event.suggestions.each do |suggestion| %>
-            <% if current_user == invitee %>
-              <%= render 'events/vote', suggestion: suggestion,
-                vote_for_suggestion: current_user.vote_for_suggestion(suggestion) %>
-            <% else %>
-              <% if invitee.voted_for_suggestion?(suggestion) %>
-                <td class="voted">
-                  <%= image_tag('checkmark.png') %>
-                </td>
+        <% if @event.user_voted?(invitee) || invitee == current_user %>
+          <tr class="<%= 'votable' if  current_user == invitee %>">
+            <% @event.suggestions.each do |suggestion| %>
+              <% if current_user == invitee %>
+                <%= render 'events/vote', suggestion: suggestion,
+                  vote_for_suggestion: current_user.vote_for_suggestion(suggestion) %>
               <% else %>
-                <td></td>
+                <% if invitee.voted_for_suggestion?(suggestion) %>
+                  <td class="voted">
+                    <%= image_tag('checkmark.png') %>
+                  </td>
+                <% else %>
+                  <td></td>
+              <% end %>
             <% end %>
           <% end %>
-        <% end %>
         </tr>
+      <% else %>
+        <tr>
+            <td colspan=<%= @event.invitees.count %>>
+              <% if invitee != current_user %>
+                <%= link_to "Remind #{invitee.name} to vote", reminders_path(reminder:
+                                                                             { receiver_id: @event.invitation_for(invitee),
+                                                                               receiver_type: @event.invitation_for(invitee).class.name
+                }, event_id: @event.uuid), method: :post %>
+              <% end %>
+          </td>
+        </tr>
+        <% end %>
       <% end %>
     </tbody>
     <tfoot>
