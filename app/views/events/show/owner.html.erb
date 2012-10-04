@@ -19,6 +19,14 @@
         <% @event.groups.each do |group| %>
           <li>
             <div class="group-name"><%= group.name %></div>
+              <%= link_to "Remind",
+                reminders_path(event_id: @event,
+                  reminder:{
+                    receiver_id: @event.invitation_for(group),
+                    receiver_type: @event.invitation_for(group).class.name
+              }),
+              method: :post,
+              class: "group-reminder" %>
           </li>
         <% end %>
       </ul>
