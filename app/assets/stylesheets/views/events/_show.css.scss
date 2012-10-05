@@ -272,6 +272,21 @@ div.show-event {
           @include inline-block;
           padding: 0.5em 1em 0.5em 30px;
         }
+
+        a.group-reminder {
+          background: lighten($bg-color, 1%);
+          border: 1px solid darken($bg-color, 2%);
+          @include border-radius(3px);
+          color: darken($bg-color, 20%);
+          display: block;
+          float: right;
+          font-size: 0.9em;
+          padding: 0.5em 1em;
+
+          &:hover {
+            @extend .blue-button;
+          }
+        }
       }
     }
   }
