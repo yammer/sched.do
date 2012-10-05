@@ -16,4 +16,4 @@ Feature: User can remind invitees to vote
     And a user exists with a name of "Joe Smith"
     When I invite the Yammer user "Joe Smith" to "Clown party"
     And I click "Remind Joe Smith to vote"
-    And "Joe Smith" should receive a private reminder message
+    Then "Joe Smith" should receive a private reminder message
