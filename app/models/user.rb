@@ -41,7 +41,7 @@ class User < ActiveRecord::Base
     guest = Guest.find_by_email(email)
 
     if guest
-      self.invitations = guest.invitations
+      associate_each_invitation_with(guest)
       guest.destroy
     end
   end
@@ -126,6 +126,12 @@ class User < ActiveRecord::Base
   end
 
   private
+
+  def associate_each_invitation_with(guest)
+    guest.invitations.each do |invitation|
+      self.invitations << invitation
+    end
+  end
 
   def parse_email_from_response(response)
     response['contact']['email_addresses'].
