@@ -1,7 +1,7 @@
 @javascript
-Feature: User sees parsed times
+Feature: Owner sees parsed times
 
-  Scenario: User sees parsed times
+  Scenario: Owner sees parsed times
     Given I am signed in
     When I visit the new event page
     And I enter "13:00" in the first secondary field

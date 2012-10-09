@@ -1,13 +1,13 @@
-Feature: Users can vote on suggestions
+Feature: Owners can vote on suggestions
   @javascript
-  Scenario: User votes for a single suggestion
+  Scenario: Owner votes for a single suggestion
     Given I am signed in
     And I created an event named "Clown party" with a suggestion of "lunch"
     Then I should see that "lunch" has 0 votes
     When I vote for "lunch"
     Then I should see that "lunch" has 1 vote
 
-  Scenario: User votes twice for a single suggestion
+  Scenario: Owner votes twice for a single suggestion
     Given I am signed in
     And I created an event named "Clown party" with a suggestion of "lunch"
     When I vote for "lunch"
@@ -15,7 +15,7 @@ Feature: Users can vote on suggestions
     Then I should see "Sorry, you cannot duplicate votes"
 
   @javascript
-  Scenario: User can undo their vote for a suggestion
+  Scenario: Owner can undo their vote for a suggestion
     Given I am signed in
     And I created an event named "Clown party" with a suggestion of "lunch"
     When I vote for "lunch"
@@ -24,7 +24,7 @@ Feature: Users can vote on suggestions
     Then I should see that "lunch" has 0 votes
 
   @javascript
-  Scenario: User can vote for suggestions for different events
+  Scenario: Owner can vote for suggestions for different events
     Given I am signed in
     When I create an event named "Clown party" with a suggestion of "lunch"
     And I vote for "lunch"
@@ -34,7 +34,7 @@ Feature: Users can vote on suggestions
     Then I should see that "dinner" has 1 vote
 
   @javascript
-  Scenario: User votes for multiple suggestions
+  Scenario: Owner votes for multiple suggestions
     Given I am signed in
     And I create an event with the following suggestions:
       | lunch  |
@@ -45,7 +45,7 @@ Feature: Users can vote on suggestions
     And I should see that "dinner" has 1 vote
 
   @javascript
-  Scenario: User can vote on an event they were not invited to
+  Scenario: Owner can vote on an event they were not invited to
     Given someone created an event named "Clown party" with a suggestion of "lunch"
     And I am signed in
     When I view the "Clown party" event

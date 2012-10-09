@@ -1,4 +1,4 @@
-Feature: User can view invitees for an event
+Feature: Owner can view invitees for an event
 
   Scenario: Event owner views Yammer invitees
     Given a user exists with a name of "Joe Smith"
