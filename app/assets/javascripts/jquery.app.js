@@ -152,7 +152,7 @@ $(document).ready(function() {
 
   clip.addEventListener( 'mouseDown', function(client) {
     clip.setText( $('div.copy-event-url').data('event-url'));
-    $('div.copy-event-url').text('URL Is Copied');
+    $('div.copy-event-url span').text('URL Is Copied');
   });
 
   if( $('#copy-event-url').length > 0) {

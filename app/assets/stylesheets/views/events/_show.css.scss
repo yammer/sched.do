@@ -162,6 +162,26 @@ div.show-event {
     }
 
     &.invitee-sharing {
+      #copy-url-container {
+        position: relative;
+        @include inline-block;
+      }
+
+      div.copy-event-url {
+        &.copy-event-url span{
+          width: 104px;
+          @include inline-block;
+          padding-left: 0px;
+          padding-right: 0px;
+          text-align: center;
+        }
+
+        img {
+          margin: 0em 0.4em 0.1em 0em;
+          vertical-align: middle;
+        }
+      }
+
       h4 {
         @include inline-block;
         margin-right: 10px;
@@ -169,7 +189,7 @@ div.show-event {
         vertical-align: middle;
       }
 
-      a.email-invite, a.yammer-invite, a.copy-url {
+      a.email-invite, a.yammer-invite, div.copy-event-url {
         @extend .button;
         @include box-sizing(border-box);
         height: 100%;
