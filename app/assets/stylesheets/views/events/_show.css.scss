@@ -100,12 +100,9 @@ div.show-event {
       }
 
       div.invitee-input {
-        margin: 0px 80px 0px 0px;
-
         input#auto-complete {
-          @include border-radius(4px 0px 0px 4px);
+          @include border-radius(4px);
           @include background-image(none);
-          border-right: none;
           font-size: 0.8em;
           float: left;
           height: 34px;
