@@ -6,8 +6,7 @@ class EventDecorator < Draper::Base
   end
 
   def invitees_for_grid
-    invitees_with_current_user_first.
-      select{ |invitee| display_invitee_in_grid?(invitee) }
+    invitees_with_current_user_first
   end
 
   def invitees_with_current_user_first
@@ -42,12 +41,6 @@ class EventDecorator < Draper::Base
 
   def current_user
     h.current_user
-  end
-
-  def display_invitee_in_grid?(invitee)
-    current_user == invitee ||
-      event.user_owner?(current_user) ||
-      event.user_voted?(invitee)
   end
 
   def first_invitee_with_name

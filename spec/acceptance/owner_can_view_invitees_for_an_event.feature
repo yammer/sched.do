@@ -14,7 +14,7 @@ Feature: Owner can view invitees for an event
     And I invite "myfriend@example.com" to "Party"
     Then I should see "myfriend@example.com" in the list of invitees
 
-  Scenario: Invitees who are not the owner only see invitees who have voted
+  Scenario: Invitees see all other invitees
     Given a user exists with a name of "Joe Smith"
     And I am signed in
     When I create an event named "Party"
@@ -23,7 +23,7 @@ Feature: Owner can view invitees for an event
     And I sign out
     And I am signed in as the guest "myfriend@example.com"
     Then I view the "Party" event
-    Then I should not see "myotherfriend@example.com" in the list of invitees
+    Then I should see "myotherfriend@example.com" in the list of invitees
 
   Scenario: Current user who is the Event owner should see their name at the top
     Given I have a Yammer account with name "Joe Smith"
