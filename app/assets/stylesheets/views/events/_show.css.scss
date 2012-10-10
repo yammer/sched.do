@@ -109,7 +109,7 @@ div.show-event {
           padding: 0.6em 0.8em;
 
           &.autocomplete-true {
-            @include border-radius(4px 0px 0px 0px);
+            @include border-radius(4px 4px 0px 0px);
           }
         }
       }
