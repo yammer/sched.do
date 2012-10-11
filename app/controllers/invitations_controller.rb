@@ -1,4 +1,7 @@
 class InvitationsController < ApplicationController
+  skip_before_filter :require_yammer_login, only: :create
+  before_filter :require_guest_or_yammer_login, only: :create
+
   layout 'events'
 
   def create

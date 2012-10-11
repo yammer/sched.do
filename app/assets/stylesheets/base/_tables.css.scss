@@ -153,20 +153,6 @@ div.table-wrapper {
       }
     }
 
-    &.grid-help {
-      color: darken($bg-color, 25%);
-      display:none;
-      font-size: 0.8em;
-      padding: 0.7em 0.5em;
-      position: absolute;
-      top: 0;
-      width: $table-width-mobile;
-
-      h4 {
-        margin-bottom: 0;
-      }
-    }
-
     &.options {
       border: 1px solid darken($bg-color, 20%);
       @include border-radius(0px 4px 0 0);

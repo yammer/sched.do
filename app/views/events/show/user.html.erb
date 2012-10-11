@@ -1,17 +1,13 @@
 <div class="show-event">
   <%= render 'events/header' %>
-  <%= render 'events/add_invitation' %>
+  <%= render 'events/user_invitation_form' %>
 
   <div class="table-wrapper grid">
     <div class="scroll-notice"></div>
 
-    <div class="grid-help">
-      <h4>Invite People</h4>
-      <p>Who do you want to invite?</p>
-    </div>
-
     <%= render 'events/grid' %>
   </div>
+
   <% if @event.groups.any? %>
     <section class="invited-yammer-groups">
       <h4>Invited Yammer Groups</h4>

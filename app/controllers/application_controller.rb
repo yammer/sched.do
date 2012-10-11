@@ -4,7 +4,9 @@ class ApplicationController < ActionController::Base
   before_filter :require_yammer_login
 
   hide_action :current_user=
+
   helper_method :current_user
+  helper_method :role
   helper_method :signed_in?
 
   def current_user=(user)
