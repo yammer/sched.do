@@ -26,7 +26,7 @@ Feature: Guest is shown appropriate login option
     When I view the "Clown party" event
     When I vote for "lunch"
     Then I should receive a vote confirmation email with a link to "Clown party"
-    When I sign out
+    When I am signed out
     And "guest@example.com" follows the link "change your vote" in his email
     Then I should see my email address "guest@example.com" prepopulated
     And I should see my name "Joe Schmoe" prepopulated
