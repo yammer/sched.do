@@ -24,3 +24,11 @@ Feature: Owner can remind invitees to vote
     When I click "Remind"
     Then I should see "Reminders sent" in the notice flash
     And "scheddo-developers" should receive a private reminder message
+
+  Scenario: Guest cannot remind users
+    Given someone created an event named "Clown party"
+    And "guest@example.com" was invited to the event "Clown party"
+    And I am signed in as the guest "guest@example.com" named "Joe Schmoe"
+    When I view the "Clown party" event
+    Then I should not be able to remind everyone to vote
+    And I should not be able to remind an individual user to vote

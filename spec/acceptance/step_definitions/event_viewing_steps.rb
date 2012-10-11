@@ -35,6 +35,14 @@ step 'I should not see an edit link' do
   page.should have_no_css('a', text: 'Edit')
 end
 
+step 'I should not be able to remind everyone to vote' do
+  page.should have_no_css('a.remind-all')
+end
+
+step 'I should not be able to remind an individual user to vote' do
+  page.should have_no_css('a.remind')
+end
+
 step 'I should be on the :event_name event page' do |event_name|
   event = Event.find_by_name!(event_name)
   current_url.should == event_url(event)
