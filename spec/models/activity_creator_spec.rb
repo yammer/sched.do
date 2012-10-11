@@ -40,7 +40,7 @@ describe ActivityCreator do
           url: Rails.application.routes.url_helpers.event_url(event),
           type: 'poll',
           title: event.name,
-          image: ActionController::Base.helpers.asset_path('logo.png')
+          image: 'http://' + ENV['HOSTNAME'] + '/logo.png'
         }
       },
       message: '',
