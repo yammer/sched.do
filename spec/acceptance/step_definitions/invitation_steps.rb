@@ -31,6 +31,11 @@ step 'I invite :email to :event_name' do |email, event_name|
   click_button 'add-invitee'
 end
 
+step 'I fill in :name in the invitation field' do |name|
+  find_field_by_data_role('invitation_name').set(name)
+  click_button 'add-invitee'
+end
+
 step 'someone invites :email to :event_name' do |email, event_name|
   event = Event.find_by_name!(event_name)
   invitation = Invitation.new(event: event)

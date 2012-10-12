@@ -67,6 +67,10 @@ class Guest < ActiveRecord::Base
     nil
   end
 
+  def yammer_network_id
+    nil
+  end
+
   def yammer_user?
     false
   end
