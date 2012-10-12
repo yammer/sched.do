@@ -34,6 +34,13 @@ body.welcome {
         }
       }
 
+      p.phonetic {
+        font-family: 'Gloria Hallelujah', cursive;
+        color: lighten(#d0ad56, 10%);
+        letter-spacing: 1px;
+        text-shadow: 0 1px rgba(255,255,255, 1);
+      }
+
       div.post-it {
         background-color: #F7E98D;
         @include background-image(linear-gradient(#F9EFAF, #F7E98D));
