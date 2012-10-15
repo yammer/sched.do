@@ -1,4 +1,9 @@
 $(document).ready(function() {
+  if (swfobject.hasFlashPlayerVersion("9.0.18")) {
+    $(".alt-invite").show();
+  } else {
+    $("#invitations").css("margin-right", 0)
+  }
   var table = $('table.touch-scrollable');
   var parent = $('table.touch-scrollable').parent();
   var scrollNotice = $('div.scroll-notice')
