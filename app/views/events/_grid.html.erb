@@ -33,15 +33,16 @@
         </tr>
       <% else %>
         <tr>
-            <td class="send-reminder" colspan=<%= @event.suggestions.count %>>
-              <% if invitee != current_user %>
-                <div class="reminder-wrapper">
-                  <%= link_to "Remind #{invitee.name} to vote", reminders_path(reminder:
-                                                                               { receiver_id: @event.invitation_for(invitee),
-                                                                                 receiver_type: @event.invitation_for(invitee).class.name
-                  }, event_id: @event.uuid), method: :post, class: "remind" %>
-                </div>
-              <% end %>
+          <td class="send-reminder" colspan=<%= @event.suggestions.count %>>
+            <% if current_user.yammer_user? and invitee != current_user %>
+              <div class="reminder-wrapper">
+                <%= link_to "Remind #{invitee.name} to vote",
+                  reminders_path(
+                    reminder: {
+                      receiver_id: @event.invitation_for(invitee),                                  receiver_type: @event.invitation_for(invitee).class.name
+                    }, event_id: @event.uuid), method: :post, class: "remind" %>
+              </div>
+            <% end %>
           </td>
         </tr>
         <% end %>
