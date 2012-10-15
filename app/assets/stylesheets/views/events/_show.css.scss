@@ -69,7 +69,7 @@ div.show-event {
         }
       }
 
-      &:hover {
+      &.editable:hover {
         .edit-title {
           display: block;
         }

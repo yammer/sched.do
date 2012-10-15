@@ -44,12 +44,12 @@ $(document).ready(function() {
     setLabel();
   });
 
-  $('.event-name h1').click(function(){
+  $('.event-name.editable h1').click(function(){
     $(this).hide();
     $('.event-name input').show().focus();
   });
 
-  $('.event-name input').blur(function(){
+  $('.event-name.editable input').blur(function(){
     $.ajax(
       {
         type: 'PUT',
