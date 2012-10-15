@@ -3,6 +3,7 @@ require 'spec_helper'
 describe Invitation do
   it { should belong_to(:event) }
   it { should belong_to(:invitee) }
+  it { should belong_to(:sender) }
 
   it { should accept_nested_attributes_for :invitee }
 
@@ -133,7 +134,7 @@ describe Invitation, 'build_invitee' do
 
     it 'creates a User if it finds an existing Yammer user' do
       invitation = create(:invitation)
-      access_token = invitation.sender.access_token
+      access_token = invitation.access_token
       yammer_staging = false
       invitee_email = 'ralph@example.com'
       invitee_user_id = 1488374236
@@ -189,14 +190,6 @@ describe Invitation, 'build_invitee' do
         invitation.save
       }.not_to change(Invitation, :count)
     end
-  end
-end
-
-describe Invitation, '#sender' do
-  it 'tell you who created the invitations event' do
-    invitation = build_stubbed(:invitation_with_user)
-
-    invitation.sender.should == invitation.event.owner
   end
 end
 

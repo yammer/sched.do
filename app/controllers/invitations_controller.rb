@@ -5,7 +5,9 @@ class InvitationsController < ApplicationController
   layout 'events'
 
   def create
-    @invitation = Invitation.new(params[:invitation])
+    @invitation = Invitation.new(params[:invitation].
+      merge(sender_id: current_user.id, sender_type: current_user.class.name))
+
     @event =  @invitation.event
 
     if !@invitation.save

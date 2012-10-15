@@ -196,7 +196,9 @@ describe Event, '#deliver_reminders_from' do
     sender = create(:user)
     guest = create(:guest)
     user = create(:user)
+    sender = build_stubbed(:user)
     event = create_event_with_invitees(guest, user)
+    Invitation.any_instance.stubs(sender: sender)
 
     event.deliver_reminders_from(sender)
 

@@ -1,10 +1,11 @@
 class Invitation < ActiveRecord::Base
   attr_accessor :skip_notification, :invitee_params
   attr_accessible :event, :invitee, :invitee_attributes, :event_id,
-    :skip_notification
+    :skip_notification, :sender_id, :sender_type
 
   belongs_to :event
   belongs_to :invitee, polymorphic: true
+  belongs_to :sender, polymorphic: true
 
   accepts_nested_attributes_for :invitee
 
@@ -26,13 +27,13 @@ class Invitation < ActiveRecord::Base
     )
   end
 
+  def access_token
+    event_creator.access_token
+  end
+
   def build_invitee(params, options={})
     self.invitee_params = params
     self.invitee = find_or_create_invitee
-  end
-
-  def sender
-    event.owner
   end
 
   def deliver_invitation
@@ -50,10 +51,6 @@ class Invitation < ActiveRecord::Base
   end
 
   private
-
-  def access_token
-    event_creator.access_token
-  end
 
   def create_guest
     Guest.create_without_name_validation(name_or_email_param)

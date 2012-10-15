@@ -70,7 +70,9 @@ FactoryGirl.define do
   factory :invitation do
     event
     association :invitee, factory: :user
+    association :sender, factory: :user
     invitee_type 'User'
+    sender_type 'User'
 
     factory :invitation_with_user do
       association :invitee, factory: :user
