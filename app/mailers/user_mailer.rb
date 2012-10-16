@@ -16,7 +16,7 @@ class UserMailer < ActionMailer::Base
     @event = EventDecorator.decorate(invitation.event)
     mail(
       to: @guest.email,
-      from: from_text(@event.owner.name),
+      from: from_text(invitation.sender.name),
       subject: "You have been invited to a Sched.do event!"
     )
   end
