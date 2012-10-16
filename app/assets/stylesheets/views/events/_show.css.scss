@@ -16,13 +16,16 @@ div.show-event {
 
       > h1 {
         @include inline-block;
-        cursor: pointer;
         font-family: $bariol-light;
         font-size: 2em;
         //height: 40px;
         margin: 0px;
         padding: 2px 0 2px;
         vertical-align: middle;
+      }
+
+      &.editable > h1 {
+        cursor: pointer;
       }
 
       > input {
