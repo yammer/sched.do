@@ -1,7 +1,6 @@
 $(document).ready(function() {
-  if (swfobject.hasFlashPlayerVersion("9.0.18")) {
-    $(".alt-invite").show();
-  } else {
+  if (!swfobject.hasFlashPlayerVersion("9.0.18")) {
+    $(".alt-invite").hide();
     $("#invitations").css("margin-right", 0)
   }
   var table = $('table.touch-scrollable');
