@@ -8,7 +8,6 @@
   <div class="event-name <%= "editable" if @event.user_owner?(current_user) %>">
     <h1><%= @event.name %></h1>
       <%= text_field_tag :event_name, @event.name, maxlength: 70 %>
-    <div class="edit-title">Edit Title<div class="nub"></div></div>
   </div>
   <% if current_user.able_to_edit?(@event) %>
     <%= link_to 'Edit Poll', edit_event_path(@event), class: "edit-button" %>

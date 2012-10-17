@@ -24,10 +24,6 @@ div.show-event {
         vertical-align: middle;
       }
 
-      &.editable > h1 {
-        cursor: pointer;
-      }
-
       > input {
         @extend h1;
         background: rgb(254, 255, 223);
@@ -40,42 +36,6 @@ div.show-event {
         font-size: 2em;
         padding: 2px 0.2em 0px;
         text-align: center;
-      }
-
-      .edit-title {
-        background: rgb(60,60,60);
-        border: 1px solid rgb(40,40,40);
-        @include border-radius(3px);
-        color: #fff;
-        display: none;
-        font-family: $sans;
-        font-size: 13px;
-        font-size: 0.8rem;
-        left: 50%;
-        line-height: $lh;
-        margin-left: -43px;
-        padding: 3px 0px 4px;
-        position: absolute;
-        text-align: center;
-        bottom: -26px;
-        width: 84px;
-
-        .nub {
-          border: 8px solid transparent;
-          border-bottom-color: rgb(60,60,60);
-          height: 0px;
-          left: 50%;
-          margin-left: -8px;
-          position: absolute;
-          top: -16px;
-          width: 0px;
-        }
-      }
-
-      &.editable:hover {
-        .edit-title {
-          display: block;
-        }
       }
     }
 
