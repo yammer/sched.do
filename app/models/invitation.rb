@@ -40,14 +40,14 @@ class Invitation < ActiveRecord::Base
     invitee.deliver_email_or_private_message(:invitation, sender, self)
   end
 
-  def deliver_reminder
+  def deliver_reminder_from(reminder_sender)
     if not invitee.voted_for_event?(event)
-      invitee.deliver_email_or_private_message(:reminder, sender, self)
+      invitee.deliver_email_or_private_message(:reminder, reminder_sender, self)
     end
   end
 
-  def deliver_reminders_from(_)
-    deliver_reminder
+  def deliver_reminders_from(reminder_sender)
+    deliver_reminder_from(reminder_sender)
   end
 
   private

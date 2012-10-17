@@ -11,22 +11,22 @@ class UserMailer < ActionMailer::Base
     )
   end
 
-  def invitation(invitation)
+  def invitation(sender, invitation)
     @guest = invitation.invitee
     @event = EventDecorator.decorate(invitation.event)
     mail(
       to: @guest.email,
-      from: from_text(invitation.sender.name),
+      from: from_text(sender.name),
       subject: "You have been invited to a Sched.do event!"
     )
   end
 
-  def reminder(invitation)
+  def reminder(sender, invitation)
     @guest = invitation.invitee
     @event = EventDecorator.decorate(invitation.event)
     mail(
       to: @guest.email,
-      from: from_text(@event.owner.name),
+      from: from_text(sender.name),
       subject: %{Reminder: Help out #{@event.owner.name} by voting on "#{@event.name}"}
     )
   end

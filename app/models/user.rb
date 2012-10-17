@@ -82,8 +82,12 @@ class User < ActiveRecord::Base
     if in_network?(sender)
       PrivateMessenger.new(self, message, object).deliver
     else
-      UserMailer.send(message, object).deliver
+      UserMailer.send(message, sender, object).deliver
     end
+  end
+
+  def to_s
+    name
   end
 
   def vote_for_suggestion(suggestion)

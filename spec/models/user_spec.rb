@@ -299,7 +299,7 @@ describe User, '#deliver_email_or_private_message' do
     work_off_delayed_jobs
 
     organizer.in_network?(invitee).should be_false
-    UserMailer.should have_received(:invitation).with(invitation)
+    UserMailer.should have_received(:invitation).with(event.owner, invitation)
     mailer.should have_received(:deliver).once
   end
 

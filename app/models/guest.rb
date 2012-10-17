@@ -40,7 +40,7 @@ class Guest < ActiveRecord::Base
   end
 
   def deliver_email_or_private_message(message, sender, object)
-    UserMailer.send(message, object).deliver
+    UserMailer.send(message, sender, object).deliver
   end
 
   def set_should_validate_name

@@ -41,12 +41,22 @@ describe UserMailer, 'event_created_confirmation' do
 end
 
 describe UserMailer, 'invitation' do
+  it 'sends the email from the correct sender' do
+    invitation = create(:invitation_with_guest)
+    guest = invitation.invitee
+    event = invitation.event
+
+    mail = UserMailer.invitation(event.owner, invitation)
+
+    mail['from'].to_s.should == %{"#{event.owner} via Sched.do" <no-reply@sched.do>}
+  end
+
   it 'sends the email to the correct recipient' do
     invitation = create(:invitation_with_guest)
     guest = invitation.invitee
     event = invitation.event
 
-    mail = UserMailer.invitation(invitation)
+    mail = UserMailer.invitation(event.owner, invitation)
 
     mail.to.should == [guest.email]
   end
@@ -56,7 +66,7 @@ describe UserMailer, 'invitation' do
     guest = invitation.invitee
     event = invitation.event
 
-    mail = UserMailer.invitation(invitation)
+    mail = UserMailer.invitation(event.owner, invitation)
 
     mail.subject.should == 'You have been invited to a Sched.do event!'
   end
@@ -67,7 +77,7 @@ describe UserMailer, 'invitation' do
     event = invitation.event
     first_invitee = event.invitees.first
 
-    mail = UserMailer.invitation(invitation)
+    mail = UserMailer.invitation(event.owner, invitation)
 
     mail.body.encoded.should include(guest.name)
     mail.body.encoded.should include(event.name)
