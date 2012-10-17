@@ -42,7 +42,7 @@ class EventsController < ApplicationController
     else
       @event.build_suggestions
 
-      if @event.errors[:suggestions]
+      if @event.errors[:suggestions].any?
         flash[:error] = @event.errors.messages[:suggestions].to_sentence
       end
 
