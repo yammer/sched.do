@@ -9,3 +9,6 @@
     var access_token = "<%= current_user.access_token %>";
   <% end %>
 </script>
+<% if signed_in? %>
+  <meta property="yammer-network" content="<%= current_user.yammer_network_id %>">
+<% end %>
