@@ -6,6 +6,10 @@ class VoteCreatedJob < Struct.new(:vote_id)
     Delayed::Job.enqueue(new(vote.id), priority: PRIORITY)
   end
 
+  def error(job, exception)
+    Airbrake.notify(exception)
+  end
+
   def perform
     voter.create_yammer_activity(ACTION, event)
     VoteConfirmationEmailJob.enqueue(vote)

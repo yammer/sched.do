@@ -6,6 +6,10 @@ class EventCreatedJob < Struct.new(:event_id)
     Delayed::Job.enqueue new(event.id), priority: PRIORITY
   end
 
+  def error(job, exception)
+    Airbrake.notify(exception)
+  end
+
   def perform
     UserMailer.event_created_confirmation(event).deliver
     ActivityCreator.new(user, ACTION, event).create

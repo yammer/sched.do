@@ -13,12 +13,24 @@ describe ReminderCreatedJob, '.enqueue' do
   end
 end
 
+describe ReminderCreatedJob, '.error' do
+  it 'sends Airbrake an exception if the job fails' do
+    reminder = build_stubbed(:reminder)
+    Airbrake.stubs(:notify)
+    exception = 'Hey! you did something wrong!'
+
+    job = ReminderCreatedJob.new(reminder.id)
+    job.error(job, exception)
+
+    Airbrake.should have_received(:notify).with(exception)
+  end
+end
+
 describe ReminderCreatedJob, '#perform' do
   it 'creates a Yammer activity message' do
     reminder = build_stubbed(:reminder)
     Reminder.stubs(find: reminder)
     reminder.stubs(:deliver)
-    action = ReminderCreatedJob::ACTION
 
     ReminderCreatedJob.new(reminder.id).perform
 

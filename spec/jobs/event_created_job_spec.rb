@@ -12,10 +12,23 @@ describe EventCreatedJob, '.enqueue' do
   end
 end
 
+describe EventCreatedJob, '.error' do
+  it 'sends Airbrake an exception if the job fails' do
+    event = build_stubbed(:event)
+    Airbrake.stubs(:notify)
+    exception = 'Hey! you did something wrong!'
+
+    job = EventCreatedJob.new(event.id)
+    job.error(job, exception)
+
+    Airbrake.should have_received(:notify).with(exception)
+  end
+end
+
 describe EventCreatedJob, '#perform' do
   it 'emails a confirmation message to the event creator' do
     mailer = stub('mailer', deliver: true)
-    UserMailer.stubs event_created_confirmation: mailer
+    UserMailer.stubs(event_created_confirmation: mailer)
     event = build_stubbed(:event)
     Event.stubs(find: event)
 

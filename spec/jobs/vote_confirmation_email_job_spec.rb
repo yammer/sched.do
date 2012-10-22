@@ -13,6 +13,19 @@ describe VoteConfirmationEmailJob, '.enqueue' do
   end
 end
 
+describe VoteConfirmationEmailJob, '.error' do
+  it 'sends Airbrake an exception if the job fails' do
+    vote = build_stubbed(:vote)
+    Airbrake.stubs(:notify)
+    exception = 'Hey! you did something wrong!'
+
+    job = VoteConfirmationEmailJob.new(vote.id)
+    job.error(job, exception)
+
+    Airbrake.should have_received(:notify).with(exception)
+  end
+end
+
 describe VoteConfirmationEmailJob, '#perform' do
   include DelayedJobSpecHelper
 

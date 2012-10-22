@@ -13,16 +13,28 @@ describe InvitationCreatedJob, '.enqueue' do
   end
 end
 
+describe InvitationCreatedJob, '.error' do
+  it 'sends Airbrake an exception if the job fails' do
+    invitation = build_stubbed(:invitation)
+    Airbrake.stubs(:notify)
+    exception = 'Hey! you did something wrong!'
+
+    job = InvitationCreatedJob.new(invitation.id)
+    job.error(job, exception)
+
+    Airbrake.should have_received(:notify).with(exception)
+  end
+end
+
 describe InvitationCreatedJob, '#perform' do
   it 'creates a Yammer activity message' do
     invitation = build_stubbed(:invitation)
     Invitation.stubs(find: invitation)
-    invitation.stubs(:send_invitation)
-    action = InvitationCreatedJob::ACTION
+    invitation.stubs(:deliver_invitation)
     event = invitation.event
 
     InvitationCreatedJob.new(invitation.id).perform
 
-    invitation.should have_received(:send_invitation).once
+    invitation.should have_received(:deliver_invitation).once
   end
 end

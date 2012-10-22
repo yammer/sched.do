@@ -10,6 +10,10 @@ class VoteConfirmationEmailJob < Struct.new(:vote_id)
     )
   end
 
+  def error(job, exception)
+    Airbrake.notify(exception)
+  end
+
   def perform
     if no_votes_within_delay_window
       UserMailer.vote_confirmation(vote).deliver

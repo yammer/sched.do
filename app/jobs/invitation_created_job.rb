@@ -1,9 +1,12 @@
 class InvitationCreatedJob < Struct.new(:invitation_id)
   PRIORITY = 1
-  ACTION = 'create'
 
   def self.enqueue(invitation)
     Delayed::Job.enqueue new(invitation.id), priority: PRIORITY
+  end
+
+  def error(job, exception)
+    Airbrake.notify(exception)
   end
 
   def perform
