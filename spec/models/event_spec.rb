@@ -182,7 +182,7 @@ describe Event, '#enqueue_event_created_job' do
 end
 
 describe Event, '#invitation_for' do
-  it 'returns the inviation for this user' do
+  it 'returns the invitation for this user' do
     invitation = create(:invitation)
     invitee = invitation.invitee
     event = invitation.event

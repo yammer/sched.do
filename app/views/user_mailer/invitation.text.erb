@@ -1,13 +1,5 @@
-<%= @guest.name || @guest.email %>, You’re invited!
+<%= @event.owner %> created the "<%= @event.name %>" poll and <%= @sender.name %> wants your input.
 
-<%= @event.owner.name %> needs help from you<%= @event.first_invitee_for_invitation %>and others to plan "<%= link_to @event.name, event_url(@event, guest_email: @guest.email) %>".
+Please visit this link to view the options and vote: <%= url_for @event %>.
 
-Here are your options:
-
-<% @event.suggestions.each do |suggestion| %>
-  "<%= suggestion.primary %><%= "," if suggestion.secondary.present? %> <%= suggestion.secondary %>"
-<% end %>
-
-lick here to vote: <%= link_to @event.name, event_url(@event, guest_email: @guest.email) %>
-
-<%= @event.owner.name %> sent this poll in just seconds using Sched.do. Create your own polls for free at <%= link_to "#{root_url}", root_url %>.
+This poll was sent using Sched.do. Create your own polls for free at https://www.sched.do

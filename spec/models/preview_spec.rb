@@ -42,10 +42,11 @@ describe Preview, 'invitation' do
 
   it 'sends the email with the correct subject' do
     invitation = create(:invitation_with_guest)
+    event = invitation.event
 
     mail = Preview.new.invitation
 
-    mail.subject.should == 'You have been invited to a Sched.do event!'
+    mail.subject.should == "Help out #{event.owner}"
   end
 
   it 'sends the email with the correct subject' do

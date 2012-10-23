@@ -48,7 +48,8 @@ describe UserMailer, 'invitation' do
 
     mail = UserMailer.invitation(event.owner, invitation)
 
-    mail['from'].to_s.should == %{"#{event.owner} via Sched.do" <no-reply@sched.do>}
+    mail['from'].to_s.should ==
+      %{"Sched.do on behalf of #{event.owner}" <no-reply@sched.do>}
   end
 
   it 'sends the email to the correct recipient' do
@@ -68,7 +69,7 @@ describe UserMailer, 'invitation' do
 
     mail = UserMailer.invitation(event.owner, invitation)
 
-    mail.subject.should == 'You have been invited to a Sched.do event!'
+    mail.subject.should == "Help out #{event.owner}"
   end
 
   it 'sends the email with the correct body when invitees present' do

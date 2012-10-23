@@ -35,10 +35,6 @@ class Guest < ActiveRecord::Base
     'http://' + ENV['HOSTNAME'] + '/assets/no_photo.png'
   end
 
-  def notify(invitation)
-    UserMailer.delay.invitation(self, invitation.event)
-  end
-
   def deliver_email_or_private_message(message, sender, object)
     UserMailer.send(message, sender, object).deliver
   end

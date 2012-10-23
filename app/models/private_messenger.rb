@@ -48,7 +48,7 @@ class PrivateMessenger
 
   def reminder_message_body
     <<-BODY.strip_heredoc
-      Reminder: Help out #{@event.owner.name} by voting on "#{@event.name}".
+      Reminder: Help out #{@event.owner} by voting on "#{@event.name}".
 
       Please click this link to view the options and vote: #{event_url(@event)}
 
@@ -57,27 +57,22 @@ class PrivateMessenger
   end
 
   def invitation_message_body
-     <<-BODY.strip_heredoc
-      #{@recipient.name}, I am planning "#{@event.name}" and I need your help.
+    <<-BODY.strip_heredoc
+      #{@event.owner} created the "#{@event.name}" poll and I want your input.
 
-      Please click this link to view the options and vote: #{event_url(@event)}
-
-
-      Thanks in advance!
-      -#{@event.owner.name}
-
-      *This poll was sent using Sched.do. Create your own polls for free at #{root_url}
-    BODY
-  end
-
-  def group_invitation_message_body
-      <<-BODY.strip_heredoc
-       Attention #{@recipient.name}, I need your input on "#{@event.name}".
-
-       Please click this link to vote: #{event_url(@event)}. Thanks!
+       Please click this link to view the options and vote: #{event_url(@event)}
 
        *This poll was sent using Sched.do. Create your own polls for free at #{root_url}
      BODY
+  end
+
+  def group_invitation_message_body
+    <<-BODY.strip_heredoc
+      Attention #{@recipient.name}: #{@event.owner} created the "#{@event.name}" poll and I want your input.
+
+      Please click this link to view the options and vote: #{event_url(@event)}
+      *This poll was sent using Sched.do. Create your own polls for free at #{root_url}
+    BODY
   end
 
   def messages_endpoint

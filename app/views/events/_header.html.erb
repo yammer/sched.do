@@ -17,7 +17,7 @@
   <div class="created-by">
     <span>Created by:</span>
     <div class="avatar" style="background-image: url(<%= @event.owner.image %>)"></div>
-    <span><%= @event.owner.name %></span>
+    <span><%= @event.owner %></span>
   </div>
   <div class="reminder">
     <span><%= pluralize(@event.other_invitees_count, "other person") %> invited</span>

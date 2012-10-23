@@ -1,15 +1,13 @@
 <h1 class="h1" style="color: #30AADE;display: block;font-family: Helvetica, sans-serif;font-size: 24px;font-weight: normal;line-height: 100%;margin-top: 10px;margin-right: 0;margin-bottom: 25px;margin-left: 0;text-align: left;"><%= @guest.name || @guest.email %> You’re invited!</h1>
 
-<p><strong><%= @event.owner.name %></strong> needs help from you<%= @event.first_invitee_for_invitation %>and others to plan "<%= link_to truncate(@event.name, length: 28), event_url(@event, guest_email: @guest.email), html_options = {:style => "color: #EC6E4D"} %>"</p>
+<p>
+  <strong><%= @event.owner %></strong> created the "<%= link_to truncate(@event.name, length: 28), event_url(@event, guest_email: @guest.email), html_options = {:style => "color: #EC6E4D"} %>" poll and <%= @sender.name %> wants your input.
+</p>
 
-<p>Here are your options:</p>
+<p>
+  Please visit <%= link_to "this link", event_url(@event, guest_email: @guest.email), html_options = {:style => "background-color: #30AADE; border: 1px solid #0F7CC4; border-radius: 3px; color: #fff; display: block; margin: 20px auto; padding: 8px 12px; text-align: center; text-decoration: none; width: 100px"} %> to view the options and vote.
+</p>
 
-<ul>
-  <% @event.suggestions.each do |suggestion| %>
-    <li><strong><%= suggestion.primary %><%= "," if suggestion.secondary.present? %> <%= suggestion.secondary %></strong></li>
-  <% end %>
-</ul>
-
-<%= link_to "View Poll", event_url(@event, guest_email: @guest.email), html_options = {:style => "background-color: #30AADE; border: 1px solid #0F7CC4; border-radius: 3px; color: #fff; display: block; margin: 20px auto; padding: 8px 12px; text-align: center; text-decoration: none; width: 100px"} %>
-
-<p><%= @event.owner.name %> sent this poll in just seconds using Sched.do. Click here to <%= link_to "create your own polls for free", root_url %>.</p>
+<p>
+  This poll was sent using Sched.do. Create your own polls for free at <%= link_to "https://www.sched.do", "https://www.sched.do" %>
+</p>

@@ -114,20 +114,3 @@ describe Guest, '#votes' do
     guest.votes.should == []
   end
 end
-
-describe Guest, '#notify' do
-  include DelayedJobSpecHelper
-
-  it 'delivers the invitation email' do
-    guest = create(:guest)
-    invitation = build(:invitation_with_guest, invitee: guest)
-    mailer = stub('mailer', deliver: true)
-    UserMailer.stubs(invitation: mailer)
-
-    guest.notify(invitation)
-    work_off_delayed_jobs
-
-    UserMailer.should have_received(:invitation).with(guest, invitation.event)
-    mailer.should have_received(:deliver).once
-  end
-end

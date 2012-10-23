@@ -33,7 +33,7 @@ describe PrivateMessenger, "#group_reminder" do
 end
 
 describe PrivateMessenger, "#group_invitation" do
-  it 'sends a group inviation' do
+  it 'sends a group invitation' do
     user = create(:user)
     group = create(:group)
     message = :group_invitation
@@ -43,7 +43,7 @@ describe PrivateMessenger, "#group_invitation" do
     PrivateMessenger.new(group, message, invitation).deliver
 
     FakeYammer.messages_endpoint_hits.should == 1
-    FakeYammer.message.should include("I need your input")
+    FakeYammer.message.should include("I want your input")
     FakeYammer.message.should include(group.name)
   end
 end
