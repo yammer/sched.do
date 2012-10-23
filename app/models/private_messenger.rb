@@ -25,14 +25,14 @@ class PrivateMessenger
   def invitation
     @invitation = @message_object
     @event = @invitation.event
-    @sender = @invitation.event.owner
+    @sender = @invitation.sender
     @message_body = invitation_message_body
   end
 
   def group_invitation
     @invitation = @message_object
     @event = @invitation.event
-    @sender = @invitation.event.owner
+    @sender = @invitation.sender
     @message_body = group_invitation_message_body
   end
 
