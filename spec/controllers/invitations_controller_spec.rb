@@ -30,9 +30,9 @@ describe InvitationsController, '.create' do
   end
 
   it 'creates the appropriate invitation' do
-    user = create(:user)
-    sign_in_as(user)
-    event = create(:event, owner: user)
+    event_creator = create(:user)
+    sign_in_as(event_creator)
+    event = create(:event, owner: event_creator)
     invitee = create(:user)
 
     post :create,
@@ -46,7 +46,7 @@ describe InvitationsController, '.create' do
     invitation.event_id.should == event.id
     invitation.invitee_id.should == invitee.id
     invitation.invitee_type.should == invitee.class.name
-    invitation.sender_id.should == user.id
-    invitation.sender_type.should == user.class.name
+    invitation.sender_id.should == event_creator.id
+    invitation.sender_type.should == event_creator.class.name
   end
 end

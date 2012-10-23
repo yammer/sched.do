@@ -6,7 +6,6 @@ class ApplicationController < ActionController::Base
   hide_action :current_user=
 
   helper_method :current_user
-  helper_method :role
   helper_method :signed_in?
 
   def current_user=(user)
