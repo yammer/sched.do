@@ -35,6 +35,7 @@ describe SessionsController, '#create' do
     should redirect_to '/'
     flash[:error].should == "Please agree to the terms of service"
   end
+
   private
 
   def stub_omniauth_env

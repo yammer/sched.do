@@ -41,29 +41,31 @@ class EventsController < ApplicationController
       end
     else
       @event.build_suggestions
-
-      if @event.errors[:suggestions].any?
-        flash[:error] = @event.errors.messages[:suggestions].to_sentence
-      end
-
+      add_errors_to_flash
       render :edit
     end
   end
 
   private
 
-  def setup_invitations
-    @invitation = Invitation.new
-    @invitation.event = @event
-    @invitation.invitee = current_user_class.new
+  def add_errors_to_flash
+    if @event.errors[:suggestions].any?
+      flash[:error] = @event.errors.messages[:suggestions].to_sentence
+    end
+  end
+
+  def current_user_class
+    current_user.class.name.constantize
   end
 
   def current_user_class_name
     current_user.class.name.downcase
   end
 
-  def current_user_class
-    current_user.class.name.constantize
+  def setup_invitations
+    @invitation = Invitation.new
+    @invitation.event = @event
+    @invitation.invitee = current_user_class.new
   end
 
   def verify_or_setup_invitation_for_current_user

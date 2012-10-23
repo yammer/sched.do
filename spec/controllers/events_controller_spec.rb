@@ -1,31 +1,36 @@
 require 'spec_helper'
 
 describe EventsController, 'authentication' do
-  YAMMER_USER_ID_FROM_FAKE = 'LIUgiu6y'
+  YAMMER_EVENT_ID_FROM_FAKE = 'LIUgiu6y'
 
   it 'requires yammer login for #new' do
     get :new
+
     should redirect_to '/auth/yammer' 
   end
 
   it 'requires yammer login for #create' do
     post :create
+
     should redirect_to '/auth/yammer'
   end
 
   it 'requires yammer login for #edit' do
-    get :edit, id: YAMMER_USER_ID_FROM_FAKE
+    get :edit, id: YAMMER_EVENT_ID_FROM_FAKE
+
     should redirect_to '/auth/yammer'
   end
 
   it 'requires yammer login for #update' do
-    put :update, id: YAMMER_USER_ID_FROM_FAKE
+    put :update, id: YAMMER_EVENT_ID_FROM_FAKE
+
     should redirect_to '/auth/yammer'
   end
 
   it 'requires guest or yammer login for #show' do
-    get :show, id: YAMMER_USER_ID_FROM_FAKE
-    should redirect_to new_guest_url(event_id: YAMMER_USER_ID_FROM_FAKE)
+    get :show, id: YAMMER_EVENT_ID_FROM_FAKE
+
+    should redirect_to new_guest_url(event_id: YAMMER_EVENT_ID_FROM_FAKE)
   end
 end
 
@@ -35,7 +40,9 @@ describe EventsController, '#edit' do
       user = create(:user)
       event = create(:event, owner: user)
       sign_in_as(user)
+
       get :edit, id: event.uuid
+
       response.should be_success
     end
   end
@@ -48,7 +55,8 @@ describe EventsController, '#edit' do
 
       sign_in_as(create(:user))
 
-      lambda { get :update, id: event.uuid }.should raise_error(ActiveRecord::RecordNotFound)
+      lambda { get :update, id: event.uuid }.
+        should raise_error(ActiveRecord::RecordNotFound)
     end
   end
 end
@@ -67,25 +75,28 @@ describe EventsController, '#show' do
   end
 
   context 'with a user who did not create the event' do
-    before do
+    it 'shows the page' do
       user = create(:user)
       event = create(:event, owner: user)
-      sign_in_as(create(:user))
-      get :show, id: event.uuid
-    end
+      another_user = create(:user)
+      sign_in_as(another_user)
 
-    it 'shows the page' do
+      get :show, id: event.uuid
+
       response.should be_success
     end
   end
 
   context 'use an invalid uuid as the user who created the event' do
-    before do
+    it 'raises a RecordNotFound error' do
       user = create(:user)
       event = create(:event, owner: user)
       fake_uuid = 'fakefake'
+
       sign_in_as(user)
-      lambda { get :show, id: fake_uuid }.should raise_error(ActiveRecord::RecordNotFound)
+
+      lambda { get :show, id: fake_uuid }.
+        should raise_error(ActiveRecord::RecordNotFound)
     end
   end
 
@@ -96,22 +107,21 @@ describe EventsController, '#show' do
       sign_in_as(create(:user))
       fake_uuid = 'fakefake'
 
-      lambda { get :show, id: fake_uuid }.should raise_error(ActiveRecord::RecordNotFound)
+      lambda { get :show, id: fake_uuid }.
+        should raise_error(ActiveRecord::RecordNotFound)
     end
   end
 end
 
 describe EventsController, '#update' do
   context 'with the user who created the event' do
-    let!(:event) { create(:event) }
-    let!(:user) { event.owner }
-
-    before do
-      sign_in_as(user)
-    end
-
     it 'is successful' do
+      event = create(:event)
+      user = event.owner
+      sign_in_as(user)
+
       put :update, id: event.uuid
+
       response.should redirect_to(event)
     end
   end
@@ -120,8 +130,11 @@ describe EventsController, '#update' do
     it "should raise ActiveRecord::RecordNotFound" do
       user = create(:user)
       event = create(:event, owner: user)
+
       sign_in_as(create(:user))
-      lambda { put :update, id: event.uuid }.should raise_error(ActiveRecord::RecordNotFound)
+
+      lambda { put :update, id: event.uuid }.
+        should raise_error(ActiveRecord::RecordNotFound)
     end
   end
 end
