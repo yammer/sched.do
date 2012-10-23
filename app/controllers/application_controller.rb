@@ -25,6 +25,13 @@ class ApplicationController < ActionController::Base
     )
   end
 
+  def require_tos_acceptance
+    if user_rejected_tos
+      redirect_to :back
+      flash[:error] = "Please agree to the terms of service"
+    end
+  end
+
   def require_yammer_login
     unless current_user.yammer_user?
       session[:return_to] ||= request.fullpath
@@ -58,5 +65,9 @@ class ApplicationController < ActionController::Base
 
   def set_referred_from_yammer
     session[:referred_from_yammer] = referred_from_yammer?
+  end
+
+  def user_rejected_tos
+    request.env["omniauth.params"].try(:[],"agree_to_tos") == "0"
   end
 end

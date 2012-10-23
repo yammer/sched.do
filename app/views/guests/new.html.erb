@@ -8,18 +8,19 @@
 
 <div class="guest-sign-in">
   <div class="sign-in-message"><p>Sign in to Sched.do (Skeh-DOO) and help <%= @event.owner.name %> decide on "<%= @event.name %>".</p></div>
-
-  <section class="signin-with-yammer">
-    <%= link_to "Sign in with Yammer", "/auth/yammer", class: "sign-in",  id: "sign-in" %>
-    <div class="agree-to-tos">
-      <label>
-        <input type="checkbox">
-        I agree to the
-        <%= link_to "terms of service", "/tos" %>
-      </label>
-    </div>
-  </section>
-
+  <%= form_tag "/auth/yammer" do %>
+    <section class="signin-with-yammer">
+      <%= submit_tag "Sign in with Yammer", class: "sign-in",  id: "sign-in" %>
+      <div class="agree-to-tos">
+        <label>
+          <input type="hidden" name="agree_to_tos" value="0">
+          <input type="checkbox" name="agree_to_tos" value="1" checked="checked">
+          I agree to the
+          <%= link_to 'terms of service', "https://www.yammer.com/about/terms/", target:"_blank" %>
+        </label>
+      </div>
+    </section>
+  <% end %>
   <% if @show_guest_login %>
     <p class="sign-in-tip">Or enter your name and email.</p>
 
@@ -43,13 +44,6 @@
               <%= email_error %>
             </div>
           <% end %>
-        </div>
-        <div class="agree-to-tos">
-          <label>
-            <input type="checkbox">
-            I agree to the
-            <%= link_to "terms of service", "/tos" %>
-          </label>
         </div>
       <% end %>
       <%= f.actions do %>

@@ -20,7 +20,7 @@ body.welcome {
     }
 
     div.sign-in {
-      a {
+      input {
         &.sign-in {
           font-size: 1.5em;
           margin-top: 30px;
@@ -30,7 +30,7 @@ body.welcome {
   }
 
   div.footer-sign-in {
-    a.sign-in {
+    input.sign-in {
       font-size: 1.5em;
     }
   }

@@ -46,7 +46,7 @@ div.guest-sign-in {
     margin-bottom: 25px;
   }
 
-  a.sign-in {
+  input.sign-in {
     @extend .button;
     @extend .yammer-button;
     display: block;
@@ -58,7 +58,6 @@ div.guest-sign-in {
   }
 
   div.agree-to-tos {
-    display: none;
     @extend %tos-agreement;
   }
 

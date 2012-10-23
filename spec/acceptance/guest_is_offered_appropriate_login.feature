@@ -8,6 +8,7 @@ Feature: Guest is shown appropriate login option
 
   Scenario: Guest is not shown name and email fields if they are a Yammer user
     Given I am signed in as "ralph@example.com"
+    And I sign out
     And someone created an event named "Clown party"
     And I view the login form for the "Clown party" event
     And I fill in the guest fields with "ralph@example.com" and "Ralph Robot"

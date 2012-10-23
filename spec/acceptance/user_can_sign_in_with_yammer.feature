@@ -3,7 +3,7 @@ Feature: User can sign in with Yammer
   Scenario: User signs in
     Given I have a Yammer account
     When I visit the homepage
-    And I click "Sign in with Yammer"
+    And I press "Sign in with Yammer"
     Then I should be redirected to the new event page
 
   Scenario: User only has to sign in once

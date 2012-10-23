@@ -77,7 +77,7 @@ end
 step 'I log out and sign back in again' do
   step "I sign out"
   step "I visit the homepage"
-  step "I click 'Sign in with Yammer'"
+  step "I press 'Sign in with Yammer'"
 end
 
 step 'I fill in the fields then submit' do

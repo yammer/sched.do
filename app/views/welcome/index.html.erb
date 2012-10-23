@@ -1,75 +1,70 @@
 <%= render 'shared/flashes' -%>
 <div class= "welcome" id="js-welcome-header">
-  <div class="logo">
-    <hgroup>
-      <h1><img src="/assets/welcome-page/welcome-logo.svg" data-png-fallback="/assets/welcome-page/welcome-logo.png" alt="Sched.do" /></h1>
-      <p class="phonetic">(we say it: Skeh-DOOOO!)</p>
-    </hgroup>
-
-    <div class="post-it">
-      <h2>Bringing busy people together.</h2>
-      <a href="#steps" class="learn-more-postit">Lean More</a>
+  <%= form_tag "/auth/yammer" do %>
+    <div class="logo">
+      <hgroup>
+        <h1><img src="/assets/welcome-page/welcome-logo.svg" data-png-fallback="/assets/welcome-page/welcome-logo.png" alt="Sched.do" /></h1>
+        <p class="phonetic">(we say it: Skeh-DOOOO!)</p>
+      </hgroup>
+      <div class="post-it">
+        <h2>Bringing busy people together.</h2>
+        <a href="#steps" class="learn-more-postit">Learn More</a>
+      </div>
+    </div>
+      <div class="sign-in">
+        <%= submit_tag "Sign in with Yammer", class: "sign-in",  id: "sign-in" %>
+      </div>
+    <div class="learn-more-wrapper">
+      <a href="#steps" class="learn-more-fixed">Learn More <span class="arrow"></span></a>
     </div>
   </div>
 
-  <div class="sign-in">
-    <%= link_to "Sign in with Yammer", "/auth/yammer", class: "sign-in",  id: "sign-in" %>
-    <div class="agree-to-tos">
-      <label>
-        <input type="checkbox">
-        I agree to the
-        <%= link_to "terms of service", "/tos" %>
-      </label>
-    </div>
+  <section id="steps" class="steps">
+  <ul>
+    <li class="first-step">
+      <div class="title">
+        <img src="/assets/welcome-page/step-1.svg" data-png-fallback="/assets/welcome-page/step-1.png" class="step-number" alt="" />
+        Create an event
+      </div>
+      <img src="/assets/welcome-page/new-event.svg" data-png-fallback="/assets/welcome-page/new-event.png" class="illustration" id="new-event"  alt="" />
+    </li>
+
+    <li class="second-step">
+      <div class="title">
+        <img src="/assets/welcome-page/step-2.svg" data-png-fallback="/assets/welcome-page/step-2.png" class="step-number"  alt="" />
+        Suggest dates & times
+      </div>
+      <img src="/assets/welcome-page/suggestions.svg" data-png-fallback="/assets/welcome-page/suggestions.png" class="illustration" id="suggestions"  alt="" />
+    </li>
+
+    <li class="third-step">
+      <div class="title">
+        <img src="/assets/welcome-page/step-3.svg" data-png-fallback="/assets/welcome-page/step-3.png" class="step-number" alt="" />
+        Invite guests to vote
+      </div>
+      <img src="/assets/welcome-page/invite-people.svg" data-png-fallback="/assets/welcome-page/invite-people.png" class="illustration" id="invite-people"  alt="" />
+    </li>
+
+    <li class="fourth-step">
+      <div class="title">
+        <img src="/assets/welcome-page/step-4.svg" data-png-fallback="/assets/welcome-page/step-4.png" class="step-number" alt="" />
+        Pick a date & time
+      </div>
+      <img src="/assets/welcome-page/choose-date.svg" data-png-fallback="/assets/welcome-page/choose-date.png" class="illustration" id="choose-date"  alt="" />
+    </li>
+  </ul>
+  </section>
+
+  <div class="footer-sign-in">
+    <%= submit_tag "Sign in with Yammer", class: "sign-in",  id: "sign-in" %>
   </div>
-  <div class="learn-more-wrapper">
-    <a href="#steps" class="learn-more-fixed">Learn More <span class="arrow"></span></a>
-  </div>
-</div>
-
-<section id="steps" class="steps">
-<ul>
-  <li class="first-step">
-    <div class="title">
-      <img src="/assets/welcome-page/step-1.svg" data-png-fallback="/assets/welcome-page/step-1.png" class="step-number" alt="" />
-      Create an event
-    </div>
-    <img src="/assets/welcome-page/new-event.svg" data-png-fallback="/assets/welcome-page/new-event.png" class="illustration" id="new-event"  alt="" />
-  </li>
-
-  <li class="second-step">
-    <div class="title">
-      <img src="/assets/welcome-page/step-2.svg" data-png-fallback="/assets/welcome-page/step-2.png" class="step-number"  alt="" />
-      Suggest dates & times
-    </div>
-    <img src="/assets/welcome-page/suggestions.svg" data-png-fallback="/assets/welcome-page/suggestions.png" class="illustration" id="suggestions"  alt="" />
-  </li>
-
-  <li class="third-step">
-    <div class="title">
-      <img src="/assets/welcome-page/step-3.svg" data-png-fallback="/assets/welcome-page/step-3.png" class="step-number" alt="" />
-      Invite guests to vote
-    </div>
-    <img src="/assets/welcome-page/invite-people.svg" data-png-fallback="/assets/welcome-page/invite-people.png" class="illustration" id="invite-people"  alt="" />
-  </li>
-
-  <li class="fourth-step">
-    <div class="title">
-      <img src="/assets/welcome-page/step-4.svg" data-png-fallback="/assets/welcome-page/step-4.png" class="step-number" alt="" />
-      Pick a date & time
-    </div>
-    <img src="/assets/welcome-page/choose-date.svg" data-png-fallback="/assets/welcome-page/choose-date.png" class="illustration" id="choose-date"  alt="" />
-  </li>
-</ul>
-</section>
-
-<div class="footer-sign-in">
-  <%= link_to "Sign in with Yammer", "/auth/yammer", class: "sign-in",  id: "sign-in" %>
   <div class="agree-to-tos">
     <label>
-      <input type="checkbox">
+      <input type="hidden" name="agree_to_tos" value="0">
+      <input type="checkbox" name="agree_to_tos" value="1" checked="checked">
       I agree to the
-      <%= link_to "terms of service", "/tos" %>
+      <%= link_to 'terms of service', "https://www.yammer.com/about/terms/", target:"_blank" %>
     </label>
   </div>
+  <%- end %>
 </div>

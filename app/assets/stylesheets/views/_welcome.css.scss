@@ -2,7 +2,6 @@ body.welcome {
   font-smoothing:subpixel-antialiased;
 
   div.agree-to-tos {
-    display: none;
     @extend %tos-agreement;
   }
 
@@ -111,7 +110,7 @@ body.welcome {
     div.sign-in {
       @extend div.logo;
 
-      > a {
+      > input {
         display: block;
 
         &.sign-in {
@@ -198,14 +197,14 @@ body.welcome {
   }
 
   div.footer-sign-in {
-    padding: 0 10% 5%;
     text-align: center;
 
-    a.sign-in {
+    input.sign-in {
       @extend .button;
       @extend .yammer-button;
       display: block;
       margin-bottom: 0px;
+      padding: 10px 60px 10px 100px;
     }
   }
 }

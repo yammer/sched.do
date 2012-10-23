@@ -25,9 +25,23 @@ describe SessionsController, '#create' do
     session[:email].should be_nil
   end
 
+  it 'requires the user to accept the terms of service' do
+    stub_omniauth_env
+    stub_declined_tos
+    request.env['HTTP_REFERER'] = '/'
+
+    post :create
+
+    should redirect_to '/'
+    flash[:error].should == "Please agree to the terms of service"
+  end
   private
 
   def stub_omniauth_env
     request.env['omniauth.auth'] = OmniAuth.mock_auth_for(:yammer)
+  end
+
+  def stub_declined_tos
+    request.env['omniauth.params'] = { "agree_to_tos" => "0" }
   end
 end
