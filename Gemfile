@@ -66,11 +66,12 @@ group :test do
   gem 'email_spec'
   gem 'factory_girl_rails', '~> 3.0'
   gem 'launchy'
-  gem 'shoulda-matchers', '~> 1.1.0'
+  gem 'shoulda-matchers', '~> 1.4.1'
   gem 'simplecov', :require => false
   gem 'sinatra'
   gem 'timecop'
   gem 'turnip', '~> 1.0.0'
+  gem 'mocha', '~> 0.9.8'
 end
 
 group :staging, :production do

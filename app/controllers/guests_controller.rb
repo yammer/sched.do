@@ -13,8 +13,7 @@ class GuestsController < ApplicationController
   end
 
   def create
-    @guest = Guest.find_or_initialize_by_email(params[:guest][:email])
-    @guest.name = params[:guest][:name]
+    @guest = Guest.initialize_with_name_and_email(params)
     @event = Event.find_by_uuid(params[:event_id])
     @show_guest_login = show_guest_login?
 

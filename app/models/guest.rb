@@ -5,7 +5,7 @@ class Guest < ActiveRecord::Base
   has_many :invitations, as: :invitee
   has_many :votes, as: :voter
 
-  validates :email, presence: true
+  validates :email, presence: true, uniqueness: true
   validates :email, email: true
   validates :name, presence: true, if: :should_validate_name
 
@@ -17,6 +17,12 @@ class Guest < ActiveRecord::Base
       guest.should_validate_name = false
       guest.save
     end
+  end
+
+  def self.initialize_with_name_and_email(params)
+    guest = find_or_initialize_by_email(params[:guest][:email])
+    guest.name = params[:guest][:name]
+    guest
   end
 
   def able_to_edit?(event)

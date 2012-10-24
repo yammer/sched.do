@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe Guest, 'validations' do
   it { should validate_presence_of(:email) }
+  it { should validate_uniqueness_of(:email) }
   it { should have_many(:invitations) }
 
   it "requires a valid e-mail address" do
@@ -11,6 +12,40 @@ describe Guest, 'validations' do
     should_not allow_value("person@@example.com").for(:email)
     should_not allow_value("person").for(:email)
     should_not allow_value("person @person.com").for(:email)
+  end
+end
+
+describe Guest, '.initialize_with_name_and_email' do
+  it 'initializes a guest with the given email and name' do
+    guest = create(:guest)
+    params = { guest: { email: guest.email, name: guest.name } }
+
+    initialized_guest = Guest.initialize_with_name_and_email(params)
+
+    initialized_guest.email.should == guest.email
+    initialized_guest.name.should == guest.name
+  end
+
+  it 'does not create duplicate guests with the same email' do
+    guest = create(:guest)
+    params = { guest: { email: guest.email, name: guest.name } }
+
+    duplicate_guest = Guest.initialize_with_name_and_email(params)
+
+    lambda {
+      duplicate_guest.save
+    }.should change(Guest, :count).by(0)
+  end
+
+  it 'allows guests with the same name and different emails' do
+    guest = create(:guest)
+    params = { guest: { email: 'different@email.com', name: guest.name } }
+
+    guest_with_same_name = Guest.initialize_with_name_and_email(params)
+
+    lambda {
+      guest_with_same_name.save
+    }.should change(Guest, :count).by(1)
   end
 end
 
@@ -27,7 +62,6 @@ describe Guest, 'image' do
     guest.image.should == 'http://' + ENV['HOSTNAME'] + '/assets/no_photo.png'
   end
 end
-
 
 describe Guest, '#vote_for_suggestion' do
   it "returns the user's vote for the given suggestion if the user has one" do
