@@ -51,40 +51,42 @@ if($("input[data-role='invitation_name']").length){
         "</a>"
       )
       .appendTo(ul);
-  }
+  },
+    options: {
+      minLength: 1,
+      appendTo: '.invitation-autocomplete-suggestions',
+      open: function(event, ui){
+        $('#auto-complete').addClass("autocomplete-true")
+      },
+      close: function(event, ui){
+        $('#auto-complete').removeClass("autocomplete-true")
+      },
+      select: function(event, ui) {
+        var id;
+        var dataRole;
+        clearAllNearbyDataRoles(event.target);
+        if (ui.item.yammerUserId) {
+          id = ui.item.yammerUserId;
+          dataRole = "yammer_user_id";
+        }
+        else{
+          id = ui.item.yammerGroupId;
+          dataRole = "yammer_group_id";
+        };
+        fillInClosestFieldWithDataRole(id, event.target, dataRole);
+        $(this).parents('form').submit();
+      },
+      source: function(request, response) {
+        var term = request.term;
+        YammerApi.setAccessToken(access_token);
+        YammerApi.autocomplete.get(term, response);
+      }
+    }
   });
 
-
-  $("input[data-role='invitation_name']").yammerAutocomplete({
-    minLength: 1,
-    appendTo: '.invitation-autocomplete-suggestions',
-    open: function(event, ui){
-          $('#auto-complete').addClass("autocomplete-true")
-    },
-    close: function(event, ui){
-          $('#auto-complete').removeClass("autocomplete-true")
-    },
-    select: function(event, ui) {
-      var id;
-      var dataRole;
-      clearAllNearbyDataRoles(event.target);
-      if (ui.item.yammerUserId) {
-        id = ui.item.yammerUserId;
-        dataRole = "yammer_user_id";
-      }
-      else{
-        id = ui.item.yammerGroupId;
-        dataRole = "yammer_group_id";
-      };
-      fillInClosestFieldWithDataRole(id, event.target, dataRole);
-      $(this).parents('form').submit();
-    },
-    source: function(request, response) {
-      var term = request.term;
-      YammerApi.setAccessToken(access_token);
-      YammerApi.autocomplete.get(term, response);
-    }
-  })
+  if("access_token" in window){
+    $("input[data-role='invitation_name']").yammerAutocomplete();
+  }
 }
 
 function clearAllNearbyDataRoles(target){
