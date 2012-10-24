@@ -11,6 +11,9 @@
 }
 
 $(document).ready(function() {
+  if (!Modernizr.cssanimations) {
+    $('.flash > div').delay(1500).slideUp()
+  }
   $("#new-event").leanModal({closeButton: ".modal-close"})
   $("a[rel*=yammer-invite]").leanModal({closeButton: ".modal-close"})
   $("a[rel*=email-invite]").leanModal({closeButton: ".modal-close"})
