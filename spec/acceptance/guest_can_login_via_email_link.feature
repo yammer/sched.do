@@ -5,7 +5,7 @@ Feature: Guests can login via email link
     And I invite "guest@example.com" to "Clown party"
     And I sign out
     And "guest@example.com" should receive an email
-    When "guest@example.com" follows the link "this link" in his email
+    When "guest@example.com" follows the link "Click Here" in his email
     Then I should see my email address "guest@example.com" prepopulated
     And I fill in the fields with "guest@example.com" and "Guest" then submit
     And I should be on the "Clown party" event page

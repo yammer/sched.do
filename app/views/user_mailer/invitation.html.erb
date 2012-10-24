@@ -5,7 +5,8 @@
 </p>
 
 <p>
-  Please visit <%= link_to "this link", event_url(@event, guest_email: @guest.email), html_options = {:style => "background-color: #30AADE; border: 1px solid #0F7CC4; border-radius: 3px; color: #fff; display: block; margin: 20px auto; padding: 8px 12px; text-align: center; text-decoration: none; width: 100px"} %> to view the options and vote.
+  Please click the below button to view the options and vote.
+  <%= link_to "Click Here", event_url(@event, guest_email: @guest.email), html_options = {:style => "background-color: #30AADE; border: 1px solid #0F7CC4; border-radius: 3px; color: #fff; display: block; margin: 20px auto; padding: 8px 12px; text-align: center; text-decoration: none; width: 100px"} %>
 </p>
 
 <p>

@@ -44,7 +44,6 @@ gem 'cocoon', git: 'git://github.com/jsteiner/cocoon.git', branch: 'scheddo'
 group :development do
   gem 'bundler', '>= 1.2.0.pre'
   gem 'foreman', '~> 0.46.0'
-  gem 'heroku'
   gem 'quiet_assets'
 end
 
