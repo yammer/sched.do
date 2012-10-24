@@ -80,7 +80,7 @@ class User < ActiveRecord::Base
 
   def deliver_email_or_private_message(message, sender, object)
     if in_network?(sender)
-      PrivateMessenger.new(self, message, object).deliver
+      PrivateMessenger.new(self, message, sender, object).deliver
     else
       UserMailer.send(message, sender, object).deliver
     end

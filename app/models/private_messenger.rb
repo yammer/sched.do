@@ -1,9 +1,10 @@
 class PrivateMessenger
   include Rails.application.routes.url_helpers
 
-  def initialize(recipient, message, message_object)
+  def initialize(recipient, message, sender, message_object)
     @message = message
     @recipient = recipient
+    @sender = sender
     @message_object = message_object
     send(@message)
   end
@@ -11,28 +12,24 @@ class PrivateMessenger
   def reminder
     @invitation = @message_object
     @event = @invitation.event
-    @sender = @invitation.event.owner
     @message_body = reminder_message_body
   end
 
   def group_reminder
     @invitation = @message_object
     @event = @invitation.event
-    @sender = @invitation.event.owner
     @message_body = reminder_message_body
   end
 
   def invitation
     @invitation = @message_object
     @event = @invitation.event
-    @sender = @invitation.sender
     @message_body = invitation_message_body
   end
 
   def group_invitation
     @invitation = @message_object
     @event = @invitation.event
-    @sender = @invitation.sender
     @message_body = group_invitation_message_body
   end
 
