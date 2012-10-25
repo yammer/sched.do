@@ -14,7 +14,7 @@ window.parseTime= (time) ->
   minutes = ("0" + minutes).slice(-2)
   "#{hours}:#{minutes}#{am_or_pm}"
 $ ->
-  $(".times input").blur ->
+  $(".suggestions").delegate ".times input", "blur", ->
     if(!$(this).data("time-parsed") and $(this).val() != "")
       $(this).val(parseTime($(this).val()))
     $(this).data("time-parsed", true)
