@@ -50,6 +50,10 @@ class User < ActiveRecord::Base
     ActivityCreator.new(self, action, event).post
   end
 
+  def expire_token
+    update_attributes(access_token: 'EXPIRED')
+  end
+
   def guest?
     false
   end
@@ -84,6 +88,10 @@ class User < ActiveRecord::Base
     else
       UserMailer.send(message, sender, object).deliver
     end
+  end
+
+  def reset_token
+    update_attributes(access_token: 'RESET')
   end
 
   def to_s

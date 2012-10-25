@@ -2,18 +2,19 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
 
   before_filter :require_yammer_login
+  before_filter :check_blank_token
 
   hide_action :current_user=
 
   helper_method :current_user
   helper_method :signed_in?
 
-  def current_user=(user)
-    @current_user = user
-  end
-
   def signed_in?
     current_user.yammer_user?
+  end
+
+  def current_user=(user)
+    @current_user = user
   end
 
   def current_user
@@ -22,6 +23,13 @@ class ApplicationController < ActionController::Base
       session[:name],
       session[:email]
     )
+  end
+
+  def check_blank_token
+    if current_user_has_expired_token?
+      current_user.reset_token
+      redirect_to sign_out_path
+    end
   end
 
   def require_yammer_login
@@ -46,6 +54,10 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
+  def current_user_has_expired_token?
+    signed_in? && current_user.access_token == 'EXPIRED'
+  end
 
   def referred_from_yammer?
     referring_site.include?('yammer.com')

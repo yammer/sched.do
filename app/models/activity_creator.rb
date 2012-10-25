@@ -9,11 +9,22 @@ class ActivityCreator
 
   def post
     post_activity_json
+  rescue RestClient::Unauthorized
+    @user.expire_token
   end
 
   private
 
-  def generate_json
+  def post_activity_json
+    RestClient.delay.post(rest_client_url, json_payload, json_arguments)
+  end
+
+  def rest_client_url
+    @user.yammer_endpoint +
+      "api/v1/activity.json?access_token=#{@user.access_token}"
+  end
+
+  def json_payload
     {
       activity: {
         actor: {
@@ -35,14 +46,5 @@ class ActivityCreator
 
   def json_arguments
     { content_type: :json, accept: :json }
-  end
-
-  def post_activity_json
-    RestClient.delay.post(rest_client_url, generate_json, json_arguments)
-  end
-
-  def rest_client_url
-    @user.yammer_endpoint +
-      "api/v1/activity.json?access_token=#{@user.access_token}"
   end
 end

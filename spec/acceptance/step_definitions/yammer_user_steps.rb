@@ -1,5 +1,3 @@
-USERS_BY_EMAIL_URL = 'https://www.yammer.com/api/v1/users/by_email.json'
-
 step 'no sched.do user exists with email :email' do |email|
   User.find_by_email(email).should be_nil
 end

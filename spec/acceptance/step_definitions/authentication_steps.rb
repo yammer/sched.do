@@ -18,13 +18,16 @@ step 'I sign in as a different user' do
   sign_in
 end
 
-step 'I deny access to Yammer' do
-  mock_deny_yammer_oauth
+step 'I am signed in with an old token' do
+  email = 'happy@example.com'
+  token = 'OLDTOKEN'
+  mock_yammer_oauth(email, token)
   sign_in
 end
 
-step 'I should be redirected to the new event page' do
-  page.should have_content "Schedule an Event"
+step 'I deny access to Yammer' do
+  mock_deny_yammer_oauth
+  sign_in
 end
 
 step 'I sign out' do
@@ -32,8 +35,8 @@ step 'I sign out' do
 end
 
 step 'I am signed in as :name and I view the page for :event' do |name, event|
-  step %(a Yammer user exists named "#{name}" with email "temp@example.com")
-  step %(I am signed in as "temp@example.com")
+  step %(a Yammer user exists named "#{name}" with email 'temp@example.com')
+  step %(I am signed in as 'temp@example.com')
   step %(I visit the event page for "#{event}")
 end
 
@@ -48,7 +51,7 @@ end
 
 step 'I am signed in as the guest :guest_email' do |guest_email|
   visit new_guest_path(event_id: Event.last.uuid)
-  step %(I fill in the fields with "#{guest_email}" and "nil" then submit)
+  step %(I fill in the fields with "#{guest_email}" and 'nil' then submit)
 end
 
 step 'I am signed in as the guest :email named :name' do |email, name|
@@ -61,10 +64,6 @@ step 'I view the login form for the :event event' do |event_name|
   visit new_guest_url(event_id: event.uuid)
 end
 
-step 'I should not see a sign out button' do
-  page.should have_no_content 'Sign out'
-end
-
 step 'I have a Yammer account with name :name' do |name|
   named_fake_yammer(name)
   sign_in
@@ -75,8 +74,8 @@ step 'I change my name to :new_name' do |new_name|
 end
 
 step 'I log out and sign back in again' do
-  step "I sign out"
-  step "I visit the homepage"
+  step 'I sign out'
+  step 'I visit the homepage'
   step "I press 'Sign in with Yammer'"
 end
 
@@ -90,4 +89,18 @@ step 'I fill in the fields with :email and :name then submit' do |email, name|
   fill_in 'guest_name', with: name
   fill_in 'guest_email', with: email
   click_button 'Begin Voting'
+end
+
+# Should
+
+step 'I should be redirected to the new event page' do
+  page.should have_content 'Schedule an Event'
+end
+
+step 'I should not see a sign out button' do
+  page.should have_no_content 'Sign out'
+end
+
+step 'I should be signed out' do
+  current_url.should == root_url
 end

@@ -17,7 +17,7 @@ module TurnipAuthenticationHelpers
 end
 
 module AuthenticationHelpers
-  def mock_yammer_oauth(email=nil)
+  def mock_yammer_oauth(email = nil, token = generated_token)
     email ||= generate(:email)
     OmniAuth.config.mock_auth[:yammer] = {
       uid: generate(:yammer_uid),
@@ -30,7 +30,7 @@ module AuthenticationHelpers
         yammer_profile_url: generate(:yammer_profile_url)
       },
       credentials: {
-        token: FactoryGirl.generate(:yammer_token)
+        token: token
       },
       extra: generate(:extra)
     }
@@ -58,6 +58,12 @@ module AuthenticationHelpers
 
   def sign_out
     click_link 'Sign out'
+  end
+
+  private
+
+  def generated_token
+    FactoryGirl.generate(:yammer_token)
   end
 end
 

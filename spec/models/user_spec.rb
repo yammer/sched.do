@@ -134,6 +134,16 @@ describe User, '#able_to_edit?' do
   end
 end
 
+describe User, '#expire_token' do
+  it 'sets the user access_token to EXPIRED' do
+    user = create(:user, access_token: '123456')
+
+    user.expire_token
+
+    user.access_token.should == 'EXPIRED'
+  end
+end
+
 describe User, '#image' do
   it 'returns the placeholder if there is no image' do
     user = build_stubbed(:user, image: nil)
@@ -148,6 +158,16 @@ describe User, '#image' do
   end
 end
 
+describe User, '#reset_token' do
+  it 'changes the user access_token to RESET' do
+    user = create(:user, access_token: '123456')
+
+    user.reset_token
+
+    user.access_token.should == 'RESET'
+  end
+end
+
 describe User, '#votes' do
   it "returns the user's votes if there are any" do
     user = create(:user)
@@ -155,7 +175,7 @@ describe User, '#votes' do
     user.votes.should == [vote]
   end
 
-  it "returns an empty array if the user has no votes" do
+  it 'returns an empty array if the user has no votes' do
     user = build(:user)
     user.votes.should == []
   end
@@ -176,7 +196,7 @@ describe User, '#vote_for_suggestion' do
 end
 
 describe User, '#voted_for_suggestion?' do
-  it "returns true if the user voted for the suggestion" do
+  it 'returns true if the user voted for the suggestion' do
     user = create(:user)
     vote = create(:vote, voter: user)
     user.voted_for_suggestion?(vote.suggestion).should be_true

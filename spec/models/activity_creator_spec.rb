@@ -5,18 +5,18 @@ describe ActivityCreator, '#post' do
 
   it 'posts to the Yammer API on post' do
     RestClient.stubs(:post)
+    user = build_user
     action = 'vote'
     event = build_stubbed(:event_with_invitees)
-    user = build_stubbed_user
 
     ActivityCreator.new(user, action, event).post
     work_off_delayed_jobs
 
     RestClient.should have_received(:post).with(
-      "https://www.yammer.com/api/v1/activity.json?access_token=ABC123",
+      'https://www.yammer.com/api/v1/activity.json?access_token=ABC123',
       expected_json(event),
-      :content_type => :json,
-      :accept => :json
+      content_type: :json,
+      accept: :json
     )
   end
 
@@ -30,13 +30,25 @@ describe ActivityCreator, '#post' do
     }.to change(Delayed::Job, :count).by(1)
   end
 
+  it 'expires the access_token if it is stale' do
+    Delayed::Worker.delay_jobs = false
+    user = build_user('OLDTOKEN')
+    action = 'vote'
+    event = build_stubbed(:event_with_invitees)
+
+    ActivityCreator.new(user, action, event).post
+
+    user.access_token.should == 'EXPIRED'
+    Delayed::Worker.delay_jobs = true
+  end
+
   private
 
-  def build_stubbed_user
-    user = build_stubbed(
+  def build_user(token = 'ABC123')
+    user = create(
       :user,
       email: 'fred@example.com',
-      access_token: 'ABC123',
+      access_token: token,
       name: 'Fred Jones'
     )
   end

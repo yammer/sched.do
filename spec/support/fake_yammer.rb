@@ -17,8 +17,12 @@ class FakeYammer < Sinatra::Base
   end
 
   post '/api/v1/activity.json' do
-    self.activity_endpoint_hits += 1
-    202
+    if params[:access_token] == 'OLDTOKEN'
+      401
+    else
+      self.activity_endpoint_hits += 1
+      202
+    end
   end
 
   post '/api/v1/messages.json' do
