@@ -25,17 +25,6 @@ describe SessionsController, '#create' do
     session[:email].should be_nil
   end
 
-  it 'requires the user to accept the terms of service' do
-    stub_omniauth_env
-    stub_declined_tos
-    request.env['HTTP_REFERER'] = '/'
-
-    post :create
-
-    should redirect_to '/'
-    flash[:error].should == "Please agree to the terms of service"
-  end
-
   private
 
   def stub_omniauth_env

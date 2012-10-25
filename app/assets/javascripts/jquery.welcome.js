@@ -34,4 +34,16 @@ $(document).ready(function() {
       }, 500);
       return false;
   });
+
+  window.require_tos_acceptance = function(e){
+     if(!$('input[name=agree_to_tos][type=checkbox]').is(':checked')){
+      e.preventDefault();
+      $(window).scrollTop(0);
+      var termsOfServicePrompt = '<div id=flash-error>Please agree to the terms of service</div>';
+      $('.flash').html(termsOfServicePrompt);
+      $('input[name=agree_to_tos][type=checkbox]').prop('checked', true);
+     }
+  }
+
+  $('input.sign-in').click(require_tos_acceptance);
 });

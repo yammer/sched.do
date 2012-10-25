@@ -24,13 +24,6 @@ class ApplicationController < ActionController::Base
     )
   end
 
-  def require_tos_acceptance
-    if user_rejected_tos
-      redirect_to :back
-      flash[:error] = "Please agree to the terms of service"
-    end
-  end
-
   def require_yammer_login
     unless current_user.yammer_user?
       session[:return_to] ||= request.fullpath
