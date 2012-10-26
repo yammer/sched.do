@@ -10,6 +10,10 @@
   color:  $placeholder-color !important;
 }
 
+textarea {
+  height: inherit;
+}
+
 form {
   fieldset {
     background: transparent;
