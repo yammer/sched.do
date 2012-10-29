@@ -16,7 +16,7 @@ describe Preview, 'event_created_confirmation' do
 
     mail = Preview.new.event_created_confirmation(event)
 
-    mail.subject.should == "You created #{event.name} on Sched.do"
+    mail.subject.should == "You created #{event.name} on sched.do"
   end
 
   it 'sends the email with the correct body' do
@@ -82,7 +82,7 @@ describe Preview, 'vote_confirmation' do
     mail = Preview.new.vote_confirmation
 
     mail.subject.should ==
-      %{Thanks for voting on "#{truncate(event.name, length: 23)}" on Sched.do}
+      %{Thanks for voting on "#{truncate(event.name, length: 23)}" on sched.do}
   end
 
   it 'sends the email with the correct body' do

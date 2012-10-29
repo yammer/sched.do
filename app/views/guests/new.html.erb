@@ -7,7 +7,7 @@
 <% end %>
 
 <div class="guest-sign-in">
-  <div class="sign-in-message"><p>Sign in to Sched.do (Skeh-DOO) and help <%= @event.owner %> decide on "<%= @event.name %>".</p></div>
+  <div class="sign-in-message"><p>Sign in to sched.do (Skeh-DOO) and help <%= @event.owner %> decide on "<%= @event.name %>".</p></div>
   <%= form_tag "/auth/yammer" do %>
     <section class="signin-with-yammer">
       <%= submit_tag "Sign in with Yammer", class: "sign-in",  id: "sign-in" %>

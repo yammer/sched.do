@@ -1,7 +1,7 @@
 class UserMailer < ActionMailer::Base
   include ActionView::Helpers::TextHelper
   FROM_EMAIL = '<no-reply@sched.do>'
-  default from: %("Sched.do" #{FROM_EMAIL})
+  default from: %("sched.do" #{FROM_EMAIL})
 
   def event_created_confirmation(event)
     @event = event
@@ -9,7 +9,7 @@ class UserMailer < ActionMailer::Base
 
     mail(
       to: @creator.email,
-      subject: "You created #{@event.name} on Sched.do"
+      subject: "You created #{@event.name} on sched.do"
     )
   end
 
@@ -43,13 +43,13 @@ class UserMailer < ActionMailer::Base
 
     mail(
       to: @user.email,
-      subject: %{Thanks for voting on "#{truncate(@event.name, length: 23)}" on Sched.do}
+      subject: %{Thanks for voting on "#{truncate(@event.name, length: 23)}" on sched.do}
     )
   end
 
   private
 
   def from_text(user_name = nil)
-    %("Sched.do on behalf of #{user_name}" #{FROM_EMAIL})
+    %("sched.do on behalf of #{user_name}" #{FROM_EMAIL})
   end
 end

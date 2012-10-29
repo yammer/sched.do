@@ -49,7 +49,7 @@ class PrivateMessenger
 
       Please click this link to view the options and vote: #{event_url(@event)}
 
-      *This poll was sent using Sched.do. Create your own polls for free at #{root_url}
+      *This poll was sent using sched.do. Create your own polls for free at #{root_url}
     BODY
   end
 
@@ -59,7 +59,7 @@ class PrivateMessenger
 
        Please click this link to view the options and vote: #{event_url(@event)}
 
-       *This poll was sent using Sched.do. Create your own polls for free at #{root_url}
+       *This poll was sent using sched.do. Create your own polls for free at #{root_url}
      BODY
   end
 
@@ -68,7 +68,7 @@ class PrivateMessenger
       Attention #{@recipient.name}: #{@event.owner} created the "#{@event.name}" poll and I want your input.
 
       Please click this link to view the options and vote: #{event_url(@event)}
-      *This poll was sent using Sched.do. Create your own polls for free at #{root_url}
+      *This poll was sent using sched.do. Create your own polls for free at #{root_url}
     BODY
   end
 

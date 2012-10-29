@@ -26,7 +26,7 @@ describe UserMailer, 'event_created_confirmation' do
 
     mail = UserMailer.event_created_confirmation(event)
 
-    mail.subject.should == "You created #{event.name} on Sched.do"
+    mail.subject.should == "You created #{event.name} on sched.do"
   end
 
   it 'sends the email with the correct body' do
@@ -49,7 +49,7 @@ describe UserMailer, 'invitation' do
     mail = UserMailer.invitation(event.owner, invitation)
 
     mail['from'].to_s.should ==
-      %{"Sched.do on behalf of #{event.owner}" <no-reply@sched.do>}
+      %{"sched.do on behalf of #{event.owner}" <no-reply@sched.do>}
   end
 
   it 'sends the email to the correct recipient' do
@@ -104,7 +104,7 @@ describe UserMailer, 'vote_confirmation' do
     mail = UserMailer.vote_confirmation(vote)
 
     mail.subject.should ==
-      %{Thanks for voting on "#{truncate(event.name, length: 23)}" on Sched.do}
+      %{Thanks for voting on "#{truncate(event.name, length: 23)}" on sched.do}
   end
 
   it 'sends the email with the correct body' do
