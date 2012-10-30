@@ -111,7 +111,11 @@ class User < ActiveRecord::Base
   end
 
   def yammer_endpoint
-    yammer_staging ? "https://www.staging.yammer.com/" : "https://www.yammer.com/"
+    if yammer_staging
+      'https://www.staging.yammer.com/'
+    else
+      'https://www.yammer.com/'
+    end
   end
 
   def yammer_group_id
@@ -119,17 +123,14 @@ class User < ActiveRecord::Base
   end
 
   def yammer_user_data
-    JSON.parse(
-      RestClient.get yammer_endpoint +
-      "api/v1/users/" +
-      yammer_user_id.to_s +
-      ".json?" + {
-        access_token: access_token,
-      }.to_query
-    )
+    JSON.parse( yammer_user_url )
   end
 
   private
+
+  def access_token_for_query
+    { access_token: access_token }.to_query
+  end
 
   def associate_each_invitation_with(guest)
     guest.invitations.each do |invitation|
@@ -140,5 +141,13 @@ class User < ActiveRecord::Base
   def parse_email_from_response(response)
     response['contact']['email_addresses'].
       detect{ |address| address['type'] == 'primary' }['address']
+  end
+
+  def yammer_user_url
+    RestClient.get yammer_endpoint +
+      'api/v1/users/' +
+      yammer_user_id.to_s +
+      '.json?' +
+      access_token_for_query
   end
 end
