@@ -31,7 +31,7 @@ describe VoteConfirmationEmailJob, '#perform' do
 
   it 'does not send the email immediately' do
     mailer = stub('mailer', deliver: true)
-    UserMailer.stubs vote_confirmation: mailer
+    UserMailer.stubs(vote_confirmation: mailer)
     vote = build_stubbed(:vote)
     Vote.stubs find: vote
 
@@ -43,34 +43,55 @@ describe VoteConfirmationEmailJob, '#perform' do
 
   it 'sends the email three minutes after the job is enqueued' do
     mailer = stub('mailer', deliver: true)
-    UserMailer.stubs vote_confirmation: mailer
+    UserMailer.stubs(vote_confirmation: mailer)
     vote = build_stubbed(:vote)
     Vote.stubs find: vote
 
     VoteConfirmationEmailJob.new(vote.id).perform
-
-    Timecop.freeze(3.minutes.from_now) do
-      UserMailer.should have_received(:vote_confirmation).with(vote)
+    Timecop.freeze(VoteConfirmationEmailJob::DELAY.from_now) do
+      work_off_delayed_jobs
     end
+
+    UserMailer.should have_received(:vote_confirmation).with(vote)
   end
 
-  it 'sends only one email per user, every three minutes' do
+  it 'sends only one email per user if within the delay period' do
     mailer = stub('mailer', deliver: true)
-    UserMailer.stubs vote_confirmation: mailer
-
+    UserMailer.stubs(vote_confirmation: mailer)
     first_vote = create(:vote)
     event = first_vote.suggestion.event
+    voter = first_vote.voter
     second_suggestion = create(:suggestion, event: event)
-    second_vote = create(:vote,
-      voter: first_vote.voter,
-      suggestion: second_suggestion)
+
+    second_vote = create(:vote, voter: voter, suggestion: second_suggestion)
     work_off_delayed_jobs
-    Timecop.travel(3.minutes.from_now) do
+    Timecop.freeze(VoteConfirmationEmailJob::DELAY.from_now) do
       work_off_delayed_jobs
     end
 
     UserMailer.should have_received(:vote_confirmation).with(first_vote).never
     UserMailer.should have_received(:vote_confirmation).with(second_vote)
     mailer.should have_received(:deliver).once
+  end
+
+  it 'sends two emails per user if outside the delay period' do
+    mailer = stub('mailer', deliver: true)
+    UserMailer.stubs(vote_confirmation: mailer)
+    first_vote = create(:vote)
+    event = first_vote.suggestion.event
+    voter = first_vote.voter
+    second_suggestion = create(:suggestion, event: event)
+
+    Timecop.freeze(VoteConfirmationEmailJob::DELAY.from_now + 1.minute)
+    second_vote = create(:vote, voter: voter, suggestion: second_suggestion)
+    work_off_delayed_jobs
+    Timecop.return
+    Timecop.freeze((VoteConfirmationEmailJob::DELAY * 3).from_now) do
+      work_off_delayed_jobs
+    end
+
+    UserMailer.should have_received(:vote_confirmation).with(first_vote)
+    UserMailer.should have_received(:vote_confirmation).with(second_vote)
+    mailer.should have_received(:deliver).twice
   end
 end

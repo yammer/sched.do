@@ -25,6 +25,40 @@ describe Vote do
   end
 end
 
+describe Vote, '#no_votes_witin_delay_window?' do
+  include DelayedJobSpecHelper
+
+  it 'is false if a second email is sent within the delay window' do
+    first_vote = create(:vote)
+    voter = first_vote.voter
+    event = first_vote.suggestion.event
+    second_suggestion = create(:suggestion, event: event)
+    second_vote = create(:vote, voter: voter, suggestion: second_suggestion)
+
+    first_vote_check = first_vote.has_no_other_votes_within_delay_window?
+    second_vote_check = second_vote.has_no_other_votes_within_delay_window?
+
+    first_vote_check.should be_false
+    second_vote_check.should be_true
+  end
+
+  it 'is true if two emails are sent outside the delay window' do
+    first_vote = create(:vote)
+    voter = first_vote.voter
+    event = first_vote.suggestion.event
+    second_suggestion = create(:suggestion, event: event)
+
+    Timecop.freeze(VoteConfirmationEmailJob::DELAY.from_now)
+    second_vote = create(:vote, voter: voter, suggestion: second_suggestion)
+    Timecop.return
+    first_vote_check = first_vote.has_no_other_votes_within_delay_window?
+    second_vote_check = second_vote.has_no_other_votes_within_delay_window?
+
+    first_vote_check.should be_true
+    second_vote_check.should be_true
+  end
+end
+
 describe Vote, '#event' do
   it 'returns the vote\'s event' do
     vote = create(:vote)

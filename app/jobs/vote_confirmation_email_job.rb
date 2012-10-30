@@ -15,20 +15,9 @@ class VoteConfirmationEmailJob < Struct.new(:vote_id)
   end
 
   def perform
-    if no_votes_within_delay_window
+    if vote.has_no_other_votes_within_delay_window?
       UserMailer.vote_confirmation(vote).deliver
     end
-  end
-
-  def no_votes_within_delay_window
-    voter.
-      votes.
-      joins(suggestion: :event).
-      where(['votes.id != ?', vote.id]).
-      where(['events.id = ?',  vote.event.id]).
-      where(['votes.created_at >= ?', vote.created_at]).
-      where(['votes.created_at <= ?', (vote.created_at + DELAY)]).
-      empty?
   end
 
   private

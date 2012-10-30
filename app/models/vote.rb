@@ -17,11 +17,26 @@ class Vote < ActiveRecord::Base
     where(id: nil)
   end
 
+  def has_no_other_votes_within_delay_window?
+    voter.
+      votes.
+      joins(suggestion: :event).
+      where(['votes.id != ?', self.id]).
+      where(['events.id = ?', self.event.id]).
+      where(['votes.created_at >= ?', self.created_at]).
+      where(['votes.created_at <= ?', (self.created_at + delay_window)]).
+      empty?
+  end
+
   def event
     suggestion.event
   end
 
   private
+
+  def delay_window
+    VoteConfirmationEmailJob::DELAY
+  end
 
   def queue_vote_created_job
     VoteCreatedJob.enqueue(self)
