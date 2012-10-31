@@ -3,7 +3,7 @@ class Event < ActiveRecord::Base
 
   attr_accessible :name, :suggestion, :suggestions_attributes, :uuid
 
-  belongs_to :owner, :foreign_key => 'user_id', :class_name => "User"
+  belongs_to :owner, foreign_key: 'user_id', class_name: 'User'
   has_many :suggestions
   has_many :votes, through: :suggestions
   has_many :invitations
@@ -11,7 +11,7 @@ class Event < ActiveRecord::Base
   has_many :guests, through: :invitations, source: :invitee, source_type: 'Guest'
   has_many :groups, through: :invitations, source: :invitee, source_type: 'Group'
 
-  validate :has_suggestions?
+  validate :add_errors_if_no_suggestions
   validates :name, presence: { message: 'This field is required' }
   validates :name, length: { maximum: NAME_MAX_LENGTH }
   validates :user_id, presence: true
@@ -22,7 +22,7 @@ class Event < ActiveRecord::Base
 
   after_create :enqueue_event_created_job
   after_create :invite_owner
-  before_validation :generate_uuid, :on => :create
+  before_validation :generate_uuid, on: :create
   before_validation :set_first_suggestion
 
   def build_suggestions
@@ -34,9 +34,13 @@ class Event < ActiveRecord::Base
     invitations_without(user).map{ |i| i.deliver_reminder_from(user) }
   end
 
-  def has_suggestions?
-    if has_at_least_one_suggestion?
-      errors.add(:suggestions, "An event must have at least one suggestion")
+  def generate_uuid
+    self.uuid = SecureRandom.hex(4)
+  end
+
+  def add_errors_if_no_suggestions
+    if lacks_suggestions?
+      errors.add(:suggestions, 'An event must have at least one suggestion')
     end
   end
 
@@ -57,10 +61,6 @@ class Event < ActiveRecord::Base
                     invitee_id: user,
                     invitee_type: user.class.name
                     ).first
-  end
-
-  def generate_uuid
-    self.uuid = SecureRandom.hex(4)
   end
 
   def user_owner?(user)
@@ -93,8 +93,14 @@ class Event < ActiveRecord::Base
     EventCreatedJob.enqueue(self)
   end
 
-  def has_at_least_one_suggestion?
-    suggestions.reject(&:marked_for_destruction?).size == 0
+  def lacks_suggestions?
+    remaining_suggestions.none?
+  end
+
+  def remaining_suggestions
+    suggestions.reject do |s|
+      s.marked_for_destruction?
+    end
   end
 
   def invitations_without(user)

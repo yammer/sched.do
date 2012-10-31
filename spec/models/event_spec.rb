@@ -23,13 +23,13 @@ describe Event do
 
   it { should accept_nested_attributes_for(:suggestions).allow_destroy(true) }
 
-  it "should allow the event to have one or more suggestions" do
+  it 'should allow the event to have one or more suggestions' do
     event = create(:event)
 
     event.should be_valid
   end
 
-  it "should not allow the event to have no suggestions" do
+  it 'should not allow the event to have no suggestions' do
     event = create(:event)
     event.suggestions.destroy_all
 
@@ -81,6 +81,37 @@ describe Event, '#build_suggestions' do
   end
 end
 
+describe Event, '#add_errors_if_no_suggestions' do
+  it 'adds errors if an event has no suggestions' do
+    event = create(:event)
+    event.suggestions.destroy_all
+
+    event.add_errors_if_no_suggestions
+    error = event.errors.messages[:suggestions].first
+
+    error.should == 'An event must have at least one suggestion'
+  end
+
+  it 'adds errors if an event has suggestions marked_for_destruction' do
+    event = create(:event)
+    event.suggestions.map(&:mark_for_destruction)
+
+    event.add_errors_if_no_suggestions
+    error = event.errors.messages[:suggestions].first
+
+    error.should == 'An event must have at least one suggestion'
+  end
+
+  it 'adds no errors if an event has suggestions' do
+    event = create(:event)
+
+    event.add_errors_if_no_suggestions
+    error = event.errors.messages
+
+    error.should be_empty
+  end
+end
+
 describe Event, '#invitees' do
   it 'returns the users and guests invited to an event' do
     event = create(:event)
@@ -95,7 +126,7 @@ describe Event, '#invitees' do
     event.invitees.should =~ invitees
   end
 
-  it "returns invitees with the newest first" do
+  it 'returns invitees with the newest first' do
     event = create(:event)
     first_invitee = create(:invitation_with_user, event: event).invitee
     second_invitee = create(:invitation_with_user, event: event).invitee
