@@ -20,7 +20,7 @@ class Event < ActiveRecord::Base
   accepts_nested_attributes_for :suggestions, reject_if: :all_blank,
     allow_destroy: true
 
-  after_create :enqueue_event_created_job
+  after_create :enqueue_event_created_jobs
   after_create :invite_owner
   before_validation :generate_uuid, on: :create
   before_validation :set_first_suggestion
@@ -89,8 +89,9 @@ class Event < ActiveRecord::Base
 
   private
 
-  def enqueue_event_created_job
-    EventCreatedJob.enqueue(self)
+  def enqueue_event_created_jobs
+    EventCreatedEmailJob.enqueue(self)
+    ActivityCreatorJob.enqueue(self)
   end
 
   def lacks_suggestions?

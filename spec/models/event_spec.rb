@@ -203,12 +203,20 @@ describe Event, '#set_first_suggestion' do
 end
 
 describe Event, '#enqueue_event_created_job' do
-  it 'creates a delayed job' do
-    EventCreatedJob.stubs(:enqueue)
+  it 'creates a delayed email notice job' do
+    EventCreatedEmailJob.stubs(:enqueue)
 
     event = create(:event)
 
-    EventCreatedJob.should have_received(:enqueue).with(event)
+    EventCreatedEmailJob.should have_received(:enqueue).with(event)
+  end
+
+  it 'creates a delayed activity create job' do
+    ActivityCreatorJob.stubs(:enqueue)
+
+    event = create(:event)
+
+    ActivityCreatorJob.should have_received(:enqueue).with(event)
   end
 end
 
