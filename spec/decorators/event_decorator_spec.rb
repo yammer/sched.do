@@ -46,13 +46,12 @@ end
 
 describe EventDecorator, '#invitees_who_have_not_voted_count' do
   it 'returns the number of invitees who have not voted' do
-    event = create(:event)
+    event = create(:event_with_invitees)
+    invitees = event.invitees
+    suggestion = event.suggestions.first
     EventDecorator.any_instance.stubs(current_user: event.owner)
     decorated_event = EventDecorator.new(event)
-    invitees = create_list(:invitation_with_user, 2, event: event).
-      map(&:invitee)
-    suggestion = create(:suggestion, event: event)
-    vote = create(:vote, voter: invitees.last, suggestion: suggestion)
+    vote = create(:vote, voter: invitees.first, suggestion: suggestion)
 
     invitees_count = decorated_event.other_invitees_who_have_not_voted_count
 

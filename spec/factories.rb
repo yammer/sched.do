@@ -8,28 +8,14 @@ FactoryGirl.define do
   sequence(:yammer_token) { |n| "token_#{n}" }
   sequence(:yammer_user_name) { |n| "Yammer User #{n}" }
 
-  factory :user do
-    sequence(:name) { |n| "Joe User #{n}" }
-    email
-    sequence(:access_token) { |n| "abc12#{n}" }
-    sequence(:yammer_user_id) { |n| n.to_s }
-    image
-    yammer_profile_url
-    yammer_network_id 1
-
-    factory :out_network_user do
-      yammer_network_id 2
-    end
-  end
-
-  factory :guest do
-    email
-    sequence(:name) { |n| "Joe Guest #{n}" }
-  end
-
-  factory :group do
-    name 'Yammer Group'
-    sequence(:yammer_group_id) { |n| n.to_s }
+  factory :activity_creator do
+    initialize_with {
+      new(
+        build_stubbed(:user),
+        'create',
+        build_stubbed(:event)
+      )
+    }
   end
 
   factory :event do
@@ -52,9 +38,14 @@ FactoryGirl.define do
     end
   end
 
-  factory :vote do
-    suggestion
-    association :voter, factory: :user
+  factory :group do
+    name 'Yammer Group'
+    sequence(:yammer_group_id) { |n| n.to_s }
+  end
+
+  factory :guest do
+    email
+    sequence(:name) { |n| "Joe Guest #{n}" }
   end
 
   factory :suggestion do
@@ -88,5 +79,24 @@ FactoryGirl.define do
       association :invitee, factory: :guest
       invitee_type 'Guest'
     end
+  end
+
+  factory :user do
+    sequence(:name) { |n| "Joe User #{n}" }
+    email
+    sequence(:access_token) { |n| "abc12#{n}" }
+    sequence(:yammer_user_id) { |n| n.to_s }
+    image
+    yammer_profile_url
+    yammer_network_id 1
+
+    factory :out_network_user do
+      yammer_network_id 2
+    end
+  end
+
+  factory :vote do
+    suggestion
+    association :voter, factory: :user
   end
 end

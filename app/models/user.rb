@@ -47,7 +47,7 @@ class User < ActiveRecord::Base
   end
 
   def create_yammer_activity(action, event)
-    ActivityCreator.new(self, action, event).create
+    ActivityCreator.new(self, action, event).post
   end
 
   def guest?

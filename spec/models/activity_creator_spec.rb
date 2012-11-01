@@ -1,13 +1,16 @@
 require 'spec_helper'
 
-describe ActivityCreator do
-  it 'posts to the Yammer API on create' do
+describe ActivityCreator, '#post' do
+  include DelayedJobSpecHelper
+
+  it 'posts to the Yammer API on post' do
     RestClient.stubs(:post)
     action = 'vote'
     event = build_stubbed(:event_with_invitees)
     user = build_stubbed_user
 
-    ActivityCreator.new(user, action, event).create
+    ActivityCreator.new(user, action, event).post
+    work_off_delayed_jobs
 
     RestClient.should have_received(:post).with(
       "https://www.yammer.com/api/v1/activity.json?access_token=ABC123",
@@ -15,6 +18,16 @@ describe ActivityCreator do
       :content_type => :json,
       :accept => :json
     )
+  end
+
+  it 'creates a delayed job' do
+    user = build_stubbed(:user)
+    action = 'vote'
+    event = build_stubbed(:event)
+
+    expect {
+      ActivityCreator.new(user, action, event).post
+    }.to change(Delayed::Job, :count).by(1)
   end
 
   private

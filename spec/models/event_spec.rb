@@ -211,12 +211,25 @@ describe Event, '#enqueue_event_created_job' do
     EventCreatedEmailJob.should have_received(:enqueue).with(event)
   end
 
-  it 'creates a delayed activity create job' do
-    ActivityCreatorJob.stubs(:enqueue)
+  it 'creates a new instance of ActivityCreator' do
+    user = build_stubbed(:user)
+    event = build_stubbed(:event)
+    activity = ActivityCreator.new(user, 'create', event)
+    ActivityCreator.stubs(new: activity)
 
     event = create(:event)
 
-    ActivityCreatorJob.should have_received(:enqueue).with(event)
+    ActivityCreator.should have_received(:new).
+      with(event.owner, 'create', event)
+  end
+
+  it 'calls post on a new instance of ActivityCreator' do
+    activity_creator = stub('activity_creator', post: true)
+    ActivityCreator.stubs(new: activity_creator)
+
+    event = create(:event)
+
+    activity_creator.should have_received(:post)
   end
 end
 

@@ -2,12 +2,12 @@ class ActivityCreator
   include Rails.application.routes.url_helpers
 
   def initialize(user, action, event)
-    @action = action
     @user = user
+    @action = action
     @event = event
   end
 
-  def create
+  def post
     post_activity_json
   end
 
@@ -38,7 +38,7 @@ class ActivityCreator
   end
 
   def post_activity_json
-    RestClient.post rest_client_url, generate_json, json_arguments
+    RestClient.delay.post(rest_client_url, generate_json, json_arguments)
   end
 
   def rest_client_url
