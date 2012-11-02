@@ -1,7 +1,7 @@
 Sched.do
 ========
 
-[![tddium_badge](https://api.tddium.com/scheddo/sched.do/badges/2918.png)](https://api.tddium.com/scheddo/sched.do/suites/3697)
+[![tddium_badge](https://api.tddium.com/scheddo/sched.do/badges/2918.png)](https://api.tddium.com/scheddo/sched.do/sessions/113307#/suites/2918/sessions/113307)
 
 Create events. Have your friends vote on them. See what times work for
 everybody.
