@@ -17,14 +17,6 @@ Feature: Owner can remind invitees to vote
     And I click "Remind Joe Smith to vote"
     Then "Joe Smith" should receive a private reminder message
 
-  Scenario: Owner can remind groups to vote
-    Given I sign in and create an event named "Clown party"
-    And I invite the Yammer group "scheddo-developers" to "Clown party"
-    Then I should see "scheddo-developers" in the groups list
-    When I click "Remind"
-    Then I should see "Reminders sent" in the notice flash
-    And "scheddo-developers" should receive a private reminder message
-
   Scenario: Guest cannot remind users
     Given someone created an event named "Clown party"
     And "guest@example.com" was invited to the event "Clown party"
@@ -32,3 +24,22 @@ Feature: Owner can remind invitees to vote
     When I view the "Clown party" event
     Then I should not be able to remind everyone to vote
     And I should not be able to remind an individual user to vote
+
+  Scenario: Owner can remind groups to vote
+    Given I sign in and create an event named "Clown party"
+    And I invite the Yammer group "scheddo-developers" to "Clown party"
+    Then I should see "scheddo-developers" in the groups list
+    When I click "Remind"
+    Then I should see "Reminders sent" in the notice flash
+    And "scheddo-developers" should receive a private reminder message
+    And the private reminder message sent should be from "Ralph Robot"
+
+  Scenario: Users can remind groups to vote
+    Given I sign in and create an event named "Clown party"
+    And I invite the Yammer group "scheddo-developers" to "Clown party"
+    And I sign out
+    And I am signed in as "Snoop" and I view the page for "Clown party"
+    When I click "Remind"
+    Then I should see "Reminders sent" in the notice flash
+    And "scheddo-developers" should receive a private reminder message
+    And the private reminder message sent should be from "Snoop"

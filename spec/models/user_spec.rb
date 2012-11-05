@@ -327,18 +327,15 @@ describe User, '#deliver_email_or_private_message' do
 
   it 'sends a private message notification, if the user is in-network' do
     invitee = build_stubbed(:user)
-    invitation = build_stubbed(:invitation_with_user,
-                               invitee: invitee)
+    invitation = build_stubbed(:invitation_with_user, invitee: invitee)
     organizer = invitation.sender
+    owner = invitation.event.owner
 
-    invitee.deliver_email_or_private_message(
-      :reminder,
-      invitation.event.owner,
-      invitation
-    )
+    invitee.deliver_email_or_private_message(:reminder, owner, invitation)
     work_off_delayed_jobs
 
     organizer.should be_in_network(invitee)
+    FakeYammer.messages_endpoint_hits.should == 1
     FakeYammer.message.should include(invitation.event.name)
   end
 
