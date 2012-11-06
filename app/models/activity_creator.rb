@@ -21,7 +21,7 @@ class ActivityCreator
 
   def rest_client_url
     @user.yammer_endpoint +
-      "api/v1/activity.json?access_token=#{@user.access_token}"
+      "/api/v1/activity.json?access_token=#{@user.access_token}"
   end
 
   def json_payload

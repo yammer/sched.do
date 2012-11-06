@@ -118,9 +118,9 @@ class User < ActiveRecord::Base
 
   def yammer_endpoint
     if yammer_staging
-      'https://www.staging.yammer.com/'
+      YAMMER_STAGING_HOST
     else
-      'https://www.yammer.com/'
+      YAMMER_HOST
     end
   end
 
@@ -155,7 +155,7 @@ class User < ActiveRecord::Base
 
   def yammer_user_url
     RestClient.get yammer_endpoint +
-      'api/v1/users/' +
+      '/api/v1/users/' +
       yammer_user_id.to_s +
       '.json?' +
       access_token_for_query

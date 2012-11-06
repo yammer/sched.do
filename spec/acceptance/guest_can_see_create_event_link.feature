@@ -8,4 +8,3 @@ Feature: Guest can see create event link
     And I click "Create Poll"
     When I click "Sign in with Yammer"
     Then I should be redirected to the new event page
-

@@ -1,4 +1,8 @@
 SchedDo::Application.configure do
+  # Set Yammer asset hostname
+  YAMMER_ASSETS_HOST = 'https://assets.yammer.com'
+  YAMMER_ASSETS_STAGING_HOST = 'https://assets.staging.yammer.com'
+
   # Settings specified here will take precedence over those in config/application.rb
 
   # Code is not reloaded between requests

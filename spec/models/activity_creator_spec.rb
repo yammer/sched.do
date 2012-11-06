@@ -13,7 +13,7 @@ describe ActivityCreator, '#post' do
     work_off_delayed_jobs
 
     RestClient.should have_received(:post).with(
-      'https://www.yammer.com/api/v1/activity.json?access_token=ABC123',
+      YAMMER_HOST + '/api/v1/activity.json?access_token=ABC123',
       expected_json(event),
       content_type: :json,
       accept: :json

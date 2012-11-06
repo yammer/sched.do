@@ -55,9 +55,9 @@ describe User, '.find_or_create_with_auth' do
     yammer_staging = false
     lambda {
       User.find_or_create_with_auth(
-      access_token: access_token,
-      yammer_staging: yammer_staging,
-      yammer_user_id: new_yammer_user_id
+        access_token: access_token,
+        yammer_staging: yammer_staging,
+        yammer_user_id: new_yammer_user_id
       )
     }.should change(User,:count).by(1)
 
@@ -155,8 +155,7 @@ describe User, '#image' do
 
   it 'returns the absolute image url if one exists' do
     user = create(:user)
-
-    user.image.should include('http://www.yammer.com/mugshot/48x48/')
+    user.image.should include(YAMMER_HOST + '/mugshot/48x48/')
   end
 end
 
@@ -266,12 +265,12 @@ end
 describe User, '#yammer_endpoint' do
   it 'returns the Yammer staging url if the user is a Yammer staging user' do
     user = create(:user, yammer_staging: true)
-    user.yammer_endpoint.should == "https://www.staging.yammer.com/"
+    user.yammer_endpoint.should == YAMMER_STAGING_HOST
   end
 
   it 'returns the Yammer base url if the user is a Yammer user' do
     user = create(:user)
-    user.yammer_endpoint.should == "https://www.yammer.com/"
+    user.yammer_endpoint.should == YAMMER_HOST
   end
 end
 

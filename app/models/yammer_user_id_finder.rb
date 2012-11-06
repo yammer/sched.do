@@ -1,5 +1,5 @@
 class YammerUserIdFinder
-  SEARCH_PATH = 'api/v1/users/by_email.json'
+  SEARCH_PATH = '/api/v1/users/by_email.json'
 
   def initialize(user, email)
     @user = user

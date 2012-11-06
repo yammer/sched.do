@@ -63,7 +63,7 @@
       <input type="hidden" name="agree_to_tos" value="0">
       <input type="checkbox" name="agree_to_tos" value="1" checked="checked">
       I agree to the
-      <%= link_to 'terms of service', "https://www.yammer.com/about/terms/", target:"_blank" %>
+      <%= link_to 'terms of service', YAMMER_HOST + '/about/terms/', target:'_blank' %>
     </label>
   </div>
   <%- end %>

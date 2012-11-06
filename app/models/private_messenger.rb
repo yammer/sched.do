@@ -73,7 +73,7 @@ class PrivateMessenger
   end
 
   def messages_endpoint
-    @sender.yammer_endpoint + "api/v1/messages.json"
+    @sender.yammer_endpoint + '/api/v1/messages.json'
   end
 
   def post_to_yammer(message)

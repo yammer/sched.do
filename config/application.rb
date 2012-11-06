@@ -1,3 +1,7 @@
+# Set global hostnames
+YAMMER_HOST='https://www.yammer.com'
+YAMMER_STAGING_HOST='https://www.staging.yammer.com'
+
 require File.expand_path('../boot', __FILE__)
 
 # Pick the frameworks you want:
