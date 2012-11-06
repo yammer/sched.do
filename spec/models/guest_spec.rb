@@ -9,6 +9,8 @@ describe Guest, 'validations' do
     should allow_value("person@example.com").for(:email)
     should allow_value("person-awesome@example.com").for(:email)
     should allow_value("person-awesome@example.co.ul.com").for(:email)
+    should allow_value(" person@example.com").for(:email)
+    should allow_value("person@example.com  ").for(:email)
     should_not allow_value("person@@example.com").for(:email)
     should_not allow_value("person").for(:email)
     should_not allow_value("person @person.com").for(:email)

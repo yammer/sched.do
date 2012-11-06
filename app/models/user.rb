@@ -8,6 +8,8 @@ class User < ActiveRecord::Base
   has_many :votes, as: :voter
   has_many :invitations, as: :invitee
 
+  strip_attributes only: [:email]
+
   validates :email, email: true
   validates :encrypted_access_token, presence: true
   validates :name, presence: true
