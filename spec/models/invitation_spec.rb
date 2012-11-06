@@ -193,14 +193,14 @@ describe Invitation, 'build_invitee' do
   end
 end
 
-describe Invitation, '#deliver_reminders_from' do
+describe Invitation, '#deliver_reminder_from' do
   it 'sends a reminder to the invitee' do
     invitation = create(:invitation)
     invitee = invitation.invitee
     invitee.stubs(:deliver_email_or_private_message)
     sender = create(:user)
 
-    invitation.deliver_reminders_from(sender)
+    invitation.deliver_reminder_from(sender)
 
     invitee.should have_received(:deliver_email_or_private_message).once
   end

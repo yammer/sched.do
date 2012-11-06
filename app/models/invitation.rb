@@ -46,10 +46,6 @@ class Invitation < ActiveRecord::Base
     end
   end
 
-  def deliver_reminders_from(reminder_sender)
-    deliver_reminder_from(reminder_sender)
-  end
-
   private
 
   def create_guest

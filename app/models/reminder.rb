@@ -7,7 +7,7 @@ class Reminder < ActiveRecord::Base
   after_create :queue_reminder_created_job
 
   def deliver
-    receiver.deliver_reminders_from(sender)
+    receiver.deliver_reminder_from(sender)
   end
 
   private

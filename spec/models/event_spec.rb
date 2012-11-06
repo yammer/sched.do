@@ -243,7 +243,7 @@ describe Event, '#invitation_for' do
   end
 end
 
-describe Event, '#deliver_reminders_from' do
+describe Event, '#deliver_reminder_from' do
   it 'sends a reminder to invited users, but not to the sender' do
     sender = create(:user)
     guest = create(:guest)
@@ -252,7 +252,7 @@ describe Event, '#deliver_reminders_from' do
     event = create_event_with_invitees(guest, user)
     Invitation.any_instance.stubs(sender: sender)
 
-    event.deliver_reminders_from(sender)
+    event.deliver_reminder_from(sender)
 
     guest.should have_received(:deliver_email_or_private_message).once
     user.should have_received(:deliver_email_or_private_message).once

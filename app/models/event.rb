@@ -31,7 +31,7 @@ class Event < ActiveRecord::Base
     suggestions[1] ||= Suggestion.new
   end
 
-  def deliver_reminders_from(user)
+  def deliver_reminder_from(user)
     invitations_without(user).map{ |i| i.deliver_reminder_from(user) }
   end
 
