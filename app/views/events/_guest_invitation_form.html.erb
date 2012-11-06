@@ -9,7 +9,8 @@
         <%= text_field_tag "invitation[invitee_attributes][name_or_email]",
           nil,
           'data-role' => 'invitation_name',
-          placeholder: 'enter an email' %>
+          placeholder: 'enter an email',
+          id: 'auto-complete' %>
       </div>
 
       <%= form.input :event_id, as: :hidden %>
