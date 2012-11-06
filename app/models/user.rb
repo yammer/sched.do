@@ -74,10 +74,6 @@ class User < ActiveRecord::Base
     )
   end
 
-  def in_network?(test_user)
-    yammer_network_id == test_user.yammer_network_id
-  end
-
   def image
     self[:image] || 'http://' + ENV['HOSTNAME'] + '/assets/no_photo.png'
   end
@@ -144,6 +140,10 @@ class User < ActiveRecord::Base
     guest.invitations.each do |invitation|
       self.invitations << invitation
     end
+  end
+
+  def in_network?(test_user)
+    yammer_network_id == test_user.yammer_network_id
   end
 
   def parse_email_from_response(response)

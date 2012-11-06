@@ -112,13 +112,13 @@ describe User, '#in_network?' do
 
     user.should be_in_network(in_network_user)
   end
+
   it 'returns false if user is out network' do
     user = build_stubbed(:user, yammer_network_id: 1)
     in_network_user = build_stubbed(:user, yammer_network_id: 2)
 
     user.should_not be_in_network(in_network_user)
   end
-
 end
 
 describe User, '#able_to_edit?' do
@@ -318,7 +318,7 @@ describe User, '#deliver_email_or_private_message' do
     )
     work_off_delayed_jobs
 
-    organizer.in_network?(invitee).should be_false
+    organizer.should_not be_in_network(invitee)
     UserMailer.should have_received(:invitation).with(event.owner, invitation)
     mailer.should have_received(:deliver).once
   end
@@ -336,7 +336,7 @@ describe User, '#deliver_email_or_private_message' do
     )
     work_off_delayed_jobs
 
-    organizer.in_network?(invitee).should be_true
+    organizer.should be_in_network(invitee)
     FakeYammer.message.should include(invitation.event.name)
   end
 
