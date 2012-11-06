@@ -18,6 +18,10 @@ step 'I should see a presence error on the suggestion field' do
   expect_error_on_field_with_data_role("can't be blank", 'suggestion')
 end
 
+step 'I should see a length error on the event name field' do
+  find('#event_name_input').should have_content('is too long')
+end
+
 step 'I create(d) an event named :event_name with a suggestion of :suggestion' do |event_name, suggestion|
   create_event(event_name, suggestion)
 end

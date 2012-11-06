@@ -3,15 +3,18 @@ div.new-event {
 
   .char-limit {
     p {
-      color: darken($bg-color, 25%);
       font-size: 0.8em;
       font-style: italic;
       margin-top: -8px;
-
-      span.text-counter {
-        color: darken($bg-color, 50%);
-      }
     }
+  }
+
+  .valid-char-limit {
+    color: darken($bg-color, 25%);
+  }
+
+  .invalid-char-limit {
+    color: $orange;
   }
 
   div.suggestions {
