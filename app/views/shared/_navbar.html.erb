@@ -1,19 +1,41 @@
 <header>
-<div class="header-content">
-  <a href="/" class="logo">
-    <img src="/assets/navbar-logo.svg" data-png-fallback="/assets/navbar-logo.png" alt="sched.do" />
-  </a>
-  <nav>
-    <ul>
-      <li>
+  <div class="header-content">
+    <a href="/" class="logo">
+      <img src="/assets/navbar-logo.svg"
+        data-png-fallback="/assets/navbar-logo.png"
+        alt="sched.do" />
+    </a>
+
+    <nav>
+      <ul>
         <% if current_user.yammer_user? %>
-          <%= link_to 'Create Poll', new_event_path, id: "new-event", class: "create-poll" %>
+          <li>
+            <span>
+              <%= current_user.name %>
+            </span>
+          </li>
+          <li>
+            <span class="user-avatar">
+              <%= image_tag(current_user.image) %>
+            </span>
+          </li>
+          <li>
+            <%= link_to 'Create Poll',
+              new_event_path,
+              id: "new-event",
+              class: "create-poll" %>
+          </li>
         <% else %>
-          <%= link_to 'Create Poll', "#sign-in-modal", id: "new-event", name: "sign-in-modal" %>
+          <li>
+            <%= link_to 'Create Poll',
+              "#sign-in-modal",
+              id: "new-event",
+              name: "sign-in-modal" %>
+          </li>
         <% end %>
-      </li>
       </ul>
     </nav>
-</div>
+  </div>
 </header>
+
 <%= render 'shared/flashes' -%>

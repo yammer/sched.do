@@ -71,6 +71,13 @@ header {
           @include inline-block;
           vertical-align: middle;
 
+          img {
+            margin: 0;
+            padding: 0px 10px;
+            height: 30px;
+            vertical-align: middle;
+          }
+
           a, a:link, a:visited {
             @extend .button;
 
