@@ -1,6 +1,9 @@
 $(document).ready(function(){
   var max = 70;
-  var characters_remaining = max - $('#event_name').val().length;
+
+  if ($('#event_name').val() !== undefined) {
+    var characters_remaining = max - $('#event_name').val().length;
+  }
 
   $('.text-counter').text(characters_remaining);
 
