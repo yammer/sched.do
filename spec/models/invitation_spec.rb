@@ -125,11 +125,11 @@ describe Invitation, 'build_invitee' do
       invitation = create(:invitation)
       access_token = invitation.sender.access_token
       invitee_email = 'ralph@example.com'
-      YammerUserIdFinder.any_instance.stubs(:find)
+      Yam.stubs(:get)
 
       invitation.build_invitee(name_or_email: invitee_email)
 
-      YammerUserIdFinder.any_instance.should have_received(:find)
+      Yam.should have_received(:get)
     end
 
     it 'creates a User if it finds an existing Yammer user' do

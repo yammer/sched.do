@@ -43,32 +43,6 @@ class PrivateMessenger
 
   private
 
-  def send_user_message
-    post_to_yammer({
-      body: @message_body,
-      direct_to_id: @recipient.yammer_user_id,
-      og_url: event_url(@event)
-    })
-  end
-
-  def send_group_message
-    post_to_yammer({
-      body: @message_body,
-      group_id: @recipient.yammer_group_id,
-      og_url: event_url(@event)
-    })
-  end
-
-  def post_to_yammer(message)
-    RestClient.post messages_endpoint + '?' +
-      message.merge(access_token: @sender.access_token).
-      to_query, nil
-  end
-
-  def messages_endpoint
-    @sender.yammer_endpoint + '/api/v1/messages.json'
-  end
-
   def invitation_message_body
     <<-BODY.strip_heredoc
       #{@event.owner} created the "#{@event.name}" poll and I want your input.
@@ -96,5 +70,23 @@ class PrivateMessenger
       Please click this link to view the options and vote: #{event_url(@event)}
       *This poll was sent using sched.do. Create your own polls for free at #{root_url}
     BODY
+  end
+
+  def send_group_message
+    Yam.post(
+      "/messages",
+      body: @message_body,
+      group_id: @recipient.yammer_group_id,
+      og_url: event_url(@event)
+    )
+  end
+
+  def send_user_message
+    Yam.post(
+      "/messages",
+      body: @message_body,
+      direct_to_id: @recipient.yammer_user_id,
+      og_url: event_url(@event)
+    )
   end
 end

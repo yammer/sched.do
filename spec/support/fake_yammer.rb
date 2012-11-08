@@ -17,7 +17,7 @@ class FakeYammer < Sinatra::Base
     self.yammer_email = 'ralph@example.com'
   end
 
-  post '/api/v1/activity.json' do
+  post '/api/v1/activity' do
     if params[:access_token] == 'OLDTOKEN'
       401
     else
@@ -26,24 +26,24 @@ class FakeYammer < Sinatra::Base
     end
   end
 
-  post '/api/v1/messages.json' do
+  post '/api/v1/messages' do
     self.messages_endpoint_hits += 1
     self.message = params[:body]
     self.access_token = params[:access_token]
     202
   end
 
-  get '/api/v1/users/by_email.json' do
+  get '/api/v1/users/by_email' do
     self.user_search_by_email_hits += 1
 
     if params[:email] == self.yammer_email
       json_for_user_email_search
     else
-      nil
+      "[ ]"
     end
   end
 
-  get '/api/v1/users/:user_id.json' do |user_id|
+  get '/api/v1/users/:user_id' do |user_id|
     self.users_endpoint_hits += 1
     json_for_user_id
   end

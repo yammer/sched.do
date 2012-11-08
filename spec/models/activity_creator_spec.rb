@@ -4,7 +4,7 @@ describe ActivityCreator, '#post' do
   include DelayedJobSpecHelper
 
   it 'posts to the Yammer API on post' do
-    RestClient.stubs(:post)
+    Yam.stubs(:post)
     user = build_user
     action = 'vote'
     event = build_stubbed(:event_with_invitees)
@@ -12,12 +12,10 @@ describe ActivityCreator, '#post' do
     ActivityCreator.new(user, action, event).post
     work_off_delayed_jobs
 
-    RestClient.should have_received(:post).with(
-      YAMMER_HOST + '/api/v1/activity.json?access_token=ABC123',
-      expected_json(event),
-      content_type: :json,
-      accept: :json
-    )
+    Yam.should have_received(:post).with(
+      '/activity',
+      expected_json(event)
+   )
   end
 
   it 'creates a delayed job' do
@@ -33,6 +31,7 @@ describe ActivityCreator, '#post' do
   it 'expires the access_token if it is stale' do
     Delayed::Worker.delay_jobs = false
     user = build_user('OLDTOKEN')
+    Yam.oauth_token = user.access_token
     action = 'vote'
     event = build_stubbed(:event_with_invitees)
 
@@ -40,6 +39,7 @@ describe ActivityCreator, '#post' do
 
     user.access_token.should == 'EXPIRED'
     Delayed::Worker.delay_jobs = true
+    Yam.set_defaults
   end
 
   private
@@ -70,6 +70,6 @@ describe ActivityCreator, '#post' do
       },
       message: '',
       users: event.invitees_for_json
-    }.to_json
+    }
   end
 end

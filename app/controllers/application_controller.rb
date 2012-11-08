@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
 
   before_filter :require_yammer_login
   before_filter :check_blank_token
+  before_filter :configure_yammer
 
   hide_action :current_user=
 
@@ -15,6 +16,25 @@ class ApplicationController < ActionController::Base
 
   def current_user=(user)
     @current_user = user
+  end
+
+  def configure_yammer
+    if signed_in?
+      oauth_token = current_user.access_token
+      staging = current_user.yammer_staging
+    elsif session[:event_id].present?
+      event = Event.find_by_uuid(session[:event_id])
+      oauth_token = event.owner.access_token
+      staging = event.owner.yammer_staging
+    else
+      oauth_token = omniauth_token
+      staging = omniauth_staging?
+    end
+
+    Yam.configure do |config|
+      config.oauth_token = oauth_token
+      config.endpoint = "https://www.#{"staging." if staging}yammer.com/api/v1/"
+    end
   end
 
   def current_user
@@ -30,6 +50,18 @@ class ApplicationController < ActionController::Base
       current_user.reset_token
       redirect_to sign_out_path
     end
+  end
+
+  def omniauth
+    request.env['omniauth.auth']
+  end
+
+  def omniauth_token
+    omniauth.try(:[],:credentials).try(:[],:token)
+  end
+
+  def omniauth_staging?
+    (omniauth.try(:[],:provider) == 'yammer_staging')
   end
 
   def require_yammer_login

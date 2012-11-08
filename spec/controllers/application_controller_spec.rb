@@ -21,6 +21,35 @@ describe ApplicationController, '#current_user=' do
   end
 end
 
+describe ApplicationController, '#configure_yammer' do
+  it 'configures Yammer to use the current user\'s token' do
+    user = create(:user)
+    sign_in_as(user)
+
+    @controller.configure_yammer
+
+    Yam.oauth_token.should  == user.access_token
+  end
+
+  it 'configures Yammer with the event owner\'s token if a guest is logged in' do
+    event = create(:event)
+    session[:event_id] = event.uuid
+
+    @controller.configure_yammer
+
+    Yam.oauth_token.should  == event.owner.access_token
+  end
+
+  it 'configures Yammer with the omniauth token if the user is singing in' do
+    token = 'TOKEN'
+    @controller.stubs(omniauth_token: token)
+
+    @controller.configure_yammer
+
+    Yam.oauth_token.should  == token
+  end
+end
+
 describe ApplicationController, '#check_blank_token' do
   it 'signs the user out if access_token is blank' do
     @controller.stubs(:redirect_to)

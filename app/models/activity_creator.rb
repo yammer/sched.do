@@ -8,24 +8,8 @@ class ActivityCreator
   end
 
   def post
-    post_activity_json
-  rescue RestClient::Unauthorized
-    @user.expire_token
-  end
-
-  private
-
-  def post_activity_json
-    RestClient.delay.post(rest_client_url, json_payload, json_arguments)
-  end
-
-  def rest_client_url
-    @user.yammer_endpoint +
-      "/api/v1/activity.json?access_token=#{@user.access_token}"
-  end
-
-  def json_payload
-    {
+    Yam.delay.post(
+      "/activity",
       activity: {
         actor: {
           name: @user.name,
@@ -41,10 +25,8 @@ class ActivityCreator
       },
       message: '',
       users: @event.invitees_for_json
-    }.to_json
-  end
-
-  def json_arguments
-    { content_type: :json, accept: :json }
+    )
+  rescue Faraday::Error::ClientError
+    @user.expire_token
   end
 end

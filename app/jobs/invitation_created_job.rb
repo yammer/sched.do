@@ -10,6 +10,7 @@ class InvitationCreatedJob < Struct.new(:invitation_id)
   end
 
   def perform
+    configure_yammer
     invitation.deliver_invitation
   end
 
@@ -17,5 +18,12 @@ class InvitationCreatedJob < Struct.new(:invitation_id)
 
   def invitation
     Invitation.find(invitation_id)
+  end
+
+  def configure_yammer
+    Yam.configure do |config|
+      config.oauth_token = invitation.sender.access_token
+      config.endpoint = invitation.sender.yammer_endpoint + "/api/v1"
+    end
   end
 end
