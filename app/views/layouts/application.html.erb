@@ -35,7 +35,7 @@
     <div class="footer-spacer"></div>
     <footer>
       <div class="inner">
-        <span class="copy-right">&copy;2012 sched.do</span>
+        <span class="copy-right">&copy;<%= Time.now.year %> sched.do</span>
         <%= link_to 'Terms of Service', YAMMER_HOST + '/about/terms/', target:'_blank' %>
         <% if current_user.present? %>
           <%= link_to 'Sign out', sign_out_path %>
