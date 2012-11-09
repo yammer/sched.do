@@ -1,5 +1,6 @@
 class SessionsController < ApplicationController
-  skip_before_filter :require_yammer_login, only: [:create, :destroy, :oauth_failure]
+  skip_before_filter :require_yammer_login,
+    only: [:create, :destroy, :oauth_failure]
 
   def create
     user = find_or_create_with_auth
@@ -18,11 +19,27 @@ class SessionsController < ApplicationController
   end
 
   def oauth_failure
-    flash[:error] = "You denied access to Yammer"
-    redirect_to request.env["omniauth.origin"] || root_url
+    flash[:error] = 'You denied access to Yammer'
+    redirect_to request.env['omniauth.origin'] || root_url
   end
 
   private
+
+  def find_or_create_with_auth
+    YammerUser.new(credentials).find_or_create
+  end
+
+  def credentials
+    {
+      access_token: auth[:credentials][:token],
+      yammer_staging: auth[:provider] == 'yammer_staging',
+      yammer_user_id: auth[:uid]
+    }
+  end
+
+  def auth
+    request.env['omniauth.auth']
+  end
 
   def after_sign_in_path
     if session[:return_to].blank?
@@ -30,18 +47,6 @@ class SessionsController < ApplicationController
     else
       session.delete(:return_to)
     end
-  end
-
-  def auth
-    request.env['omniauth.auth']
-  end
-
-  def find_or_create_with_auth
-    User.find_or_create_with_auth(
-        access_token: auth[:credentials][:token],
-        yammer_staging: auth[:provider] == "yammer_staging",
-        yammer_user_id: auth[:uid]
-    )
   end
 
   def log_out_guest

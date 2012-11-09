@@ -138,11 +138,12 @@ describe Invitation, 'build_invitee' do
       yammer_staging = false
       invitee_email = 'ralph@example.com'
       invitee_user_id = 1488374236
-      User.stubs(:find_or_create_with_auth)
+      yammer_user = stub('yammer_user', :find_or_create)
+      YammerUser.stubs(new: yammer_user)
 
       invitation.build_invitee(name_or_email: invitee_email)
 
-      User.should have_received(:find_or_create_with_auth).
+      YammerUser.should have_received(:new).
         with(access_token: access_token,
              yammer_staging: yammer_staging,
              yammer_user_id: invitee_user_id)

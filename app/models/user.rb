@@ -15,26 +15,6 @@ class User < ActiveRecord::Base
   validates :name, presence: true
   validates :yammer_user_id, presence: true
 
-  def self.create_with_auth(auth)
-    create(yammer_user_id: auth[:yammer_user_id]).tap do |user|
-      user.access_token = auth[:access_token]
-      user.yammer_staging = auth[:yammer_staging]
-      user.fetch_yammer_user_data
-      user.save!
-    end
-  end
-
-  def self.find_or_create_with_auth(auth)
-    user = find_by_yammer_user_id(auth[:yammer_user_id]) ||
-     create_with_auth(auth)
-
-    user.tap do |user|
-      user.access_token = auth[:access_token]
-      user.associate_guest_invitations
-      user.save!
-    end
-  end
-
   def able_to_edit?(event)
     event.owner == self
   end
@@ -129,7 +109,7 @@ class User < ActiveRecord::Base
   end
 
   def yammer_user_data
-    JSON.parse( yammer_user_url )
+    JSON.parse(yammer_user_url)
   end
 
   private

@@ -3,7 +3,8 @@ class YammerUserIdFinder
 
   def initialize(user, email)
     @user = user
-    @query = { email: URI.escape(email), access_token: user.access_token }.to_query
+    @query = { email: URI.escape(email), access_token: user.access_token }.
+      to_query
   end
 
   def find
@@ -13,6 +14,10 @@ class YammerUserIdFinder
 
   private
 
+  def get_user_by_email
+    @response = RestClient.get(api_endpoint)
+  end
+
   def api_endpoint
     "#{@user.yammer_endpoint}#{SEARCH_PATH}?#{@query}"
   end
@@ -21,10 +26,6 @@ class YammerUserIdFinder
     if @response.present? && parsed_json.present?
       parsed_json['id']
     end
-  end
-
-  def get_user_by_email
-    @response = RestClient.get(api_endpoint)
   end
 
   def parsed_json

@@ -8,15 +8,15 @@ describe User, 'validations' do
   it { should validate_presence_of(:yammer_user_id) }
   it { should validate_presence_of(:encrypted_access_token) }
 
-  it "requires a valid e-mail address" do
-    should allow_value("person@example.com").for(:email)
-    should allow_value("person-awesome@example.com").for(:email)
-    should allow_value("person-awesome@example.co.ul.com").for(:email)
-    should allow_value(" person@example.com").for(:email)
-    should allow_value("person@example.com  ").for(:email)
-    should_not allow_value("person@@example.com").for(:email)
-    should_not allow_value("person").for(:email)
-    should_not allow_value("person @person.com").for(:email)
+  it 'requires a valid e-mail address' do
+    should allow_value('person@example.com').for(:email)
+    should allow_value('person-awesome@example.com').for(:email)
+    should allow_value('person-awesome@example.co.ul.com').for(:email)
+    should allow_value(' person@example.com').for(:email)
+    should allow_value('person@example.com  ').for(:email)
+    should_not allow_value('person@@example.com').for(:email)
+    should_not allow_value('person').for(:email)
+    should_not allow_value('person @person.com').for(:email)
   end
 
   context 'encrypted_access_token' do
@@ -31,55 +31,6 @@ describe User, 'validations' do
       user.save
       user.encrypted_access_token.should == expected_encrypted_access_token
     end
-  end
-end
-
-describe User, '.find_or_create_with_auth' do
-  it 'finds a user if one already exists using the yammer_user_id' do
-    user = create(:user)
-    sent_access_token = 'ZZZZZZZ'
-
-    found_user = User.find_or_create_with_auth( {
-      access_token: sent_access_token,
-      yammer_staging: user.yammer_staging?,
-      yammer_user_id: user.yammer_user_id
-    } )
-
-    found_user.should == user
-    found_user.access_token.should == sent_access_token
-  end
-
-  it 'creates a new user if one does not exist' do
-    new_yammer_user_id = 321123
-    access_token = 'PUH98h'
-    yammer_staging = false
-    lambda {
-      User.find_or_create_with_auth(
-        access_token: access_token,
-        yammer_staging: yammer_staging,
-        yammer_user_id: new_yammer_user_id
-      )
-    }.should change(User,:count).by(1)
-
-    user = User.last
-    user.yammer_user_id.should == new_yammer_user_id
-    user.access_token.should == access_token
-    user.yammer_staging.should == yammer_staging
-  end
-
-  it 'calls associate_guest_invitations' do
-    new_yammer_user_id = 321123
-    access_token = 'PUH98h'
-    yammer_staging = false
-    User.any_instance.stubs(:associate_guest_invitations)
-
-    User.find_or_create_with_auth(
-      access_token: access_token,
-      yammer_staging: yammer_staging,
-      yammer_user_id: new_yammer_user_id
-    )
-
-    User.any_instance.should have_received(:associate_guest_invitations)
   end
 end
 
@@ -170,7 +121,7 @@ describe User, '#reset_token' do
 end
 
 describe User, '#votes' do
-  it "returns the user's votes if there are any" do
+  it 'returns the users votes if there are any' do
     user = create(:user)
     vote = create(:vote, voter: user)
     user.votes.should == [vote]
@@ -183,7 +134,7 @@ describe User, '#votes' do
 end
 
 describe User, '#vote_for_suggestion' do
-  it "returns the user's vote for the given suggestion if the user has one" do
+  it 'returns the users vote for the given suggestion if the user has one' do
     user = create(:user)
     vote = create(:vote, voter: user)
     user.vote_for_suggestion(vote.suggestion).should == vote
@@ -203,7 +154,7 @@ describe User, '#voted_for_suggestion?' do
     user.voted_for_suggestion?(vote.suggestion).should be_true
   end
 
-  it "returns false if the user did not vote for the suggestion" do
+  it 'returns false if the user did not vote for the suggestion' do
     user = create(:user)
     suggestion = create(:suggestion)
     user.voted_for_suggestion?(suggestion).should be_false
@@ -211,13 +162,13 @@ describe User, '#voted_for_suggestion?' do
 end
 
 describe User, '#voted_for_event?' do
-  it "returns true if the user voted for the event" do
+  it 'returns true if the user voted for the event' do
     user = create(:user)
     vote = create(:vote, voter: user)
     user.voted_for_event?(vote.event).should be_true
   end
 
-  it "returns false if the user did not vote for the event" do
+  it 'returns false if the user did not vote for the event' do
     user = create(:user)
     event = create(:event)
 

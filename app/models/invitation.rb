@@ -11,9 +11,9 @@ class Invitation < ActiveRecord::Base
 
   validates :event_id, presence: true
   validates :invitee_type, presence: true
-  validates :invitee_id, presence: { message: "is invalid" }
+  validates :invitee_id, presence: { message: 'is invalid' }
   validates :invitee_id, uniqueness: {
-    message: "has already been invited",
+    message: 'has already been invited',
     scope: [:invitee_type, :event_id]
   }
 
@@ -48,6 +48,14 @@ class Invitation < ActiveRecord::Base
 
   private
 
+  def auth
+    {
+      access_token: access_token,
+      yammer_staging: yammer_staging?,
+      yammer_user_id: yammer_user_id_param
+    }
+  end
+
   def create_guest
     Guest.create_without_name_validation(name_or_email_param)
   end
@@ -62,15 +70,14 @@ class Invitation < ActiveRecord::Base
   end
 
   def find_existing_yammer_user
-    id_finder = YammerUserIdFinder.new(event.owner, name_or_email_param)
-    user_id = id_finder.find
+    user_id = YammerUserIdFinder.new(event_creator, name_or_email_param).find
 
     if user_id
-      User.find_or_create_with_auth(
+      YammerUser.new(
         access_token: access_token,
         yammer_staging: yammer_staging?,
         yammer_user_id: user_id
-      )
+      ).find_or_create
     end
   end
 
@@ -92,11 +99,7 @@ class Invitation < ActiveRecord::Base
   end
 
   def find_or_create_user
-    User.find_or_create_with_auth(
-        access_token: access_token,
-        yammer_staging: yammer_staging?,
-        yammer_user_id: yammer_user_id_param
-    )
+    YammerUser.new(auth).find_or_create
   end
 
   def find_user_by_email_or_create_guest
