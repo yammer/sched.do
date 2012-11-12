@@ -14,6 +14,7 @@ require 'rspec/rails'
 require 'rspec/autorun'
 require 'turnip/capybara'
 require 'email_spec'
+require 'bourne'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
