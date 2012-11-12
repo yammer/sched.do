@@ -99,9 +99,12 @@
   </table>
 </div>
 
-<!-- This call to action is a placeholder -->
+<% if current_user.yammer_user? %>
 <div class="call-to-action">
   Discuss this poll
 </div>
 
 <div id="yammer-feed"></div>
+<% end %>
+
+
