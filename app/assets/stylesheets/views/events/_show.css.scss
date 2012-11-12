@@ -326,8 +326,36 @@ div.show-event {
     }
   }
 
-  #yammer-feed{
+
+  div.call-to-action {
+    background-color: darken($bg-color, 40%);
+    border: 1px solid darken($bg-color, 50%);
+    @include box-shadow(inset 0 1px 0 darken($bg-color, 20%));
+    @include border-radius(3px 3px 0 0);
+    color: #FFF;
     margin-top: 20px;
+    padding: 10px;
+    text-shadow: 0 -1px 0 darken($blue, 40%);
+  }
+
+  #yammer-feed {
+    border: solid 1px #DDD;
+    @include border-radius(0 0 4px 4px);
+
+    .yj-ft {
+      @include border-radius(0 0 4px 4px);
+      padding: 10px 10px 0 10px;
+    }
+
+    .yj-first-message {
+      border-top: 0;
+      margin-top: 0;
+    }
+
+    .yj-last-message {
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
   }
 
   div.event-url {
