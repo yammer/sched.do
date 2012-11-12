@@ -19,10 +19,10 @@ $(document).ready(function() {
 
     if (offsets.total > 0) {
 
-      if (offsets.current === 0) {
-        scrollNotice.removeClass('visible');
+      if (offsets.current <= 0) {
+        scrollNotice.hide();
       } else {
-        scrollNotice.addClass('visible');
+        scrollNotice.show();
       }
     }
   };
