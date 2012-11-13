@@ -7,16 +7,16 @@
             .find('input[data-role="primary-suggestion"]');
     nextDate = $(this).datepicker('getDate');
     nextDate.setDate(nextDate.getDate()+1);
-    $(nextDateField).datepicker("option", "defaultDate", nextDate);
+    $(nextDateField).datepicker('option', 'defaultDate', nextDate);
 }
 
 $(document).ready(function() {
   if (!Modernizr.cssanimations) {
     $('.flash > div').delay(1500).slideUp()
   }
-  $("#new-event").leanModal({closeButton: ".modal-close"})
-  $("a[rel*=yammer-invite]").leanModal({closeButton: ".modal-close"})
-  $("a[rel*=email-invite]").leanModal({closeButton: ".modal-close"})
+  $('#new-event').leanModal({closeButton: '.modal-close'})
+  $('a[rel*=yammer-invite]').leanModal({closeButton: '.modal-close'})
+  $('a[rel*=email-invite]').leanModal({closeButton: '.modal-close'})
 
   var placeholderPollyfill = function() {
     $('input, textarea').placeholder();
@@ -25,8 +25,8 @@ $(document).ready(function() {
   var datepicker = function(){
     // Displays a date picker when suggetsion field is focused
     $('input[data-role="primary-suggestion"]').datepicker({
-      nextText: "▶",
-      prevText: "◀",
+      nextText: '▶',
+      prevText: '◀',
       dateFormat: 'D, M dd yy',
       constrainInput: false,
       onSelect: setNextDatePicker
@@ -103,24 +103,24 @@ $(document).ready(function() {
   bind_to_new_time_fields();
   bind_to_changed_primary_fields();
 
-  $('#new_event ol').bind("insertion-callback", function() {
+  $('#new_event ol').bind('insertion-callback', function() {
     set_default_date();
     bind_to_new_time_fields();
     bind_to_changed_primary_fields();
   });
 
   function bind_to_new_time_fields() {
-    $('.nested-fields.primary').bind("insertion-callback", function() {
-      var primary_suggestions = $(this).find("[data-role='primary-suggestion']");
+    $('.nested-fields.primary').bind('insertion-callback', function() {
+      var primary_suggestions = $(this).find('[data-role="primary-suggestion"]');
       var primary_suggestion_value = primary_suggestions.first().val();
       primary_suggestions.last().val(primary_suggestion_value);
     });
   }
 
   function bind_to_changed_primary_fields() {
-    $("[data-role='primary-suggestion']").change(function() {
+    $('[data-role="primary-suggestion"]').change(function() {
       var primary_suggestions = $(this).parents('.nested-fields.primary')
-        .first().find("[data-role='primary-suggestion']");
+        .first().find('[data-role="primary-suggestion"]');
       var primary_suggestion_value = primary_suggestions.first().val();
       primary_suggestions.each(function(index) {
         $(this).val(primary_suggestion_value);
@@ -147,7 +147,7 @@ $(document).ready(function() {
 
   // Enable dragging in touch devices on tables
   if (Modernizr.touch) {
-    $('table.touch-scrollable').addClass("scrollable horizontal")
+    $('table.touch-scrollable').addClass('scrollable horizontal')
   }
 
   // Enable click-to-copy
@@ -181,7 +181,7 @@ $(document).ready(function() {
       span.css('font-size','0.9em');
     }
 
-    if ($(this).hasClass("event-creator")) {
+    if ($(this).hasClass('event-creator')) {
       span.css('font-size','1em');
     }
   });
