@@ -28,13 +28,4 @@
       <%= form.action :submit, button_html: { id: "add-invitee" } %>
     <% end %>
   <% end %>
-
-  <div class="alt-invite">
-    <div id="copy-url-container">
-      <div id="copy-event-url" class="copy-event-url" data-event-url="<%= event_url(@event) %>">
-        <img src="/assets/email.svg" data-png-fallback="/assets/email.png">
-        Copy Event URL
-      </div>
-    </div>
-  </div>
 </section>

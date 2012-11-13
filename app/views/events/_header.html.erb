@@ -13,20 +13,3 @@
     <%= link_to 'Edit Poll', edit_event_path(@event), class: "edit-button" %>
   <% end %>
 </div>
-<section class="sub-head">
-  <div class="created-by">
-    <span>Created by:</span>
-    <div class="avatar" style="background-image: url(<%= @event.owner.image %>)"></div>
-    <span><%= @event.owner %></span>
-  </div>
-  <div class="reminder">
-    <span><%= pluralize(@event.other_invitees_count, "other person") %> invited</span>
-    <span class="divider">|</span>
-    <span><%= pluralize(@event.other_invitees_who_have_not_voted_count, 'has not voted','have not voted') %></span>
-    <% if @event.other_invitees_who_have_not_voted_count > 0 %>
-      <% if current_user.yammer_user? %>
-        <%= link_to 'Remind Them!', reminders_path(reminder: { receiver_id: @event.id, receiver_type: @event.class.name }, event_id: @event), method: :post, class: "remind-all" %>
-      <% end %>
-    <% end %>
-  </div>
-</section>

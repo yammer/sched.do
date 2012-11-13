@@ -18,7 +18,6 @@ div.show-event {
         @include inline-block;
         font-family: $bariol-light;
         font-size: 2em;
-        //height: 40px;
         margin: 0px;
         padding: 2px 0 2px;
         vertical-align: middle;
@@ -48,10 +47,11 @@ div.show-event {
     }
   }
 
-  section.sub-head {
+  section.metadata {
     @include clearfix;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
     padding: 10px 0px 0px;
+    color: darken($bg-color, 30%);
 
     span {
       font-size: 0.8em;
@@ -86,6 +86,28 @@ div.show-event {
         vertical-align: middle;
       }
     }
+
+    .alt-invite {
+      height: 14px;
+      display:inline-block;
+
+      a.email-invite, div.copy-event-url {
+        @extend .button;
+        padding: 1px 5px;
+        font-size: 1.1em;
+        margin-top: -1px;
+        @include box-sizing(border-box);
+        cursor: pointer;
+        height: 100%;
+
+        &.copy-event-url {
+          width: 120px;
+          padding-left: 0px;
+          padding-right: 0px;
+          text-align: center;
+        }
+      }
+    }
   }
 
   section.search-box, section.invitee-sharing {
@@ -96,10 +118,10 @@ div.show-event {
     @include box-shadow(inset 0 -1px 0px #fff);
     @include box-sizing(border-box);
     left: 0;
-    margin-bottom: 20px;
     padding: 15px;
     position: relative;
     @include transition(all 0.2s linear);
+    margin-top: 20px;
 
     &:hover {
       @include box-shadow(inset 0 -1px 0px #fff, 0 0 15px rgba(darken($bg-color, 15%), 0.5));
@@ -140,39 +162,6 @@ div.show-event {
 
       #add-invitee {
         display: none;
-      }
-    }
-
-    .alt-invite {
-      display: none;
-      height: 34px;
-      right: 15px;
-      position: absolute;
-      top: 15px;
-
-      #copy-url-container {
-        position: relative;
-      }
-
-      a.email-invite, div.copy-event-url {
-        @extend .button;
-        @include box-sizing(border-box);
-        cursor: pointer;
-        height: 100%;
-        @include inline-block;
-
-        &.copy-event-url {
-          width: 140px;
-          padding-left: 0px;
-          padding-right: 0px;
-          text-align: center;
-        }
-
-        img {
-          display: none;
-          margin: 0em 0.4em 0.1em 0em;
-          vertical-align: middle;
-        }
       }
     }
 

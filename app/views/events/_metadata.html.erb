@@ -1,0 +1,25 @@
+<section class="metadata">
+  <div class="created-by">
+    <span>Created by:</span>
+    <!-- <div class="avatar" style="background-image: url(<%= @event.owner.image %>)"></div> -->
+    <span><%= @event.owner %></span>
+  </div>
+  <div class="reminder">
+    <span><%= pluralize(@event.other_invitees_count, "other person") %> invited</span>
+    <span class="divider">&bull;</span>
+    <span><%= pluralize(@event.other_invitees_who_have_not_voted_count, 'has not voted','have not voted') %></span>
+    <% if @event.other_invitees_who_have_not_voted_count > 0 %>
+      <% if current_user.yammer_user? %>
+        <%= link_to 'Remind Them!', reminders_path(reminder: { receiver_id: @event.id, receiver_type: @event.class.name }, event_id: @event), method: :post, class: "remind-all" %>
+      <% end %>
+    <% end %>
+    <span class="divider">&bull;</span>
+    <div class="alt-invite">
+      <div id="copy-url-container">
+        <div id="copy-event-url" class="copy-event-url" data-event-url="<%= event_url(@event) %>">
+          <span>Copy Event URL</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
