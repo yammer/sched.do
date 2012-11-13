@@ -135,7 +135,7 @@ $(document).ready(function() {
     if(previousDate){
       previousDate.setDate(previousDate.getDate()+1);
       setTimeout( function(){
-        $('input[data-role="primary-suggestion"]:last').datepicker("option", "defaultDate", previousDate);
+        $('input[data-role="primary-suggestion"]:last').data('datepicker').settings.defaultDate=previousDate;
       }, 10);
     }
   }
@@ -187,5 +187,4 @@ $(document).ready(function() {
   });
 
   placeholderPollyfill();
-
 });
