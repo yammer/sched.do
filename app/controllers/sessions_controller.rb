@@ -30,9 +30,11 @@ class SessionsController < ApplicationController
   end
 
   def credentials
-    access_token: omniauth_token,
-    yammer_staging: omniauth_staging?,
-    yammer_user_id: omniauth[:uid]
+    {
+      access_token: omniauth_token,
+      yammer_staging: omniauth_staging?,
+      yammer_user_id: omniauth[:uid]
+    }
   end
 
   def after_sign_in_path

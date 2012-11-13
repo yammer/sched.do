@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
 
   before_filter :require_yammer_login
   before_filter :check_blank_token
-  before_filter :configure_yammer
+  before_filter :set_token_and_endpoint
 
   hide_action :current_user=
 
@@ -18,12 +18,12 @@ class ApplicationController < ActionController::Base
     @current_user = user
   end
 
-  def configure_yammer
+  def set_token_and_endpoint
     if signed_in?
       oauth_token = current_user.access_token
       staging = current_user.yammer_staging
     elsif session[:event_id].present?
-      event = Event.find_by_uuid(session[:event_id])
+      event = Event.find_by_uuid!(session[:event_id])
       oauth_token = event.owner.access_token
       staging = event.owner.yammer_staging
     else
@@ -33,7 +33,14 @@ class ApplicationController < ActionController::Base
 
     Yam.configure do |config|
       config.oauth_token = oauth_token
-      config.endpoint = "https://www.#{"staging." if staging}yammer.com/api/v1/"
+
+      if staging
+        host = YAMMER_STAGING_HOST
+      else
+        host = YAMMER_HOST
+      end
+
+      config.endpoint = host + "/api/v1/"
     end
   end
 

@@ -69,13 +69,6 @@ class Invitation < ActiveRecord::Base
     Guest.find_by_email(name_or_email_param)
   end
 
-  def find_user_id_by_email
-    Yam.get(
-      '/users/by_email',
-      email: name_or_email_param
-    ).try(:first).try(:id)
-  end
-
   def find_existing_yammer_user
     user_id = find_user_id_by_email
 
@@ -86,6 +79,13 @@ class Invitation < ActiveRecord::Base
         yammer_user_id: user_id
       ).find_or_create
     end
+  end
+
+  def find_user_id_by_email
+    Yam.get(
+      '/users/by_email',
+      email: name_or_email_param
+    ).try(:first).try(:id)
   end
 
   def find_group

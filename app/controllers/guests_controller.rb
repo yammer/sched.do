@@ -18,7 +18,7 @@ class GuestsController < ApplicationController
     @show_guest_login = show_guest_login?
 
     if @guest.save
-      params[:event_id] = params[:event_id]
+      session[:event_id] = params[:event_id]
       log_in_guest
       redirect_to previous_page
     else
