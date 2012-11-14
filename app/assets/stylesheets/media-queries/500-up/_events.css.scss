@@ -7,13 +7,11 @@ div.new-event {
       width: 100%;
 
       div.date {
-        //@include columns(6);
         display: table-cell;
         padding-right: 1em;
       }
 
       div.times {
-        //@include columns(6);
         display: table-cell;
         margin-top: 0;
         padding-top: 0;

@@ -9,6 +9,27 @@ div.show-event {
     margin-top: -30px;
   }
 
+  section.metadata {
+    div.reminder {
+      float: none;
+      line-height: 1.6em;
+      padding-bottom: 0.8em;
+      text-align: center;
+
+      a.remind-all {
+        display:inline-block;
+        line-height: 1.3em;
+      }
+    }
+
+    .alt-invite {
+      float: none;
+      margin: auto;
+      max-width: 7em;
+      text-align: center;
+    } 
+  }
+
   ul.suggestions {
     margin-top: 10px;
   }
@@ -19,3 +40,5 @@ div.show-event {
     }
   }
 }
+
+      

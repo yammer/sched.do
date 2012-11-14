@@ -11,8 +11,22 @@ div.show-event {
       margin-left: 240px;
     }
 
+  }
+
+  section.metadata {
+    div.reminder {
+      float: left;
+      line-height: 1.1em;
+      padding-bottom: 0;
+      text-align: left;
+      width: 80%;
+    }
+
     .alt-invite {
-      display: block;
+      display: inline-block;
+      text-align: right;
+      float: right;
+      width: 15%;
     }
   }
 
