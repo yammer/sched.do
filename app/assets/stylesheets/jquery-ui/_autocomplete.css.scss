@@ -1,9 +1,9 @@
 ul.ui-autocomplete {
-  border: none;
-  @include box-shadow(0 0 20px darken($bg-color, 15%));
   background: transparent;
+  border: none;
+  @include box-shadow(0 3px 10px transparentize($blue, 0.7));
   list-style: none;
-  margin-top: 2px;
+  margin-top: 1px;
 
   li.ui-autocomplete-type {
     background-color: rgb(240,240,240);
