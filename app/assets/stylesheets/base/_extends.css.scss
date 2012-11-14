@@ -10,16 +10,16 @@
 }
 
 .blue-button {
-  background-color: #48AEF1;
-  @include button-color(#48AEF1);
+  background-color: $yammer-blue;
+  @include button-color($yammer-blue);
   @include background-image(linear-gradient(#48AFF3, #228ed5));
   color: #fff;
-  text-shadow: 0 -1px 0 darken(#48AEF1, 40%);
+  text-shadow: 0 -1px 0 darken($yammer-blue, 40%);
 }
 
 .yammer-button {
-  background-color: #48AEF1;
-  @include button-color(#48AEF1);
+  background-color: $yammer-blue;
+  @include button-color($yammer-blue);
   @include background-image(url(yammer-logo.svg));
   @include background-image(url(yammer-logo.svg),linear-gradient(#48AFF3, #228ed5));
   background-position: 20px center, 0 0;
@@ -35,11 +35,11 @@
   margin: 30px auto 25px auto;
   padding-left: 40px;
   padding-right: 0px;
-  text-shadow: 0 -1px 0 darken(#48AEF1, 40%);
+  text-shadow: 0 -1px 0 darken($yammer-blue, 40%);
 
 
   &:hover {
-    background-color: lighten(#48AEF1, 5%);
+    background-color: lighten($yammer-blue, 5%);
     @include background-image(url(yammer-logo.svg),linear-gradient(#48AFF3, lighten(#228ed5, 5%)));
   }
 }
@@ -82,4 +82,12 @@
       margin-top: 2px;
     }
   }
+}
+
+%blue-container {
+  @include colorful-container;
+}
+
+%orange-container {
+  @include colorful-container($orange);
 }
