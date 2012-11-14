@@ -6,8 +6,8 @@ GIT
     cocoon (1.0.20)
 
 GIT
-  remote: https://dc2c9edbddec893a0b71709d6cd36fab963ee11b:x-oauth-basic@github.com/yammer/yam.git
-  revision: ce49ace5411816c5a4b33952f32330f6cfed94f4
+  remote: https://:x-oauth-basic@github.com/yammer/yam.git
+  revision: e81362b4a374aace2d8a656e6fc41160e9843068
   specs:
     yam (0.0.2)
       faraday (~> 0.8.1)

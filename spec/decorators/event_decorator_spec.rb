@@ -22,7 +22,7 @@ end
 
 describe EventDecorator, '#invitees_with_current_user_first' do
   it 'creates an array of invitees, with the current user first' do
-    event = create(:event_with_invitees)
+    event = build_stubbed(:event_with_invitees)
     unsorted_invitees = event.invitees
     current_user = unsorted_invitees.second
     EventDecorator.any_instance.stubs(current_user: current_user)
@@ -59,49 +59,37 @@ describe EventDecorator, '#invitees_who_have_not_voted_count' do
   end
 end
 
-
-describe EventDecorator, '#invitations_excluding_current_user' do
-  it 'returns all invitations excluding the invitation for the current user' do
-    event = create(:event)
-    decorated_event = EventDecorator.new(event)
-    owner_invitation = event.invitations.first
-    owner = owner_invitation.invitee
-    EventDecorator.any_instance.stubs(current_user: owner)
-    new_invitation = create(:invitation_with_user, event: event)
-
-    invitations = decorated_event.invitations_excluding_current_user
-
-    invitations.should include new_invitation
-    invitations.should_not include owner_invitation
-  end
-end
-
 describe EventDecorator, '#first_invitee_for_invitation' do
-  it 'returns a space if no invitees' do
-    event = build_stubbed(:event)
+  context 'when an event has invitees' do
+    it 'returns the first invitee with a name' do
+      event = create(:event_with_invitees)
+      guest = event.invitees.first
+      guest.name = nil
+      user = event.invitees.second
 
-    string = EventDecorator.new(event).first_invitee_for_invitation
+      string = EventDecorator.new(event).first_invitee_for_invitation
 
-    string.should == ' '
+      string.should == ", #{user.name}, "
+    end
+
+    it 'returns the first invitee if one exists' do
+      event = create(:event_with_invitees)
+      first_invitee = event.invitees.first
+
+      string = EventDecorator.new(event).first_invitee_for_invitation
+
+      string.should == ", #{first_invitee.name}, "
+    end
   end
 
-  it 'returns the first invitee with a name' do
-    event = create(:event_with_invitees)
-    guest = event.invitees.first
-    guest.name = nil
-    user = event.invitees.second
+  context 'when an event has no invitees' do
+    it 'returns a space if no invitees' do
+      event = build_stubbed(:event)
+      event.invitees.should be_empty
 
-    string = EventDecorator.new(event).first_invitee_for_invitation
+      string = EventDecorator.new(event).first_invitee_for_invitation
 
-    string.should == ", #{user.name}, "
-  end
-
-  it 'returns the first invitee if one exists' do
-    event = create(:event_with_invitees)
-    first_invitee = event.invitees.first
-
-    string = EventDecorator.new(event).first_invitee_for_invitation
-
-    string.should == ", #{first_invitee.name}, "
+      string.should == ' '
+    end
   end
 end
