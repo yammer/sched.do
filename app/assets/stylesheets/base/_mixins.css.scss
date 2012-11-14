@@ -44,3 +44,22 @@
   white-space: nowrap;
   overflow: hidden;
 }
+
+// Colorful container mixin
+@mixin colorful-container-text($color) {
+  color: #FFF;
+  text-shadow: 0 -1px 0 darken($color, 40%);
+}
+
+@mixin colorful-container($color: $yammer-blue) {
+  background-color: $color;
+  @include background-image(linear-gradient(tint($color, 35%), shade($color, 10%)));
+  border: 1px solid darken($color, 5%);
+  border-bottom-color: darken($color, 20%);
+  @include box-shadow(inset 0 1px 0px lighten($color, 30%));
+  @include colorful-container-text($color);
+
+  h1, h2, h3, h4 ,h5, h6 {
+    @include colorful-container-text($color);
+  }
+}
