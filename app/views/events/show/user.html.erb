@@ -2,12 +2,7 @@
   <%= render 'events/header' %>
   <%= render 'events/user_invitation_form' %>
   <%= render 'events/metadata' %>
-
-  <div class="table-wrapper grid">
-    <div class="scroll-notice"></div>
-
-    <%= render 'events/grid' %>
-  </div>
+  <%= render 'events/grid' %>
 
   <% if @event.groups.any? %>
     <section class="invited-yammer-groups">

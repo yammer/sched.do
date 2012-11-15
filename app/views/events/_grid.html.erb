@@ -1,110 +1,112 @@
-<div class="options">
-  <table class="touch-scrollable">
-    <thead>
-      <tr>
-        <% @event.suggestions.each do |suggestion| %>
-          <th data-id="<%= suggestion.id %>">
-            <%= suggestion.primary %>
-            <span class="secondary">
-              <%= suggestion.secondary %>
-            </span>
-          </th>
-        <% end %>
-      </tr>
-    </thead>
-    <tbody>
-      <% @event.invitees_with_current_user_first.each do |invitee| %>
-        <% if @event.user_voted?(invitee) || invitee == current_user %>
-          <tr class="<%= 'votable' if  current_user == invitee %>">
-            <% @event.suggestions.each do |suggestion| %>
-              <% if current_user == invitee %>
-                <%= render 'events/vote', suggestion: suggestion,
-                  vote_for_suggestion: current_user.vote_for_suggestion(suggestion) %>
-              <% else %>
-                <% if invitee.voted_for_suggestion?(suggestion) %>
-                  <td class="voted">
-                    <%= image_tag('checkmark.png') %>
-                  </td>
-                <% else %>
-                  <td></td>
-              <% end %>
-            <% end %>
+<div class="table-wrapper grid">
+  <div class="scroll-notice">▸</div>
+  <div class="options">
+    <table class="touch-scrollable">
+      <thead>
+        <tr>
+          <% @event.suggestions.each do |suggestion| %>
+            <th data-id="<%= suggestion.id %>">
+              <%= suggestion.primary %>
+              <span class="secondary">
+                <%= suggestion.secondary %>
+              </span>
+            </th>
           <% end %>
         </tr>
-      <% else %>
-        <tr>
-          <td class="send-reminder" colspan=<%= @event.suggestions.count %>>
-            <% if current_user.yammer_user? and invitee != current_user %>
-              <div class="reminder-wrapper">
-                <%= link_to "Remind #{invitee.name} to vote",
-                  reminders_path(
-                    reminder: {
-                      receiver_id: @event.invitation_for(invitee),                                  receiver_type: @event.invitation_for(invitee).class.name
-                    }, event_id: @event.uuid), method: :post, class: "remind" %>
-              </div>
+      </thead>
+      <tbody>
+        <% @event.invitees_with_current_user_first.each do |invitee| %>
+          <% if @event.user_voted?(invitee) || invitee == current_user %>
+            <tr class="<%= 'votable' if  current_user == invitee %>">
+              <% @event.suggestions.each do |suggestion| %>
+                <% if current_user == invitee %>
+                  <%= render 'events/vote', suggestion: suggestion,
+                    vote_for_suggestion: current_user.vote_for_suggestion(suggestion) %>
+                <% else %>
+                  <% if invitee.voted_for_suggestion?(suggestion) %>
+                    <td class="voted">
+                      <%= image_tag('checkmark.png') %>
+                    </td>
+                  <% else %>
+                    <td></td>
+                <% end %>
+              <% end %>
             <% end %>
-          </td>
-        </tr>
-        <% end %>
-      <% end %>
-    </tbody>
-    <tfoot>
-      <tr>
-        <% @event.suggestions.each do |suggestion| %>
-          <td class="vote-count" data-id="<%= suggestion.id %>">
-            <%= suggestion.vote_count %>
-          </td>
-        <% end %>
-      </tr>
-    </tfoot>
-  </table>
-</div>
-
-<div id="invitees" <% if current_user.able_to_edit?(@event) %>class="blank"<% end %>>
-  <table>
-    <thead>
-      <tr>
-        <th>
-          The Invitees
-          <span class="secondary">
-            <%= @event.other_invitees_count %> total
-          </span>
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-
-      <% @event.invitees_with_current_user_first.each do |invitee| %>
-        <tr class="<%= 'current-user' if  current_user == invitee %>">
-
-        <% if @event.user_owner?(invitee) %>
-          <td class="event-creator">
-            <div class="avatar" style="background-image: url(<%= invitee.image %>)"></div>
-            <img src="/assets/bullhorn.svg" data-png-fallback="/assets/bullhorn.png">
+          </tr>
         <% else %>
-          <td>
-            <div class="avatar" style="background-image: url(<%= invitee.image %>)"></div>
+          <tr>
+            <td class="send-reminder" colspan=<%= @event.suggestions.count %>>
+              <% if current_user.yammer_user? and invitee != current_user %>
+                <div class="reminder-wrapper">
+                  <%= link_to "Remind #{invitee.name} to vote",
+                    reminders_path(
+                      reminder: {
+                        receiver_id: @event.invitation_for(invitee),
+                        receiver_type: @event.invitation_for(invitee).class.name
+                      }, event_id: @event.uuid), method: :post, class: "remind" %>
+                </div>
+              <% end %>
+            </td>
+          </tr>
+          <% end %>
         <% end %>
-            <span class="user-name">
-              <%= invitee.name || invitee.email %>
-            </span>
-          </td>
+      </tbody>
+      <tfoot>
+        <tr>
+          <% @event.suggestions.each do |suggestion| %>
+            <td class="vote-count" data-id="<%= suggestion.id %>">
+              <%= suggestion.vote_count %>
+            </td>
+          <% end %>
         </tr>
-      <% end %>
+      </tfoot>
+    </table>
+  </div>
 
-      <tr class="total">
-       <td>Total Votes</td>
-      </tr>
-    </tbody>
-  </table>
+  <div id="invitees" <% if current_user.able_to_edit?(@event) %>class="blank"<% end %>>
+    <table>
+      <thead>
+        <tr>
+          <th>
+            The Invitees
+            <span class="secondary">
+              <%= @event.other_invitees_count %> total
+            </span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <% @event.invitees_with_current_user_first.each do |invitee| %>
+          <tr class="<%= 'current-user' if  current_user == invitee %>">
+
+          <% if @event.user_owner?(invitee) %>
+            <td class="event-creator">
+              <div class="avatar" style="background-image: url(<%= invitee.image %>)"></div>
+              <img src="/assets/bullhorn.svg" data-png-fallback="/assets/bullhorn.png">
+          <% else %>
+            <td>
+              <div class="avatar" style="background-image: url(<%= invitee.image %>)"></div>
+          <% end %>
+              <span class="user-name">
+                <%= invitee.name || invitee.email %>
+              </span>
+            </td>
+          </tr>
+        <% end %>
+
+        <tr class="total">
+         <td>Total Votes</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <% if current_user.yammer_user? %>
+    <div class="call-to-action">
+      Discuss this poll
+    </div>
+
+    <div id="yammer-feed"></div>
+  <% end %>
 </div>
-
-<% if current_user.yammer_user? %>
-<div class="call-to-action">
-  Discuss this poll
-</div>
-
-<div id="yammer-feed"></div>
-<% end %>
-
-
