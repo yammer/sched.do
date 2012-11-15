@@ -11,6 +11,7 @@ class VoteCreatedJob < Struct.new(:vote_id)
   end
 
   def perform
+    configure_yammer
     voter.create_yammer_activity(ACTION, event)
     VoteConfirmationEmailJob.enqueue(vote)
   end
@@ -36,5 +37,17 @@ class VoteCreatedJob < Struct.new(:vote_id)
 
   def voter
     vote.voter
+  end
+
+  def configure_yammer
+    Yam.configure do |config|
+      if voter.yammer_user?
+        config.oauth_token = voter.access_token
+
+        if voter.yammer_staging
+          config.endpoint = YAMMER_STAGING_ENDPOINT
+        end
+      end
+    end
   end
 end

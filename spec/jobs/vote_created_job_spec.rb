@@ -50,4 +50,14 @@ describe VoteCreatedJob, '#perform' do
 
     VoteConfirmationEmailJob.should have_received(:enqueue).with(vote)
   end
+
+  it 'configures Yammer' do
+    voter = build_stubbed(:user)
+    vote = build_stubbed(:vote, voter: voter)
+    Vote.stubs(find: vote)
+
+    VoteCreatedJob.new.perform
+
+    Yam.oauth_token.should == voter.access_token
+  end
 end
