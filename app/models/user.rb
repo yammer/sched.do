@@ -96,14 +96,6 @@ class User < ActiveRecord::Base
     true
   end
 
-  def yammer_endpoint
-    if yammer_staging
-      YAMMER_STAGING_HOST
-    else
-      YAMMER_HOST
-    end
-  end
-
   def yammer_group_id
     nil
   end

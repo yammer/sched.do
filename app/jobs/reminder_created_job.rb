@@ -27,7 +27,10 @@ class ReminderCreatedJob < Struct.new(:reminder_id)
   def configure_yammer
     Yam.configure do |config|
       config.oauth_token = sender.access_token
-      config.endpoint = sender.yammer_endpoint + "/api/v1"
+
+      if sender.yammer_staging
+        config.endpoint = YAMMER_STAGING_ENDPOINT
+      end
     end
   end
 end

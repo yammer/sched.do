@@ -213,18 +213,6 @@ describe User, '#yammer_user?' do
   end
 end
 
-describe User, '#yammer_endpoint' do
-  it 'returns the Yammer staging url if the user is a Yammer staging user' do
-    user = create(:user, yammer_staging: true)
-    user.yammer_endpoint.should == YAMMER_STAGING_HOST
-  end
-
-  it 'returns the Yammer base url if the user is a Yammer user' do
-    user = create(:user)
-    user.yammer_endpoint.should == YAMMER_HOST
-  end
-end
-
 describe User, '#create_yammer_activity' do
   include DelayedJobSpecHelper
 

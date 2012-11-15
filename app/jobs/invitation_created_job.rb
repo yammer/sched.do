@@ -28,7 +28,10 @@ class InvitationCreatedJob < Struct.new(:invitation_id)
     Yam.configure do |config|
       if sender.yammer_user?
         config.oauth_token = sender.access_token
-        config.endpoint = sender.yammer_endpoint + "/api/v1"
+
+        if sender.yammer_staging
+          config.endpoint = YAMMER_STAGING_ENDPOINT
+        end
       end
     end
   end

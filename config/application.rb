@@ -1,6 +1,8 @@
 # Set global hostnames
-YAMMER_HOST='https://www.yammer.com'
-YAMMER_STAGING_HOST='https://www.staging.yammer.com'
+YAMMER_HOST = 'https://www.yammer.com'
+YAMMER_ENDPOINT = YAMMER_HOST + '/api/v1/'
+YAMMER_STAGING_HOST = 'https://www.staging.yammer.com'
+YAMMER_STAGING_ENDPOINT = YAMMER_STAGING_HOST + '/api/v1/'
 
 require File.expand_path('../boot', __FILE__)
 

@@ -35,12 +35,8 @@ class ApplicationController < ActionController::Base
       config.oauth_token = oauth_token
 
       if staging
-        host = YAMMER_STAGING_HOST
-      else
-        host = YAMMER_HOST
+        config.endpoint = YAMMER_STAGING_ENDPOINT
       end
-
-      config.endpoint = host + "/api/v1/"
     end
   end
 
