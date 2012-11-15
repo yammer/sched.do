@@ -1,5 +1,5 @@
 <div class="table-wrapper grid">
-  <div class="scroll-notice">▸</div>
+  <div class="scroll-notice forward">►</div>
   <div class="options">
     <table class="touch-scrollable">
       <thead>
@@ -64,6 +64,7 @@
   </div>
 
   <div id="invitees" <% if current_user.able_to_edit?(@event) %>class="blank"<% end %>>
+    <div class="scroll-notice backward">◄</div>
     <table>
       <thead>
         <tr>

@@ -6,6 +6,8 @@ $(document).ready(function() {
   var table = $('table.touch-scrollable');
   var parent = $('table.touch-scrollable').parent();
   var scrollNotice = $('div.scroll-notice')
+  var scrollRight = $('div.scroll-notice.forward')
+  var scrollLeft = $('div.scroll-notice.backward')
 
   var getCurrentOffset = function() {
     var totalOffset = table.width() - parent.innerWidth();
@@ -19,10 +21,12 @@ $(document).ready(function() {
 
     if (offsets.total > 0) {
 
-      if (offsets.current <= 0) {
-        scrollNotice.hide();
+      if (offsets.current === 0) {
+        scrollRight.removeClass('visible');
+        scrollLeft.addClass('visible');
       } else {
-        scrollNotice.show();
+        scrollRight.addClass('visible');
+        scrollLeft.removeClass('visible');
       }
     }
   };
