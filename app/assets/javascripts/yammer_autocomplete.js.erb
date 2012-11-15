@@ -64,16 +64,20 @@ if($("input[data-role='invitation_name']").length){
       select: function(event, ui) {
         var id;
         var dataRole;
+        var inviteeFormAction;
         clearAllNearbyDataRoles(event.target);
         if (ui.item.yammerUserId) {
           id = ui.item.yammerUserId;
-          dataRole = "yammer_user_id";
+          dataRole = 'yammer_user_id';
+          inviteeFormAction = '<%= Rails.application.routes.url_helpers.yammer_user_invitations_path %>';
         }
         else{
           id = ui.item.yammerGroupId;
           dataRole = "yammer_group_id";
+          inviteeFormAction = '<%= Rails.application.routes.url_helpers.yammer_group_invitations_path %>';
         };
         fillInClosestFieldWithDataRole(id, event.target, dataRole);
+        $(this).parents('form').attr('action', inviteeFormAction);
         $(this).parents('form').submit();
       },
       source: function(request, response) {

@@ -5,6 +5,7 @@ Feature: Owner can invite people to an event
     When I invite "Unknown Owner" to "Clown party"
     Then I should see "Invitee is invalid"
 
+  @javascript
   Scenario: Owner invites a user twice
     Given I sign in and create an event named "Clown party"
     And a user exists with a name of "Joe Smith"
@@ -18,6 +19,7 @@ Feature: Owner can invite people to an event
     Then I should see "batman@example.com" in the list of invitees
     And "batman@example.com" should receive an email
 
+  @javascript
   Scenario: Owner invites a Yammer user in-network using their name
     Given I sign in and create an event named "Clown party"
     And a user exists with a name of "Joe Smith" and yammer_network_id of "1"
@@ -32,6 +34,7 @@ Feature: Owner can invite people to an event
     Then I should see "Bruce Wayne" in the list of invitees
     And "Bruce Wayne" should receive 1 private message
 
+  @javascript
   Scenario: Owner invites a Yammer user out-network using their name
     Given I sign in and create an event named "Clown party"
     And a user exists with a name of "Frank Drebin" and yammer_network_id of "2"

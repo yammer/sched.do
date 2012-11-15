@@ -7,6 +7,7 @@ Feature: Guest is converted to User
     Then I should see "Bruce Wayne" in the list of invitees
     And "Bruce Wayne" should receive 1 private message
 
+  @javascript
   Scenario: User invites an existing Yammer user with no sched.do account
     Given I sign in and create an event named "Clown party"
     And a Yammer user exists named "Bruce Campell" with email "bruce@example.com"

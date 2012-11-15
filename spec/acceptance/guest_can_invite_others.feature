@@ -44,3 +44,14 @@ Feature: Guest invitees can invite others to an event
     When I invite "batman@example.com" to "Clown party"
     Then I should see "Bruce Wayne" in the list of invitees
     And "batman@example.com" should receive an email
+
+  Scenario: Guest invites multiple other guests via comma delimited list
+    Given someone created an event named "Clown party"
+    And "guest@example.com" was invited to the event "Clown party"
+    And I am signed in as the guest "guest@example.com"
+    When I view the "Clown party" event
+    And I invite "joe@example.com, bob@example.com" to "Clown party"
+    Then I should see "joe@example.com" in the list of invitees
+    And I should see "bob@example.com" in the list of invitees
+    And "joe@example.com" should receive an email
+    And "bob@example.com" should receive an email

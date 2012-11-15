@@ -2,17 +2,21 @@ step 'I invite the Yammer user :user_name to :event_name' do |user_name, event_n
   user = User.find_by_name!(user_name)
   event = Event.find_by_name!(event_name)
   visit event_path(event)
-  find_field_by_data_role('invitation_name').set(event_name)
-  find_field_by_data_role('yammer_user_id').set(user.yammer_user_id)
-  click_button 'add-invitee'
+
+  mock_out_yammer_api({ name:  user_name, id: user.yammer_user_id, return_type: 'user' })
+  fill_in_autocomplete('#auto-complete', user_name)
+  choose_autocomplete('.name', user_name)
 end
 
 step 'I invite the Yammer group :user_name to :event_name' do |group_name, event_name|
   event = Event.find_by_name!(event_name)
+  group = Group.new(name: group_name, yammer_group_id: 12345)
+  group.save!
   visit event_path(event)
-  find_first_empty_field_by_data_role('invitation_name').set(group_name)
-  find_first_empty_field_by_data_role('yammer_group_id').set('12345')
-  click_button 'add-invitee'
+
+  mock_out_yammer_api({ name: group_name, id: group.yammer_group_id, return_type: 'group' })
+  fill_in_autocomplete('#auto-complete', group_name)
+  choose_autocomplete('.name', group_name)
 end
 
 step 'I invite myself' do
@@ -24,10 +28,10 @@ step 'I invite myself' do
   click_button 'add-invitee'
 end
 
-step 'I invite :email to :event_name' do |email, event_name|
+step 'I invite :emails to :event_name' do |emails, event_name|
   event = Event.find_by_name!(event_name)
   visit event_path(event)
-  find_first_empty_field_by_data_role('invitation_name').set(email)
+  find('#auto-complete').set(emails)
   click_button 'add-invitee'
 end
 
@@ -39,7 +43,7 @@ end
 step 'someone invites :email to :event_name' do |email, event_name|
   event = Event.find_by_name!(event_name)
   invitation = Invitation.new(event: event)
-  invitation.build_invitee(name_or_email: email).save
+  InvitateeBuilder.new.find_user_by_email_or_create_guest(email, event).save
 end
 
 step 'I should see :name in the list of invitees' do |name|
@@ -67,7 +71,7 @@ end
 step ':guest_email was invited to the event :event_name' do |guest_email, event_name|
   event = Event.find_by_name!(event_name)
   invitation = Invitation.new(event: event)
-  invitation.build_invitee(name_or_email: guest_email).save
+  InviteeBuilder.new(guest_email, event).find_user_by_email_or_create_guest.save
 end
 
 step ':first_item should appear before :second_item' do |first_item, second_item|

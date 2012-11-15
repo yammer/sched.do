@@ -57,10 +57,17 @@ step 'I create an event named :event_name' do |event_name|
   create_event(event_name)
 end
 
+step 'I sign in and try to create an event named :event_name' do |event_name|
+  mock_yammer_oauth
+  sign_in
+  create_event(event_name)
+end
+
 step 'I sign in and create an event named :event_name' do |event_name|
   mock_yammer_oauth
   sign_in
   create_event(event_name)
+  page.should have_content event_name
 end
 
 step 'I try to create an event with invalid data' do

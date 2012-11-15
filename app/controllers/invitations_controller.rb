@@ -5,23 +5,29 @@ class InvitationsController < ApplicationController
   layout 'events'
 
   def create
-    @invitation = Invitation.new(invitation_params_with_current_user)
-
-    @event = @invitation.event
-
-    if !@invitation.save
-      flash[:error] = @invitation.errors.full_messages.last
-    end
-
-    redirect_to @event
+    event = Event.find(params[:invitation][:event_id])
+    create_invitations(event)
+    redirect_to event
   end
 
   private
 
-  def invitation_params_with_current_user
-    params[:invitation].merge(
-      sender_id: current_user.id,
-      sender_type: current_user.class.name
-    )
+  def create_invitations(event)
+    invitee_emails.each do |email|
+      invitation = Invitation.new(
+        event: event,
+        invitee: InviteeBuilder.new(email.strip, event).find_user_by_email_or_create_guest,
+        sender: current_user
+      )
+
+      if !invitation.save
+        flash[:error] = invitation.errors.full_messages.last
+        break
+      end
+    end
+  end
+
+  def invitee_emails
+    params[:invitation][:invitee_attributes][:name_or_email].split(',')
   end
 end

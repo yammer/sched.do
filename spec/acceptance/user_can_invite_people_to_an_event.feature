@@ -1,5 +1,6 @@
 Feature: Invited Yammer Users can invite others to an event
 
+  @javascript
   Scenario: User invites another Yammer User
     Given someone created an event named "Clown party"
     And I am signed in as "Bruce Lee" and I view the page for "Clown party"
