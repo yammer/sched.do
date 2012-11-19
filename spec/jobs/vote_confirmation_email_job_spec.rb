@@ -19,7 +19,7 @@ describe VoteConfirmationEmailJob, '.error' do
     Airbrake.stubs(:notify)
     exception = 'Hey! you did something wrong!'
 
-    job = VoteConfirmationEmailJob.new(vote.id)
+    job = VoteConfirmationEmailJob.new(vote)
     job.error(job, exception)
 
     Airbrake.should have_received(:notify).with(exception)
@@ -33,7 +33,7 @@ describe VoteConfirmationEmailJob, '#perform' do
     mailer = stub('mailer', deliver: true)
     UserMailer.stubs(vote_confirmation: mailer)
     vote = build_stubbed(:vote)
-    Vote.stubs find: vote
+    Vote.stubs find_by_id: vote
 
     VoteConfirmationEmailJob.enqueue(vote)
     work_off_delayed_jobs
@@ -45,7 +45,7 @@ describe VoteConfirmationEmailJob, '#perform' do
     mailer = stub('mailer', deliver: true)
     UserMailer.stubs(vote_confirmation: mailer)
     vote = build_stubbed(:vote)
-    Vote.stubs find: vote
+    Vote.stubs find_by_id: vote
 
     VoteConfirmationEmailJob.new(vote.id).perform
     Timecop.freeze(VoteConfirmationEmailJob::DELAY.from_now) do
@@ -93,5 +93,19 @@ describe VoteConfirmationEmailJob, '#perform' do
     UserMailer.should have_received(:vote_confirmation).with(first_vote)
     UserMailer.should have_received(:vote_confirmation).with(second_vote)
     mailer.should have_received(:deliver).twice
+  end
+
+  it 'quietly fails if the Vote is destroyed before the job runs' do
+    fake_logger = stub(error: 'blah')
+    Rails.stubs(logger: fake_logger)
+    vote_id = 999
+
+    VoteConfirmationEmailJob.new(vote_id).perform
+    Timecop.freeze(VoteConfirmationEmailJob::DELAY.from_now) do
+      work_off_delayed_jobs
+    end
+
+    fake_logger.should have_received(:error).
+      with("NOTE: VoteConfirmationEmailJob cannot find Vote id=#{vote_id}")
   end
 end
