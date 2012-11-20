@@ -29,7 +29,7 @@ class User < ActiveRecord::Base
   end
 
   def create_yammer_activity(action, event)
-    ActivityCreator.new(self, action, event).post
+    ActivityCreator.new(user: self, action: action, event: event).post
   end
 
   def expire_token
@@ -62,7 +62,12 @@ class User < ActiveRecord::Base
 
   def deliver_email_or_private_message(message, sender, object)
     if in_network?(sender)
-      PrivateMessenger.new(self, message, sender, object).deliver
+      PrivateMessenger.new(
+        recipient: self,
+        message: message,
+        sender: sender,
+        message_object: object
+      ).deliver
     else
       UserMailer.send(message, sender, object).deliver
     end

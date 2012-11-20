@@ -6,7 +6,12 @@ class Group < ActiveRecord::Base
   validates :yammer_group_id, :name, presence: true
 
   def deliver_email_or_private_message(message, sender, object)
-    PrivateMessenger.new(self, "group_#{message}", sender, object).deliver
+    PrivateMessenger.new(
+      recipient: self,
+      message: "group_#{message}",
+      sender: sender,
+      message_object: object
+    ).deliver
   end
 
   def voted_for_event?(_)

@@ -1,11 +1,11 @@
 class PrivateMessenger
   include Rails.application.routes.url_helpers
 
-  def initialize(recipient, message, sender, message_object)
-    @recipient = recipient
-    @message = message
-    @sender = sender
-    @message_object = message_object
+  def initialize(params)
+    @recipient = params[:recipient]
+    @message = params[:message]
+    @sender = params[:sender]
+    @message_object = params[:message_object]
     send(@message)
   end
 

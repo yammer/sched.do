@@ -31,7 +31,7 @@ class Guest < ActiveRecord::Base
     false
   end
 
-  def create_yammer_activity(action, event)
+  def create_yammer_activity(_, _)
     nil
   end
 

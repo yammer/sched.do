@@ -8,7 +8,12 @@ describe PrivateMessenger, '#invitation' do
     event = create(:event, owner: event_owner)
     invitation = build(:invitation, event: event, invitee: invitee)
 
-    PrivateMessenger.new(invitee, message, event_owner, invitation).deliver
+    PrivateMessenger.new(
+      recipient: invitee,
+      message: message,
+      sender: event_owner,
+      message_object: invitation
+    ).deliver
 
     FakeYammer.messages_endpoint_hits.should == 1
     FakeYammer.message.should include('vote')
@@ -24,7 +29,12 @@ describe PrivateMessenger, '#reminder' do
     event = create(:event, owner: event_owner)
     invitation = build(:invitation, event: event, invitee: invitee)
 
-    PrivateMessenger.new(invitee, message, event_owner, invitation).deliver
+    PrivateMessenger.new(
+      recipient: invitee,
+      message: message,
+      sender: event_owner,
+      message_object: invitation
+    ).deliver
 
     FakeYammer.messages_endpoint_hits.should == 1
     FakeYammer.message.should include('Reminder')
@@ -40,7 +50,12 @@ describe PrivateMessenger, '#group_invitation' do
     event = create(:event, owner: event_owner)
     invitation = build(:invitation, event: event, invitee: group)
 
-    PrivateMessenger.new(group, message, event_owner, invitation).deliver
+    PrivateMessenger.new(
+      recipient: group,
+      message: message,
+      sender: event_owner,
+      message_object: invitation
+    ).deliver
 
     FakeYammer.messages_endpoint_hits.should == 1
     FakeYammer.message.should include('I want your input')
@@ -56,7 +71,12 @@ describe PrivateMessenger, '#group_reminder' do
     event = create(:event, owner: event_owner)
     invitation = build(:invitation, event: event, invitee: group)
 
-    PrivateMessenger.new(group, message, event_owner, invitation).deliver
+    PrivateMessenger.new(
+      recipient: group,
+      message: message,
+      sender: event_owner,
+      message_object: invitation
+    ).deliver
 
     FakeYammer.messages_endpoint_hits.should == 1
     FakeYammer.message.should include('Reminder')

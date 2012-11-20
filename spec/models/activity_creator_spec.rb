@@ -9,7 +9,7 @@ describe ActivityCreator, '#post' do
     action = 'vote'
     event = build_stubbed(:event_with_invitees)
 
-    ActivityCreator.new(user, action, event).post
+    ActivityCreator.new(user: user, action: action, event: event).post
     work_off_delayed_jobs
 
     Yam.should have_received(:post).with(
@@ -24,7 +24,7 @@ describe ActivityCreator, '#post' do
     event = build_stubbed(:event)
 
     expect {
-      ActivityCreator.new(user, action, event).post
+      ActivityCreator.new(user: user, action: action, event: event).post
     }.to change(Delayed::Job, :count).by(1)
   end
 
@@ -35,7 +35,7 @@ describe ActivityCreator, '#post' do
     action = 'vote'
     event = build_stubbed(:event_with_invitees)
 
-    ActivityCreator.new(user, action, event).post
+    ActivityCreator.new(user: user, action: action, event: event).post
 
     user.access_token.should == 'EXPIRED'
     Delayed::Worker.delay_jobs = true

@@ -1,10 +1,10 @@
 class ActivityCreator
   include Rails.application.routes.url_helpers
 
-  def initialize(user, action, event)
-    @user = user
-    @action = action
-    @event = event
+  def initialize(params)
+    @user = params[:user]
+    @action = params[:action]
+    @event = params[:event]
   end
 
   def post

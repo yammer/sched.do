@@ -214,13 +214,13 @@ describe Event, '#enqueue_event_created_job' do
   it 'creates a new instance of ActivityCreator' do
     user = build_stubbed(:user)
     event = build_stubbed(:event)
-    activity = ActivityCreator.new(user, 'create', event)
+    activity = ActivityCreator.new(user: user, action: 'create', event: event)
     ActivityCreator.stubs(new: activity)
 
     event = create(:event)
 
     ActivityCreator.should have_received(:new).
-      with(event.owner, 'create', event)
+      with(user: event.owner, action: 'create', event: event)
   end
 
   it 'calls post on a new instance of ActivityCreator' do
