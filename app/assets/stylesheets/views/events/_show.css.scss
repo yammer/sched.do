@@ -4,7 +4,7 @@ div.show-event {
   div.event-header {
     border-bottom: 1px solid darken($bg-color, 10%);
     margin-top: -10px;
-    padding: 1.6em 0 0.7em;
+    padding: 1.6em 0 1em;
     position: relative;
     text-align: center;
     z-index: 0;
@@ -45,11 +45,27 @@ div.show-event {
     }
 
     a.edit-button {
-      @extend .button;
+      background-image: url('edit-icon.svg');
+      background-repeat: no-repeat;
+      float: right;
+      height: 24px;
       @include inline-block;
-      margin: 3px 10px;
-      padding: 0.2em 1em 0;
-      vertical-align: middle;
+      @include no-text;
+      padding: 0;
+      margin-top: 6px;
+      width: 24px;
+      opacity: 0.2;
+      @include transition(0.1s all ease-in);
+    }
+
+    &:hover {
+      a.edit-button {
+        opacity: 0.7;
+
+        &:hover {
+          opacity: 1;
+        }
+      }
     }
   }
 
