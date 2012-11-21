@@ -15,7 +15,7 @@ end
 gem 'airbrake', '~> 3.1'
 gem 'attr_encrypted'
 gem 'awesome_print'
-gem 'bourbon', '~> 2.1'
+gem 'bourbon', '~> 2.1.1'
 gem 'delayed_job_active_record'
 gem 'draper'
 gem 'flutie'
@@ -34,8 +34,8 @@ gem 'strip_attributes', '~> 1.1'
 gem 'swfobject-rails'
 gem 'tddium'
 gem 'thin'
-gem 'underscore-rails', '~> 1.3'
-gem 'zero-clipboard-rails', '~> 1.0'
+gem 'underscore-rails', '~> 1.3.1'
+gem 'zclip-rails'
 gem 'yam', git: "https://#{ENV['GITHUB_TOKEN']}:x-oauth-basic@github.com/yammer/yam.git"
 
 # We currently use this forked repo as it allows you to nest links to add associations.

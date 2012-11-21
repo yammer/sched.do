@@ -3,6 +3,7 @@
 //= require jquery-ui
 //= require cocoon
 //= require underscore
-//= require zero-clipboard
+//= require swfobject
+//= require zclip
 //= require jquery.lean-modal
 //= require_tree .
