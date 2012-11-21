@@ -11,13 +11,13 @@
   </div>
   <ul class="poll-actions">
     <li>
-      <button id="copy-event-url" data-event-url="<%= event_url(@event) %>">
+      <button id="copy-event-url" class="icon-button" data-event-url="<%= event_url(@event) %>">
         Copy
       </button>
     </li>
     <% if current_user.able_to_edit?(@event) %>
       <li>
-        <%= link_to 'Edit Poll', edit_event_path(@event), class: "edit-button" %>
+        <%= link_to 'Edit Poll', edit_event_path(@event), class: "edit-button icon-button" %>
       </li>
     <% end %>
   </ul>
