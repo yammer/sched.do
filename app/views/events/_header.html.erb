@@ -1,15 +1,24 @@
 <% content_for :head do %>
-    <meta property="og:title" content="<%= @event.name %>" />
-    <meta property="og:type" content="poll" />
-    <meta property="og:url" content="<%= event_url(@event) %>" />
+  <meta property="og:title" content="<%= @event.name %>" />
+  <meta property="og:type" content="poll" />
+  <meta property="og:url" content="<%= event_url(@event) %>" />
 <% end %>
 
 <div class="event-header">
   <div class="event-name <%= "editable" if @event.user_owner?(current_user) %>">
     <h1><%= @event.name %></h1>
-      <%= text_field_tag :event_name, @event.name, maxlength: 70 %>
+    <%= text_field_tag :event_name, @event.name, maxlength: 70 %>
   </div>
-  <% if current_user.able_to_edit?(@event) %>
-    <%= link_to 'Edit Poll', edit_event_path(@event), class: "edit-button" %>
-  <% end %>
+  <ul class="poll-actions">
+    <li>
+      <button id="copy-event-url" data-event-url="<%= event_url(@event) %>">
+        Copy
+      </button>
+    </li>
+    <% if current_user.able_to_edit?(@event) %>
+      <li>
+        <%= link_to 'Edit Poll', edit_event_path(@event), class: "edit-button" %>
+      </li>
+    <% end %>
+  </ul>
 </div>

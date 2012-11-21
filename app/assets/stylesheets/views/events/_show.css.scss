@@ -44,18 +44,27 @@ div.show-event {
       }
     }
 
-    a.edit-button {
-      background-image: url('edit-icon.svg');
-      background-repeat: no-repeat;
+    ul.poll-actions {
+      position: relative;
       float: right;
-      height: 24px;
-      @include inline-block;
-      @include no-text;
-      padding: 0;
-      margin-top: 6px;
-      width: 24px;
-      opacity: 0.2;
-      @include transition(0.1s all ease-in);
+
+      li {
+        display: inline-block;
+
+        a.edit-button {
+          background-image: url('edit-icon.svg');
+          background-repeat: no-repeat;
+          float: right;
+          height: 24px;
+          @include inline-block;
+          margin-top: 6px;
+          @include no-text;
+          opacity: 0.2;
+          padding: 0;
+          @include transition(0.1s all ease-in);
+          width: 24px;
+        }
+      }
     }
 
     &:hover {
@@ -109,25 +118,6 @@ div.show-event {
       }
     }
 
-    .alt-invite {
-      height: 14px;
-
-      a.email-invite, div.copy-event-url {
-        @extend .button;
-        padding: 1px 5px;
-        font-size: 1.1em;
-        margin-top: -1px;
-        @include box-sizing(border-box);
-        cursor: pointer;
-        height: 100%;
-
-        &.copy-event-url {
-          padding-left: 0px;
-          padding-right: 0px;
-          text-align: center;
-        }
-      }
-    }
   }
 
   section.search-box, section.invitee-sharing {

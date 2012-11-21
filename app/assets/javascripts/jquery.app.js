@@ -152,19 +152,19 @@ $(document).ready(function() {
 
   // Enable click-to-copy
   var clip = new ZeroClipboard.Client();
+  // clip.setHandCursor(true);
 
-  clip.addEventListener( 'mouseDown', function(client) {
-    clip.setText( $('div.copy-event-url').data('event-url'));
-    $('div.copy-event-url span').text('URL Is Copied');
-  });
+  // clip.addEventListener( 'mouseDown', function(client) {
+  //   clip.setText( $('li.copy-event-url').data('event-url'));
+  // });
 
-  if( $('#copy-event-url').length > 0) {
-    clip.glue( 'copy-event-url', 'copy-url-container' );
-  }
+  // if( $('#copy-event-url').length > 0) {
+  //   clip.glue( 'copy-event-url', 'copy-url-container' );
+  // }
 
-  $(window).resize(function(){
-    clip.reposition();
-  });
+  // $(window).resize(function(){
+  //   clip.reposition();
+  // });
 
   // Shrink invitee name/email text size if it is too large to fit in the table cell
   $('div#invitees td span').each(function(){
