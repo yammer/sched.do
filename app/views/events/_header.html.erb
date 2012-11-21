@@ -10,13 +10,12 @@
     <%= text_field_tag :event_name, @event.name, maxlength: 70 %>
   </div>
   <ul class="poll-actions">
-    <li>
-      <button id="copy-event-url" class="icon-button" data-event-url="<%= event_url(@event) %>">
-        Copy
+    <li data-content="Copy Poll URL">
+      <button id="copy-event-url" class="icon-button" data-event-url="<%= event_url(@event) %>" >
       </button>
     </li>
     <% if current_user.able_to_edit?(@event) %>
-      <li>
+      <li data-content="Edit Poll">
         <%= link_to 'Edit Poll', edit_event_path(@event), class: "edit-button icon-button" %>
       </li>
     <% end %>
