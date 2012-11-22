@@ -203,7 +203,7 @@ describe Event, '#set_first_suggestion' do
 end
 
 describe Event, '#enqueue_event_created_job' do
-  it 'creates a delayed email notice job' do
+  it 'enqueues an EventCreatedEmailJob' do
     EventCreatedEmailJob.stubs(:enqueue)
 
     event = create(:event)
@@ -211,25 +211,14 @@ describe Event, '#enqueue_event_created_job' do
     EventCreatedEmailJob.should have_received(:enqueue).with(event)
   end
 
-  it 'creates a new instance of ActivityCreator' do
-    user = build_stubbed(:user)
-    event = build_stubbed(:event)
-    activity = ActivityCreator.new(user: user, action: 'create', event: event)
-    ActivityCreator.stubs(new: activity)
+  it 'enqueues a ActivityCreatorJob' do
+    ActivityCreatorJob.stubs(:enqueue)
 
+    action = 'create'
     event = create(:event)
+    user = event.owner
 
-    ActivityCreator.should have_received(:new).
-      with(user: event.owner, action: 'create', event: event)
-  end
-
-  it 'calls post on a new instance of ActivityCreator' do
-    activity_creator = stub('activity_creator', post: true)
-    ActivityCreator.stubs(new: activity_creator)
-
-    event = create(:event)
-
-    activity_creator.should have_received(:post)
+    ActivityCreatorJob.should have_received(:enqueue).with(user, action, event)
   end
 end
 

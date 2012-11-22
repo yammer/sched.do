@@ -213,33 +213,6 @@ describe User, '#yammer_user?' do
   end
 end
 
-describe User, '#create_yammer_activity' do
-  include DelayedJobSpecHelper
-
-  it 'creates a Yammer activity story' do
-    FakeYammer.activity_endpoint_hits.should == 0
-    user = build_stubbed(:user)
-    event = build_stubbed(:event)
-    event.generate_uuid
-
-    user.create_yammer_activity('update', event)
-    work_off_delayed_jobs
-
-    FakeYammer.activity_endpoint_hits.should == 1
-  end
-
-  it 'posts to the Yammer activity API' do
-    user = build_stubbed(:user)
-    event = build_stubbed(:event)
-    event.generate_uuid
-
-    expect {
-      user.create_yammer_activity('update', event)
-      work_off_delayed_jobs
-    }.to change(FakeYammer, :activity_endpoint_hits).by(1)
-  end
-end
-
 describe User, '#deliver_email_or_private_message' do
   include DelayedJobSpecHelper
 

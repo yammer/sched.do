@@ -23,10 +23,10 @@ class VoteConfirmationEmailJob < Struct.new(:vote_id)
   private
 
   def vote
-    found_vote || log_error_and_return_false
+    @vote ||= find_vote || log_error_and_return_false
   end
 
-  def found_vote
+  def find_vote
     Vote.find_by_id(vote_id)
   end
 

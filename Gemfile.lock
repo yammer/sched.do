@@ -6,8 +6,8 @@ GIT
     cocoon (1.0.20)
 
 GIT
-  remote: https://39c64eacaed334e9685e2a78afb48d366c914740:x-oauth-basic@github.com/yammer/yam.git
-  revision: b1a09af39fb7b81db3511eadb133b22d9929896e
+  remote: https://:x-oauth-basic@github.com/yammer/yam.git
+  revision: fb8f0b29a68cfe54466194ad7b3d50c2b62d3470
   specs:
     yam (0.0.2)
       faraday (~> 0.8.1)
@@ -15,7 +15,6 @@ GIT
       hashie (~> 1.2.0)
       multi_json (~> 1.3)
       oauth2 (~> 0.8.0)
-      rspec
 
 GEM
   remote: https://rubygems.org/
@@ -360,7 +359,7 @@ DEPENDENCIES
   tddium
   thin
   timecop
-  turnip (~> 1.0)
+  turnip (= 1.0)
   uglifier (>= 1.0)
   underscore-rails (~> 1.3)
   yam!

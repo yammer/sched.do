@@ -16,14 +16,6 @@ class ReminderCreatedJob < Struct.new(:reminder_id)
 
   private
 
-  def reminder
-    Reminder.find(reminder_id)
-  end
-
-  def sender
-    reminder.sender
-  end
-
   def configure_yammer
     Yam.configure do |config|
       config.oauth_token = sender.access_token
@@ -32,5 +24,13 @@ class ReminderCreatedJob < Struct.new(:reminder_id)
         config.endpoint = YAMMER_STAGING_ENDPOINT
       end
     end
+  end
+
+  def reminder
+    @reminder ||= Reminder.find(reminder_id)
+  end
+
+  def sender
+    @sender ||= reminder.sender
   end
 end

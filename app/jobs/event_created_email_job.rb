@@ -19,8 +19,4 @@ class EventCreatedEmailJob < Struct.new(:event_id)
   def event
     Event.find(event_id)
   end
-
-  def user
-    event.owner
-  end
 end

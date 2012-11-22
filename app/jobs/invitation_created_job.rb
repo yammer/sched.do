@@ -16,14 +16,6 @@ class InvitationCreatedJob < Struct.new(:invitation_id)
 
   private
 
-  def invitation
-    Invitation.find(invitation_id)
-  end
-
-  def sender
-    invitation.sender
-  end
-
   def configure_yammer
     Yam.configure do |config|
       if sender.yammer_user?
@@ -34,5 +26,13 @@ class InvitationCreatedJob < Struct.new(:invitation_id)
         end
       end
     end
+  end
+
+  def invitation
+    @invitation ||= Invitation.find(invitation_id)
+  end
+
+  def sender
+    @sender ||= invitation.sender
   end
 end

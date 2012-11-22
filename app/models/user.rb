@@ -28,10 +28,6 @@ class User < ActiveRecord::Base
     end
   end
 
-  def create_yammer_activity(action, event)
-    ActivityCreator.new(user: self, action: action, event: event).post
-  end
-
   def expire_token
     update_attributes(access_token: 'EXPIRED')
   end

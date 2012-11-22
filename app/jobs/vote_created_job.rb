@@ -6,38 +6,17 @@ class VoteCreatedJob < Struct.new(:vote_id)
     Delayed::Job.enqueue(new(vote.id), priority: PRIORITY)
   end
 
+  def perform
+    configure_yammer
+    enqueue_activity_creator_job
+    VoteConfirmationEmailJob.enqueue(vote)
+  end
+
   def error(job, exception)
     Airbrake.notify(exception)
   end
 
-  def perform
-    configure_yammer
-    voter.create_yammer_activity(ACTION, event)
-    VoteConfirmationEmailJob.enqueue(vote)
-  end
-
   private
-
-  def event
-    vote.event
-  end
-
-  def no_recent_votes
-    voter.
-      votes.
-      where(['id != ?', vote.id]).
-      where(['created_at > ?', VOTE_EMAIL_DELAY.ago]).
-      where(['created_at < ?', vote.created_at]).
-      empty?
-  end
-
-  def vote
-    Vote.find(vote_id)
-  end
-
-  def voter
-    vote.voter
-  end
 
   def configure_yammer
     Yam.configure do |config|
@@ -49,5 +28,23 @@ class VoteCreatedJob < Struct.new(:vote_id)
         end
       end
     end
+  end
+
+  def voter
+    @voter ||= vote.voter
+  end
+
+  def vote
+    @vote ||= Vote.find(vote_id)
+  end
+
+  def enqueue_activity_creator_job
+    if voter.yammer_user?
+      ActivityCreatorJob.enqueue(voter, ACTION, event)
+    end
+  end
+
+  def event
+    vote.event
   end
 end

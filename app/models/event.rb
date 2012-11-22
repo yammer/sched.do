@@ -92,7 +92,7 @@ class Event < ActiveRecord::Base
 
   def enqueue_event_created_jobs
     EventCreatedEmailJob.enqueue(self)
-    ActivityCreator.new(user: self.owner, action: 'create', event: self).post
+    ActivityCreatorJob.enqueue(self.owner, 'create', self)
   end
 
   def lacks_suggestions?

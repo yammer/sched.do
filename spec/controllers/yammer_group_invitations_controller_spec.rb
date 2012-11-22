@@ -36,9 +36,15 @@ describe YammerGroupInvitationsController, '.create' do
 
       Invitation.expects(:new).
         with(event_id: event.id.to_s, invitee: group, sender: event_creator).
-        returns(mock('invitation',
-                      save: false, event: event, errors: mock('errors',
-                                                               full_messages: mock('full messages', last: 'error'))))
+        returns(
+          mock(
+            'invitation', save: false, event: event, errors: mock(
+              'errors', full_messages: mock(
+                'full messages', last: 'error'
+              )
+            )
+          )
+        )
 
       post :create,
         invitation: {

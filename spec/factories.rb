@@ -98,5 +98,9 @@ FactoryGirl.define do
   factory :vote do
     suggestion
     association :voter, factory: :user
+
+    factory :guest_vote do
+      association :voter, factory: :guest
+    end
   end
 end
