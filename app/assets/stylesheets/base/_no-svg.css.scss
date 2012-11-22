@@ -30,11 +30,24 @@ html.no-svg {
     }
   }
 
-  // Vote Table
-  div.table-wrapper div.scroll-notice {
-    @include background-image(url(more-arrow.png));
+  // Event header
+  div.show-event {
+    div.event-header {
+      ul.poll-actions {
+        li {
+          button#copy-event-url {
+            @include background-image(url(link-icon.png));
+          }
+
+          a.edit-button {
+            @include background-image(url(edit-icon.png));
+          }
+        }
+      }
+    }
   }
 
+  // Vote Table
   div.table-wrapper div.options table tr.votable td form.vote li.action input[type="submit"].vote {
     background-image: url(checkmark-dimmed.png);
   }
