@@ -63,3 +63,16 @@
     @include colorful-container-text($color);
   }
 }
+
+// IE styles
+@mixin ie8 {
+  html.ie8 & {
+    @content;
+  }
+}
+
+@mixin ie9 {
+  html.ie9 & {
+    @content;
+  }
+}
