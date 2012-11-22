@@ -26,8 +26,5 @@ vendor/bundler_gems
 bin/
 coverage
 .tddium*
-
-# Remove this once Yam gem is public
-Gemfile.lock
 zeus.json
 vendor/cache
