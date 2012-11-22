@@ -6,4 +6,5 @@
 //= require swfobject
 //= require zclip
 //= require jquery.lean-modal
+//= require bootstrap-tooltip
 //= require_tree .

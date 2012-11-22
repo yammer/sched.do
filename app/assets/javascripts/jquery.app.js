@@ -140,31 +140,22 @@ $(document).ready(function() {
     }
   }
 
-  // Select event URL on click
-   $("input#event-url").click(function() {
-     $(this).select();
-   });
-
   // Enable dragging in touch devices on tables
   if (Modernizr.touch) {
     $('table.touch-scrollable').addClass('scrollable horizontal')
   }
 
-  // Enable click-to-copy
-  var clip = new ZeroClipboard.Client();
-  // clip.setHandCursor(true);
+  $('ul.poll-actions li').tooltip();
 
-  // clip.addEventListener( 'mouseDown', function(client) {
-  //   clip.setText( $('li.copy-event-url').data('event-url'));
-  // });
-
-  // if( $('#copy-event-url').length > 0) {
-  //   clip.glue( 'copy-event-url', 'copy-url-container' );
-  // }
-
-  // $(window).resize(function(){
-  //   clip.reposition();
-  // });
+  $('#copy-event-url').zclip({
+    copy: $('#copy-event-url').data('event-url'),
+    afterCopy: function() {
+      var parent = $('#copy-event-url').parent();
+      parent.attr('data-original-title', 'URL copied!');
+      parent.tooltip('show');
+      parent.attr('data-original-title', 'Copy Poll URL');
+    }
+  });
 
   // Shrink invitee name/email text size if it is too large to fit in the table cell
   $('div#invitees td span').each(function(){

@@ -1,0 +1,85 @@
+.tooltip {
+  position: absolute;
+  z-index: 99;
+  display: block;
+  visibility: visible;
+  padding: 5px;
+  font-size: 11px;
+  opacity: 0;
+
+  &.in {
+    opacity: 0.8;
+  }
+
+  &.top {
+    margin-top: -3px;
+  }
+
+  &.right {
+    margin-left: 3px;
+  }
+
+  &.bottom {
+    margin-top: 3px;
+  }
+
+  &.left {
+    margin-left: -3px;
+  }
+}
+
+// Wrapper for the tooltip content
+.tooltip-inner {
+  background-color: rgba(51,51,51,1);
+  @include background-image(linear-gradient(bottom, rgba(0,0,0,0.7) 0%,rgba(51,51,51,1) 100%));
+  @include border-radius(4px);
+  @include box-shadow(0px 0px 0px 1px rgba(0,0,0,1), inset 0px 1px 0px 0px rgba(255,255,255,.3));
+  color: #FFF;
+  max-width: 200px;
+  padding: 3px 8px;
+  text-align: center;
+  text-decoration: none;
+}
+
+// Arrows
+.tooltip-arrow {
+  border-color: transparent;
+  border-style: solid;
+  height: 0;
+  position: absolute;
+  width: 0;
+}
+
+.tooltip {
+  &.top .tooltip-arrow {
+    border-top-color: #000;
+    border-width: 5px 5px 0;
+    bottom: 0;
+    left: 50%;
+    margin-left: -5px;
+  }
+
+  &.right .tooltip-arrow {
+    border-right-color: #000;
+    border-width: 5px 5px 5px 0;
+    left: 0;
+    margin-top: -5px;
+    top: 50%;
+  }
+
+  &.left .tooltip-arrow {
+    border-left-color: #000;
+    border-width: 5px 0 5px 5px;
+    margin-top: -5px;
+    right: 0;
+    top: 50%;
+  }
+
+  &.bottom .tooltip-arrow {
+    border-bottom-color: #000;
+    border-width: 0 5px 5px;
+    left: 50%;
+    margin-left: -5px;
+    top: 0;
+  }
+}
