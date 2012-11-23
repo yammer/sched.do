@@ -32,16 +32,14 @@ html.no-svg {
 
   // Event header
   div.show-event {
-    div.event-header {
-      ul.poll-actions {
-        li {
-          button#copy-event-url {
-            @include background-image(url(link-icon.png));
-          }
+    ul.poll-actions {
+      li {
+        button#copy-event-url {
+          @include background-image(url(link-icon.png));
+        }
 
-          a.edit-button {
-            @include background-image(url(edit-icon.png));
-          }
+        a.edit-button {
+          @include background-image(url(edit-icon.png));
         }
       }
     }
