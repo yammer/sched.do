@@ -72,7 +72,7 @@ group :test do
   gem 'simplecov', require: false
   gem 'sinatra'
   gem 'timecop'
-  gem 'turnip', '~> 1.0'
+  gem 'turnip', '1.0'
   gem 'mocha'
 end
 
