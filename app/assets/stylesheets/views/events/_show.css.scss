@@ -73,10 +73,11 @@ div.show-event {
     z-index: 0;
 
     .event-name {
+      @include fill-parent;
       @include inline-block;
+      margin-left: 5%;
       position: relative;
       vertical-align: middle;
-      margin-left: 10%;
 
       > h1 {
         color: darken($bg-color, 35%);
@@ -106,9 +107,11 @@ div.show-event {
         color: darken($notice, 50%);
         display: none;
         font-family: $bariol-light;
-        font-size: 2em;
+        font-size: 2.5em;
+        margin-left: -5%;
         padding: 2px 0.2em 0px;
         text-align: center;
+        width: 110%;
       }
     }
   }
