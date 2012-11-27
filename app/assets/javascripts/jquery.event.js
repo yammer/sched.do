@@ -33,7 +33,6 @@ $(document).ready(function() {
 
   setLabel();
 
-
   scrollNotice.click(function() {
     var offsets = getCurrentOffset()
     var isRight = $(this).is('.forward');
