@@ -36,7 +36,7 @@ gem 'tddium'
 gem 'thin'
 gem 'underscore-rails', '~> 1.3'
 gem 'zclip-rails'
-gem 'yam', git: "https://#{ENV['GITHUB_TOKEN']}:x-oauth-basic@github.com/yammer/yam.git"
+gem 'yam', path: 'vendor/local_gems/yam/'
 
 # We currently use this forked repo as it allows you to nest links to add
 # associations. We can move back to the original gem when the gem fixes a bug
