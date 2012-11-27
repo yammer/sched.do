@@ -1,7 +1,6 @@
 div.show-event {
   @extend .sheet;
 
-
     ul.poll-actions {
       float: right;
 
@@ -349,7 +348,6 @@ div.show-event {
       }
     }
   }
-
 
   div.call-to-action {
     @extend %orange-container;
