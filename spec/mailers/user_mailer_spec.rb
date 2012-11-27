@@ -46,10 +46,10 @@ describe UserMailer, 'invitation' do
     guest = invitation.invitee
     event = invitation.event
 
-    mail = UserMailer.invitation(event.owner, invitation)
+    mail = UserMailer.invitation(invitation)
 
     mail['from'].to_s.should ==
-      %{"sched.do on behalf of #{event.owner}" <no-reply@sched.do>}
+      %{"sched.do on behalf of #{invitation.sender}" <no-reply@sched.do>}
   end
 
   it 'sends the email to the correct recipient' do
@@ -57,7 +57,7 @@ describe UserMailer, 'invitation' do
     guest = invitation.invitee
     event = invitation.event
 
-    mail = UserMailer.invitation(event.owner, invitation)
+    mail = UserMailer.invitation(invitation)
 
     mail.to.should == [guest.email]
   end
@@ -67,7 +67,7 @@ describe UserMailer, 'invitation' do
     guest = invitation.invitee
     event = invitation.event
 
-    mail = UserMailer.invitation(event.owner, invitation)
+    mail = UserMailer.invitation(invitation)
 
     mail.subject.should == "Help out #{event.owner}"
   end
@@ -78,7 +78,7 @@ describe UserMailer, 'invitation' do
     event = invitation.event
     first_invitee = event.invitees.first
 
-    mail = UserMailer.invitation(event.owner, invitation)
+    mail = UserMailer.invitation(invitation)
 
     mail.body.encoded.should include(guest.name)
     mail.body.encoded.should include(event.name)

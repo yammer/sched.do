@@ -5,7 +5,7 @@ describe Group do
   it { should validate_presence_of(:name) }
 end
 
-describe Group, '#deliver_email_or_private_message' do
+describe Group, '#invite' do
   include DelayedJobSpecHelper
 
   it 'sends a private message if in-network' do
@@ -13,7 +13,7 @@ describe Group, '#deliver_email_or_private_message' do
     invitation = build_stubbed(:invitation_with_group, invitee: invitee)
     owner = invitation.event.owner
 
-    invitee.deliver_email_or_private_message(:invitation, owner, invitation)
+    invitee.invite(invitation)
     work_off_delayed_jobs
 
     FakeYammer.messages_endpoint_hits.should == 1

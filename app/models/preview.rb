@@ -6,8 +6,7 @@ if Rails.env.development? || Rails.env.test?
 
     def invitation
       invitation = Invitation.last
-      event = invitation.event
-      UserMailer.invitation(event.owner, invitation)
+      UserMailer.invitation(invitation)
     end
 
     def vote_confirmation

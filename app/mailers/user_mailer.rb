@@ -13,9 +13,9 @@ class UserMailer < ActionMailer::Base
     )
   end
 
-  def invitation(sender, invitation)
+  def invitation(invitation)
     @guest = invitation.invitee
-    @sender = sender
+    @sender = invitation.sender
     @event = EventDecorator.decorate(invitation.event)
 
     mail(
@@ -25,13 +25,14 @@ class UserMailer < ActionMailer::Base
     )
   end
 
-  def reminder(sender, invitation)
+  def reminder(invitation, sender)
     @guest = invitation.invitee
+    @sender = invitation.sender
     @event = EventDecorator.decorate(invitation.event)
 
     mail(
       to: @guest.email,
-      from: from_text(sender.name),
+      from: from_text(@sender.name),
       subject:
         %{Reminder: Help out #{@event.owner} by voting on "#{@event.name}"}
     )

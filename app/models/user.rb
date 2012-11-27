@@ -52,17 +52,12 @@ class User < ActiveRecord::Base
     self[:image] || 'http://' + ENV['HOSTNAME'] + '/assets/no_photo.png'
   end
 
-  def deliver_email_or_private_message(message, sender, object)
-    if in_network?(sender)
-      PrivateMessenger.new(
-        recipient: self,
-        message: message,
-        sender: sender,
-        message_object: object
-      ).deliver
-    else
-      UserMailer.send(message, sender, object).deliver
-    end
+  def invite(invitation)
+    get_messenger(invitation, invitation.sender).invite
+  end
+
+  def remind(invitation, sender)
+    get_messenger(invitation, sender).remind
   end
 
   def to_s
@@ -111,6 +106,14 @@ class User < ActiveRecord::Base
 
   def in_network?(test_user)
     yammer_network_id == test_user.yammer_network_id
+  end
+
+  def get_messenger(invitation, sender)
+    if in_network?(sender)
+      return UserPrivateMessenger.new(invitation, sender)
+    else
+      return Messenger.new(invitation, sender)
+    end
   end
 
   def parse_email_from_response(response)

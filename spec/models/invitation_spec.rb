@@ -40,11 +40,11 @@ describe Invitation, '#create' do
   it 'invite_without_notification does not notify the invitee' do
     user = create(:user)
     event = create(:event)
-    user.stubs(:deliver_email_or_private_message)
+    user.stubs(:invite)
 
     Invitation.invite_without_notification(event, user)
 
-    user.should have_received(:deliver_email_or_private_message).never
+    user.should have_received(:invite).never
   end
 end
 
@@ -53,11 +53,11 @@ describe Invitation, '#deliver_reminder_from' do
   it 'sends a reminder to the invitee' do
     invitation = create(:invitation)
     invitee = invitation.invitee
-    invitee.stubs(:deliver_email_or_private_message)
+    invitee.stubs(:remind)
     sender = create(:user)
 
     invitation.deliver_reminder_from(sender)
 
-    invitee.should have_received(:deliver_email_or_private_message).once
+    invitee.should have_received(:remind).once
   end
 end

@@ -201,27 +201,25 @@ describe User, '#yammer_user?' do
   end
 end
 
-describe User, '#deliver_email_or_private_message' do
+describe User, '#invite' do
   include DelayedJobSpecHelper
 
   it 'if the user is out-network, it sends an email notification' do
     invitee = create(:out_network_user)
     invitation = build(:invitation_with_user, invitee: invitee)
-    mailer = stub('mailer', deliver: true)
-    UserMailer.stubs(invitation: mailer)
+    messenger_instance = mock('messenger instance', :invite)
+    Messenger.expects(:new).
+      with(invitation, invitation.sender).
+      returns(messenger_instance)
+
     organizer = invitation.sender
     event = invitation.event
 
-    invitee.deliver_email_or_private_message(
-      :invitation,
-      event.owner,
-      invitation
-    )
+    invitee.invite(invitation)
     work_off_delayed_jobs
 
     organizer.should_not be_in_network(invitee)
-    UserMailer.should have_received(:invitation).with(event.owner, invitation)
-    mailer.should have_received(:deliver).once
+    messenger_instance.should have_received(:invite)
   end
 
   it 'sends a private message notification, if the user is in-network' do
@@ -230,13 +228,17 @@ describe User, '#deliver_email_or_private_message' do
     organizer = invitation.sender
     owner = invitation.event.owner
 
-    invitee.deliver_email_or_private_message(:reminder, owner, invitation)
+    invitee.remind(invitation, owner)
     work_off_delayed_jobs
 
     organizer.should be_in_network(invitee)
     FakeYammer.messages_endpoint_hits.should == 1
     FakeYammer.message.should include(invitation.event.name)
   end
+end
+
+describe User, '#remind' do
+  include DelayedJobSpecHelper
 
   it 'hits the Yammer messages API, if the user is in-network' do
     invitee = build_stubbed(:user)
@@ -244,11 +246,7 @@ describe User, '#deliver_email_or_private_message' do
                                invitee: invitee)
 
     expect {
-      invitee.deliver_email_or_private_message(
-        :reminder,
-        invitation.event.owner,
-        invitation
-      )
+      invitee.remind(invitation, invitation.sender)
       work_off_delayed_jobs
     }.to change(FakeYammer, :messages_endpoint_hits).by(1)
   end
