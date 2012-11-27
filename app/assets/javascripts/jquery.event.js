@@ -35,8 +35,8 @@ $(document).ready(function() {
 
   scrollNotice.click(function() {
     var offsets = getCurrentOffset()
-    var isRight = $(this).is('.forward');
-    var distanceToScroll = isRight ? offsets.current + (offsets.total - offsets.current) : 0;
+    var isForward = $(this).is('.forward');
+    var distanceToScroll = isForward ? offsets.total : 0;
 
     parent.animate({ scrollLeft: distanceToScroll }, 300);
   });
