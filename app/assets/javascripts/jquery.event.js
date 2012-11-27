@@ -34,7 +34,7 @@ $(document).ready(function() {
   setLabel();
 
   scrollNotice.click(function() {
-    var offsets = getCurrentOffset()
+    var offsets = getCurrentOffset();
     var isForward = $(this).is('.forward');
     var distanceToScroll = isForward ? offsets.total : 0;
 
