@@ -5,6 +5,8 @@ $(document).ready(function() {
   }
   var table = $('table.touch-scrollable');
   var parent = $('table.touch-scrollable').parent();
+
+  // Scroll Notice
   var scrollNotice = $('div.scroll-notice')
   var scrollRight = $('div.scroll-notice.forward')
   var scrollLeft = $('div.scroll-notice.backward')
@@ -20,12 +22,10 @@ $(document).ready(function() {
     var offsets = getCurrentOffset()
 
     if (offsets.total > 0) {
-
+      scrollNotice.addClass('visible');
       if (offsets.current === 0) {
         scrollRight.removeClass('visible');
-        scrollLeft.addClass('visible');
-      } else {
-        scrollRight.addClass('visible');
+      } else if (offsets.current === offsets.total) {
         scrollLeft.removeClass('visible');
       }
     }
@@ -33,10 +33,13 @@ $(document).ready(function() {
 
   setLabel();
 
+
   scrollNotice.click(function() {
     var offsets = getCurrentOffset()
+    var isRight = $(this).is('.forward');
+    var distanceToScroll = isRight ? offsets.current + (offsets.total - offsets.current) : 0;
 
-    parent.animate({ scrollLeft: offsets.current }, 300);
+    parent.animate({ scrollLeft: distanceToScroll }, 300);
   });
 
   parent.scroll(function() {
@@ -47,6 +50,7 @@ $(document).ready(function() {
     setLabel();
   });
 
+  // Editable Event Name
   $('.event-name.editable h1').click(function(){
     $(this).hide();
     $('.event-name input').show().focus();
