@@ -1,7 +1,6 @@
-# SimpleCov calculates test coverage on rake. Output at 'coverage/index.html'
+# Calculates test coverage on rake. Output in 'coverage/index.html'
 require 'simplecov'
 
-# Start SimpleCov and exclude directories
 SimpleCov.start do
   add_filter "/support/"
   add_filter "/initializers/"
@@ -16,55 +15,69 @@ require 'turnip/capybara'
 require 'email_spec'
 require 'bourne'
 
-# Requires supporting ruby files with custom matchers and macros, etc,
-# in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
-# Capybara-webkit
 Capybara.javascript_driver = :webkit
-
-DatabaseCleaner.strategy = :truncation
 
 RSpec.configure do |config|
   config.mock_with :mocha
+
   config.include FactoryGirl::Syntax::Default
   config.include EmailSpec::Helpers
   config.include EmailSpec::Matchers
   config.include ActionView::Helpers::TextHelper
   config.include DelayedJob::Matchers
 
-  # If you're not using ActiveRecord, or you'd prefer not to run each of your
-  # examples within a transaction, remove the following line or assign false
-  # instead of true.
   config.use_transactional_fixtures = false
-
-  # If true, the base class of anonymous controllers will be inferred
-  # automatically. This will be the default behavior in future versions of
-  # rspec-rails.
   config.infer_base_class_for_anonymous_controllers = false
 
-  # Delay some jobs under Rspec
   Delayed::Worker.delay_jobs = true
 
-  # Acceptance tests before block
-  config.before(:each, type: :request) do
+  config.before(:suite) do
+    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.clean_with(:truncation)
+  end
 
-    # Clean before each run, otherwise JS scenarios leave records in the db
-    DatabaseCleaner.clean
-    ActionMailer::Base.deliveries.clear
+  config.before(type: :request) do
+    DatabaseCleaner.strategy = :truncation
+    DatabaseCleaner.start
     Dotenv.load
-
-    # Do not run Delayed Jobs during acceptance testing
     Delayed::Worker.delay_jobs = false
   end
 
-  # Unit tests before block
-  config.before(:each) do
-    FakeYammer.reset
+  config.after(type: :request) do
+    DatabaseCleaner.strategy = :transaction
   end
 
-  # Unit tests after block
+  config.before(:each) do
+    DatabaseCleaner.start
+    ActionMailer::Base.deliveries.clear
+    FakeYammer.reset
+    GC.disable
+  end
+
   config.after(:each) do
     DatabaseCleaner.clean
+    garbage_collect_once_per_second_for_faster_tests
+  end
+
+  def garbage_collect_once_per_second_for_faster_tests
+    if time_to_run_gc?
+      GC.enable
+      GC.start
+      last_gc_run = Time.now
+    end
+  end
+
+  def time_to_run_gc?
+    (Time.now - last_gc_run) > 1.0
+  end
+
+  def last_gc_run=(time)
+    @last_run = time
+  end
+
+  def last_gc_run
+    @last_run ||= Time.now
   end
 end

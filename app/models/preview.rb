@@ -1,7 +1,6 @@
 if Rails.env.development? || Rails.env.test?
   class Preview < MailView
     def event_created_confirmation(event)
-      event = Event.first
       UserMailer.event_created_confirmation(event)
     end
 

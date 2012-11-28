@@ -23,13 +23,13 @@ describe Event do
 
   it { should accept_nested_attributes_for(:suggestions).allow_destroy(true) }
 
-  it 'should allow the event to have one or more suggestions' do
+  it 'allows the event to have one or more suggestions' do
     event = create(:event)
 
     event.should be_valid
   end
 
-  it 'should not allow the event to have no suggestions' do
+  it 'requires an event to have suggestions' do
     event = create(:event)
     event.suggestions.destroy_all
 

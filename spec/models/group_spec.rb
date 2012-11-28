@@ -9,8 +9,8 @@ describe Group, '#deliver_email_or_private_message' do
   include DelayedJobSpecHelper
 
   it 'sends a private message if in-network' do
-    invitee = create(:group)
-    invitation = build(:invitation_with_group, invitee: invitee)
+    invitee = build_stubbed(:group)
+    invitation = build_stubbed(:invitation_with_group, invitee: invitee)
     owner = invitation.event.owner
 
     invitee.deliver_email_or_private_message(:invitation, owner, invitation)

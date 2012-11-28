@@ -10,6 +10,8 @@ class Suggestion < ActiveRecord::Base
     persisted_votes.size
   end
 
+  private
+
   def persisted_votes
     votes.select(&:persisted?)
   end

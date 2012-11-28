@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Preview, 'event_created_confirmation' do
   it 'sends the email to the correct recipient' do
-    event = create(:event)
+    event = build_stubbed(:event)
     creator = event.owner
 
     mail = Preview.new.event_created_confirmation(event)
