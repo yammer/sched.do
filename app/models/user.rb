@@ -101,11 +101,12 @@ class User < ActiveRecord::Base
     nil
   end
 
+  private
+
   def yammer_user_data
+    configure_yammer
     Yam.get("/users/#{yammer_user_id}")
   end
-
-  private
 
   def associate_each_invitation_with(guest)
     guest.invitations.each do |invitation|
@@ -120,5 +121,17 @@ class User < ActiveRecord::Base
   def parse_email_from_response(response)
     response['contact']['email_addresses'].
       detect{ |address| address['type'] == 'primary' }['address']
+  end
+
+  def configure_yammer
+    Yam.configure do |config|
+      if yammer_user?
+        config.oauth_token = access_token
+
+        if yammer_staging
+          config.endpoint = YAMMER_STAGING_ENDPOINT
+        end
+      end
+    end
   end
 end

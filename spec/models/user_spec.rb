@@ -185,11 +185,19 @@ describe User, '#guest?' do
 end
 
 describe User, '#fetch_yammer_user_data' do
+  it 'configures the access token for Yam' do
+    user = create(:user)
+
+    user.fetch_yammer_user_data
+
+    Yam.oauth_token.should == user.access_token
+  end
+
   it 'queries the Yammer Users API for Yammer Production data' do
     user = User.new(yammer_user_id: 123456,
                     access_token: 'Tokenz',
                     yammer_staging: false)
-    oauth_hash = user.yammer_user_data
+    oauth_hash = user.send(:yammer_user_data)
     before_user_id = user.yammer_user_id
 
     user.fetch_yammer_user_data
