@@ -207,11 +207,11 @@ div.show-event {
 
       div.copy-event-url {
         &.copy-event-url span{
-          width: 104px;
           @include inline-block;
           padding-left: 0px;
           padding-right: 0px;
           text-align: center;
+          width: 104px;
         }
 
         img {
