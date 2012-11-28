@@ -12,9 +12,9 @@ Gem::Specification.new do |gem|
   gem.summary       = %q{A Ruby wrapper for the Yammer REST API}
   gem.homepage      = %q{https://github.com/yammer/yam}
 
-  gem.files         = `git ls-files`.split($/)
-  gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
-  gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
+  # gem.files         = `git ls-files`.split($/)
+  # gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
+  # gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ["lib"]
 
   gem.add_dependency 'hashie', '~> 1.2.0'
