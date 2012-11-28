@@ -2,13 +2,7 @@ html.no-svg {
 
   // Welcome Index
   body.welcome {
-    div.welcome {
-      div.sign-in a.sign-in {
-        @include background-image(url(yammer-logo.png));
-      }
-    }
-
-    div.footer-sign-in a.sign-in {
+    div.sign-in > input.sign-in {
       @include background-image(url(yammer-logo.png));
     }
   }

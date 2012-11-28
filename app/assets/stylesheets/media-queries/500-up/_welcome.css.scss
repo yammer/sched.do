@@ -30,15 +30,6 @@ body.welcome {
     }
   }
 
-  div.sign-in {
-    input {
-      &.sign-in {
-        max-width: 400px;
-        margin-top: 50px;
-      }
-    }
-  }
-
   section.steps {
     img {
       &.step-number {
@@ -51,6 +42,17 @@ body.welcome {
         font-size: 3em;
         padding: 70px 0 80px;
       }
+    }
+  }
+}
+
+div.sign-in {
+  input.sign-in {
+    margin-top: 50px;
+    max-width: 400px;
+
+    &.footer-sign-in {
+      max-width: 400px;
     }
   }
 }

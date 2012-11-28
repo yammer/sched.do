@@ -106,24 +106,11 @@ body.welcome {
         }
       }
     }
-
-    div.sign-in {
-      @extend div.logo;
-
-      > input {
-        display: block;
-
-        &.sign-in {
-          @extend .button;
-          @extend .yammer-button;
-          margin-bottom: 0;
-        }
-      }
-    }
   }
 
   section.steps {
     width: 100%;
+    position: relative;
     @include box-sizing(border-box);
 
     img {
@@ -195,16 +182,25 @@ body.welcome {
       }
     }
   }
+}
 
-  div.footer-sign-in {
-    text-align: center;
+div.sign-in {
+  text-align: center;
 
-    input.sign-in {
-      @extend .button;
-      @extend .yammer-button;
-      display: block;
-      margin-bottom: 0px;
-      padding: 10px 60px 10px 100px;
+  input.sign-in {
+    @extend .button;
+    @extend .yammer-button;
+    display: block;
+    margin-bottom: 0;
+
+    &.footer-sign-in {
+      font-size: 1.3em;
+      max-width: 400px;
+      padding: 10px 60px 10px 80px;
+
+      @include ie8 {
+        width:400px;
+      }
     }
   }
 }
