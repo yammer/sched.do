@@ -130,6 +130,8 @@ class User < ActiveRecord::Base
 
         if yammer_staging
           config.endpoint = YAMMER_STAGING_ENDPOINT
+        else
+          config.endpoint = YAMMER_ENDPOINT
         end
       end
     end

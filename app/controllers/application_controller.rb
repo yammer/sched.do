@@ -36,6 +36,8 @@ class ApplicationController < ActionController::Base
 
       if staging
         config.endpoint = YAMMER_STAGING_ENDPOINT
+      else
+        config.endpoint = YAMMER_ENDPOINT
       end
     end
   end

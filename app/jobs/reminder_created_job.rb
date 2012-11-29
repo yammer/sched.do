@@ -22,6 +22,8 @@ class ReminderCreatedJob < Struct.new(:reminder_id)
 
       if sender.yammer_staging
         config.endpoint = YAMMER_STAGING_ENDPOINT
+      else
+        config.endpoint = YAMMER_ENDPOINT
       end
     end
   end

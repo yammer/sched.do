@@ -25,6 +25,8 @@ class VoteCreatedJob < Struct.new(:vote_id)
 
         if voter.yammer_staging
           config.endpoint = YAMMER_STAGING_ENDPOINT
+        else
+          config.endpoint = YAMMER_ENDPOINT
         end
       end
     end
