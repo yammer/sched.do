@@ -41,6 +41,7 @@ $(document).ready(function() {
       $(window).scrollTop(0);
       var termsOfServicePrompt = '<div id=flash-error>Please agree to the terms of service</div>';
       $('.flash').html(termsOfServicePrompt);
+      $('#flash-error').delay(3000).fadeTo(300, 0);
       $('input[name=agree_to_tos][type=checkbox]').prop('checked', true);
      }
   }
