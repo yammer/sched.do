@@ -26,6 +26,14 @@ div.table-wrapper {
     right: -10px;
     text-align: center;
 
+    @include ie8 {
+      filter: alpha(opacity=0);
+
+      &.visible {
+        filter: alpha(opacity=100);
+      }
+    }
+
     &.visible {
       opacity: 1;
     }
