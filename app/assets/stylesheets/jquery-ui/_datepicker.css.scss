@@ -8,10 +8,11 @@
 .ui-datepicker {
   @include box-sizing(border-box);
   display: none;
-  padding: 1em;
   height: 280px;
+  padding: 1em;
+  position: relative;
 
-  &::before {
+  &:before {
     background: #000;
     border: 1px solid #000;
     bottom: -11px;
@@ -23,6 +24,17 @@
     position: absolute;
     @include transform(rotate(45deg));
     width: 20px;
+
+    @include ie8 {
+      background: transparent;
+      border-left:10px solid transparent;
+      border-right:10px solid transparent;
+      border-top:10px solid #2f2f2f;
+      font-size:0px;
+      height:0px;
+      line-height:0px;
+      width:0px;
+    }
   }
 
   .ui-datepicker-header {
