@@ -301,15 +301,16 @@ div.table-wrapper {
             div.reminder-wrapper {
               a.remind {
                 background: lighten($bg-color, 1%);
-                @include inline-block;
-                color: darken($bg-color, 20%);
                 border: 1px solid darken($bg-color, 2%);
                 @include border-radius(3px);
+                color: darken($bg-color, 20%);
                 font-size: 0.8em;
-                padding: 3px 8px;
+                @include inline-block;
+                min-width: 45%;
+                padding: 6px;
 
                 &:hover {
-                  @extend .blue-button;
+                  @extend .light-cta-button;
                 }
               }
             }
