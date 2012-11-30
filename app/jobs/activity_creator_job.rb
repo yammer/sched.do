@@ -15,9 +15,6 @@ class ActivityCreatorJob < Struct.new(:user_id, :action, :event_id)
   def perform
     configure_yammer
     post_yammer_activity
-  rescue Faraday::Error::ClientError
-    log_error
-    user.expire_token
   end
 
   def error(job, exception)
@@ -70,9 +67,5 @@ class ActivityCreatorJob < Struct.new(:user_id, :action, :event_id)
 
   def event
     @event ||= Event.find(event_id)
-  end
-
-  def log_error
-    Rails.logger.error("ActivityCreatorJob has failed. JSON was #{json_payload}")
   end
 end

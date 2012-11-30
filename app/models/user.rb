@@ -28,10 +28,6 @@ class User < ActiveRecord::Base
     end
   end
 
-  def expire_token
-    update_attributes(access_token: 'EXPIRED')
-  end
-
   def guest?
     false
   end

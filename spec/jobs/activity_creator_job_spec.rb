@@ -42,35 +42,6 @@ describe ActivityCreatorJob, '#perform' do
     Yam.should have_received(:post).with('/activity', expected_json(event))
   end
 
-  it 'expires the access_token if it is stale' do
-    user = build_user('OLDTOKEN')
-    action = 'vote'
-    event = build_stubbed(:event)
-    Yam.oauth_token = user.access_token
-    Event.stubs(find: event)
-    User.stubs(find: user)
-
-    ActivityCreatorJob.new(user, action, event).perform
-
-    user.access_token.should == 'EXPIRED'
-    Yam.set_defaults
-  end
-
-  it 'logs an error if the access token is stale' do
-    fake_logger = stub(error: 'error message')
-    Rails.stubs(logger: fake_logger)
-    user = build_user('OLDTOKEN')
-    action = 'vote'
-    event = build_stubbed(:event)
-    Yam.oauth_token = user.access_token
-    Event.stubs(find: event)
-    User.stubs(find: user)
-
-    ActivityCreatorJob.new(user, action, event).perform
-
-    fake_logger.should have_received(:error)
-  end
-
   private
 
   def build_user(token = 'ABC123')

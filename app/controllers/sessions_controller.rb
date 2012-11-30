@@ -49,4 +49,16 @@ class SessionsController < ApplicationController
     session[:name] = nil
     session[:email] = nil
   end
+
+  def omniauth
+    request.env['omniauth.auth']
+  end
+
+  def omniauth_token
+    omniauth.try(:[],:credentials).try(:[],:token)
+  end
+
+  def omniauth_staging?
+    (omniauth.try(:[],:provider) == 'yammer_staging')
+  end
 end

@@ -87,16 +87,6 @@ describe User, '#able_to_edit?' do
   end
 end
 
-describe User, '#expire_token' do
-  it 'sets the user access_token to EXPIRED' do
-    user = create(:user, access_token: '123456')
-
-    user.expire_token
-
-    user.access_token.should == 'EXPIRED'
-  end
-end
-
 describe User, '#image' do
   it 'returns the placeholder if there is no image' do
     user = build_stubbed(:user, image: nil)

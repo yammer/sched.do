@@ -2,8 +2,6 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
 
   before_filter :require_yammer_login
-  before_filter :check_blank_token
-  before_filter :set_token_and_endpoint
 
   hide_action :current_user=
 
@@ -18,55 +16,12 @@ class ApplicationController < ActionController::Base
     @current_user = user
   end
 
-  def set_token_and_endpoint
-    if signed_in?
-      oauth_token = current_user.access_token
-      staging = current_user.yammer_staging
-    elsif session[:event_id].present?
-      event = Event.find_by_uuid!(session[:event_id])
-      oauth_token = event.owner.access_token
-      staging = event.owner.yammer_staging
-    else
-      oauth_token = omniauth_token
-      staging = omniauth_staging?
-    end
-
-    Yam.configure do |config|
-      config.oauth_token = oauth_token
-
-      if staging
-        config.endpoint = YAMMER_STAGING_ENDPOINT
-      else
-        config.endpoint = YAMMER_ENDPOINT
-      end
-    end
-  end
-
   def current_user
     @current_user ||= CurrentUser.find(
       cookies.try(:signed).try(:[], :yammer_user_id),
       session[:name],
       session[:email]
     )
-  end
-
-  def check_blank_token
-    if current_user_has_expired_token?
-      current_user.reset_token
-      redirect_to sign_out_path
-    end
-  end
-
-  def omniauth
-    request.env['omniauth.auth']
-  end
-
-  def omniauth_token
-    omniauth.try(:[],:credentials).try(:[],:token)
-  end
-
-  def omniauth_staging?
-    (omniauth.try(:[],:provider) == 'yammer_staging')
   end
 
   def require_yammer_login
@@ -91,10 +46,6 @@ class ApplicationController < ActionController::Base
   end
 
   private
-
-  def current_user_has_expired_token?
-    signed_in? && current_user.access_token == 'EXPIRED'
-  end
 
   def referred_from_yammer?
     referring_site.include?('yammer.com')
