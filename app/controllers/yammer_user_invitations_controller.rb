@@ -18,8 +18,8 @@ class YammerUserInvitationsController < ApplicationController
 
   def auth
     {
-      access_token: @event.owner.access_token,
-      yammer_staging: @event.owner.yammer_staging?,
+      access_token: current_user.access_token,
+      yammer_staging: current_user.yammer_staging?,
       yammer_user_id: invitee_id
     }
   end

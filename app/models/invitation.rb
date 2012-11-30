@@ -18,10 +18,6 @@ class Invitation < ActiveRecord::Base
 
   after_create :queue_invitation_created_job, unless: :skip_notification
 
-  def access_token
-    event.owner.access_token
-  end
-
   def self.invite_without_notification(event, invitee)
     create(
       event: event,

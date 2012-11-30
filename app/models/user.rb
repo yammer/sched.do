@@ -65,10 +65,6 @@ class User < ActiveRecord::Base
     end
   end
 
-  def reset_token
-    update_attributes(access_token: 'RESET')
-  end
-
   def to_s
     name
   end

@@ -18,13 +18,6 @@ step 'I sign in as a different user' do
   sign_in
 end
 
-step 'I am signed in with an old token' do
-  email = 'happy@example.com'
-  token = 'OLDTOKEN'
-  mock_yammer_oauth(email, token)
-  sign_in
-end
-
 step 'I deny access to Yammer' do
   mock_deny_yammer_oauth
   sign_in

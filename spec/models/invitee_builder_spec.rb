@@ -39,7 +39,8 @@ describe InviteeBuilder, 'find_user_by_email_or_create_guest' do
 
     it 'creates a User if it finds an existing Yammer user' do
       invitation = create(:invitation)
-      access_token = invitation.access_token
+      event_owner = invitation.event.owner
+      access_token = event_owner.access_token
       yammer_staging = false
       invitee_email = 'ralph@example.com'
       invitee_user_id = 1488374236

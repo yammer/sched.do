@@ -100,16 +100,6 @@ describe User, '#image' do
   end
 end
 
-describe User, '#reset_token' do
-  it 'changes the user access_token to RESET' do
-    user = create(:user, access_token: '123456')
-
-    user.reset_token
-
-    user.access_token.should == 'RESET'
-  end
-end
-
 describe User, '#votes' do
   it 'returns the users votes if there are any' do
     user = create(:user)

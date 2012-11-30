@@ -5,9 +5,9 @@ class Vote < ActiveRecord::Base
   belongs_to :voter, polymorphic: true
 
   validates :suggestion_id, presence: true
+  validates :suggestion_id, uniqueness: { scope: [:voter_type, :voter_id] }
   validates :voter_id, presence: true
   validates :voter_type, presence: true
-  validates :suggestion_id, uniqueness: { scope: [:voter_type, :voter_id] }
 
   after_create :queue_vote_created_job
 
