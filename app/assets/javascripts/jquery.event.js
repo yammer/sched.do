@@ -69,6 +69,5 @@ $(document).ready(function() {
           $('.event-name h1').show();
         }
         );
-
   })
 });
