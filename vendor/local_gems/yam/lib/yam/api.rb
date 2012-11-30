@@ -36,8 +36,10 @@ module Yam
       end
     end
 
-    def initialize(options={}, &block)
-      setup(options)
+    def initialize(oauth_token, endpoint)
+      @oauth_token = oauth_token
+      @endpoint = endpoint
+      setup({})
     end
 
     def setup(options={})

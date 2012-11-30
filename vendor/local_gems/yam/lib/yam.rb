@@ -30,8 +30,8 @@ module Yam
     # Alias for Yam::Client.new
     #
     # @return [Yam::Client]
-    def new(options = {}, &block)
-      @api_client = Yam::Client.new(options, &block)
+    def new(oauth_token, endpoint)
+      @api_client = Yam::Client.new(oauth_token, endpoint)
     end
 
     # Delegate to Yam::Client
