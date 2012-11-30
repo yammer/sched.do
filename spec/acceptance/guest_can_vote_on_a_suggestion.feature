@@ -9,13 +9,19 @@ Feature: Guests can vote on suggestions
     When I vote for "lunch"
     Then I should see that "lunch" has 1 vote
 
-  Scenario: Guest gets a vote confimation email
-    Given someone created an event named "Clown party" with a suggestion of "lunch"
+  Scenario Outline: Guest gets a vote confimation email
+    Given someone <profile_image> a profile image created an event named "Clown party" with a suggestion of "lunch"
     And "guest@example.com" was invited to the event "Clown party"
     And I am signed in as the guest "guest@example.com"
     When I view the "Clown party" event
     And I vote for "lunch"
     Then I should receive a vote confirmation email with a link to "Clown party"
+    And the email <should_include_image> contain an image of the owner of "Clown party"
+
+    Examples:
+      | profile_image | should_include_image |
+      | with          | should               |
+      | without       |should not            |
 
   Scenario: Guest can undo their vote for a suggestion
     Given someone created an event named "Clown party" with a suggestion of "lunch"

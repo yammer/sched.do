@@ -118,4 +118,19 @@ describe UserMailer, 'vote_confirmation' do
     mail.body.encoded.should include(user_name)
     mail.body.encoded.should include(event_name)
   end
+
+  it 'includes the last paragraph if the voter is not the poll creator' do
+    vote = build_stubbed(:vote)
+    voter = build_stubbed(:user)
+    vote.voter = voter
+    mail = UserMailer.vote_confirmation(vote)
+    mail.body.encoded.should include 'Did you know you can send your own polls for free?'
+  end
+
+  it 'omits the last paragraph if the voter is the poll creator' do
+    vote = build_stubbed(:vote)
+    vote.voter = vote.event.owner
+    mail = UserMailer.vote_confirmation(vote)
+    mail.body.encoded.should_not include 'Did you know you can send your own polls for free?'
+  end
 end
