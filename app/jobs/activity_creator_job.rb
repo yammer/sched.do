@@ -23,26 +23,12 @@ class ActivityCreatorJob < Struct.new(:user_id, :action, :event_id)
 
   private
 
-  def configure_yammer
-    Yam.configure do |config|
-      if user.yammer_user?
-        config.oauth_token = user.access_token
-
-        if user.yammer_staging
-          config.endpoint = YAMMER_STAGING_ENDPOINT
-        else
-          config.endpoint = YAMMER_ENDPOINT
-        end
-      end
-    end
-  end
-
   def user
     @user ||= User.find(user_id)
   end
 
   def post_yammer_activity
-    Yam.post('/activity', json_payload)
+    user.yammer_session.post('/activity', json_payload)
   end
 
   def json_payload

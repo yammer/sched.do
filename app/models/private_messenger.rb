@@ -73,7 +73,7 @@ class PrivateMessenger
   end
 
   def send_group_message
-    Yam.post(
+    @sender.yammer_session.post(
       "/messages",
       body: @message_body,
       group_id: @recipient.yammer_group_id,
@@ -82,7 +82,7 @@ class PrivateMessenger
   end
 
   def send_user_message
-    Yam.post(
+    @sender.yammer_session.post(
       "/messages",
       body: @message_body,
       direct_to_id: @recipient.yammer_user_id,

@@ -7,7 +7,6 @@ class VoteCreatedJob < Struct.new(:vote_id)
   end
 
   def perform
-    configure_yammer
     enqueue_activity_creator_job
     VoteConfirmationEmailJob.enqueue(vote)
   end
@@ -17,20 +16,6 @@ class VoteCreatedJob < Struct.new(:vote_id)
   end
 
   private
-
-  def configure_yammer
-    Yam.configure do |config|
-      if voter.yammer_user?
-        config.oauth_token = voter.access_token
-
-        if voter.yammer_staging
-          config.endpoint = YAMMER_STAGING_ENDPOINT
-        else
-          config.endpoint = YAMMER_ENDPOINT
-        end
-      end
-    end
-  end
 
   def voter
     @voter ||= vote.voter

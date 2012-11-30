@@ -93,11 +93,14 @@ class User < ActiveRecord::Base
     nil
   end
 
+  def yammer_session
+    @yam ||= Yam.new(user.access_token, yammer_endpoint)
+  end
+
   private
 
   def yammer_user_data
-    configure_yammer
-    Yam.get("/users/#{yammer_user_id}")
+    yammer_session.get("/users/#{yammer_user_id}")
   end
 
   def associate_each_invitation_with(guest)
@@ -115,17 +118,6 @@ class User < ActiveRecord::Base
       detect{ |address| address['type'] == 'primary' }['address']
   end
 
-  def configure_yammer
-    Yam.configure do |config|
-      if yammer_user?
-        config.oauth_token = access_token
-
-        if yammer_staging
-          config.endpoint = YAMMER_STAGING_ENDPOINT
-        else
-          config.endpoint = YAMMER_ENDPOINT
-        end
-      end
-    end
-  end
-end
+  def yammer_endpoint
+    yammer_staging ? YAMMER_STAGING_ENDPOINT : YAMMER_ENDPOINT
+  end end

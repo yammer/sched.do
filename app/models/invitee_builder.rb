@@ -30,7 +30,7 @@ class InviteeBuilder
   end
 
   def find_user_id_by_email
-    Yam.get(
+    @event.owner.yammer_session.get(
       '/users/by_email',
       email: @email
     ).try(:first).try(:id)
