@@ -120,4 +120,5 @@ class User < ActiveRecord::Base
 
   def yammer_endpoint
     yammer_staging ? YAMMER_STAGING_ENDPOINT : YAMMER_ENDPOINT
-  end end
+  end
+end
