@@ -5,7 +5,7 @@ class Guest < ActiveRecord::Base
   has_many :invitations, as: :invitee
   has_many :votes, as: :voter
 
-  strip_attributes only: [:email]
+  before_validation :strip_email_whitespace
 
   validates :email, presence: true, uniqueness: true
   validates :email, email: true
@@ -81,5 +81,11 @@ class Guest < ActiveRecord::Base
 
   def yammer_staging
     false
+  end
+
+  private
+
+  def strip_email_whitespace
+    self.email = email.try(:strip)
   end
 end

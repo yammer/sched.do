@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
   has_many :votes, as: :voter
   has_many :invitations, as: :invitee
 
-  strip_attributes only: [:email]
+  before_validation :strip_email_whitespace
 
   validates :email, email: true
   validates :encrypted_access_token, presence: true
@@ -120,5 +120,9 @@ class User < ActiveRecord::Base
 
   def yammer_endpoint
     yammer_staging ? YAMMER_STAGING_ENDPOINT : YAMMER_ENDPOINT
+  end
+
+  def strip_email_whitespace
+    self.email = email.try(:strip)
   end
 end
