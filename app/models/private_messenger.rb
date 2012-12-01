@@ -74,7 +74,7 @@ class PrivateMessenger
 
   def send_group_message
     @sender.yammer_session.post(
-      "/messages",
+      '/messages',
       body: @message_body,
       group_id: @recipient.yammer_group_id,
       og_url: event_url(@event)
@@ -83,7 +83,7 @@ class PrivateMessenger
 
   def send_user_message
     @sender.yammer_session.post(
-      "/messages",
+      '/messages',
       body: @message_body,
       direct_to_id: @recipient.yammer_user_id,
       og_url: event_url(@event)
