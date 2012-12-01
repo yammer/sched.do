@@ -33,7 +33,7 @@ module Yam
           ACCEPT_CHARSET   => 'utf-8',
           USER_AGENT       => user_agent
         },
-        :ssl => { :verify => true },
+        :ssl => { :verify => false },
         :url => options.fetch(:endpoint) { endpoint }
       }.merge(options)
     end
