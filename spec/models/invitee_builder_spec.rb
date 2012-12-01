@@ -30,7 +30,7 @@ describe InviteeBuilder, 'find_user_by_email_or_create_guest' do
       access_token = invitation.sender.access_token
       invitee_email = 'ralph@example.com'
       yam_client_stub = mock('yam session', :get)
-      Yam.stubs(:new)
+      Yam.stubs(:new).returns(yam_client_stub)
 
       InviteeBuilder.new(invitee_email, invitation.event).
         find_user_by_email_or_create_guest
