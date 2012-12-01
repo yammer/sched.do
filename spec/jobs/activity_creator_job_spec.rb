@@ -26,7 +26,7 @@ describe ActivityCreatorJob, '#perform' do
 
     ActivityCreatorJob.new(user, action, event).perform
 
-    user.yammer_session.oauth_token.should == user.access_token
+    user.yammer_client.oauth_token.should == user.access_token
   end
 
   it 'posts to the Yammer activity endpoint' do

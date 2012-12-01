@@ -1,5 +1,3 @@
-# Methods for User to interact with Yammer APIs
-
 class YammerUser
   def initialize(auth)
     @access_token = auth[:access_token]

@@ -58,7 +58,7 @@ describe VoteCreatedJob, '#perform' do
 
     VoteCreatedJob.new.perform
 
-    voter.yammer_session.oauth_token.should == voter.access_token
+    voter.yammer_client.oauth_token.should == voter.access_token
   end
 end
 

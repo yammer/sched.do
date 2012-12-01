@@ -93,14 +93,14 @@ class User < ActiveRecord::Base
     nil
   end
 
-  def yammer_session
+  def yammer_client
     @yam ||= Yam.new(access_token, yammer_endpoint)
   end
 
   private
 
   def yammer_user_data
-    yammer_session.get("/users/#{yammer_user_id}")
+    yammer_client.get("/users/#{yammer_user_id}")
   end
 
   def associate_each_invitation_with(guest)
