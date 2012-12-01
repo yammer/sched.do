@@ -94,7 +94,7 @@ class User < ActiveRecord::Base
   end
 
   def yammer_session
-    @yam ||= Yam.new(user.access_token, yammer_endpoint)
+    @yam ||= Yam.new(access_token, yammer_endpoint)
   end
 
   private

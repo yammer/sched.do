@@ -10,7 +10,6 @@ class InvitationCreatedJob < Struct.new(:invitation_id)
   end
 
   def perform
-    configure_yammer
     invitation.deliver_invitation
   end
 

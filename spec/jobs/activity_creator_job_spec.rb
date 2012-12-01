@@ -26,7 +26,7 @@ describe ActivityCreatorJob, '#perform' do
 
     ActivityCreatorJob.new(user, action, event).perform
 
-    Yam.oauth_token.should == user.access_token
+    user.yammer_session.oauth_token.should == user.access_token
   end
 
   it 'posts to the Yammer activity endpoint' do
@@ -35,11 +35,12 @@ describe ActivityCreatorJob, '#perform' do
     event = build_stubbed(:event)
     User.stubs(find: user)
     Event.stubs(find: event)
-    Yam.stubs(:post)
+    yam_session_stub = mock('yam session', :post)
+    Yam.stubs(:new).returns(yam_session_stub)
 
     ActivityCreatorJob.new(user, action, event).perform
 
-    Yam.should have_received(:post).with('/activity', expected_json(event))
+    yam_session_stub.should have_received(:post).with('/activity', expected_json(event))
   end
 
   private

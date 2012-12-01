@@ -29,12 +29,13 @@ describe InviteeBuilder, 'find_user_by_email_or_create_guest' do
       invitation = create(:invitation)
       access_token = invitation.sender.access_token
       invitee_email = 'ralph@example.com'
-      Yam.stubs(:get)
+      yam_client_stub = mock('yam session', :get)
+      Yam.stubs(:new)
 
       InviteeBuilder.new(invitee_email, invitation.event).
         find_user_by_email_or_create_guest
 
-      Yam.should have_received(:get)
+      yam_client_stub.should have_received(:get)
     end
 
     it 'creates a User if it finds an existing Yammer user' do

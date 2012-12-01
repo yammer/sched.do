@@ -170,7 +170,7 @@ describe User, '#fetch_yammer_user_data' do
 
     user.fetch_yammer_user_data
 
-    Yam.oauth_token.should == user.access_token
+    user.yammer_session.oauth_token.should == user.access_token
   end
 
   it 'queries the Yammer Users API for Yammer Production data' do

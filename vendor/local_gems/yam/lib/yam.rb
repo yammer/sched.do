@@ -31,18 +31,20 @@ module Yam
     #
     # @return [Yam::Client]
     def new(oauth_token, endpoint)
+      # @oauth_token = oauth_token
+      # @endpoint = endpoint
       @api_client = Yam::Client.new(oauth_token, endpoint)
     end
 
     # Delegate to Yam::Client
     #
-    def method_missing(method, *args, &block)
-      return super unless new.respond_to?(method)
-      new.send(method, *args, &block)
-    end
+    # def method_missing(method, *args, &block)
+    #   return super unless new(@oauth_token, @endpoint).respond_to?(method)
+    #   new(@oauth_token, @endpoint).send(method, *args, &block)
+    # end
 
-    def respond_to?(method, include_private = false)
-      new.respond_to?(method, include_private) || super(method, include_private)
-    end
+    # def respond_to?(method, include_private = false)
+    #   new(@oauth_token, @endpoint).respond_to?(method, include_private) || super(method, include_private)
+    # end
   end
 end

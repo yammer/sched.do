@@ -26,6 +26,7 @@ module Yam
     include Connection
     include Request
     attr_reader *Configuration::VALID_OPTIONS_KEYS
+    attr_reader :oauth_token, :endpoint
 
     class_eval do
       Configuration::VALID_OPTIONS_KEYS.each do |key|
@@ -49,10 +50,10 @@ module Yam
       end
     end
 
-    def method_missing(method, *args, &block)
-      if method.to_s.match /^(.*)\?$/
-        return !self.send($1.to_s).nil?
-      end
-    end
+    # def method_missing(method, *args, &block)
+    #   if method.to_s.match /^(.*)\?$/
+    #     return !self.send($1.to_s).nil?
+    #   end
+    # end
   end
 end

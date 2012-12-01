@@ -13,7 +13,6 @@ class ActivityCreatorJob < Struct.new(:user_id, :action, :event_id)
   end
 
   def perform
-    configure_yammer
     post_yammer_activity
   end
 
