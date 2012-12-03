@@ -342,7 +342,7 @@ div.show-event {
           padding: 0.5em 1em;
 
           &:hover {
-            @extend .blue-button;
+            @extend .light-cta-button;
           }
         }
       }
