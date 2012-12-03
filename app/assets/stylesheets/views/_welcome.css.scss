@@ -194,12 +194,13 @@ div.sign-in {
     margin-bottom: 0;
 
     &.footer-sign-in {
-      font-size: 1.3em;
-      max-width: 400px;
-      padding: 10px 60px 10px 80px;
+      font-size: 1.5em;
+      padding: 10px 60px 10px 100px;
+      margin-bottom: 20px;
 
       @include ie8 {
-        width:400px;
+        max-width: 400px;
+        padding: 10px 12px 10px 24px;
       }
     }
   }
