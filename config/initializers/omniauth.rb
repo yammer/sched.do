@@ -3,6 +3,7 @@ OmniAuth.config.on_failure = SessionsController.action(:oauth_failure)
 OmniAuth.config.logger = Rails.logger
 
 Rails.application.config.middleware.use OmniAuth::Builder do
-  provider :yammer, ENV['CONSUMER_KEY'], ENV['CONSUMER_SECRET']
-  provider :yammer_staging, ENV['STAGING_CONSUMER_KEY'], ENV['STAGING_CONSUMER_SECRET']
+  provider :yammer, ENV['YAMMER_CONSUMER_KEY'], ENV['YAMMER_CONSUMER_SECRET']
+  provider :yammer_staging, ENV['YAMMER_STAGING_CONSUMER_KEY'],
+    ENV['YAMMER_STAGING_CONSUMER_SECRET']
 end

@@ -5,9 +5,9 @@
 <% end %>
 <script type="text/javascript">
   <% if current_user && current_user.yammer_staging %>
-    yam.config({appId: '<%= ENV['STAGING_CONSUMER_KEY'] %>'});
+    yam.config({appId: '<%= ENV['YAMMER_STAGING_CONSUMER_KEY'] %>'});
   <% else %>
-    yam.config({appId: '<%= ENV['CONSUMER_KEY'] %>'});
+    yam.config({appId: '<%= ENV['YAMMER_CONSUMER_KEY'] %>'});
   <% end %>
   <% if signed_in? %>
     var access_token = "<%= current_user.access_token %>";
