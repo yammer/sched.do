@@ -299,10 +299,13 @@ div.show-event {
 
   section.invited-yammer-groups {
     border: 1px solid darken($bg-color, 20%);
+    @include border-radius(4px 4px 0 0);
 
     h4 {
       background-color: $bg-color;
+      @include background-image(linear-gradient(#fff, darken($bg-color, 2%)));
       border-bottom: 1px solid darken($bg-color, 20%);
+      @include border-radius(3px 3px 0 0);
       margin-bottom: 0px;
       padding: 10px 15px;
     }

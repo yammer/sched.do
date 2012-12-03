@@ -1,0 +1,22 @@
+<% if @event.groups.any? %>
+  <section class="invited-yammer-groups">
+    <h4>Invited Yammer Groups</h4>
+    <ul id="groups">
+      <% @event.groups.each do |group| %>
+        <li>
+          <div class="group-name"><%= group.name %></div>
+          <%= link_to 'Remind them to Vote!',
+            reminders_path(
+              event_id: @event,
+              reminder:{
+                receiver_id: @event.invitation_for(group),
+                receiver_type: @event.invitation_for(group).class.name
+              }
+            ),
+            method: :post,
+            class: 'group-reminder' %>
+        </li>
+      <% end %>
+    </ul>
+  </section>
+<% end %>

@@ -171,9 +171,9 @@ div.table-wrapper {
       border: 1px solid darken($bg-color, 20%);
       @include border-radius(0px 4px 0 0);
       @include box-sizing(border-box);
+      height: 100%;
       margin-left: $table-width-mobile - 1;
       overflow: auto;
-      height: 100%;
 
       &::-webkit-scrollbar {
         background-color: $bg-color;
