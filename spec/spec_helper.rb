@@ -2,20 +2,20 @@
 require 'simplecov'
 
 SimpleCov.start do
-  add_filter "/support/"
-  add_filter "/initializers/"
-  add_filter "/lib/"
+  add_filter '/support/'
+  add_filter '/initializers/'
+  add_filter '/lib/'
 end
 
-ENV["RAILS_ENV"] ||= 'test'
-require File.expand_path("../../config/environment", __FILE__)
+ENV['RAILS_ENV'] = 'test'
+require File.expand_path('../../config/environment', __FILE__)
 require 'rspec/rails'
 require 'rspec/autorun'
 require 'turnip/capybara'
 require 'email_spec'
 require 'bourne'
 
-Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
+Dir[Rails.root.join('spec/support/**/*.rb')].each {|f| require f}
 
 Capybara.javascript_driver = :webkit
 
