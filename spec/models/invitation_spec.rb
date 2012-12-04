@@ -15,7 +15,8 @@ describe Invitation do
   it { should validate_presence_of(:invitee_type) }
 
   it 'is valid if the event owner is not invited' do
-    user = create(:user)
+    user = build_stubbed(:user)
+
     invitation = build_stubbed(:invitation, invitee: user)
 
     invitation.should be_valid
@@ -23,31 +24,72 @@ describe Invitation do
 
   it 'is invalid if the invitee was already invited' do
     event = create(:event)
-    user = create(:user)
+    invitee = create(:user)
 
-    first_invitation = create(:invitation, event: event, invitee: user)
-    second_invitation = build_stubbed(:invitation, event: event, invitee: user)
+    first_invitation = create(:invitation, event: event, invitee: invitee)
+    second_invitation = build_stubbed(
+      :invitation, event: event, invitee: invitee
+    )
 
     second_invitation.should be_invalid
   end
 end
 
 describe Invitation, '#create' do
-  it 'creates a delayed job' do
-    InvitationCreatedJob.stubs(:enqueue)
+  it 'enqueues an InvitationCreatedMessageJob' do
+    InvitationCreatedMessageJob.stubs(:enqueue)
+
+    invitation = create(:invitation)
+
+    InvitationCreatedMessageJob.should have_received(:enqueue).with(invitation)
   end
 
-  it 'invite_without_notification does not notify the invitee' do
-    user = create(:user)
-    event = create(:event)
-    user.stubs(:invite)
+  it 'enqueues an ActivityCreatorJob for the sender' do
+    ActivityCreatorJob.stubs(:enqueue)
+    action = 'invite'
 
-    Invitation.invite_without_notification(event, user)
+    invitation = create(:invitation)
+    event = invitation.event
+    sender = invitation.sender
 
-    user.should have_received(:invite).never
+    ActivityCreatorJob.should have_received(:enqueue).
+      with(sender, action, event)
   end
 end
 
+describe Invitation, '.invite_without_notification' do
+  it 'creates an invitation' do
+    event = create(:event)
+    invitee = create(:user)
+    Invitation.stubs(:create)
+
+    Invitation.invite_without_notification(event, invitee)
+
+    Invitation.should have_received(:create).
+      with(event: event, invitee: invitee, skip_notification: true)
+  end
+
+  it 'does not notify the invitee' do
+    user = create(:user)
+    event = create(:event)
+    user.stubs(:deliver_email_or_private_message)
+
+    Invitation.invite_without_notification(event, user)
+
+    user.should have_received(:deliver_email_or_private_message).never
+  end
+
+  it 'does not enqueue an InvitationCreatedMessageJob' do
+    InvitationCreatedMessageJob.stubs(:enqueue)
+    user = create(:user)
+    event = create(:event)
+
+    invitation = Invitation.invite_without_notification(event, user)
+
+    InvitationCreatedMessageJob.should have_received(:enqueue).
+      with(invitation).never
+  end
+end
 
 describe Invitation, '#deliver_reminder_from' do
   it 'sends a reminder to the invitee' do

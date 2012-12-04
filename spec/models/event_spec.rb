@@ -81,6 +81,34 @@ describe Event, '#build_suggestions' do
   end
 end
 
+describe Event, '#deliver_reminder_from' do
+  it 'sends a reminder to invited users, but not to the sender' do
+    event = create(:event)
+    sender_invitation = event.invitations.first
+    sender = sender_invitation.invitee
+    user = create(:user)
+    user_invitation = create(:invitation, event: event, invitee: user)
+    user_invitations = [user_invitation]
+    event.stubs(:invitations_without).returns(user_invitations)
+    user_invitation.stubs(:deliver_reminder_from)
+
+    event.deliver_reminder_from(sender)
+
+    user_invitation.should have_received(:deliver_reminder_from).with(sender)
+  end
+end
+
+describe Event, '#generate_uuid' do
+  it 'generates an 8 character uuid' do
+    event = create(:event, uuid: '123')
+
+    event.generate_uuid
+
+    uuid_length = event.uuid.length
+    uuid_length.should == 8
+  end
+end
+
 describe Event, '#add_errors_if_no_suggestions' do
   it 'adds errors if an event has no suggestions' do
     event = create(:event)
@@ -230,33 +258,4 @@ describe Event, '#invitation_for' do
 
     event.invitation_for(invitee).should == invitation
   end
-end
-
-describe Event, '#deliver_reminder_from' do
-  it 'sends a reminder to invited users, but not to the sender' do
-    sender = create(:user)
-    guest = create(:guest)
-    user = create(:user)
-    sender = build_stubbed(:user)
-    event = create_event_with_invitees(guest, user)
-    Invitation.any_instance.stubs(sender: sender, event: event)
-
-    event.deliver_reminder_from(sender)
-
-    guest.should have_received(:remind).once
-    user.should have_received(:remind).once
-    sender.should have_received(:remind).never
-  end
-end
-
-def create_event_with_invitees(guest, user)
-  event = create(:event)
-
-  guest.stubs(:remind)
-  user.stubs(:remind)
-
-  event.users << user
-  event.guests << guest
-
-  event
 end

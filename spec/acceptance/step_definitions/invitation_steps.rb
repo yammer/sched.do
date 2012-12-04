@@ -43,7 +43,7 @@ end
 step 'someone invites :email to :event_name' do |email, event_name|
   event = Event.find_by_name!(event_name)
   invitation = Invitation.new(event: event)
-  InvitateeBuilder.new.find_user_by_email_or_create_guest(email, event).save
+  InviteeBuilder.new.find_user_by_email_or_create_guest(email, event).save
 end
 
 step 'I should see :name in the list of invitees' do |name|

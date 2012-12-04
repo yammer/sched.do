@@ -29,13 +29,6 @@ FactoryGirl.define do
     after :stub do |event|
       event.generate_uuid
     end
-
-    factory :event_with_invitees do
-      after :create do |event|
-        event.guests << build(:guest)
-        event.users << build(:user)
-      end
-    end
   end
 
   factory :group do

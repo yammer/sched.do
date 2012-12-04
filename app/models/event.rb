@@ -31,8 +31,10 @@ class Event < ActiveRecord::Base
     suggestions[1] ||= Suggestion.new
   end
 
-  def deliver_reminder_from(user)
-    invitations_without(user).map{ |invite| invite.deliver_reminder_from(user) }
+  def deliver_reminder_from(sender)
+    invitations_without(sender).each do |invitation|
+      invitation.deliver_reminder_from(sender)
+    end
   end
 
   def generate_uuid
@@ -58,10 +60,11 @@ class Event < ActiveRecord::Base
   end
 
   def invitation_for(user)
-    Invitation.where(event_id: self,
-                    invitee_id: user,
-                    invitee_type: user.class.name
-                    ).first
+    Invitation.where(
+      event_id: self,
+      invitee_id: user,
+      invitee_type: user.class.name
+    ).first
   end
 
   def user_owner?(user)
