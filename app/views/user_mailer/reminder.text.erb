@@ -1,4 +1,6 @@
 Reminder to vote
-You haven't voted on "<%= @event.name %>" and <%= @event.owner %> wants your input.
+You haven't voted on <%= @event.name %> and <%= @sender.name %> wants your input.
 
-Did you know you can send your own polls for free? Use sched.do to plan events easily and collect feedback fast on virtually any topic. Visit https://www.sched.do to learn more.
+To vote and see results, visit <%= event_url(@event) %>.
+
+Did you know you can send your own polls for free? Use sched.do to plan events easily and collect feedback fast on virtually any topic. Click here to <%= link_to 'learn more', root_url %>.

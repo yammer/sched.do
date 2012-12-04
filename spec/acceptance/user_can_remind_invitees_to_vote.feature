@@ -51,3 +51,10 @@ Feature: Owner can remind invitees to vote
     Then I should see "Reminders sent" in the notice flash
     And "scheddo-developers" should receive a private reminder message
     And the private reminder message sent should be from "Snoop"
+
+  Scenario: Guest gets a reminder email
+    Given I sign in and create an event named "Clown party"
+    And I invite "batman@example.com" to "Clown party"
+    When I click "Remind Them!"
+    Then "batman@example.com" should receive a reminder email with a link to "Clown party"
+    And the email should contain an image of the owner of "Clown party"

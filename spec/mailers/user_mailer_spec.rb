@@ -124,6 +124,7 @@ describe UserMailer, 'vote_confirmation' do
     voter = build_stubbed(:user)
     vote.voter = voter
     mail = UserMailer.vote_confirmation(vote)
+
     mail.body.encoded.should include 'Did you know you can send your own polls for free?'
   end
 
@@ -131,6 +132,48 @@ describe UserMailer, 'vote_confirmation' do
     vote = build_stubbed(:vote)
     vote.voter = vote.event.owner
     mail = UserMailer.vote_confirmation(vote)
+
     mail.body.encoded.should_not include 'Did you know you can send your own polls for free?'
+  end
+end
+
+describe UserMailer, '#reminder' do
+  it 'sends the email to the correct receipient' do
+    invitation = build_stubbed(:invitation)
+    sender = build_stubbed(:user)
+
+    mail = UserMailer.reminder(invitation, sender)
+
+    mail.to.should == [invitation.invitee.email]
+  end
+
+  it 'send the email from the correct email address' do
+    invitation = build_stubbed(:invitation)
+    sender = build_stubbed(:user)
+
+    mail = UserMailer.reminder(invitation, sender)
+
+    mail.from.should == ['no-reply@sched.do']
+  end
+
+  it 'sends the email with the correct subject' do
+    invitation = build_stubbed(:invitation)
+    sender = build_stubbed(:user)
+
+    mail = UserMailer.reminder(invitation, sender)
+
+    mail.subject.should ==
+      "Reminder: Help out #{sender.name} by voting on #{invitation.event.name}"
+  end
+
+  it 'sends the email with the correct body' do
+    invitation = build_stubbed(:invitation)
+    sender = build_stubbed(:user)
+
+    mail = UserMailer.reminder(invitation, sender)
+
+    mail.body.encoded.should include(sender.name)
+    mail.body.encoded.should include(invitation.event.name)
+    mail.body.encoded.should_not include(invitation.event.owner.name)
   end
 end

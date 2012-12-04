@@ -1,14 +1,18 @@
-<h1 class="h1" style="color: #30AADE;display: block;font-family: Helvetica, sans-serif;font-size: 24px;font-weight: normal;line-height: 100%;margin-top: 10px;margin-right: 0;margin-bottom: 25px;margin-left: 0;text-align: left;"><%= @guest.name || @guest.email %> You’re invited!</h1>
+<%= render partial: 'title', locals: { title: "#{@guest.name || @guest.email} You’re invited!" } %>
 
 <p>
-  <strong><%= @event.owner %></strong> created the "<%= link_to truncate(@event.name, length: 28), event_url(@event, guest_email: @guest.email), html_options = {:style => "color: #EC6E4D"} %>" poll and <%= @sender.name %> wants your input.
+<strong><%= @event.owner %></strong> created the "<%=
+  link_to truncate(@event.name, length: 28),
+    event_url(@event, guest_email: @guest.email),
+    html_options = { style: 'color: #EC6E4D' }
+    %>" poll and <%= @sender.name %> wants your input.
 </p>
 
 <p>
   Please click the below button to view the options and vote.
-  <%= link_to "Click Here", event_url(@event, guest_email: @guest.email), html_options = {:style => "background-color: #30AADE; border: 1px solid #0F7CC4; border-radius: 3px; color: #fff; display: block; margin: 20px auto; padding: 8px 12px; text-align: center; text-decoration: none; width: 100px"} %>
+  <%= render partial: 'click_here', locals: { event: @event, email: @guest.email } %>
 </p>
 
 <p>
-  This poll was sent using sched.do. Create your own polls for free at <%= link_to "https://www.sched.do", "https://www.sched.do" %>
+  This poll was sent using sched.do. Create your own polls for free at <%= link_to 'https://www.sched.do', 'https://www.sched.do' %>
 </p>

@@ -32,23 +32,6 @@ step 'someone created an event named :event_name with a suggestion of :suggestio
   end
 end
 
-step 'someone :profile_image a profile image created an event named :event_name with a suggestion of :suggestion' do |profile_image, event_name, suggestion|
-  send 'someone created an event named :event_name with a suggestion of :suggestion', event_name, suggestion
-  user = Event.find_by_name(event_name).owner
-  user.image = profile_image
-  user.save
-end
-
-placeholder :profile_image do
-  match /without/ do
-    'no_photo.png'
-  end
-
-  match /with/ do
-    'i_have_a_photo.png'
-  end
-end
-
 step 'someone created an event named :event_name' do |event_name|
   as_random_user do
     create_event(event_name)

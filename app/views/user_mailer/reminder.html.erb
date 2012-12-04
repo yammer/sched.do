@@ -1,5 +1,11 @@
-<h1 class="h1" style="color: #30AADE;display: block;font-family: Helvetica, sans-serif;font-size: 24px;font-weight: normal;line-height: 100%;margin-top: 10px;margin-right: 0;margin-bottom: 25px;margin-left: 0;text-align: left;">Reminder to vote</h1>
+<%= render partial: 'title', locals: { title: 'Reminder to vote' } %>
 
-You haven't voted on "<%= link_to @event.name, event_url(@event) %>" and <%= @event.owner %> wants your input.
+You haven't voted on <%= link_to @event.name, event_url(@event) %> and <%= @sender.name %> wants your input.
 
-Did you know you can send your own polls for free? Use sched.do to plan events easily and collect feedback fast on virtually any topic. <%= link_to "Click here", root_url %> to learn more.
+<p>
+  <%= image_tag(@event.owner.image) %>
+  Click here to change your vote or see the results.
+  <%= render partial: 'click_here', locals: { event: @event, email: @guest.email } %>
+</p>
+
+Did you know you can send your own polls for free? Use sched.do to plan events easily and collect feedback fast on virtually any topic. Click here to <%= link_to 'learn more', root_url %>.

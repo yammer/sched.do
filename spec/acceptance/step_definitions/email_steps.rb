@@ -15,22 +15,17 @@ end
 step ':email_address should receive a vote confirmation email with a link to :event' do |email_address, event|
   event = Event.find_by_name(event)
   guest = event.invitees.first
-  email_body(last_email_sent).should have_link('Click Here', href: event_url(event, guest_email: guest.email))
+  body = email_body(last_email_sent)
+  body.should have_link('Click Here', href: event_url(event, guest_email: guest.email))
+  body.should include('Thanks for voting!')
 end
 
-step 'the email :should_include_image contain an image of the owner of :event' do |should_include_image, event|
+step ':email_address should receive a reminder email with a link to :event' do |email_address, event|
   event = Event.find_by_name(event)
-  email_body(last_email_sent).send(should_include_image, include(event.owner.image))
-end
-
-placeholder :should_include_image  do
-  match /should not/ do
-    :should_not
-  end
-
-  match /should/ do
-    :should
-  end
+  guest = event.invitees.first
+  body = email_body(last_email_sent)
+  body.should have_link('Click Here', href: event_url(event, guest_email: guest.email))
+  body.should include('Reminder to vote')
 end
 
 step ':email_address should have :count email(s)' do |email_address, count|
@@ -40,4 +35,9 @@ end
 step 'out-network Yammer user :name should get an email notification' do |name|
   user = User.find_by_name!(name)
   mailbox_for(user.email).size.should == 1
+end
+
+step 'the email should contain an image of the owner of :event_name' do |event_name|
+  event = Event.find_by_name(event_name)
+  email_body(last_email_sent).should include(event.owner.image)
 end

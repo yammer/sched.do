@@ -1,22 +1,26 @@
-<h1 class="h1" style="color: #30AADE;display: block;font-family: Helvetica, sans-serif;font-size: 24px;font-weight: normal;line-height: 100%;margin-top: 10px;margin-right: 0;margin-bottom: 25px;margin-left: 0;text-align: left;">
-  Thanks for voting!
-</h1>
+<%= render partial: 'title', locals: { title: 'Thanks for voting!' } %>
 
-<p><%= image_tag(@event.owner.image) unless @event.owner.image.include?('no_photo.png') %>Thanks for helping <strong><%= @event.owner %></strong> with “<%= link_to @event.name, event_url(@event), html_options = { :style => "color: #EC6E4D"} %>”.</p>
+<p>
+  <%= image_tag(@event.owner.image) %>
+  Thanks for helping <strong><%= @event.owner %></strong> with “<%=
+  link_to @event.name,
+    event_url(@event),
+    html_options = { style: 'color: #EC6E4D' } %>”.
+</p>
 
 <p>You voted for:</p>
 
 <ul>
   <% @event.user_votes(@user).each do |vote| %>
-    <li><strong><%= vote.suggestion.primary %><%= "," if vote.suggestion.secondary.present? %> <%= vote.suggestion.secondary %></strong></li>
+    <li><strong><%= vote.suggestion.primary %><%= ',' if vote.suggestion.secondary.present? %> <%= vote.suggestion.secondary %></strong></li>
   <% end %>
 </ul>
 
 <p>
   Click here to change your vote or see the results.
-  <%= link_to "Click Here", event_url(@event, guest_email: @user.email), html_options = {:style => "background-color: #30AADE; border: 1px solid #0F7CC4; border-radius: 3px; color: #fff; display: block; margin: 20px auto; padding: 8px 12px; text-align: center; text-decoration: none; width: 100px"} %>
+  <%= render partial: 'click_here', locals: { event: @event, email: @user.email } %>
 </p>
 
 <% if @user != @event.owner %>
-<p>Did you know you can send your own polls for free? Use sched.do to plan events easily and collect feedback fast on virtually any topic. Click here to <%= link_to "learn more", root_url, html_options = {:style => "color: #EC6E4D"} %>.</p>
+<p>Did you know you can send your own polls for free? Use sched.do to plan events easily and collect feedback fast on virtually any topic. Click here to <%= link_to 'learn more', root_url, html_options = { style: 'color: #EC6E4D' } %>.</p>
 <% end %>
