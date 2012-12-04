@@ -20,20 +20,23 @@ $h1-size: 2em;
 // Ratio used in generating relative size and bottom margin of H tags based on $h1-size
 $ratio: .8;
 
-//Line height
+// Line height
 $lh: 1.1em;
 
-// colors:
-$bg-color: #F6FBFC;
+// Colors
+$yammer-blue: #48AEF1;
 $blue: #30AADE;
 $orange: #EC6E4D;
-$placeholder-color: darken($bg-color, 20%);
-$yammer-blue: #48AEF1;
 $yellow: #FEFFDF;
+$bg-color: #F6FBFC;
 $autocomplete-border-color: #CBCBCB;
 
 // Flash colors
-$notice:#FFF3E5;
-$success:#EDF8E7;
-$error:lighten($orange, 33%);
+$notice: #FFF3E5;
+$success: #EDF8E7;
 $failure: #F5D1D1;
+
+// Derivative colors
+$placeholder-color: darken($bg-color, 20%);
+$scroll-notice-color: lighten($blue, 20%);
+$error: lighten($orange, 33%);
