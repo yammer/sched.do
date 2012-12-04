@@ -1,11 +1,18 @@
 Contributing
 ============
 
+Style Guide
+-----------
+
+Pull requests should conform to [this style guide](https://github.com/thoughtbot/guides/tree/master/style) and [this set of best practices](https://github.com/thoughtbot/guides/tree/master/best-practices).
+
 
 Quick Overview
 --------------
 
-We love pull requests. Here's a quick overview of the process (detail below):
+We love pull requests which follow [this protocol](https://github.com/thoughtbot/guides/tree/master/protocol#write-a-feature).
+
+Here's a quick overview of the process (detail below):
 
 1. Fork the repo.
 
