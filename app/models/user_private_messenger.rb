@@ -1,5 +1,6 @@
 class UserPrivateMessenger
   include Rails.application.routes.url_helpers
+  include PrivateMessenger
 
   def initialize(invitation, sender=invitation.sender)
     @recipient = invitation.invitee
@@ -9,11 +10,6 @@ class UserPrivateMessenger
 
   def invite
     @message_body = PrivateMessage.new('/users/invitation.erb', binding).body
-    deliver
-  end
-
-  def remind
-    @message_body = PrivateMessage.new('/shared/reminder.erb', binding).body
     deliver
   end
 

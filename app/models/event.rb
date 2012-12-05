@@ -32,7 +32,7 @@ class Event < ActiveRecord::Base
   end
 
   def deliver_reminder_from(user)
-    invitations_without(user).map{ |i| i.deliver_reminder_from(user) }
+    invitations_without(user).map{ |invite| invite.deliver_reminder_from(user) }
   end
 
   def generate_uuid

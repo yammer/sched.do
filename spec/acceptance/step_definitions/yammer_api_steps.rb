@@ -3,7 +3,12 @@ step ':name should receive :count private message(s)' do |name, count|
 end
 
 step ':name should receive a private reminder message' do |name|
-  FakeYammer.message.should include("Reminder")
+  FakeYammer.message.should include('Reminder')
+end
+
+step 'the private message should include a link to :event_name' do |event_name|
+  event = Event.find_by_name(event_name)
+  FakeYammer.message.should include(event_url(event))
 end
 
 step 'the private reminder message sent should be from :name' do |name|

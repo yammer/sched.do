@@ -20,6 +20,7 @@ Feature: Owner can remind invitees to vote
     And I click "Remind Joe Smith to vote"
     And I should see "Reminders sent"
     Then "Joe Smith" should receive a private reminder message
+    And the private message should include a link to "Clown party"
 
   Scenario: Guest cannot remind users
     Given someone created an event named "Clown party"
