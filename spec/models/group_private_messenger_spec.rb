@@ -14,7 +14,7 @@ describe GroupPrivateMessenger, '#invitation' do
 
     FakeYammer.messages_endpoint_hits.should == 1
     FakeYammer.message.should include('I want your input')
-    FakeYammer.message.should include(group.name)
+    FakeYammer.message.should include(event.name)
   end
 end
 
