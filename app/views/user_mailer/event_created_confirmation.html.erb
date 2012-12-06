@@ -6,11 +6,8 @@
 %>
 
 <p>
-  To see the results, <strong> <%=
-    link_to 'click here',
-    event_url(@event),
-    html_options = { style: 'color: #EC6E4D' }
-  %></strong>.
+  Click here to vote and see the results.
+  <%= render partial: 'click_here', locals: { event: @event, email: @event.owner.email } %>
 </p>
 
 <p>

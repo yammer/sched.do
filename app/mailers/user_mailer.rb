@@ -1,7 +1,7 @@
 class UserMailer < ActionMailer::Base
   include ActionView::Helpers::TextHelper
-  FROM_EMAIL = '<no-reply@sched.do>'
-  default from: %("sched.do" #{FROM_EMAIL})
+  NO_REPLY_FROM_EMAIL = '<no-reply@sched.do>'
+  default from: %("sched.do" #{NO_REPLY_FROM_EMAIL})
 
   def event_created_confirmation(event)
     @event = event
@@ -9,6 +9,7 @@ class UserMailer < ActionMailer::Base
 
     mail(
       to: @creator.email,
+      from: NO_REPLY_FROM_EMAIL,
       subject: "You created #{@event.name} on sched.do"
     )
   end
@@ -51,6 +52,6 @@ class UserMailer < ActionMailer::Base
   private
 
   def from_text(user_name = nil)
-    %("sched.do on behalf of #{user_name}" #{FROM_EMAIL})
+    %("sched.do on behalf of #{user_name}" #{NO_REPLY_FROM_EMAIL})
   end
 end
