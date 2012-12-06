@@ -3,11 +3,13 @@ class YammerUserInvitationsController < ApplicationController
     @event = Event.find(event_id)
     invitee = YammerUser.new(auth).find_or_create
     invitation = Invitation.new(
-      event: @event, invitee: invitee,
+      event: @event,
+      invitee: invitee,
       sender: current_user
     )
+    invitation.invite
 
-    if !invitation.save
+    if invitation.invalid?
       flash[:error] = invitation.errors.full_messages.last
     end
 

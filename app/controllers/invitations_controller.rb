@@ -16,12 +16,14 @@ class InvitationsController < ApplicationController
     invitee_emails.each do |email|
       invitation = Invitation.new(
         event: event,
-        invitee: InviteeBuilder.new(email.strip, event).find_user_by_email_or_create_guest,
+        invitee: InviteeBuilder.new(email.strip, event).
+          find_user_by_email_or_create_guest,
         sender: current_user
       )
+      invitation.invite
 
-      if !invitation.save
-        flash[:error] = invitation.errors.full_messages.last
+      if invitation.invalid?
+        flash[:error] = invitation.errors.full_messages.join(', ')
         break
       end
     end

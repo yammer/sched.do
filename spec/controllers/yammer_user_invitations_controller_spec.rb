@@ -12,7 +12,6 @@ describe YammerUserInvitationsController, '.create' do
         event_id: event.id
       }
 
-    Invitation.count.should == 2
     Invitation.last.invitee_id.should == invitee.id
   end
 

@@ -35,59 +35,30 @@ describe Invitation do
   end
 end
 
-describe Invitation, '#create' do
-  it 'enqueues an InvitationCreatedMessageJob' do
+describe Invitation, '#invite' do
+  it 'notifies the invitee' do
+    user = create(:user)
+    sender = create(:user)
+    event = create(:event)
     InvitationCreatedMessageJob.stubs(:enqueue)
+    invitation = Invitation.new(event: event, invitee: user, sender: sender)
 
-    invitation = create(:invitation)
+    invitation.invite
 
-    InvitationCreatedMessageJob.should have_received(:enqueue).with(invitation)
-  end
-
-  it 'enqueues an ActivityCreatorJob for the sender' do
-    ActivityCreatorJob.stubs(:enqueue)
-    action = 'invite'
-
-    invitation = create(:invitation)
-    event = invitation.event
-    sender = invitation.sender
-
-    ActivityCreatorJob.should have_received(:enqueue).
-      with(sender, action, event)
+    InvitationCreatedMessageJob.should have_received(:enqueue)
   end
 end
 
-describe Invitation, '.invite_without_notification' do
-  it 'creates an invitation' do
-    event = create(:event)
-    invitee = create(:user)
-    Invitation.stubs(:create)
-
-    Invitation.invite_without_notification(event, invitee)
-
-    Invitation.should have_received(:create).
-      with(event: event, invitee: invitee, skip_notification: true)
-  end
-
+describe Invitation, '#invite_without_notification' do
   it 'does not notify the invitee' do
     user = create(:user)
     event = create(:event)
-    user.stubs(:deliver_email_or_private_message)
-
-    Invitation.invite_without_notification(event, user)
-
-    user.should have_received(:deliver_email_or_private_message).never
-  end
-
-  it 'does not enqueue an InvitationCreatedMessageJob' do
     InvitationCreatedMessageJob.stubs(:enqueue)
-    user = create(:user)
-    event = create(:event)
+    invitation = Invitation.new(event: event, invitee: user)
 
-    invitation = Invitation.invite_without_notification(event, user)
+    invitation.invite_without_notification
 
-    InvitationCreatedMessageJob.should have_received(:enqueue).
-      with(invitation).never
+    InvitationCreatedMessageJob.should have_received(:enqueue).never
   end
 end
 

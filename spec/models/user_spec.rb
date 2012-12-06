@@ -174,14 +174,17 @@ describe User, '#fetch_yammer_user_data' do
   end
 
   it 'queries the Yammer Users API for Yammer Production data' do
-    user = User.new(yammer_user_id: 123456,
-                    access_token: 'Tokenz',
-                    yammer_staging: false)
+    user = User.new(
+      access_token: 'Tokenz',
+      yammer_staging: false,
+      yammer_user_id: 123456
+    )
     oauth_hash = user.send(:yammer_user_data)
     before_user_id = user.yammer_user_id
 
     user.fetch_yammer_user_data
 
+    user.reload
     before_user_id.should == user.yammer_user_id
     user.yammer_staging?.should == false
     user.email.should == oauth_hash['contact']['email_addresses'].
@@ -191,7 +194,7 @@ describe User, '#fetch_yammer_user_data' do
     user.nickname.should == oauth_hash['name']
     user.yammer_profile_url.should == oauth_hash['web_url']
     user.yammer_network_id.should == oauth_hash['network_id']
-    user.extra.should == oauth_hash
+    user.extra.should == oauth_hash.to_yaml
   end
 end
 

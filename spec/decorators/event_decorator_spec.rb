@@ -44,7 +44,7 @@ describe EventDecorator, '#invitees_with_current_user_first' do
   end
 end
 
-describe EventDecorator, '#invitees_who_have_not_voted_count' do
+describe EventDecorator, '#other_invitees_who_have_not_voted_count' do
   it 'returns the number of invitees who have not voted' do
     event = event_with_invitees
     invitees = event.invitees

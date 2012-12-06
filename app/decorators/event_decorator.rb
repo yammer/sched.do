@@ -2,7 +2,7 @@ class EventDecorator < Draper::Base
   decorates :event
 
   def other_invitees_count
-    invitees.count - 1
+    invitees.count - event_owner
   end
 
   def invitees_with_current_user_first
@@ -10,7 +10,7 @@ class EventDecorator < Draper::Base
   end
 
   def other_invitees_who_have_not_voted_count
-    invitees_who_have_not_voted.reject { |i| i == current_user }.length
+    other_invitees_who_have_not_voted.count
   end
 
   def first_invitee_for_invitation
@@ -23,12 +23,22 @@ class EventDecorator < Draper::Base
 
   private
 
+  def event_owner
+    1
+  end
+
   def current_user
     h.current_user
   end
 
+  def other_invitees_who_have_not_voted
+    invitees_who_have_not_voted.reject do |invitee|
+      invitee == current_user
+    end
+  end
+
   def invitees_who_have_not_voted
-    invitees.select{ |invitee| not invitee.voted_for_event?(self) }
+    invitees.select { |invitee| not invitee.voted_for_event?(self) }
   end
 
   def invitees?
@@ -36,14 +46,14 @@ class EventDecorator < Draper::Base
   end
 
   def first_invitee_name_with_commas
-    if first_invitee_with_name
-      ", #{first_invitee_with_name.name}, "
+    if first_invitee_with_a_name
+      ", #{first_invitee_with_a_name.name}, "
     else
       ' '
     end
   end
 
-  def first_invitee_with_name
+  def first_invitee_with_a_name
     invitees.find { |i| i.name.present? }
   end
 end

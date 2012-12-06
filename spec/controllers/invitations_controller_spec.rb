@@ -26,6 +26,7 @@ describe InvitationsController, '.create' do
     it 'displays flash errors if the invitation does not save' do
       event_creator = create_user_and_sign_in
       event = create_event_and_mock_find(event_creator)
+      expected_errors = 'Invitee email is not an email, Invitee is invalid'
 
       post :create,
         invitation: {
@@ -33,7 +34,7 @@ describe InvitationsController, '.create' do
           event_id: event.id
         }
 
-      flash[:error].should == 'Invitee is invalid'
+      flash[:error].should == expected_errors
     end
 
     it 'creates the appropriate invitation' do
@@ -73,17 +74,30 @@ describe InvitationsController, '.create' do
     it 'creates multiple invitations for the correct users' do
       event_creator = create_user_and_sign_in
       event = create_event_and_mock_find(event_creator)
-      Invitation.stubs(:new).returns(mock('invitation') { expects(:save).returns(true).twice })
-
+      invitation = stub('invitation', invite: nil, invalid?: false)
+      invitee = stub('invitee')
+      builder = stub('builder', find_user_by_email_or_create_guest: invitee)
       emails = 'guest1@example.com, guest2@example.com'
-      InviteeBuilder.expects(:new).with('guest1@example.com', event).returns(stub_everything).once
-      InviteeBuilder.expects(:new).with('guest2@example.com', event).returns(stub_everything).once
+      Invitation.stubs(new: invitation)
+      InviteeBuilder.stubs(new: builder)
 
       post :create,
         invitation: {
           invitee_attributes: { name_or_email: emails },
           event_id: event.id
-      }
+        }
+
+      Invitation.should have_received(:new).with(
+        event: event,
+        invitee: invitee,
+        sender: event_creator
+      ).twice
+
+      invitation.should have_received(:invite).twice
+
+      emails.split(', ').each do |email|
+        InviteeBuilder.should have_received(:new).with(email, event)
+      end
     end
 
     def create_user_and_sign_in

@@ -1,5 +1,4 @@
 class User < ActiveRecord::Base
-  serialize :extra, JSON
   attr_accessible :access_token, :encrypted_access_token, :name,
     :yammer_user_id, :yammer_staging
   attr_encrypted :access_token, key: ENV['ACCESS_TOKEN_ENCRYPTION_KEY']

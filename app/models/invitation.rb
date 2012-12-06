@@ -1,6 +1,5 @@
 class Invitation < ActiveRecord::Base
-  attr_accessor :skip_notification
-  attr_accessible :event, :invitee, :event_id, :skip_notification, :sender
+  attr_accessible :event, :invitee, :event_id, :sender
 
   belongs_to :event
   belongs_to :invitee, polymorphic: true
@@ -16,14 +15,14 @@ class Invitation < ActiveRecord::Base
     scope: [:invitee_type, :event_id]
   }
 
-  after_create :queue_invitation_created_jobs, unless: :skip_notification
+  def invite
+    if save
+      queue_created_jobs
+    end
+  end
 
-  def self.invite_without_notification(event, invitee)
-    create(
-      event: event,
-      invitee: invitee,
-      skip_notification: true
-    )
+  def invite_without_notification
+    save
   end
 
   def deliver_reminder_from(reminder_sender)
@@ -34,12 +33,12 @@ class Invitation < ActiveRecord::Base
 
   private
 
-  def queue_invitation_created_jobs
-    send_invitation_created_messages
+  def queue_created_jobs
+    send_invitation_created_message
     send_activity_message
   end
 
-  def send_invitation_created_messages
+  def send_invitation_created_message
     InvitationCreatedMessageJob.enqueue(self)
   end
 

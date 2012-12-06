@@ -56,7 +56,7 @@ class Event < ActiveRecord::Base
   end
 
   def invite_owner
-    Invitation.invite_without_notification(self, owner)
+    Invitation.new(event: self, invitee: owner).invite_without_notification
   end
 
   def invitation_for(user)
