@@ -2,11 +2,7 @@
 
 <p>
   <%= image_tag(@event.owner.image) %>
-  <strong><%= @event.owner %></strong> created the <%=
-  	link_to @event.name,
-    event_url(@event, guest_email: @guest.email),
-    html_options = { style: 'color: #EC6E4D' }
-    %> poll and <%= @sender.name %> wants your input.
+  <strong><%= @event.owner %></strong> <%= get_first_line_of_invitation(@invitation) %>
 </p>
 
 <p>

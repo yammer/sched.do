@@ -1,7 +1,9 @@
 class UserMailer < ActionMailer::Base
   include ActionView::Helpers::TextHelper
+
   NO_REPLY_FROM_EMAIL = '<no-reply@sched.do>'
   default from: %("sched.do" #{NO_REPLY_FROM_EMAIL})
+  helper :mail
 
   def event_created_confirmation(event)
     @event = event
@@ -18,6 +20,7 @@ class UserMailer < ActionMailer::Base
     @guest = invitation.invitee
     @sender = invitation.sender
     @event = EventDecorator.decorate(invitation.event)
+    @invitation = invitation
 
     mail(
       to: @guest.email,

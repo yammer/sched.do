@@ -11,7 +11,6 @@ describe UserPrivateMessenger, '#invitation' do
 
     FakeYammer.messages_endpoint_hits.should == 1
     FakeYammer.message.should include('vote')
-    FakeYammer.message.should include(event_owner.name)
   end
 end
 
@@ -27,6 +26,7 @@ describe UserPrivateMessenger, '#reminder' do
     FakeYammer.messages_endpoint_hits.should == 1
     FakeYammer.message.should include('Reminder')
     FakeYammer.message.should include(event_owner.name)
+    FakeYammer.message.should include(event.name)
   end
 end
 
