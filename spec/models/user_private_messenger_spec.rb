@@ -11,6 +11,8 @@ describe UserPrivateMessenger, '#invitation' do
 
     FakeYammer.messages_endpoint_hits.should == 1
     FakeYammer.message.should include('vote')
+    FakeYammer.message.should include(event.name)
+    FakeYammer.message.should include(URL_HELPERS.event_url(event))
   end
 end
 

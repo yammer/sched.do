@@ -61,6 +61,8 @@ RSpec.configure do |config|
     garbage_collect_once_per_second_for_faster_tests
   end
 
+ URL_HELPERS = Rails.application.routes.url_helpers
+
   def garbage_collect_once_per_second_for_faster_tests
     if time_to_run_gc?
       GC.enable

@@ -38,7 +38,7 @@ describe GroupPrivateMessenger, '#get_help_out_test' do
     invitation = build_stubbed(:invitation)
     sender = build_stubbed(:user)
 
-    help_out_text = UserPrivateMessenger.new(invitation, sender).get_help_out_text
+    help_out_text = GroupPrivateMessenger.new(invitation, sender).get_help_out_text
 
     help_out_text.should == "out #{invitation.event.owner.name}"
   end
@@ -48,7 +48,7 @@ describe GroupPrivateMessenger, '#get_help_out_test' do
     sender = build_stubbed(:user)
     invitation.invitee = invitation.event.owner
 
-    help_out_text =  UserPrivateMessenger.new(invitation, sender).get_help_out_text
+    help_out_text =  GroupPrivateMessenger.new(invitation, sender).get_help_out_text
 
     help_out_text.should == 'me out'
   end
