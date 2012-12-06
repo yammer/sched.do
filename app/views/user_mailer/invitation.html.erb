@@ -1,18 +1,19 @@
-<%= render partial: 'title', locals: { title: "#{@guest.name || @guest.email} You’re invited!" } %>
+<%= render partial: 'title', locals: { title: "#{@guest.name.try(:+, ' ')}You’re invited!" } %>
 
 <p>
-<strong><%= @event.owner %></strong> created the "<%=
-  link_to truncate(@event.name, length: 28),
+  <%= image_tag(@event.owner.image) %>
+  <strong><%= @event.owner %></strong> created the <%=
+  	link_to @event.name,
     event_url(@event, guest_email: @guest.email),
     html_options = { style: 'color: #EC6E4D' }
-    %>" poll and <%= @sender.name %> wants your input.
+    %> poll and <%= @sender.name %> wants your input.
 </p>
 
 <p>
-  Please click the below button to view the options and vote.
+  Click here to vote and see the results.
   <%= render partial: 'click_here', locals: { event: @event, email: @guest.email } %>
 </p>
 
 <p>
-  This poll was sent using sched.do. Create your own polls for free at <%= link_to 'https://www.sched.do', 'https://www.sched.do' %>
+  <%= render 'footer' %>
 </p>

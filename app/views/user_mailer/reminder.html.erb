@@ -8,4 +8,6 @@ You haven't voted on <%= link_to @event.name, event_url(@event) %> and <%= @send
   <%= render partial: 'click_here', locals: { event: @event, email: @guest.email } %>
 </p>
 
-Did you know you can send your own polls for free? Use sched.do to plan events easily and collect feedback fast on virtually any topic. Click here to <%= link_to 'learn more', root_url %>.
+<p>
+  <%= render 'footer' %>
+</p>
