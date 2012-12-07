@@ -7,7 +7,10 @@ $(document).ready(function() {
   var table = $('table.touch-scrollable');
   var parent = $('table.touch-scrollable').parent();
 
-  if (Modernizr.touch) {
+  var isMicrosoftSurface = 'onmsgesturechange' in window;
+  var isTouch = Modernizr.touch || isMicrosoftSurface;
+
+  if (isTouch) {
     table.addClass('scrollable horizontal');
     parent.addClass('touch-scrollable');
   }
@@ -30,7 +33,7 @@ $(document).ready(function() {
   var setLabel = function() {
     var offsets = getCurrentOffset();
 
-    if (offsets.total > 0 && !Modernizr.touch) {
+    if (offsets.total > 0 && !isTouch) {
       scrollNotice.addClass('visible');
       if (offsets.current === 0) {
         scrollRight.removeClass('visible');
