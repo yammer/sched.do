@@ -35,7 +35,6 @@ class UserMailer < ActionMailer::Base
 
     mail(
       to: @guest.email,
-      from: from_text(@sender.name),
       subject:
         "Reminder: Help out #{@sender.name} by voting on #{@event.name}"
     )
