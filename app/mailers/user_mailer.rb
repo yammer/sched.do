@@ -11,7 +11,6 @@ class UserMailer < ActionMailer::Base
 
     mail(
       to: @creator.email,
-      from: NO_REPLY_FROM_EMAIL,
       subject: "You created #{@event.name} on sched.do"
     )
   end
