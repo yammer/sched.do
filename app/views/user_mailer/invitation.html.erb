@@ -1,7 +1,7 @@
 <%= render partial: 'title', locals: { title: "#{@guest.name.try(:+, ' ')}You’re invited!" } %>
 
 <p>
-  <%= image_tag(@event.owner.image) %>
+  <%= image_tag(@invitation.sender.image) %>
   <strong><%= @event.owner %></strong> <%= get_first_line_of_invitation(@invitation) %>
 </p>
 

@@ -1,16 +1,13 @@
 class GroupPrivateMessenger
   include Rails.application.routes.url_helpers
-  include PrivateMessenger
+  include Invitability
+  include Remindability
 
   def initialize(invitation, sender=invitation.sender)
     @recipient = invitation.invitee
     @sender = sender
     @event = invitation.event
-  end
-
-  def invite
-    @message_body = PrivateMessage.new('/groups/invitation.erb', binding).body
-    deliver
+    @invitation_template_path = '/groups/invitation.erb'
   end
 
   private

@@ -1,4 +1,4 @@
-class PrivateMessage
+class PrivateMessageTemplate
   PRIVATE_MESSAGES_PATH = 'app/private_messages'
 
   def initialize(template_path, binding)

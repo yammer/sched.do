@@ -12,20 +12,28 @@ step ':email_address follows the link :link in his email' do |email_address, lin
   visit_in_email(link)
 end
 
-step ':email_address should receive a vote confirmation email with a link to :event' do |email_address, event|
-  event = Event.find_by_name(event)
+step ':email_address should receive a vote confirmation email with a link to :event_name' do |email_address, event_name|
+  event = Event.find_by_name(event_name)
   guest = event.invitees.first
   body = email_body(last_email_sent)
   body.should have_link('Click Here', href: event_url(event, guest_email: guest.email))
   body.should include('Thanks for voting!')
 end
 
-step ':email_address should receive a reminder email with a link to :event' do |email_address, event|
-  event = Event.find_by_name(event)
+step ':email_address should receive a reminder email with a link to :event_name' do |email_address, event_name|
+  event = Event.find_by_name(event_name)
   guest = event.invitees.first
   body = email_body(last_email_sent)
   body.should have_link('Click Here', href: event_url(event, guest_email: guest.email))
   body.should include('Reminder to vote')
+end
+
+step ':email_address should receive an invitation email with a link to :event_name' do |email_address, event_name|
+  event = Event.find_by_name(event_name)
+  guest = event.invitees.first
+  body = email_body(last_email_sent)
+  body.should have_link('Click Here', href: event_url(event, guest_email: guest.email))
+  body.should include('invited')
 end
 
 step ':email_address should have :count email(s)' do |email_address, count|
@@ -40,4 +48,9 @@ end
 step 'the email should contain an image of the owner of :event_name' do |event_name|
   event = Event.find_by_name(event_name)
   email_body(last_email_sent).should include(event.owner.image)
+end
+
+step 'the email should contain an image of :user_name' do |user_name|
+  user = User.find_by_name(user_name)
+  email_body(last_email_sent).should include(user.image)
 end

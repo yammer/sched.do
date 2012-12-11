@@ -1,7 +1,7 @@
 <%= render partial: 'title', locals: { title: 'Reminder to vote' } %>
 
 <p>
-  <%= image_tag(@event.owner.image) %>You haven't voted on <%= link_to @event.name, event_url(@event) %> and <%= @sender.name %> wants your input.
+  <%= image_tag(@sender.image) %>You haven't voted on <%= link_to @event.name, event_url(@event) %> and <%= @sender.name %> wants your input.
 </p>
 
 <p>

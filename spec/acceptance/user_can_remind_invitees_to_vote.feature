@@ -55,7 +55,10 @@ Feature: Owner can remind invitees to vote
 
   Scenario: Guest gets a reminder email
     Given I sign in and create an event named "Clown party"
+    And "guest@example.com" was invited to the event "Clown party"
+    And I sign out
+    And I am signed in as "Snoop" and I view the page for "Clown party"
     And I invite "batman@example.com" to "Clown party"
     When I click "Remind Them!"
     Then "batman@example.com" should receive a reminder email with a link to "Clown party"
-    And the email should contain an image of the owner of "Clown party"
+    And the email should contain an image of "Snoop"
