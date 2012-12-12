@@ -17,18 +17,6 @@ end
 describe ActivityCreatorJob, '#perform' do
   include DelayedJobSpecHelper
 
-  it 'configures Yammer' do
-    user = build_stubbed(:user)
-    action = 'vote'
-    event = build_stubbed(:event)
-    User.stubs(find: user)
-    Event.stubs(find: event)
-
-    ActivityCreatorJob.new(user, action, event).perform
-
-    user.yammer_client.oauth_token.should == user.access_token
-  end
-
   it 'posts to the Yammer activity endpoint' do
     user = build_user
     action = 'vote'
@@ -40,7 +28,8 @@ describe ActivityCreatorJob, '#perform' do
 
     ActivityCreatorJob.new(user, action, event).perform
 
-    yam_session_stub.should have_received(:post).with('/activity', expected_json(event))
+    yam_session_stub.should have_received(:post).
+      with('/activity', expected_json(event))
   end
 
   private

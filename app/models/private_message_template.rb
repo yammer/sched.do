@@ -13,6 +13,7 @@ class PrivateMessageTemplate
   private
 
   def method_body
-    ERB.new(File.read("#{PRIVATE_MESSAGES_PATH}/#{@template_path}")).result(@binding)
+    ERB.new(File.read("#{PRIVATE_MESSAGES_PATH}/#{@template_path}")).
+      result(@binding)
   end
 end

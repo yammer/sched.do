@@ -13,11 +13,7 @@ class YammerGroupInvitationsController < ApplicationController
   private
 
   def args
-    {
-      event: event,
-      invitee: invitee,
-      sender: current_user
-    }
+    { event: event, invitee: invitee, sender: current_user }
   end
 
   def event

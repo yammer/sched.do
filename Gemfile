@@ -33,7 +33,7 @@ gem 'swfobject-rails'
 gem 'tddium'
 gem 'thin'
 gem 'underscore-rails', '~> 1.3'
-gem 'yam', path: 'vendor/local_gems/yam'
+gem 'yam', '0.0.5'
 gem 'zclip-rails'
 
 # We currently use this forked repo as it allows you to nest links to add

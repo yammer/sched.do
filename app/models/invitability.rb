@@ -1,7 +1,9 @@
 module Invitability
   def invite
     @event_creator = get_event_creator_text
-    @message_body = PrivateMessageTemplate.new(@invitation_template_path, binding).body
+    @message_body = PrivateMessageTemplate.
+      new(@invitation_template_path, binding).
+      body
     deliver
   end
 

@@ -16,11 +16,18 @@ step 'the private reminder message sent should be from :name' do |name|
   FakeYammer.access_token.should == sender.access_token
 end
 
-step ':name should receive a private invitation message' do |name|
-  FakeYammer.message.should include('input')
+step 'group :name should receive a private invitation message' do |name|
+  group = Group.find_by_name!(name)
+  expected_yammer_group_id = group.yammer_group_id.to_s
+  received_yammer_group_id = FakeYammer.group_id
+  received_yammer_group_id.should  == expected_yammer_group_id
 end
 
-step 'the private invitation message sent should be from :name' do |name|
-  sender = User.find_by_name!(name)
+step 'the private invitation message should be sent regarding :event' do |event|
+  FakeYammer.message.should include(event)
+end
+
+step 'the private invitation message sent should be from :sender' do |sender|
+  sender = User.find_by_name!(sender)
   FakeYammer.access_token.should == sender.access_token
 end
