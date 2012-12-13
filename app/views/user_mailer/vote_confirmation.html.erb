@@ -2,10 +2,10 @@
 
 <p>
   <%= image_tag(@event.owner.image) %>
-  Thanks for helping <strong><%= @event.owner %></strong> with “<%=
+  Thanks for helping <strong><%= @event.owner %></strong> with <%=
   link_to @event.name,
     event_url(@event),
-    html_options = { style: 'color: #EC6E4D' } %>”.
+    html_options = { style: 'color: #EC6E4D' } %>.
 </p>
 
 <p>You voted for:</p>

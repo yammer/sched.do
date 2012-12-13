@@ -49,7 +49,7 @@ describe UserMailer, 'invitation' do
     mail = UserMailer.invitation(invitation)
 
     mail['from'].to_s.should ==
-      %{"sched.do on behalf of #{invitation.sender}" <no-reply@sched.do>}
+      %{"sched.do" <no-reply@sched.do>}
   end
 
   it 'sends the email to the correct recipient' do

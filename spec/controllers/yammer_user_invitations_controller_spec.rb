@@ -12,7 +12,7 @@ describe YammerUserInvitationsController, '.create' do
         event_id: event.id
       }
 
-    Invitation.last.invitee_id.should == invitee.id
+    Invitation.last.invitee == invitee
   end
 
   it 'displays flash errors if the invitation does not save' do
@@ -34,6 +34,5 @@ describe YammerUserInvitationsController, '.create' do
   def create_user_and_sign_in
     user = create(:user)
     sign_in_as(user)
-    user
   end
 end

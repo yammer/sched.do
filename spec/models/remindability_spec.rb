@@ -21,7 +21,7 @@ describe Remindability, '#remind' do
     remindability.remind
 
     remindability.message_body.should include('Reminder')
-    remindability.message_body.should include(event.owner.name)
+    remindability.message_body.should_not include(event.owner.name)
   end
 
   it 'calls deliver' do
@@ -67,11 +67,11 @@ describe Remindability, '#remind' do
 end
 
 describe Remindability, '#get_help_out_text' do
-  context 'recipient is not the owner' do
-      it "returns 'out owner name'" do
+  context 'sender is not the owner' do
+    it "returns 'out owner name'" do
       event = build_stubbed(:event)
-      recipient = build_stubbed(:user)
-      remindability = TestRemindability.new(recipient, nil, event)
+      sender = build_stubbed(:user)
+      remindability = TestRemindability.new(nil, sender, event)
 
       help_out_text = remindability.get_help_out_text
 
@@ -79,11 +79,11 @@ describe Remindability, '#get_help_out_text' do
     end
   end
 
-  context 'recipient is the owner' do
+  context 'sender is the owner' do
     it "return 'me out'" do
       event = build_stubbed(:event)
-      recipient = event.owner
-      remindability = TestRemindability.new(recipient, nil, event)
+      sender = event.owner
+      remindability = TestRemindability.new(nil, sender, event)
 
       help_out_text =  remindability.get_help_out_text
 

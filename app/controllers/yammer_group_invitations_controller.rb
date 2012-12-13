@@ -1,13 +1,15 @@
 class YammerGroupInvitationsController < ApplicationController
+
   def create
     invitation = Invitation.new(
       event_id: event_id,
       invitee: invitee,
       sender: current_user
     )
+    invitation.invite
 
-    if !invitation.save
-      flash[:error] = invitation.errors.full_messages.last
+    if invitation.invalid?
+      flash[:error] = invitation.errors.full_messages.join(', ')
     end
 
     redirect_to invitation.event

@@ -6,7 +6,7 @@ module Remindability
   end
 
   def get_help_out_text
-    if @recipient == @event.owner
+    if @sender == @event.owner
       'me out'
     else
       "out #{@event.owner.name}"

@@ -23,7 +23,6 @@ class UserMailer < ActionMailer::Base
 
     mail(
       to: @guest.email,
-      from: from_text(@sender.name),
       subject: "Help out #{@event.owner}"
     )
   end
@@ -48,11 +47,5 @@ class UserMailer < ActionMailer::Base
       to: @user.email,
       subject: %{Thanks for voting on "#{truncate(@event.name, length: 23)}" on sched.do}
     )
-  end
-
-  private
-
-  def from_text(user_name = nil)
-    %("sched.do on behalf of #{user_name}" #{NO_REPLY_FROM_EMAIL})
   end
 end
