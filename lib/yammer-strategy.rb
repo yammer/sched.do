@@ -2,14 +2,30 @@ require 'omniauth-oauth2'
 
 module OmniAuth
   module Strategies
-    class YammerStaging < OmniAuth::Strategies::OAuth2
-      option :name, 'yammer_staging'
+    class Yammer < OmniAuth::Strategies::OAuth2
+      option :name, 'yammer'
 
       option :client_options, {
-        site: 'https://www.staging.yammer.com',
+        site: 'https://www.yammer.com',
         authorize_url: '/dialog/oauth',
         token_url: '/oauth2/access_token.json'
       }
+
+      uid { raw_info['id'] }
+
+      info do
+        prune!({
+          nickname: raw_info['name'],
+          name: raw_info['full_name'],
+          location: raw_info['location'],
+          image: raw_info['mugshot_url'],
+          description: raw_info['job_title'],
+          email: primary_email,
+          urls: {
+            yammer: raw_info['web_url']
+          }
+        })
+      end
 
       option :provider_ignores_state, true
 

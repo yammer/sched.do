@@ -178,8 +178,6 @@ GEM
     omniauth-oauth2 (1.1.1)
       oauth2 (~> 0.8.0)
       omniauth (~> 1.0)
-    omniauth-yammer (0.0.4)
-      omniauth-oauth2 (>= 1.1)
     paperclip (3.3.1)
       activemodel (>= 3.0.0)
       activerecord (>= 3.0.0)
@@ -338,8 +336,7 @@ DEPENDENCIES
   mail_view
   mocha
   newrelic_rpm
-  omniauth (~> 1.0)
-  omniauth-yammer
+  omniauth-oauth2
   paperclip (~> 3.0)
   pg
   pry
