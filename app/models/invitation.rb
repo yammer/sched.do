@@ -1,5 +1,5 @@
 class Invitation < ActiveRecord::Base
-  attr_accessible :event, :invitee, :event_id, :sender
+  attr_accessible :event, :invitee, :sender
 
   belongs_to :event
   belongs_to :invitee, polymorphic: true
@@ -44,7 +44,7 @@ class Invitation < ActiveRecord::Base
 
   def send_activity_message
     if sender.yammer_user?
-      ActivityCreatorJob.enqueue(sender, 'invite', event)
+      ActivityCreatorJob.enqueue(sender, 'share', event)
     end
   end
 end

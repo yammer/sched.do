@@ -26,5 +26,4 @@ vendor/bundler_gems
 bin/
 coverage
 .tddium*
-zeus.json
 vendor/cache
