@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121015210452) do
+ActiveRecord::Schema.define(:version => 20121219195741) do
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
@@ -58,9 +58,10 @@ ActiveRecord::Schema.define(:version => 20121015210452) do
 
   create_table "guests", :force => true do |t|
     t.string   "name"
-    t.string   "email",      :null => false
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.string   "email",                                 :null => false
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
+    t.boolean  "has_ever_logged_in", :default => false, :null => false
   end
 
   add_index "guests", ["email"], :name => "index_guests_on_email"
@@ -73,12 +74,16 @@ ActiveRecord::Schema.define(:version => 20121015210452) do
     t.string   "invitee_type", :null => false
     t.integer  "sender_id"
     t.string   "sender_type"
+    t.integer  "vote_id"
+    t.datetime "reminded_at"
   end
 
   add_index "invitations", ["event_id"], :name => "index_invitations_on_event_id"
   add_index "invitations", ["invitee_id"], :name => "index_invitations_on_invitee_id"
+  add_index "invitations", ["reminded_at"], :name => "index_invitations_on_reminded_at"
   add_index "invitations", ["sender_id"], :name => "index_invitations_on_sender_id"
   add_index "invitations", ["sender_type"], :name => "index_invitations_on_sender_type"
+  add_index "invitations", ["vote_id"], :name => "index_invitations_on_vote_id"
 
   create_table "reminders", :force => true do |t|
     t.integer  "sender_id",     :null => false

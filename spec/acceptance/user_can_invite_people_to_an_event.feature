@@ -15,3 +15,10 @@ Feature: Invited Yammer Users can invite others to an event
     When I invite "batman@example.com" to "Clown party"
     Then "batman@example.com" should receive an invitation email with a link to "Clown party"
     And the email should contain an image of "Bruce Lee"
+
+  Scenario: Guest receives reminder after not voting for five days
+    Given someone created an event named "Clown party"
+    And I am signed in as "Bruce Lee" and I view the page for "Clown party"
+    When I invite "batman@example.com" to "Clown party"
+    And "batman@example.com" does not act on the invitation for 5 days
+    Then "batman@example.com" should receive a reminder email with a link to "Clown party"

@@ -1,9 +1,10 @@
 class Invitation < ActiveRecord::Base
-  attr_accessible :event, :invitee, :sender
+  attr_accessible :event, :invitee, :sender, :vote, :reminded_at
 
   belongs_to :event
   belongs_to :invitee, polymorphic: true
   belongs_to :sender, polymorphic: true
+  belongs_to :vote
 
   accepts_nested_attributes_for :invitee
 
@@ -28,7 +29,26 @@ class Invitation < ActiveRecord::Base
   def deliver_reminder_from(reminder_sender)
     if not invitee.voted_for_event?(event)
       invitee.remind(self, reminder_sender)
+      set_reminded_at
     end
+  end
+
+  def self.deliver_automatic_reminders
+      due_for_reminder.each do |invitation|
+        UserMailer.reminder(invitation, invitation.sender).deliver
+        invitation.set_reminded_at
+    end
+  end
+
+  def self.due_for_reminder
+    where('sender_id IS NOT NULL').
+      where('created_at <= ?', 5.days.ago).
+      where('vote_id IS NULL').
+      where('reminded_at IS NULL')
+  end
+
+  def set_reminded_at
+    self.update_attributes!(reminded_at: Time.now.utc)
   end
 
   private

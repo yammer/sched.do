@@ -9,7 +9,7 @@ class Vote < ActiveRecord::Base
   validates :voter_id, presence: true
   validates :voter_type, presence: true
 
-  after_create :queue_vote_created_job
+  after_create :queue_vote_created_job, :cache_vote_on_invitation
 
   def self.none
     where(id: nil)
@@ -38,5 +38,10 @@ class Vote < ActiveRecord::Base
 
   def queue_vote_created_job
     VoteCreatedJob.enqueue(self)
+  end
+
+  def cache_vote_on_invitation
+    invitation = voter.invitations.where(event_id: event.id).first!
+    invitation.update_attributes!(vote: self)
   end
 end

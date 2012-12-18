@@ -1,28 +1,24 @@
 class Guest < ActiveRecord::Base
-  attr_accessible :name, :email
-  attr_accessor :should_validate_name
+  attr_accessible :name, :email, :has_ever_logged_in
 
   has_many :invitations, as: :invitee
   has_many :votes, as: :voter
 
-  before_validation :strip_email_whitespace
+  before_validation :normalize_email
 
   validates :email, presence: true, uniqueness: true
   validates :email, email: true
-  validates :name, presence: true, if: :should_validate_name
-
-  after_initialize :set_should_validate_name
+  validates :name, presence: true, if: :has_ever_logged_in?
 
   def self.create_without_name_validation(email)
     Guest.new.tap do |guest|
       guest.email = email
-      guest.should_validate_name = false
       guest.save
     end
   end
 
   def self.initialize_with_name_and_email(params)
-    guest = find_or_initialize_by_email(params[:guest][:email])
+    guest = find_or_initialize_by_email(params[:guest][:email].downcase)
     guest.name = params[:guest][:name]
     guest
   end
@@ -43,12 +39,12 @@ class Guest < ActiveRecord::Base
     Messenger.new(invitation).invite
   end
 
-  def remind(invitation, sender)
-    Messenger.new(invitation, sender).remind
+  def set_has_ever_logged_in
+    self.update_attributes!(has_ever_logged_in: true)
   end
 
-  def set_should_validate_name
-    @should_validate_name = true
+  def remind(invitation, sender)
+    Messenger.new(invitation, sender).remind
   end
 
   def vote_for_suggestion(suggestion)
@@ -89,7 +85,7 @@ class Guest < ActiveRecord::Base
 
   private
 
-  def strip_email_whitespace
-    self.email = email.try(:strip)
+  def normalize_email
+    self.email = email.to_s.strip.downcase
   end
 end

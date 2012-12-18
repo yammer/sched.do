@@ -95,5 +95,20 @@ FactoryGirl.define do
     factory :guest_vote do
       association :voter, factory: :guest
     end
+
+    after :build do |vote, attributes|
+      if Invitation.
+        where(invitee_id: attributes.voter_id).
+        where(invitee_type: attributes.voter_type).
+        where(event_id: attributes.suggestion.event.id).
+        empty?
+        create(
+          :invitation,
+          invitee: attributes.voter,
+          invitee_type: attributes.voter_type,
+          event: attributes.suggestion.event
+        )
+      end
+    end
   end
 end

@@ -74,4 +74,15 @@ describe Vote, '#create' do
 
     VoteCreatedJob.should have_received(:enqueue).with(vote)
   end
+
+  it 'caches the vote id on the invitation' do
+    event = create(:event)
+    suggestion = create(:suggestion, event: event)
+    invitation = create(:invitation, event: event)
+    vote = build(:vote, voter: invitation.invitee, suggestion: suggestion)
+
+    vote.save!
+
+    invitation.reload.vote.should == vote
+  end
 end

@@ -10,7 +10,7 @@ describe UserMailer do
   end
 end
 
-describe UserMailer, 'event_created_confirmation' do
+describe UserMailer, '.event_created_confirmation' do
   it 'sends the email to the correct recipient' do
     event = build_stubbed(:event)
     creator = event.owner
@@ -40,7 +40,7 @@ describe UserMailer, 'event_created_confirmation' do
   end
 end
 
-describe UserMailer, 'invitation' do
+describe UserMailer, '.invitation' do
   it 'sends the email from the correct sender' do
     invitation = create(:invitation_with_guest)
     guest = invitation.invitee
@@ -86,7 +86,7 @@ describe UserMailer, 'invitation' do
   end
 end
 
-describe UserMailer, 'vote_confirmation' do
+describe UserMailer, '.vote_confirmation' do
   it 'sends the email to the correct recipient' do
     vote = build_stubbed(:vote)
 
@@ -137,7 +137,7 @@ describe UserMailer, 'vote_confirmation' do
   end
 end
 
-describe UserMailer, '#reminder' do
+describe UserMailer, '.reminder' do
   it 'sends the email to the correct receipient' do
     invitation = build_stubbed(:invitation)
     sender = build_stubbed(:user)

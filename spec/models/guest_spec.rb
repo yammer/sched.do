@@ -17,6 +17,24 @@ describe Guest, 'validations' do
   end
 end
 
+describe Guest, 'filters' do
+  it 'trims white space from email' do
+    guest = build(:guest, email: ' test@email.com ')
+
+    guest.save!
+
+    guest.email.should == 'test@email.com'
+  end
+
+  it 'downcases email' do
+    guest = build(:guest, email: 'Test@email.com')
+
+    guest.save!
+
+    guest.email.should == 'test@email.com'
+  end
+end
+
 describe Guest, '.initialize_with_name_and_email' do
   it 'initializes a guest with the given email and name' do
     guest = create(:guest)
@@ -48,6 +66,17 @@ describe Guest, '.initialize_with_name_and_email' do
     lambda {
       guest_with_same_name.save
     }.should change(Guest, :count).by(1)
+  end
+
+end
+
+describe Guest, '#log_in' do
+  it 'sets has has_ever_logged_in to true if the guest is logging in for the first time' do
+    guest = create(:guest, has_ever_logged_in: false)
+
+    guest.set_has_ever_logged_in
+
+    guest.has_ever_logged_in.should be_true
   end
 end
 

@@ -19,7 +19,7 @@ class GuestsController < ApplicationController
 
     if @guest.save
       session[:event_id] = params[:event_id]
-      log_in_guest
+      log_in_guest(@guest)
       redirect_to previous_page
     else
       render :new
@@ -31,7 +31,7 @@ class GuestsController < ApplicationController
     @event = Event.find_by_uuid!(params[:event_id])
 
     if guest.update_attributes(params[:guest])
-      log_in_guest
+      log_in_guest(guest)
       redirect_to event_url(@event)
     else
       render :new
@@ -53,9 +53,10 @@ class GuestsController < ApplicationController
     end
   end
 
-  def log_in_guest
-    session[:name] = params[:guest][:name]
-    session[:email] = params[:guest][:email]
+  def log_in_guest(guest)
+    session[:name] = guest.name
+    session[:email] = guest.email
+    guest.set_has_ever_logged_in
   end
 
   def show_guest_login?

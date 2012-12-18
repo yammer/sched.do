@@ -57,6 +57,7 @@ RSpec.configure do |config|
   end
 
   config.after(:each) do
+    Timecop.return
     DatabaseCleaner.clean
     garbage_collect_once_per_second_for_faster_tests
   end
