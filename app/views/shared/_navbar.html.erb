@@ -10,13 +10,13 @@
       <ul>
         <% if current_user.yammer_user? %>
           <li>
-            <span>
-              <%= current_user.name %>
+            <span class="user-name">
+              Hi, <em><%= current_user.name %>!</em>
             </span>
           </li>
           <li>
             <span class="user-avatar">
-              <%= image_tag(current_user.image) %>
+              <div class="avatar" style="background-image: url(<%= current_user.image %>)"></div>
             </span>
           </li>
           <li>

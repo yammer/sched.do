@@ -362,7 +362,7 @@ div.show-event {
   }
 
   div.call-to-action {
-    @extend %orange-container;
+    @extend %blue-container;
     @include border-radius(3px 3px 0 0);
     margin-top: 20px;
     padding: 10px;
