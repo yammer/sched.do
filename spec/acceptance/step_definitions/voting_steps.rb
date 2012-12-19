@@ -15,3 +15,7 @@ end
 step 'I should see that :suggestion_description has :number vote(s)' do |suggestion_description, number|
   assert_vote_count(suggestion_description, number)
 end
+
+step ':email_address votes for :suggestion_description' do |email_address, suggestion_description|
+  vote_for(suggestion_description)
+end

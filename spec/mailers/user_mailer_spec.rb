@@ -137,6 +137,34 @@ describe UserMailer, '.vote_confirmation' do
   end
 end
 
+describe UserMailer, 'vote_notification' do
+  it 'sends the email to the correct recipient' do
+    vote = build_stubbed(:vote)
+
+    mail = UserMailer.vote_notification(vote)
+
+    mail.to.should == [vote.event.owner.email]
+  end
+
+  it 'sends the email with the correct subject' do
+    vote = build_stubbed(:vote)
+
+    mail = UserMailer.vote_notification(vote)
+
+    mail.subject.should ==
+      %{#{vote.voter.name} voted on "#{truncate(vote.suggestion.event.name, length: 23)}" on sched.do}
+  end
+
+  it 'sends the email with the correct body' do
+    vote = build_stubbed(:vote)
+
+    mail = UserMailer.vote_notification(vote)
+
+    mail.body.encoded.should include(vote.voter.name)
+    mail.body.encoded.should include(vote.event.name)
+  end
+end
+
 describe UserMailer, '.reminder' do
   it 'sends the email to the correct receipient' do
     invitation = build_stubbed(:invitation)

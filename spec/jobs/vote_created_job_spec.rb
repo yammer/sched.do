@@ -43,14 +43,24 @@ describe VoteCreatedJob, '#perform' do
         with(user, action, event).never
     end
 
-    it 'enqueues a VoteConfirmationEmailJob' do
+    it 'enqueues a VoteEmailJob that sends the vote confirmation email' do
       vote = build_stubbed(:vote)
       Vote.stubs(find_by_id: vote)
-      VoteConfirmationEmailJob.stubs(:enqueue)
+      VoteEmailJob.stubs(:enqueue)
 
       VoteCreatedJob.new(vote.id).perform
 
-      VoteConfirmationEmailJob.should have_received(:enqueue).with(vote)
+      VoteEmailJob.should have_received(:enqueue).with(vote, :vote_confirmation)
+    end
+
+    it 'enqueues a VoteEmailJob that sends the vote notification email' do
+      vote = build_stubbed(:vote)
+      Vote.stubs(find_by_id: vote)
+      VoteEmailJob.stubs(:enqueue)
+
+      VoteCreatedJob.new(vote.id).perform
+
+      VoteEmailJob.should have_received(:enqueue).with(vote, :vote_notification)
     end
 
     it 'configures Yammer' do
@@ -74,13 +84,13 @@ describe VoteCreatedJob, '#perform' do
       ActivityCreatorJob.should have_received(:enqueue).never
     end
 
-    it 'does not enqueue a VoteConfirmationEmailJob' do
+    it 'does not enqueue a vote email job' do
       vote_id = nil
-      VoteConfirmationEmailJob.stubs(:enqueue)
+      VoteEmailJob.stubs(:enqueue)
 
       VoteCreatedJob.new(vote_id).perform
 
-      VoteConfirmationEmailJob.should have_received(:enqueue).never
+      VoteEmailJob.should have_received(:enqueue).never
     end
   end
 end

@@ -15,15 +15,22 @@ end
 step ':email_address should receive a vote confirmation email with a link to :event_name' do |email_address, event_name|
   event = Event.find_by_name(event_name)
   guest = event.invitees.first
-  body = email_body(last_email_sent)
+  body = email_body(last_email_sent_to(guest.email))
   body.should have_link('Click Here', href: event_url(event, guest_email: guest.email))
   body.should include('Thanks for voting!')
+end
+
+step 'I should receive a vote notification email with a link to :event_name' do |event_name|
+  event = Event.find_by_name(event_name)
+  body = email_body(last_email_sent_to(event.owner.email))
+  body.should have_link('Click Here', href: event_url(event, guest_email: event.owner.email))
+  body.should include('voted on your')
 end
 
 step ':email_address should receive a reminder email with a link to :event_name' do |email_address, event_name|
   event = Event.find_by_name(event_name)
   guest = event.invitees.first
-  body = email_body(last_email_sent)
+  body = email_body(last_email_sent_to(guest.email))
   body.should have_link('Click Here', href: event_url(event, guest_email: guest.email))
   body.should include('Reminder to vote')
 end
@@ -31,7 +38,7 @@ end
 step ':email_address should receive an invitation email with a link to :event_name' do |email_address, event_name|
   event = Event.find_by_name(event_name)
   guest = event.invitees.first
-  body = email_body(last_email_sent)
+  body = email_body(last_email_sent_to(guest.email))
   body.should have_link('Click Here', href: event_url(event, guest_email: guest.email))
   body.should include('invited')
 end
@@ -47,10 +54,15 @@ end
 
 step 'the email should contain an image of the owner of :event_name' do |event_name|
   event = Event.find_by_name(event_name)
-  email_body(last_email_sent).should include(event.owner.image)
+  guest = event.invitees.first
+  body = email_body(last_email_sent_to(guest.email))
+  body.should include(event.owner.image)
 end
 
-step 'the email should contain an image of :user_name' do |user_name|
+step ':email_address should receive an email that contains an image of :user_name' do |email_address, user_name|
+  guest = Guest.find_by_email(email_address)
   user = User.find_by_name(user_name)
-  email_body(last_email_sent).should include(user.image)
+  body = last_email_sent_to(guest.email)
+  body = email_body(body)
+  body.should include(user.image)
 end

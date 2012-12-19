@@ -51,3 +51,10 @@ Feature: Users can vote on suggestions
     When I view the "Clown party" event
     And I vote for "lunch"
     Then I should see that "lunch" has 1 vote
+
+  Scenario: User votes for a single suggestion and owner is notified
+    Given I am signed in
+    And I create an event named "Clown party" with a suggestion of "lunch"
+    And I invite "batman@example.com" to "Clown party"
+    When "batman@example.com" votes for "lunch"
+    Then I should receive a vote notification email with a link to "Clown party"

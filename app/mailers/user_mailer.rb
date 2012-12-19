@@ -48,4 +48,14 @@ class UserMailer < ActionMailer::Base
       subject: %{Thanks for voting on "#{truncate(@event.name, length: 23)}" on sched.do}
     )
   end
+
+  def vote_notification(vote)
+    @voter = vote.voter
+    @event = vote.suggestion.event
+
+    mail(
+      to: @event.owner.email,
+      subject: %{#{@voter.name} voted on "#{truncate(@event.name, length: 23)}" on sched.do}
+    )
+  end
 end

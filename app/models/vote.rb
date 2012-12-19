@@ -33,7 +33,7 @@ class Vote < ActiveRecord::Base
   private
 
   def delay_window
-    VoteConfirmationEmailJob::DELAY
+    VoteEmailJob::DELAY
   end
 
   def queue_vote_created_job

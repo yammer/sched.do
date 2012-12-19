@@ -1,0 +1,14 @@
+<%= render partial: 'title', locals: { title: "#{@voter.name} voted on your #{@event.name} poll!" } %>
+
+<p>
+  <%= @voter.name %> voted for:
+</p>
+
+<p>You voted for:</p>
+
+<%= render partial: 'list_votes', locals: { event: @event, voter: @voter } %>
+
+<p>
+  Click here to change your vote or see the results.
+  <%= render partial: 'click_here', locals: { event: @event, email: @event.owner.email } %>
+</p>

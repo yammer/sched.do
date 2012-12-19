@@ -61,4 +61,4 @@ Feature: Owner can remind invitees to vote
     And I invite "batman@example.com" to "Clown party"
     When I click "Remind Them!"
     Then "batman@example.com" should receive a reminder email with a link to "Clown party"
-    And the email should contain an image of "Snoop"
+    And "batman@example.com" should receive an email that contains an image of "Snoop"

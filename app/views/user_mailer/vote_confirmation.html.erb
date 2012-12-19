@@ -10,11 +10,7 @@
 
 <p>You voted for:</p>
 
-<ul>
-  <% @event.user_votes(@user).each do |vote| %>
-    <li><strong><%= vote.suggestion.primary %><%= ',' if vote.suggestion.secondary.present? %> <%= vote.suggestion.secondary %></strong></li>
-  <% end %>
-</ul>
+<%= render partial: 'list_votes', locals: { event: @event, voter: @user } %>
 
 <p>
   Click here to change your vote or see the results.

@@ -1,10 +1,10 @@
-class VoteConfirmationEmailJob < Struct.new(:vote_id)
+class VoteEmailJob < Struct.new(:vote_id, :email_type)
   PRIORITY = 1
   DELAY = 3.minutes
 
-  def self.enqueue(vote)
+  def self.enqueue(vote, email_type)
     Delayed::Job.enqueue(
-      new(vote.id),
+      new(vote.id, email_type),
       run_at: DELAY.from_now,
       priority: PRIORITY
     )
@@ -12,7 +12,7 @@ class VoteConfirmationEmailJob < Struct.new(:vote_id)
 
   def perform
     if vote && no_other_recent_votes
-      send_confirmation_email
+      UserMailer.send(email_type, vote).deliver
     end
   end
 
@@ -37,14 +37,10 @@ class VoteConfirmationEmailJob < Struct.new(:vote_id)
 
   def log_error
     Rails.logger.
-      error "NOTE: VoteConfirmationEmailJob cannot find Vote id=#{vote_id}"
+      error "NOTE: VoteEmailJob cannot find Vote id=#{vote_id}"
   end
 
   def no_other_recent_votes
     vote.has_no_other_votes_within_delay_window?
-  end
-
-  def send_confirmation_email
-    UserMailer.vote_confirmation(vote).deliver
   end
 end

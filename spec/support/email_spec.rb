@@ -7,6 +7,13 @@ module EmailSpec
     end
   end
 
+  def last_email_sent_to(email)
+    ActionMailer::Base.
+      deliveries.
+      select { |delivery| delivery.to.include?(email) }.
+      last
+  end
+
   def email_body(email)
     email.default_part_body.to_s
   end

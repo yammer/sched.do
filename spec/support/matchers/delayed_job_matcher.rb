@@ -26,7 +26,7 @@ module DelayedJob
 
       def matches?(subject)
         @subject = subject
-        enqueued? && correct_attributes? && correct_priority?
+        enqueued? && correct_attributes? && correct_priority? && correct_run_at?
       end
 
       def priority(priority)
@@ -58,6 +58,18 @@ module DelayedJob
         else
           @failure_message = <<-message.strip_heredoc
             Expected priority to be #{@priority} but was #{job.priority}"
+          message
+
+          false
+        end
+      end
+
+      def correct_run_at?
+        if (@run_at - job.run_at).abs < 1.second
+          true
+        else
+          @failure_message = <<-message.strip_heredoc
+            Expected run_at to be #{@run_at} but was #{job.run_at}"
           message
 
           false
