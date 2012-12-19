@@ -7,8 +7,10 @@ class VoteCreatedJob < Struct.new(:vote_id)
   end
 
   def perform
-    enqueue_activity_creator_job
-    VoteConfirmationEmailJob.enqueue(vote)
+    if vote
+      create_activity_message
+      send_vote_confirmation_email
+    end
   end
 
   def error(job, exception)
@@ -17,18 +19,22 @@ class VoteCreatedJob < Struct.new(:vote_id)
 
   private
 
+  def vote
+    @vote ||= Vote.find_by_id(vote_id)
+  end
+
+  def create_activity_message
+    if voter.yammer_user?
+      ActivityCreatorJob.enqueue(voter, ACTION, event)
+    end
+  end
+
   def voter
     @voter ||= vote.voter
   end
 
-  def vote
-    @vote ||= Vote.find(vote_id)
-  end
-
-  def enqueue_activity_creator_job
-    if voter.yammer_user?
-      ActivityCreatorJob.enqueue(voter, ACTION, event)
-    end
+  def send_vote_confirmation_email
+    VoteConfirmationEmailJob.enqueue(vote)
   end
 
   def event
