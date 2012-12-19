@@ -27,10 +27,6 @@ class Guest < ActiveRecord::Base
     false
   end
 
-  def guest?
-    true
-  end
-
   def image
     'http://' + ENV['HOSTNAME'] + '/assets/no_photo.png'
   end

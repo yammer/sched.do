@@ -80,12 +80,6 @@ describe Guest, '#log_in' do
   end
 end
 
-describe Guest, '#guest?' do
-  it 'always returns true' do
-    build(:guest).should be_guest
-  end
-end
-
 describe Guest, 'image' do
   it 'returns the placeholder image' do
     guest = build_stubbed(:guest)

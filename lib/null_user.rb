@@ -3,10 +3,6 @@ class NullUser
     true
   end
 
-  def guest?
-    false
-  end
-
   def yammer_staging
     false
   end

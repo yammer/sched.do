@@ -27,10 +27,6 @@ class User < ActiveRecord::Base
     end
   end
 
-  def guest?
-    false
-  end
-
   def fetch_yammer_user_data
     response = yammer_user_data
     update_attributes(

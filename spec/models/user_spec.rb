@@ -156,14 +156,6 @@ describe User, '#voted_for_event?' do
   end
 end
 
-describe User, '#guest?' do
-  it 'always returns false' do
-    user = build_stubbed(:user)
-
-    user.guest?.should be_false
-  end
-end
-
 describe User, '#fetch_yammer_user_data' do
   it 'queries the Yammer Users API for Yammer Production data' do
     user = User.new(
