@@ -186,6 +186,21 @@ describe Invitation, '.deliver_automatic_reminders' do
     message.should have_received(:deliver).never
   end
 
+  it 'does not send automatic reminders to groups' do
+    group = create(:group)
+    invitation = create(
+      :invitation,
+      created_at: 6.days.ago,
+      invitee: group
+    )
+    message = stub('message', deliver: true)
+    UserMailer.stubs(:reminder).returns(message)
+
+    Invitation.deliver_automatic_reminders
+
+    message.should have_received(:deliver).never
+  end
+
   it 'sets reminded_at on the invitation'do
     Timecop.freeze do
       invitation = create(:invitation, created_at: 6.days.ago)

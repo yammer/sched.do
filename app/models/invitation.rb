@@ -42,6 +42,7 @@ class Invitation < ActiveRecord::Base
 
   def self.due_for_reminder
     where('sender_id IS NOT NULL').
+      where("invitee_type <> 'Group'").
       where('created_at <= ?', 5.days.ago).
       where('vote_id IS NULL').
       where('reminded_at IS NULL')

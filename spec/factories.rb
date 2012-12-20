@@ -55,22 +55,17 @@ FactoryGirl.define do
     event
     association :invitee, factory: :user
     association :sender, factory: :user
-    invitee_type 'User'
-    sender_type 'User'
 
     factory :invitation_with_user do
       association :invitee, factory: :user
-      invitee_type 'User'
     end
 
     factory :invitation_with_group do
       association :invitee, factory: :group
-      invitee_type 'Group'
     end
 
     factory :invitation_with_guest do
       association :invitee, factory: :guest
-      invitee_type 'Guest'
     end
   end
 
@@ -99,13 +94,11 @@ FactoryGirl.define do
     after :build do |vote, attributes|
       if Invitation.
         where(invitee_id: attributes.voter_id).
-        where(invitee_type: attributes.voter_type).
         where(event_id: attributes.suggestion.event.id).
         empty?
         create(
           :invitation,
           invitee: attributes.voter,
-          invitee_type: attributes.voter_type,
           event: attributes.suggestion.event
         )
       end
