@@ -60,14 +60,12 @@ form {
 
   textarea, button,
   #{$all-text-inputs},
-  input[type="button"],
-  input[type="reset"],
-  input[type="submit"],
+
   .read-only {
     @include background-image(linear-gradient(darken($bg-color, 2%), lighten($bg-color, 2%)));
     border: 1px solid darken($bg-color, 20%);
     @include border-radius(4px);
-      @include box-shadow(inset 0 0px 5px rgba(darken($bg-color, 20%), 0.6));
+    @include box-shadow(inset 0 0px 5px rgba(darken($bg-color, 20%), 0.6));
     color: darken($bg-color, 50%);
     @include fill-parent();
     outline: none;
@@ -81,6 +79,13 @@ form {
     &.placeholder {
       color:  $placeholder-color;
     }
+  }
+
+  input[type="button"],
+  input[type="reset"],
+  input[type="submit"] {
+    @include fill-parent();
+    outline: none;
   }
 
   &.ui-autocomplete-input {
