@@ -16,10 +16,13 @@ SchedDo::Application.routes.draw do
   # This is a temporary measure
   get(
     '',
-    to: redirect { |segments, request|
-      "/auth/yammer/callback?code=#{request.params[:code]}"
-    },
-    constraints: lambda { |request| request.params[:auth] == 'yammer' }
+    to: redirect do |segments, request|
+      /auth=yammer\?code=(?<code>.+)/ =~ request.query_string
+      "/auth/yammer/callback?code=#{code}"
+    end,
+    constraints: lambda do |request|
+      request.query_string.include?('auth=yammer?code=')
+    end
   )
 
   root to: "welcome#index"
