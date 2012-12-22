@@ -12,6 +12,16 @@ SchedDo::Application.routes.draw do
   resources :yammer_user_invitations, only: [:create]
   resources :yammer_group_invitations, only: [:create]
 
+  # Redirects root with param "auth=yammer" to callback with code
+  # This is a temporary measure
+  get(
+    '',
+    to: redirect { |segments, request|
+      "/auth/yammer/callback?code=#{request.params[:code]}"
+    },
+    constraints: lambda { |request| request.params[:auth] == 'yammer' }
+  )
+
   root to: "welcome#index"
 
   if Rails.env.development?
