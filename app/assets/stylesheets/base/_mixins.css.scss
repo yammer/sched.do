@@ -48,7 +48,7 @@
 // Colorful container mixin
 @mixin colorful-container-text($color) {
   color: #FFF;
-  text-shadow: 0 -1px 0 darken($color, 40%);
+  text-shadow: 0 -1px 0 darken($color, 20%);
 }
 
 @mixin colorful-container($color: $yammer-blue) {
