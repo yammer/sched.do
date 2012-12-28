@@ -1,4 +1,4 @@
-<%= render partial: 'title', locals: { title: 'Reminder to vote' } %>
+<%= render 'title', title: 'Reminder to vote' %>
 
 <p>
   <%= image_tag(@sender.image) %>You haven't voted on <%= link_to @event.name, event_url(@event) %> and <%= @sender.name %> wants your input.
@@ -6,7 +6,7 @@
 
 <p>
   Click here to change your vote or see the results.
-  <%= render partial: 'click_here', locals: { event: @event, email: @guest.email } %>
+  <%= render 'click_here', event: @event, email: @guest.email %>
 </p>
 
 <p>

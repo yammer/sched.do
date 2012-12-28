@@ -1,11 +1,8 @@
-<%= render partial: 'title',
-  locals:
-    {
-      title: "#{@creator.name}, you created a poll on sched.do called #{@event.name}."
-    }
+<%= render 'title', title:
+    "#{@creator.name}, you created a poll on sched.do called #{@event.name}."
 %>
 
 <p>
   Click here to vote and see the results.
-  <%= render partial: 'click_here', locals: { event: @event, email: @event.owner.email } %>
+  <%= render 'click_here', event: @event, email: @event.owner.email %>
 </p>

@@ -1,4 +1,4 @@
-<%= render partial: 'title', locals: { title: "#{@guest.name.try(:+, ' ')}You’re invited!" } %>
+<%= render 'title', title: "#{@guest.name.try(:+, ' ')}You’re invited!" %>
 
 <p>
   <%= image_tag(@invitation.sender.image) %>
@@ -7,7 +7,7 @@
 
 <p>
   Click here to vote and see the results.
-  <%= render partial: 'click_here', locals: { event: @event, email: @guest.email } %>
+  <%= render 'click_here', event: @event, email: @guest.email %>
 </p>
 
 <p>

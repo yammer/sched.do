@@ -1,4 +1,4 @@
-<%= render partial: 'title', locals: { title: 'Thanks for voting!' } %>
+<%= render 'title', title: 'Thanks for voting!' %>
 
 <p>
   <%= image_tag(@event.owner.image) %>
@@ -10,11 +10,11 @@
 
 <p>You voted for:</p>
 
-<%= render partial: 'list_votes', locals: { event: @event, voter: @user } %>
+<%= render 'list_votes', event: @event, voter: @user %>
 
 <p>
   Click here to change your vote or see the results.
-  <%= render partial: 'click_here', locals: { event: @event, email: @user.email } %>
+  <%= render 'click_here', event: @event, email: @user.email %>
 </p>
 
 <% if @user != @event.owner %>
