@@ -4,14 +4,6 @@ ruby '1.9.3'
 
 gem 'rails', '~> 3.2'
 
-# Gems used only for assets and not required
-# in production environments by default.
-group :assets do
-  gem 'coffee-rails', '~> 3.2'
-  gem 'sass-rails', '~> 3.2'
-  gem 'uglifier', '>= 1.0'
-end
-
 gem 'airbrake', '~> 3.1'
 gem 'attr_encrypted'
 gem 'awesome_print'
@@ -42,22 +34,19 @@ gem 'zclip-rails'
 # dynamically added objects to the params.
 gem 'cocoon', git: 'git://github.com/jsteiner/cocoon.git', branch: 'scheddo'
 
+# Gems used only for assets, not required in production environments by default.
+group :assets do
+  gem 'coffee-rails', '~> 3.2'
+  gem 'sass-rails', '~> 3.2'
+  gem 'uglifier', '>= 1.0'
+end
+
 group :development do
+  gem 'better_errors'                      # Must stay only in development group
+  gem 'binding_of_caller'                  # Must stay only in development group
   gem 'bundler', '>= 1.2.0.pre'
   gem 'foreman', '~> 0.46'
   gem 'quiet_assets'
-end
-
-group :development, :test do
-  gem 'dotenv'
-  gem 'evergreen', require: 'evergreen/rails'
-  gem 'mail_view'
-  gem 'rspec-rails', '~> 2.9.0'
-  gem 'sham_rack'
-end
-
-group :development, :test, :tddium_ignore do
-  gem 'pry'
 end
 
 group :test do
@@ -72,7 +61,19 @@ group :test do
   gem 'sinatra'
   gem 'timecop'
   gem 'turnip', '1.0'
-  gem 'mocha'
+  gem 'mocha'                              # Must be required last in this group
+end
+
+group :development, :test do
+  gem 'dotenv'
+  gem 'evergreen', require: 'evergreen/rails'
+  gem 'mail_view'
+  gem 'rspec-rails', '~> 2.9.0'
+  gem 'sham_rack'
+end
+
+group :development, :test, :tddium_ignore do
+  gem 'pry'
 end
 
 group :staging, :production do
