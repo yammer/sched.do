@@ -71,7 +71,7 @@ if($("input[data-role='invitation_name']").length){
           dataRole = 'yammer_user_id';
           inviteeFormAction = '<%= Rails.application.routes.url_helpers.yammer_user_invitations_path %>';
         }
-        else{
+        else if(ui.item.yammerGroupId) {
           id = ui.item.yammerGroupId;
           dataRole = "yammer_group_id";
           inviteeFormAction = '<%= Rails.application.routes.url_helpers.yammer_group_invitations_path %>';

@@ -9,6 +9,13 @@ Feature: Invited Yammer Users can invite others to an event
     Then I should see "John Wall" in the list of invitees
     And "John Wall" should receive 1 private message
 
+  @javascript
+  Scenario: User invites a non Yammer User via autocorrect drop down
+    Given someone created an event named "Clown party"
+    And I am signed in as "Bruce Lee" and I view the page for "Clown party"
+    When I invite "user@mail.com" to "Clown party" via the autocomplete
+    Then I should see "user@mail.com" in the list of invitees
+
   Scenario: User invites a guest
     Given someone created an event named "Clown party"
     And I am signed in as "Bruce Lee" and I view the page for "Clown party"

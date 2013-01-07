@@ -28,6 +28,14 @@ step 'I invite myself' do
   click_button 'add-invitee'
 end
 
+step 'I invite :email to :event_name via the autocomplete' do |email, event_name|
+  event = Event.find_by_name!(event_name)
+  visit event_path(event)
+  mock_out_yammer_api_without_yammer_response(name: email)
+  fill_in_autocomplete('#auto-complete', email)
+  choose_autocomplete('.email', email)
+end
+
 step 'I invite :emails to :event_name' do |emails, event_name|
   event = Event.find_by_name!(event_name)
   visit event_path(event)
