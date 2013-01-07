@@ -11,12 +11,6 @@ class Guest < ActiveRecord::Base
   validates :email, email: true
   validates :name, presence: true, if: :has_ever_logged_in?
 
-  def self.initialize_with_name_and_email(params)
-    guest = find_or_initialize_by_email(params[:guest][:email].downcase)
-    guest.name = params[:guest][:name]
-    guest
-  end
-
   def able_to_edit?(event)
     false
   end
@@ -27,10 +21,6 @@ class Guest < ActiveRecord::Base
 
   def invite(invitation)
     Messenger.new(invitation).invite
-  end
-
-  def set_has_ever_logged_in
-    self.update_attributes!(has_ever_logged_in: true)
   end
 
   def remind(invitation, sender)

@@ -15,7 +15,7 @@ step 'I visit the event page' do
 end
 
 step 'I visit the event page for :event_name' do |event_name|
-  event = Event.find_by_name(event_name)
+  event = Event.find_by_name!(event_name)
   visit "/events/#{event.uuid}"
 end
 
@@ -46,6 +46,11 @@ end
 step 'I should be on the :event_name event page' do |event_name|
   event = Event.find_by_name!(event_name)
   current_url.should == event_url(event)
+end
+
+step 'I should not be on the :event_name event page' do |event_name|
+  event = Event.find_by_name(event_name)
+  current_url.should_not == event_url(event)
 end
 
 step 'I should see an event named :event_name with a suggestion of :suggestion' do |event_name, suggestion|

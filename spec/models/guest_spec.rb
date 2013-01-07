@@ -45,28 +45,24 @@ end
 
 describe Guest, '#normalize_email' do
   it 'trims white space from email' do
-    guest = build(:guest, email: ' test@email.com ')
-
-    guest.save!
+    guest = create(:guest, email: ' test@email.com ')
 
     guest.email.should == 'test@email.com'
   end
 
   it 'downcases email' do
-    guest = build(:guest, email: 'Test@email.com')
-
-    guest.save!
+    guest = create(:guest, email: 'Test@email.com')
 
     guest.email.should == 'test@email.com'
   end
 end
 
-describe Guest, '.initialize_with_name_and_email' do
+describe Guest, '.find_or_initialize_by_email' do
   it 'initializes a guest with the given email and name' do
     guest = create(:guest)
-    params = { guest: { email: guest.email, name: guest.name } }
+    params = { email: guest.email, name: guest.name }
 
-    initialized_guest = Guest.initialize_with_name_and_email(params)
+    initialized_guest = Guest.find_or_initialize_by_email(params)
 
     initialized_guest.email.should == guest.email
     initialized_guest.name.should == guest.name
@@ -74,9 +70,9 @@ describe Guest, '.initialize_with_name_and_email' do
 
   it 'does not create duplicate guests with the same email' do
     guest = create(:guest)
-    params = { guest: { email: guest.email, name: guest.name } }
+    params = { email: guest.email, name: guest.name }
 
-    duplicate_guest = Guest.initialize_with_name_and_email(params)
+    duplicate_guest = Guest.find_or_initialize_by_email(params)
 
     lambda {
       duplicate_guest.save
@@ -85,29 +81,13 @@ describe Guest, '.initialize_with_name_and_email' do
 
   it 'allows guests with the same name and different emails' do
     guest = create(:guest)
-    params = { guest: { email: 'different@email.com', name: guest.name } }
+    params = { email: 'different@email.com', name: guest.name }
 
-    guest_with_same_name = Guest.initialize_with_name_and_email(params)
+    guest_with_same_name = Guest.find_or_initialize_by_email(params)
 
     lambda {
       guest_with_same_name.save
     }.should change(Guest, :count).by(1)
-  end
-end
-
-describe Guest, '#set_has_ever_logged_in' do
-  it 'defaults has_ever_logged_in to false' do
-    guest = create(:guest)
-
-    guest.has_ever_logged_in.should be_false
-  end
-
-  it 'sets has_ever_logged_in to true when guests log in for the first time' do
-    guest = create(:guest, has_ever_logged_in: false)
-
-    guest.set_has_ever_logged_in
-
-    guest.has_ever_logged_in.should be_true
   end
 end
 
