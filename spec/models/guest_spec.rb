@@ -1,23 +1,49 @@
 require 'spec_helper'
 
 describe Guest, 'validations' do
+  it { should have_many(:invitations) }
+  it { should have_many(:votes) }
+
   it { should validate_presence_of(:email) }
   it { should validate_uniqueness_of(:email) }
-  it { should have_many(:invitations) }
 
-  it "requires a valid e-mail address" do
-    should allow_value("person@example.com").for(:email)
-    should allow_value("person-awesome@example.com").for(:email)
-    should allow_value("person-awesome@example.co.ul.com").for(:email)
-    should allow_value(" person@example.com").for(:email)
-    should allow_value("person@example.com  ").for(:email)
-    should_not allow_value("person@@example.com").for(:email)
-    should_not allow_value("person").for(:email)
-    should_not allow_value("person @person.com").for(:email)
+  it 'requires a valid e-mail address' do
+    should allow_value('person@example.com').for(:email)
+    should allow_value('person-awesome@example.com').for(:email)
+    should allow_value('person-awesome@example.co.ul.com').for(:email)
+    should allow_value(' person@example.com').for(:email)
+    should allow_value('person@example.com  ').for(:email)
+    should_not allow_value('person@@example.com').for(:email)
+    should_not allow_value('person').for(:email)
+    should_not allow_value('person @person.com').for(:email)
+  end
+
+  context 'validates :name if has_ever_logged_in == true' do
+    it 'is not valid without a name if has_ever_logged_in == true' do
+      guest = build_stubbed(
+        :guest,
+        email: 'zip@email.com',
+        name: nil,
+        has_ever_logged_in: true
+      )
+
+      guest.should_not be_valid
+    end
+
+    it 'is valid without a name if has_ever_logged_in == false' do
+      guest = build_stubbed(
+        :guest,
+        email: 'zap@email.com',
+        name: nil,
+        has_ever_logged_in: false
+      )
+
+      guest.should be_valid
+    end
   end
 end
 
-describe Guest, 'filters' do
+describe Guest, '#normalize_email' do
   it 'trims white space from email' do
     guest = build(:guest, email: ' test@email.com ')
 
@@ -67,11 +93,16 @@ describe Guest, '.initialize_with_name_and_email' do
       guest_with_same_name.save
     }.should change(Guest, :count).by(1)
   end
-
 end
 
-describe Guest, '#log_in' do
-  it 'sets has has_ever_logged_in to true if the guest is logging in for the first time' do
+describe Guest, '#set_has_ever_logged_in' do
+  it 'defaults has_ever_logged_in to false' do
+    guest = create(:guest)
+
+    guest.has_ever_logged_in.should be_false
+  end
+
+  it 'sets has_ever_logged_in to true when guests log in for the first time' do
     guest = create(:guest, has_ever_logged_in: false)
 
     guest.set_has_ever_logged_in
@@ -80,7 +111,7 @@ describe Guest, '#log_in' do
   end
 end
 
-describe Guest, 'image' do
+describe Guest, '#image' do
   it 'returns the placeholder image' do
     guest = build_stubbed(:guest)
 
@@ -105,14 +136,14 @@ describe Guest, '#vote_for_suggestion' do
 end
 
 describe Guest, '#voted_for_suggestion?' do
-  it "returns true if the user voted for the suggestion" do
+  it 'returns true if the user voted for the suggestion' do
     user = create(:user)
     vote = create(:vote, voter: user)
 
     user.voted_for_suggestion?(vote.suggestion).should be_true
   end
 
-  it "returns false if the user did not vote for the suggestion" do
+  it 'returns false if the user did not vote for the suggestion' do
     user = create(:user)
     suggestion = create(:suggestion)
 
@@ -121,14 +152,14 @@ describe Guest, '#voted_for_suggestion?' do
 end
 
 describe User, '#voted_for_event?' do
-  it "returns true if the guest voted for the event" do
+  it 'returns true if the guest voted for the event' do
     guest = create(:guest)
     vote = create(:vote, voter: guest)
 
     guest.voted_for_event?(vote.event).should be_true
   end
 
-  it "returns false if the guest did not vote for the event" do
+  it 'returns false if the guest did not vote for the event' do
     guest = create(:guest)
     event = create(:event)
 
@@ -168,7 +199,7 @@ describe Guest, '#votes' do
     guest.votes.should == [vote]
   end
 
-  it "returns an empty array if the guest has no votes" do
+  it 'returns an empty array if the guest has no votes' do
     guest = build(:guest)
     guest.votes.should == []
   end

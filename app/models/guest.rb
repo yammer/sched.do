@@ -1,21 +1,15 @@
 class Guest < ActiveRecord::Base
-  attr_accessible :name, :email, :has_ever_logged_in
+  attr_accessible :email, :has_ever_logged_in, :name
 
   has_many :invitations, as: :invitee
   has_many :votes, as: :voter
 
   before_validation :normalize_email
 
-  validates :email, presence: true, uniqueness: true
+  validates_presence_of :email
+  validates_uniqueness_of :email
   validates :email, email: true
   validates :name, presence: true, if: :has_ever_logged_in?
-
-  def self.create_without_name_validation(email)
-    Guest.new.tap do |guest|
-      guest.email = email
-      guest.save
-    end
-  end
 
   def self.initialize_with_name_and_email(params)
     guest = find_or_initialize_by_email(params[:guest][:email].downcase)

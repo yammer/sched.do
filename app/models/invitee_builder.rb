@@ -18,22 +18,30 @@ class InviteeBuilder
   end
 
   def find_existing_yammer_user
-    user_id = find_user_id_by_email
+    @user_id = search_yammer_for_user_id_by_email
 
-    if user_id.present?
-      YammerUser.new(
-        access_token: @event.owner.access_token,
-        yammer_staging: @event.owner.yammer_staging?,
-        yammer_user_id: user_id
-      ).find_or_create
+    if @user_id.present?
+      create_new_yammer_user
     end
   end
 
-  def find_user_id_by_email
-    @event.owner.yammer_client.get('/users/by_email', email: @email).try(:first).try(:id)
+  def search_yammer_for_user_id_by_email
+    @event.owner.
+      yammer_client.
+      get('/users/by_email', email: @email).
+      try(:first).
+      try(:id)
+  end
+
+  def create_new_yammer_user
+    YammerUser.new(
+      access_token: @event.owner.access_token,
+      yammer_staging: @event.owner.yammer_staging?,
+      yammer_user_id: @user_id
+    ).find_or_create
   end
 
   def create_guest
-    Guest.create_without_name_validation(@email)
+    Guest.create(email: @email)
   end
 end

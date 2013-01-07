@@ -1,30 +1,30 @@
 require 'spec_helper'
 
-describe InviteeBuilder, 'find_user_by_email_or_create_guest' do
-  context 'given an email with no current yammer_user_id or group_id' do
-    it 'searches for a user by email' do
-      invitation = create(:invitation)
-      user = build_stubbed(:user)
-      User.stubs(:find_by_email)
+describe InviteeBuilder, '#find_user_by_email_or_create_guest' do
+  it 'searches for a user by email' do
+    invitation = create(:invitation)
+    user = build_stubbed(:user)
+    User.stubs(:find_by_email)
 
-      InviteeBuilder.new(user.email, invitation.event).
-        find_user_by_email_or_create_guest
+    InviteeBuilder.new(user.email, invitation.event).
+      find_user_by_email_or_create_guest
 
-      User.should have_received(:find_by_email).with(user.email)
-      Guest.should have_received(:find_by_email).with(user.email).never
-    end
+    User.should have_received(:find_by_email).with(user.email)
+    Guest.should have_received(:find_by_email).with(user.email).never
+  end
 
-    it 'searches for a Guest by email if no User exists' do
-      invitation = create(:invitation)
-      guest = build_stubbed(:guest)
-      Guest.stubs(:find_by_email)
+  it 'searches for a Guest by email if no User exists' do
+    invitation = create(:invitation)
+    guest = build_stubbed(:guest)
+    Guest.stubs(:find_by_email)
 
-      InviteeBuilder.new(guest.email, invitation.event).
-        find_user_by_email_or_create_guest
+    InviteeBuilder.new(guest.email, invitation.event).
+      find_user_by_email_or_create_guest
 
-      Guest.should have_received(:find_by_email).with(guest.email)
-    end
+    Guest.should have_received(:find_by_email).with(guest.email)
+  end
 
+  context 'if no User or Guest is found' do
     it 'searches for existing Yammer users' do
       invitation = create(:invitation)
       access_token = invitation.sender.access_token
@@ -51,21 +51,25 @@ describe InviteeBuilder, 'find_user_by_email_or_create_guest' do
       InviteeBuilder.new(invitee_email, invitation.event).
         find_user_by_email_or_create_guest
 
-      YammerUser.should have_received(:new).
-        with(access_token: access_token,
-             yammer_staging: yammer_staging,
-             yammer_user_id: invitee_user_id)
+      YammerUser.should have_received(:new).with(
+        access_token: access_token,
+        yammer_staging: yammer_staging,
+        yammer_user_id: invitee_user_id
+      )
     end
+  end
 
-    it 'creates a guest' do
+  context 'if no Yammer Users are found' do
+    it 'creates a guest with only an email address' do
       invitation = create(:invitation)
-      Guest.stubs(:create_without_name_validation)
-      email = 'george@example.com'
+      event = invitation.event
+      email = 'george@example.com' 
+      params = { email: email }
+      Guest.stubs(:create)
 
-      InviteeBuilder.new(email, invitation.event).
-        find_user_by_email_or_create_guest
+      InviteeBuilder.new(email, event).find_user_by_email_or_create_guest
 
-      Guest.should have_received(:create_without_name_validation).with(email)
+      Guest.should have_received(:create).with(params)
     end
   end
 end
