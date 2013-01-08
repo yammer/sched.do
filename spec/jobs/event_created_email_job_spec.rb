@@ -3,12 +3,14 @@ require 'spec_helper'
 describe EventCreatedEmailJob, '.enqueue' do
   it 'enqueues the job' do
     event = build_stubbed(:event)
+    Delayed::Job.stubs(:enqueue)
+    event_created_email_job = EventCreatedEmailJob.new(event.id)
+    priority = 1
 
     EventCreatedEmailJob.enqueue(event)
 
-    should enqueue_delayed_job('EventCreatedEmailJob').
-      with_attributes(event_id: event.id).
-      priority(1)
+    Delayed::Job.should have_received(:enqueue).
+      with(event_created_email_job, priority: priority)
   end
 end
 

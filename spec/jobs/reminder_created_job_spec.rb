@@ -4,12 +4,14 @@ describe ReminderCreatedJob, '.enqueue' do
   it 'enqueues the job' do
     reminder = build_stubbed(:reminder)
     Reminder.stubs(find: reminder)
+    Delayed::Job.stubs(:enqueue)
+    reminder_created_job = ReminderCreatedJob.new(reminder.id)
+    priority = 1
 
-    ReminderCreatedJob.enqueue reminder
+    ReminderCreatedJob.enqueue(reminder)
 
-    should enqueue_delayed_job('ReminderCreatedJob').
-      with_attributes(reminder_id: reminder.id).
-      priority(1)
+    Delayed::Job.should have_received(:enqueue).
+      with(reminder_created_job, priority: priority)
   end
 end
 

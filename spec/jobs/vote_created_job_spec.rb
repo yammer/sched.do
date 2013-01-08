@@ -4,12 +4,14 @@ describe VoteCreatedJob, '.enqueue' do
   it 'enqueues the job' do
     vote = build_stubbed(:vote)
     Vote.stubs(find: vote)
+    Delayed::Job.stubs(:enqueue)
+    vote_created_job = VoteCreatedJob.new(vote.id)
+    priority = 1
 
     VoteCreatedJob.enqueue(vote)
 
-    should enqueue_delayed_job('VoteCreatedJob').
-      with_attributes(vote_id: vote.id).
-      priority(1)
+    Delayed::Job.should have_received(:enqueue).
+      with(vote_created_job, priority: priority)
   end
 end
 

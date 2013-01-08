@@ -4,13 +4,15 @@ describe VoteEmailJob, '.enqueue' do
   it 'enqueues the job' do
     Timecop.freeze do
       vote = build_stubbed(:vote)
+      Delayed::Job.stubs(:enqueue)
+      vote_email_job = VoteEmailJob.new(vote.id, :test_vote_email)
+      priority = 1
+      delay = 3.minutes
 
       VoteEmailJob.enqueue(vote, :test_vote_email)
 
-      should enqueue_delayed_job('VoteEmailJob').
-        with_attributes(vote_id: vote.id, email_type: :test_vote_email).
-        priority(1).
-        run_at(3.minutes.from_now)
+      Delayed::Job.should have_received(:enqueue).
+        with(vote_email_job, priority: priority, run_at: delay.from_now)
     end
   end
 end

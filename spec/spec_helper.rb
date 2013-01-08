@@ -26,7 +26,6 @@ RSpec.configure do |config|
   config.include EmailSpec::Helpers
   config.include EmailSpec::Matchers
   config.include ActionView::Helpers::TextHelper
-  config.include DelayedJob::Matchers
 
   config.use_transactional_fixtures = false
   config.infer_base_class_for_anonymous_controllers = false

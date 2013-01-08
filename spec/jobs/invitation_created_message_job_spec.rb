@@ -3,13 +3,16 @@ require 'spec_helper'
 describe InvitationCreatedMessageJob, '.enqueue' do
   it 'enqueues the job' do
     invitation = build_stubbed(:invitation)
-    Invitation.stubs find: invitation
+    Invitation.stubs(find: invitation)
+    Delayed::Job.stubs(:enqueue)
+    invitation_created_message_job =
+      InvitationCreatedMessageJob.new(invitation.id)
+    priority = 1
 
-    InvitationCreatedMessageJob.enqueue invitation
+    InvitationCreatedMessageJob.enqueue(invitation)
 
-    should enqueue_delayed_job('InvitationCreatedMessageJob').
-      with_attributes(invitation_id: invitation.id).
-      priority(1)
+    Delayed::Job.should have_received(:enqueue).
+      with(invitation_created_message_job, priority: priority)
   end
 end
 
