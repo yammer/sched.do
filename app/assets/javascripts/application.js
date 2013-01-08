@@ -1,2 +1,2 @@
 //= require vendor
-//= require_tree .
+//= require_tree ./scheddo

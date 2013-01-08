@@ -24,7 +24,6 @@ gem 'sass'
 gem 'swfobject-rails'
 gem 'tddium'
 gem 'thin'
-gem 'underscore-rails', '~> 1.3'
 gem 'yam', '0.0.5'
 gem 'zclip-rails'
 

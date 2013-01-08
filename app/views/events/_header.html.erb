@@ -1,3 +1,6 @@
+<%- content_for(:javascript) do -%>
+  <%= javascript_include_tag :event_vote_invite_remind -%>
+<%- end -%>
 <ul class="poll-actions">
   <li title="Copy Poll URL">
     <button id="copy-event-url" class="icon-button <% if !current_user.able_to_edit?(@event) %>single<% end %>" data-event-url="<%= event_url(@event) %>" >

@@ -1,3 +1,6 @@
+<%- content_for(:javascript) do -%>
+  <%= javascript_include_tag :event_create_edit -%>
+<%- end -%>
 <div class="new-event">
   <h2>Schedule an Event</h2>
   <%= render 'form', submit_label: 'Create event' %>

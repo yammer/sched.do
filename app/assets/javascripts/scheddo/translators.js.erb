@@ -1,0 +1,64 @@
+var scheddo = scheddo || {};
+scheddo.translators = scheddo.translators || {};
+
+scheddo.translators.autocomplete = {
+  translateUsers: function(userData){
+    return _(userData).map(function(userObject) {
+      var user = scheddo.models.user(userObject);
+      user.label = user.fullName;
+      user.value = user.fullName;
+      user.type = 'user';
+      user.submit = function(event, form){
+        inviteeFormAction = '<%= Rails.application.routes.url_helpers.yammer_user_invitations_path %>';
+        form.attr('action', inviteeFormAction);
+        scheddo.util.dataRoleUpdater(userObject.id, event.target, 'yammer_user_id');
+        form.submit();
+      };
+      user.render = function(){
+        return $('<li></li>').
+          data('ui-autocomplete-item', this).
+          append(scheddo.templates.getUserMenuItemTemplate(this));
+      };
+
+      return user;
+    }).reverse();
+	},
+
+	translateGroups: function(groupData){
+    return _(groupData).map(function(groupObject) {
+      var group = scheddo.models.group(groupObject);
+      group.label = group.fullName;
+      group.value = group.fullName;
+      group.type = 'group'
+      group.submit = function(event, form){
+        inviteeFormAction = '<%= Rails.application.routes.url_helpers.yammer_group_invitations_path %>';
+        form.attr('action', inviteeFormAction);
+        scheddo.util.dataRoleUpdater(groupObject.id, event.target, 'yammer_group_id');
+        form.submit();
+      };
+      group.render = function(){
+        return $('<li></li>').
+          data('ui-autocomplete-item', this).
+          append(scheddo.templates.getGroupMenuItemTemplate(this));
+      };
+
+      return group;
+    }).reverse();
+	},
+
+	translateEmail: function(term){
+		return {
+      label: term,
+      value: term,
+      type: 'email',
+      submit: function(event, form){
+        form.submit();
+      },
+      render: function(){
+        return $('<li></li>').
+          data('ui-autocomplete-item', this).
+          append(scheddo.templates.getEmailItemTemplate(this));
+      }
+    }
+  }
+};

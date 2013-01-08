@@ -31,7 +31,7 @@ end
 step 'I invite :email to :event_name via the autocomplete' do |email, event_name|
   event = Event.find_by_name!(event_name)
   visit event_path(event)
-  mock_out_yammer_api_without_yammer_response(name: email)
+  mock_out_yammer_api_with_no_response
   fill_in_autocomplete('#auto-complete', email)
   choose_autocomplete('.email', email)
 end
