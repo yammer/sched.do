@@ -46,7 +46,7 @@ describe VoteCreatedJob, '#perform' do
     end
 
     it 'enqueues a VoteEmailJob that sends the vote confirmation email' do
-      vote = build_stubbed(:vote)
+      vote = create(:vote)
       Vote.stubs(find_by_id: vote)
       VoteEmailJob.stubs(:enqueue)
 
@@ -56,7 +56,7 @@ describe VoteCreatedJob, '#perform' do
     end
 
     it 'enqueues a VoteEmailJob that sends the vote notification email' do
-      vote = build_stubbed(:vote)
+      vote = create(:vote)
       Vote.stubs(find_by_id: vote)
       VoteEmailJob.stubs(:enqueue)
 
