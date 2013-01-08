@@ -61,18 +61,22 @@ RSpec.configure do |config|
     garbage_collect_once_per_second_for_faster_tests
   end
 
- URL_HELPERS = Rails.application.routes.url_helpers
+  URL_HELPERS = Rails.application.routes.url_helpers
 
   def garbage_collect_once_per_second_for_faster_tests
-    if time_to_run_gc?
-      GC.enable
-      GC.start
+    if ENV['TDDIUM'].present? || time_to_run_gc?
+      run_gc
       last_gc_run = Time.now
     end
   end
 
   def time_to_run_gc?
     (Time.now - last_gc_run) > 1.0
+  end
+
+  def run_gc
+    GC.enable
+    GC.start
   end
 
   def last_gc_run=(time)
