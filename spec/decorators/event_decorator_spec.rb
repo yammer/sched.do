@@ -1,25 +1,5 @@
 require 'spec_helper'
 
-describe EventDecorator, '#other_invitees_count' do
-  it 'returns 0 if no one has been invited' do
-    event = create(:event)
-    decorated_event = EventDecorator.new(event)
-
-    count = decorated_event.other_invitees_count
-
-    count.should == 0
-  end
-
-  it 'returns 2 if 2 other people have been invited' do
-    event = event_with_invitees
-    decorated_event = EventDecorator.new(event)
-
-    count = decorated_event.other_invitees_count
-
-    count.should == 2
-  end
-end
-
 describe EventDecorator, '#invitees_with_current_user_first' do
   it 'creates an array of invitees, with the current user first' do
     event = event_with_invitees
@@ -45,17 +25,17 @@ describe EventDecorator, '#invitees_with_current_user_first' do
 end
 
 describe EventDecorator, '#other_invitees_who_have_not_voted_count' do
-  it 'returns the number of invitees who have not voted' do
-    event = event_with_invitees
+  it 'returns the number of other invitees who have not voted' do
+    event = EventDecorator.new(event_with_invitees)
     invitees = event.invitees
     suggestion = event.suggestions.first
     EventDecorator.any_instance.stubs(current_user: event.owner)
-    decorated_event = EventDecorator.new(event)
     vote = create(:vote, voter: invitees.first, suggestion: suggestion)
 
-    invitees_count = decorated_event.other_invitees_who_have_not_voted_count
+    invitees_count = event.other_invitees_who_have_not_voted_count
 
     invitees_count.should == 1
+    invitees.count.should == 3
   end
 end
 

@@ -1,10 +1,6 @@
 class EventDecorator < Draper::Base
   decorates :event
 
-  def other_invitees_count
-    invitees.count - event_owner
-  end
-
   def invitees_with_current_user_first
     invitees.unshift(current_user).uniq
   end
@@ -22,10 +18,6 @@ class EventDecorator < Draper::Base
   end
 
   private
-
-  def event_owner
-    1
-  end
 
   def current_user
     h.current_user

@@ -2,9 +2,9 @@
   <div class="reminder">
     <span class="created-by">Created by <strong><%= @event.owner %></strong></span>
     <span class="divider">&ndash;</span>
-    <span><%= pluralize(@event.other_invitees_count, "other person") %> invited</span>
+    <span><%= pluralize(@event.invitees.count, "person") %> invited</span>
     <span class="divider">&ndash;</span>
-    <span><%= pluralize(@event.other_invitees_who_have_not_voted_count, 'has not voted','have not voted') %></span>
+    <span><%= pluralize(@event.other_invitees_who_have_not_voted_count, 'other invitee has not voted','other invitees have not voted') %></span>
     <% if @event.other_invitees_who_have_not_voted_count > 0 %>
       <% if current_user.yammer_user? %>
         <%= link_to 'Remind Them!', reminders_path(reminder: { receiver_id: @event.id, receiver_type: @event.class.name }, event_id: @event), method: :post, class: "remind-all" %>
