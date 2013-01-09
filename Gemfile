@@ -68,7 +68,7 @@ group :development, :test do
   gem 'dotenv'
   gem 'evergreen', require: 'evergreen/rails'
   gem 'mail_view'
-  gem 'rspec-rails', '~> 2.9.0'
+  gem 'rspec-rails'
   gem 'sham_rack'
 end
 
