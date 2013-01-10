@@ -1,8 +1,9 @@
+require('/assets/namespaced.js');
 require('/assets/scheddo/models/user.js');
 require('/assets/scheddo/models/group.js');
 require('/assets/underscore.js');
 
-describe('scheddo.models', function(){
+describe('Scheddo.Models', function(){
   describe('user', function(){
     it('translates a Yammer JSON user to a scheddo user', function(){
       var jsonUser = {
@@ -13,7 +14,7 @@ describe('scheddo.models', function(){
         job_title: 'engineer'
       };
 
-      var user = scheddo.models.user(jsonUser);
+      var user = Scheddo.Models.user(jsonUser);
 
       expect(user.fullName).toBe('test user');
       expect(user.photo).toBe('http://photos');
@@ -32,7 +33,7 @@ describe('scheddo.models', function(){
         ranking: 4,
       };
 
-      var group = scheddo.models.user(jsonGroup);
+      var group = Scheddo.Models.user(jsonGroup);
 
       expect(group.fullName).toBe('test group');
       expect(group.photo).toBe('http://photos');

@@ -1,65 +1,42 @@
-var scheddo = scheddo || {};
-scheddo.translators = scheddo.translators || {};
+Namespaced.declare('Scheddo');
 
-scheddo.translators.autocomplete = {
-  translateUsers: function(userData){
-    return _(userData).map(function(userObject) {
-      var user = scheddo.models.user(userObject);
-      user.label = user.fullName;
-      user.value = user.fullName;
-      user.type = 'user';
-      user.submit = function(event, form){
-        inviteeFormAction = '<%= Rails.application.routes.url_helpers.yammer_user_invitations_path %>';
-        form.attr('action', inviteeFormAction);
-        scheddo.util.dataRoleUpdater(user.id, event.target, 'yammer_user_id');
-        form.submit();
-      };
-      user.render = function(){
-        return $('<li></li>').
-          data('ui-autocomplete-item', this).
-          append(scheddo.templates.getUserMenuItemTemplate(this));
-      };
+Scheddo.Translators = {
+  translateUser: function(userData){
+    var user = Scheddo.Models.user(userData);
+    user.label = user.fullName;
+    user.value = user.fullName;
+    user.type = 'user';
+    user.render = function(){
+      return $(Scheddo.Templates.getUserMenuItemTemplate(this)).
+        data('ui-autocomplete-item', this);
+    };
 
-      return user;
-    }).reverse();
-	},
+    return user;
+  },
 
-	translateGroups: function(groupData){
-    return _(groupData).map(function(groupObject) {
-      var group = scheddo.models.group(groupObject);
-      group.label = group.fullName;
-      group.value = group.fullName;
-      group.type = 'group'
-      group.submit = function(event, form){
-        $('#auto-complete').val(group.fullName);
-        inviteeFormAction = '<%= Rails.application.routes.url_helpers.yammer_group_invitations_path %>';
-        form.attr('action', inviteeFormAction);
-        scheddo.util.dataRoleUpdater(group.id, event.target, 'yammer_group_id');
-        form.submit();
-      };
-      group.render = function(){
-        return $('<li></li>').
-          data('ui-autocomplete-item', this).
-          append(scheddo.templates.getGroupMenuItemTemplate(this));
-      };
+  translateGroup: function(groupData){
+    var group = Scheddo.Models.group(groupData);
+    group.label = group.fullName;
+    group.value = group.fullName;
+    group.type = 'group'
+    group.render = function(){
+      return $(Scheddo.Templates.getGroupMenuItemTemplate(this)).
+        data('ui-autocomplete-item', this);
+    };
 
-      return group;
-    }).reverse();
-	},
+    return group;
+  },
 
-	translateEmail: function(term){
-		return {
+  translateEmail: function(term){
+    return {
       label: term,
       value: term,
       type: 'email',
-      submit: function(event, form){
-        form.submit();
-      },
       render: function(){
-        return $('<li></li>').
-          data('ui-autocomplete-item', this).
-          append(scheddo.templates.getEmailItemTemplate(this));
+        return $(Scheddo.Templates.getEmailItemTemplate(this)).
+          data('ui-autocomplete-item', this);
       }
     }
   }
 };
+

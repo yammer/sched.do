@@ -22,5 +22,6 @@ Feature: Owner cannot enter long Event names
 
   Scenario: Owner sees updated text length on edit
     Given I sign in and create an event named "1234567890"
+    And I visit the event page for "1234567890"
     When I edit the event
     Then I should see the appropriate change in the character counter

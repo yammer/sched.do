@@ -1,0 +1,41 @@
+Namespaced.declare('Scheddo.Translators');
+
+Scheddo.Translators.AutocompletePost = {
+  translateUsers: function(userData){
+    return _(userData).map(function(userObject) {
+      var user = Scheddo.Translators.translateUser(userObject);
+      user.submit = function(event, form){
+        inviteeFormAction = '<%= Rails.application.routes.url_helpers.yammer_user_invitations_path %>';
+        form.attr('action', inviteeFormAction);
+        Scheddo.Util.dataRoleUpdater(userObject.id, event.target, 'yammer_user_id');
+        form.submit();
+      };
+
+      return user;
+    }).reverse();
+  },
+
+  translateGroups: function(groupData){
+    return _(groupData).map(function(groupObject) {
+      var group = Scheddo.Translators.translateGroup(groupObject);
+      group.submit = function(event, form){
+        $('#auto-complete').val(group.fullName);
+        inviteeFormAction = '<%= Rails.application.routes.url_helpers.yammer_group_invitations_path %>';
+        form.attr('action', inviteeFormAction);
+        Scheddo.Util.dataRoleUpdater(groupObject.id, event.target, 'yammer_group_id');
+        form.submit();
+      };
+
+      return group;
+    }).reverse();
+  },
+
+  translateEmail: function(term){
+    var email = Scheddo.Translators.translateEmail(term);
+    email.submit = function(event, form){
+      form.submit();
+    }
+
+    return email;
+  }
+};

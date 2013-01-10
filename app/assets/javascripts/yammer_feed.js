@@ -1,4 +1,4 @@
-if("access_token" in window && isOGObject()){
+if(Scheddo.YammerApi.isYammerUser() && Scheddo.Util.isOGObject()){
   yam.connect.embedFeed({
     container: '#yammer-feed',
     feedType: 'open-graph',
@@ -11,7 +11,4 @@ if("access_token" in window && isOGObject()){
     type:  $("[property='og:type']").attr('content')
     }
   });
-}
-function isOGObject(){
-  return $("[property='og:url']").length
 }

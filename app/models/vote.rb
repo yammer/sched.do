@@ -11,10 +11,6 @@ class Vote < ActiveRecord::Base
 
   after_create :queue_vote_created_job, :cache_vote_on_invitation
 
-  def self.none
-    where(id: nil)
-  end
-
   def has_no_other_votes_within_delay_window?
     voter.
       votes.

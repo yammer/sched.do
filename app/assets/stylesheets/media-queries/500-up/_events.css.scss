@@ -37,3 +37,19 @@ div.show-event {
     }
   }
 }
+
+div.new-event-invite {
+  @extend div.show-event;
+  @extend div.new-event;
+
+  form {
+    fieldset {
+      a.back {
+        float: left;
+        margin: 0;
+        margin-top: 15px;
+        width: 60px;
+      }
+    }
+  }
+}

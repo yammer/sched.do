@@ -1,18 +1,18 @@
-var scheddo = scheddo || {};
-
-scheddo.autocompleteConfiguration = (function(){
+Scheddo.autocompleteConfiguration = function(translator){
   renderUsers = function(ul, users) {
-      if(users){
-        var userHeader = scheddo.templates.getHeaderTemplate({ type: 'people' });
-        $(userHeader).appendTo(ul);
-        _.each(users,
-          function(user) { user.render().appendTo(ul); });
-      }
-    };
+    if(users){
+      var userHeader = Scheddo.Templates.getHeaderTemplate({ type: 'people' });
+      $(userHeader).appendTo(ul);
+      _.each(users,
+        function(user) {
+          user.render().appendTo(ul);
+        });
+    }
+  };
 
   renderGroups = function(ul, groups) {
     if(groups){
-      var groupHeader = scheddo.templates.getHeaderTemplate({ type: 'groups' });
+      var groupHeader = Scheddo.Templates.getHeaderTemplate({ type: 'groups' });
       $(groupHeader).appendTo(ul);
       _.each(groups,
         function(group) { group.render().appendTo(ul); });
@@ -36,29 +36,27 @@ scheddo.autocompleteConfiguration = (function(){
       throw 'This method is no longer implemented. See _renderMenu method above.';
     },
     options: {
+      autoFocus: true,
+      delay: 250,
       minLength: 1,
       appendTo: '.invitation-autocomplete-suggestions',
       open: function(event, ui){
-        $('#auto-complete').addClass("autocomplete-true")
+        $('#auto-complete').addClass('autocomplete-true')
       },
       close: function(event, ui){
-        $('#auto-complete').removeClass("autocomplete-true")
+        $('#auto-complete').removeClass('autocomplete-true')
+        $('#auto-complete').val('');
       },
       select: function(event, ui) {
+        $('#auto-complete').val(ui.item.value);
         ui.item.submit(event, $(this).parents('form'));
       },
       source: function(request, response) {
-        var yammerApi = scheddo.yammerApi(scheddo.translators.autocomplete);
+        var yammerApi = Scheddo.YammerApi;
 
-        yammerApi.setAccessToken(access_token);
-        yammerApi.autocomplete.ranked(request.term, response);
+        yammerApi.setAccessToken(Scheddo.YammerApi.userAccessToken);
+        yammerApi.autocomplete(translator).ranked(request.term, response);
       }
     }
   };
-})();
-
-$.widget("custom.yammerAutocomplete", $.ui.autocomplete, scheddo.autocompleteConfiguration);
-
-if("access_token" in window){
-  $("input[data-role='invitation_name']").yammerAutocomplete();
-}
+};

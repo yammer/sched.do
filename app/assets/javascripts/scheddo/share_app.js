@@ -8,7 +8,7 @@ $('.share-button').click( function(event) {
   event.preventDefault();
   var message = $('#dialog textarea').val();
 
-  scheddo.yammerApi().publicMessage(message);
+  Scheddo.YammerApi.publicMessage(message);
 
   $('#dialog').dialog('close');
 });

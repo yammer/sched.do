@@ -315,7 +315,7 @@ div.show-event {
       padding: 10px 15px;
     }
 
-    ul#groups {
+    ul.groups {
       margin: 0;
       padding: 0px 10px;
 
@@ -329,19 +329,7 @@ div.show-event {
         }
 
         div.group-name {
-          $color: darken($bg-color, 45%);
-          background-color: $color;
-          @include background-image(url(group.svg), linear-gradient(tint($color, 35%), shade($color, 10%)));
-          background-position: 10px center;
-          background-repeat: no-repeat, repeat;
-          border: 1px solid darken($color, 5%);
-          border-bottom-color: darken($color, 20%);
-          @include border-radius(4px);
-          @include box-shadow(inset 0 1px 0px lighten($color, 30%));
-          font-size: 0.9em;
-          @include inline-block;
-          padding: 0.5em 1em 0.5em 30px;
-          @include colorful-container-text($color);
+          @extent %group-label;
         }
 
         a.group-reminder {
@@ -360,6 +348,10 @@ div.show-event {
         }
       }
     }
+  }
+
+  section.invited-users {
+    @extend section.invited-yammer-groups;
   }
 
   div.call-to-action {

@@ -97,7 +97,7 @@ div.new-event {
       }
 
       a.remove_fields {
-        @extend %close-button;
+        @extend %delete-button;
       }
     }
 

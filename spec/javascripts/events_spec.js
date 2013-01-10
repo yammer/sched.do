@@ -1,3 +1,4 @@
+require('/assets/modernizr.custom.js');
 require('/assets/jquery.js');
 require('/assets/jquery.app.js');
 require('/assets/jquery-ui.js');

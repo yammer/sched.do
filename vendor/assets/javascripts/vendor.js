@@ -7,4 +7,5 @@
 //= require zclip
 //= require jquery.lean-modal
 //= require bootstrap-tooltip
+//= require namespaced
 //= require_tree .

@@ -78,3 +78,7 @@ div.new-event {
     }
   }
 }
+
+div.new-event-invite {
+  @extend div.show-event;
+}

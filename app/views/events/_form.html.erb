@@ -1,16 +1,25 @@
-<%= semantic_form_for(@event) do |f| %>
-  <%= f.inputs do %>
-    <%= f.input :name, label: false, placeholder: "What do you want to schedule? (e.g. Company Picnic)", input_html: { maxlength: nil }  %>
-    <div class="char-limit valid-char-limit"><p>Characters Left: <span class="text-counter"></span></p></div>
+<%= semantic_form_for(@event) do |form| %>
+  <%= form.inputs do %>
+    <%= form.input :name,
+      label: false,
+      placeholder: "What do you want to schedule? (e.g. Company Picnic)",
+      input_html: { maxlength: nil } %>
+
+    <div class="char-limit valid-char-limit">
+      <p>
+        Characters Left: <span class="text-counter"></span>
+      </p>
+    </div>
 
     <div class="suggestions">
       <p>Suggest Dates &amp; Times</p>
-      <%= f.semantic_fields_for(:suggestions, @event.suggestions) do |suggestion_form| %>
+
+      <%= form.semantic_fields_for(:suggestions, @event.suggestions) do |suggestion_form| %>
         <%= render 'existing_suggestion_fields', f: suggestion_form %>
       <% end %>
     </div>
 
-    <%= link_to_add_association 'Add Another Date', f, :suggestions,
+    <%= link_to_add_association 'Add Another Date', form, :suggestions,
       partial: 'primary_suggestion_fields',
       link_partial: 'link_to_add_secondary_fields',
       'data-link-insertion-node' => '.times',
@@ -18,7 +27,10 @@
       'data-association-insertion-node' => '.suggestions',
       'data-association-insertion-method' => :append %>
     <% end %>
-    <%= f.actions do %>
-      <%= f.action :submit, label: submit_label, button_html: { class: "cta" } %>
+
+    <%= form.actions do %>
+      <%= form.action :submit,
+        label: submit_label,
+        button_html: { class: 'cta' } %>
     <% end %>
   <% end %>

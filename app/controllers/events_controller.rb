@@ -11,7 +11,7 @@ class EventsController < ApplicationController
     @event = EventDecorator.new(current_user.events.new(params[:event]))
 
     if @event.save
-      redirect_to @event
+      redirect_to multiple_invitations_path(event_uuid: @event.uuid)
     else
       @event.build_suggestions
       render :new
@@ -26,6 +26,7 @@ class EventsController < ApplicationController
   end
 
   def edit
+    session[:return_to] = request.referer
     @event = EventDecorator.new(current_user.events.find_by_uuid!(params[:id]))
     @event.build_suggestions
   end
@@ -36,7 +37,7 @@ class EventsController < ApplicationController
 
     if @event.save
       respond_to do |format|
-        format.html { redirect_to @event }
+        format.html { redirect_to(session[:return_to] || @event) }
         format.json { render json: { status: :ok } }
       end
     else

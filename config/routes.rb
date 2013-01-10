@@ -5,6 +5,7 @@ SchedDo::Application.routes.draw do
   get '/tos' => 'pages#terms_of_service'
 
   resources :events, only: [:new, :create, :show, :edit, :update], :id => /.{8}/
+  resources :multiple_invitations, only: [:index]
   resources :votes, only: [:create, :destroy]
   resources :invitations, only: [:create, :update]
   resources :guests, only: [:new, :create, :update]
@@ -24,7 +25,7 @@ SchedDo::Application.routes.draw do
     end
   )
 
-  root to: "welcome#index"
+  root to: 'welcome#index'
 
   if Rails.env.development?
     mount UserMailer::Preview => 'mail_view'

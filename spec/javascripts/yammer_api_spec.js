@@ -1,7 +1,8 @@
+require('/assets/namespaced.js');
 require('/assets/scheddo/yammer_api.js');
 require('/assets/underscore.js');
 
-describe ('scheddo.yammerApi.setAccessToken', function(){
+describe ('Scheddo.YammerApi.setAccessToken', function(){
   it ('sets the users access token on yammer.request for oauth2', function(){
     authSetter = {
       setAuthToken: function(){
@@ -17,7 +18,7 @@ describe ('scheddo.yammerApi.setAccessToken', function(){
       }
     }
     var access_token = '123456';
-    var api = scheddo.yammerApi({});
+    var api = Scheddo.YammerApi;
     api.setAccessToken(access_token);
 
     expect(yam.request.setAuthenticator).toHaveBeenCalledWith('oauth2');
@@ -25,7 +26,7 @@ describe ('scheddo.yammerApi.setAccessToken', function(){
   });
 });
 
-describe('scheddo.yammerApi.autocomplete', function(){
+describe('Scheddo.YammerApi.autocomplete', function(){
   beforeEach(function(){
     window.yam = {
       request: jasmine.createSpy('yam.request')
@@ -37,9 +38,9 @@ describe('scheddo.yammerApi.autocomplete', function(){
     it('passes the correct arguments to yam.request', function(){
       var term = 'foobar';
       var translateResponseData = jasmine.createSpy('translateResponseData');
-      var api = scheddo.yammerApi({});
-      spyOn(api.autocomplete, 'translateResponseData').andReturn(translateResponseData);
-      api.autocomplete.ranked(term);
+      var autocomplete = Scheddo.YammerApi.autocomplete({});
+      spyOn(autocomplete, 'translateResponseData').andReturn(translateResponseData);
+      autocomplete.ranked(term);
       expect(yam.request).toHaveBeenCalledWith({
         url: '/api/v1/autocomplete/ranked',
         method: 'GET',
@@ -51,8 +52,8 @@ describe('scheddo.yammerApi.autocomplete', function(){
 
   describe('translateResponseData', function(){
     it('returns a function that translates Yammer data', function(){
-      var api = scheddo.yammerApi({});
-      var returnValue = api.autocomplete.translateResponseData('', function(){ });
+      var api = Scheddo.YammerApi;
+      var returnValue = api.autocomplete({}).translateResponseData('', function(){ });
       expect(typeof returnValue).toBe('function');
     });
 
@@ -68,7 +69,7 @@ describe('scheddo.yammerApi.autocomplete', function(){
 
       it('transforms user data', function(){
         var translator = setupTranslator();
-        var api = scheddo.yammerApi(translator);
+        var api = Scheddo.YammerApi;
         var yammerData = {
           'user': [
             {
@@ -77,13 +78,13 @@ describe('scheddo.yammerApi.autocomplete', function(){
           ]
         };
 
-        api.autocomplete.translateResponseData('', function(param){ })(yammerData);
+        api.autocomplete(translator).translateResponseData('', function(param){ })(yammerData);
         expect(translator.translateUsers).toHaveBeenCalledWith(yammerData['user']);
       });
 
       it('transforms group data', function(){
         var translator = setupTranslator();
-        var api = scheddo.yammerApi(translator);
+        var api = Scheddo.YammerApi;
         var yammerData = {
           'group': [
             {
@@ -92,15 +93,15 @@ describe('scheddo.yammerApi.autocomplete', function(){
           ]
         };
 
-        api.autocomplete.translateResponseData('', function(param){ })(yammerData);
+        api.autocomplete(translator).translateResponseData('', function(param){ })(yammerData);
         expect(translator.translateGroups).toHaveBeenCalledWith(yammerData['group']);
       });
 
       it('transforms email data', function(){
         var translator = setupTranslator();
-        var api = scheddo.yammerApi(translator);
+        var api = Scheddo.YammerApi;
 
-        api.autocomplete.translateResponseData('term', function(param){ })({});
+        api.autocomplete(translator).translateResponseData('term', function(param){ })({});
         expect(translator.translateEmail).toHaveBeenCalledWith('term');
       });
 
@@ -109,10 +110,10 @@ describe('scheddo.yammerApi.autocomplete', function(){
         translator.translateUsers.andReturn(['user']);
         translator.translateGroups.andReturn(['group']);
         translator.translateEmail.andReturn('email');
-        var api = scheddo.yammerApi(translator);
+        var api = Scheddo.YammerApi;
         var response = jasmine.createSpy(response);
 
-        api.autocomplete.translateResponseData('term', response)({});
+        api.autocomplete(translator).translateResponseData('term', response)({});
 
         expect(response).toHaveBeenCalledWith(['user', 'group', 'email']);
       });

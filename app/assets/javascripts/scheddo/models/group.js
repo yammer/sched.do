@@ -1,7 +1,6 @@
-var scheddo = scheddo || {};
-scheddo.models = scheddo.models || {};
+Namespaced.declare('Scheddo.Models');
 
-scheddo.models.group = function(groupObject){
+Scheddo.Models.group = function(groupObject){
   return {
     fullName: groupObject.full_name,
     photo: groupObject.photo,

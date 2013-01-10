@@ -1,0 +1,47 @@
+<script type="text/template" id='header'>
+  <li class='ui-autocomplete-type'>
+    <div class='category-icon {{= type }}-icon' />
+    <span class='title'>{{= type }}</span>
+  </li>
+</script>
+
+<script type="text/template" id='userMenuItem'>
+  <li>
+    <a>
+      <div class='autocomplete-avatar' style='background-image: url({{= photo }})'/>
+        <div class='outer-wrapper'>
+          <div class='profile'>
+            <div class='inner-wrapper'>
+              <p class='name'>{{= fullName }}</p>
+              <p class='job-title'>{{= jobTitle }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </a>
+  </li>
+</script>
+
+<script type="text/template" id='groupMenuItem'>
+  <li>
+    <a>
+      <div class='autocomplete-avatar' style='background-image: url({{= photo }})'/>
+        <div class='outer-wrapper'>
+          <div class='profile'>
+            <div class='inner-wrapper'>
+              <p class='name'>{{= fullName }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </a>
+  </li>
+</script>
+
+<script type="text/template" id='emailItem'>
+  <li>
+    <a class='email'>
+      <span>Email:</span>{{= value }}
+    </a>
+  </li>
+</script>

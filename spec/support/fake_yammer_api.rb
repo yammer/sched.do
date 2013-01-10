@@ -47,9 +47,12 @@ module FakeYammerApi
 
     def mock_failed_yammer_api_response
       <<-eos
+        var request = _.clone(yam.request);
         yam.request = function(options){
-        options['error']();
-        }
+          options['error']();
+        };
+
+        _.extend(yam.request, request);
       eos
     end
 
@@ -84,8 +87,8 @@ module FakeYammerApi
   end
 
 
-  def fill_in_autocomplete(selector, value)
-    page.execute_script %Q{$('#{selector}').val('#{value}').keydown()}
+  def fill_in_autocomplete(value)
+    page.execute_script %Q{$('#auto-complete').val('#{value}').keydown()}
   end
 
   def choose_autocomplete(selector, text)

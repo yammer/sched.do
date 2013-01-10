@@ -23,6 +23,11 @@ step 'group :name should receive a private invitation message' do |name|
   received_yammer_group_id.should  == expected_yammer_group_id
 end
 
+step 'group :name should not receive a private invitation message' do |name|
+  FakeYammer.group_id.should == 0
+  FakeYammer.messages_endpoint_hits.should == 0
+end
+
 step 'the private invitation message should be sent regarding :event' do |event|
   FakeYammer.message.should include(event)
 end

@@ -10,6 +10,11 @@ step 'I suggest an empty string' do
   find_field_by_data_role('primary-suggestion').set('')
 end
 
+step 'I submit the create event form for :event_name' do |event_name|
+  click_button 'Create event'
+  page.should have_content(event_name)
+end
+
 step 'I submit the create event form' do
   click_button 'Create event'
 end
@@ -24,11 +29,13 @@ end
 
 step 'I create(d) an event named :event_name with a suggestion of :suggestion' do |event_name, suggestion|
   create_event(event_name, suggestion)
+  page.should have_content event_name
 end
 
 step 'someone created an event named :event_name with a suggestion of :suggestion' do |event_name, suggestion|
   as_random_user do
     create_event(event_name, suggestion)
+    page.should have_content event_name
   end
 end
 
@@ -45,8 +52,9 @@ step 'someone created an event named :event_name with the following suggestions:
   end
 end
 
-step 'I create an event with the following suggestions:' do |table|
-  create_event('Clown party', table.raw)
+step 'I create an event :event_name with the following suggestions:' do |event_name, table|
+  create_event(event_name, table.raw)
+  page.should have_content(event_name)
 end
 
 step 'I create an event' do
@@ -55,6 +63,7 @@ end
 
 step 'I create an event named :event_name' do |event_name|
   create_event(event_name)
+  page.should have_content event_name
 end
 
 step 'I sign in and try to create an event named :event_name' do |event_name|
@@ -92,9 +101,9 @@ step 'I remove the first suggestion' do
   click_link 'Remove Suggestion'
 end
 
-step 'I sign in and fill in the event name' do
+step 'I sign in and fill in the event name as :event_name' do |event_name|
   sign_in
-  fill_in 'event_name', with: 'something'
+  fill_in 'event_name', with: event_name
 end
 
 step 'my network should see an activity message announcing the event' do

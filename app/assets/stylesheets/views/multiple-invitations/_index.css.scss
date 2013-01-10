@@ -1,0 +1,67 @@
+div.new-event-invite {
+  @extend div.show-event;
+
+  section {
+    margin-top: 20px;
+
+    &.invited-yammer-groups {
+      margin-bottom: 20px;
+    }
+    
+    h5 {
+      text-align: center;
+      font-style: italic;
+      padding:1em;
+    }
+
+    ul.list-invitees {
+      margin: 0;
+      padding: 0px 10px;
+
+      li {
+        border-bottom-width: 0px;
+        display: inline-block;
+        margin: 10px 5px;
+
+        div.group-name {
+          @extend %group-label;
+        }
+      }
+    }
+
+    &.invited {
+      ul {
+        li {
+          position: relative;
+
+          div.user-label {
+            @extend %user-label;
+          }
+
+          a.remove {
+            @extend %delete-button;
+            background-color: $orange;
+          }
+
+          &:hover {
+            a.remove {
+              display: block;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  form {
+    fieldset {
+      a.back {
+        @extend .button;
+        display: block;
+        margin: 20px auto 0;
+        text-align: center;
+        width: 100px;
+      }
+    }
+  }
+}

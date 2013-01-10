@@ -1,0 +1,256 @@
+div.new-event {
+  @extend .sheet;
+
+  .char-limit {
+    p {
+      font-size: 0.8em;
+      font-style: italic;
+      margin-top: -8px;
+    }
+  }
+
+  .valid-char-limit {
+    color: darken($bg-color, 25%);
+  }
+
+  .invalid-char-limit {
+    color: $orange;
+  }
+
+  div.suggestions {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px dashed darken($bg-color, 5%);
+  }
+
+  a.add_fields {
+    background: $success;
+    border: 1px dashed darken($success, 50%);
+    @include border-radius(5px);
+    color: desaturate(darken($success, 50%), 15%);
+    display: block;
+    @include fill-parent();
+    margin: 0 auto;
+    padding: 24px 15px;
+    text-align: center;
+    text-decoration: none;
+
+    &:before {
+      background: desaturate(darken($success, 50%), 15%);
+      @include border-radius(3px);
+      color: #fff;
+      content: "+";
+      display: block;
+      font-weight: bold;
+      margin-top: -3px;
+      opacity: 0.8;
+      padding: 4px 6px 5px;
+      position: absolute;
+      text-shadow: none;
+      vertical-align: text-top;
+    }
+
+    &:hover {
+      background: darken($success, 2%);
+
+      &:before {
+        opacity: 1;
+      }
+    }
+  }
+
+  div.nested-fields  {
+    position: relative;
+
+    &.primary {
+      background-color: $bg-color;
+      @include background-image(linear-gradient(lighten($bg-color, 0.5%), darken($bg-color, 0.5%) 20%));
+      border: 1px solid darken($bg-color, 10%);
+      @include border-radius(4px);
+      @include box-shadow(inset 0 1px 0 #fff);
+      @include box-sizing(border-box);
+      margin-bottom: 20px;
+      padding: 1em;
+
+      div.times {
+        border-top: 1px dashed darken($bg-color, 10%);
+        margin-top: 15px;
+        padding-top: 15px;
+
+        a.add_fields {
+          background: lighten($blue, 40%);
+          border: 1px dashed lighten($blue, 5%);
+          color: desaturate(lighten($blue, 10%), 10%);
+          padding: 12px 10px;
+          text-shadow: 0 1px 0 #fff;
+          @include transition(background 0.2s);
+
+          &:before {
+            display: none;
+          }
+
+          &:hover {
+            background: #fff;
+            color: desaturate(lighten($blue, 10%), 10%);
+          }
+        }
+      }
+
+      a.remove_fields {
+        background-color: rgb(220,220,220);
+        @include background-image(url(delete-icon.svg));
+        @include background-image(url(delete-icon.svg), linear-gradient(rgb(230,230,230), rgb(210,210,210)));
+        background-position: center, left;
+        -ms-background-position-x: center;
+        -ms-background-position-y: center;
+        background-repeat: no-repeat;
+        border: 1px solid rgb(190,190,190);
+        @include border-radius(20px);
+        @include box-shadow(inset 0 1px 0 rgb(240,240,240), 0 1px 3px darken($bg-color, 15%));
+        color: #fff;
+        display: none;
+        font-size: 0.9em;
+        @include no-text;
+        outline: none;
+        padding: 2px 3px;
+        position: absolute;
+        right: -10px;
+        text-decoration: none;
+        text-shadow: 0 -1px 0 rgba(0,0,0, 0.2);
+        top:-10px;
+        vertical-align: bottom;
+        width: 16px;
+
+        &:hover {
+          background-color: rgb(210,210,210);
+          @include background-image(url(delete-icon.svg), linear-gradient(rgb(220,220,220), rgb(200,200,200)));
+        }
+      }
+    }
+
+    &.animated {
+      @include animation(slideUp 1s);
+    }
+
+    &.secondary {
+      a.remove_fields { // Cocoon Class
+        background-color: darken($bg-color, 20%);
+        @include background-image(url(delete-icon-small.svg));
+        border: none;
+        @include box-shadow(none);
+        display: none;
+        right: -9px;
+        top: -8px;
+
+        &:hover {
+          background-color: darken($bg-color, 35%);
+          @include background-image(url(delete-icon-small.svg));
+        }
+      }
+    }
+
+    &.secondary [data-role='primary-suggestion'] {
+      display: none;
+    }
+
+    &.deleted {
+      @include animation(hinge 1.5s 1 both);
+      z-index: 99;
+
+      input {
+        @include box-shadow(1px 0 2px darken($bg-color, 20%));
+      }
+
+      a.remove-suggestion {
+        display: none;
+      }
+    }
+  }
+}
+
+section.event-section {
+  border-top: 1px solid darken($bg-color, 5%);
+  padding: 30px 0;
+}
+
+div.event-url {
+  font-size: 0.8em;
+  padding: 0;
+  padding-top: -20px;
+
+  form {
+    input[type="url"] {
+      margin-bottom: 10px;
+    }
+
+    input[type="button"] {
+      padding:0.5em;
+      font-size: 1.3em;
+    }
+
+    div#copy-url-container {
+      position: relative;
+
+      input {
+        &.hover {
+          background-color: darken($bg-color, 6%);
+          @include background-image(linear-gradient(lighten($bg-color, 10%), darken($bg-color, 2%)));
+        }
+
+        &.active {
+          background-color: darken($bg-color, 4%);
+          @include background-image(linear-gradient(darken($bg-color, 5%), lighten($bg-color, 10%)));
+        }
+      }
+    }
+  }
+}
+
+div.new-event-invite {
+  @extend div.show-event;
+
+  section {
+    margin-top: 20px;
+
+    &.invited-yammer-groups {
+      margin-bottom: 20px;
+    }
+
+    ul {
+      margin: 0;
+      padding: 0px 10px;
+
+      li {
+        border-bottom-width: 0px;
+        display: inline-block;
+        margin: 10px 5px;
+
+        div.group-name {
+          @extend %group-label;
+        }
+      }
+    }
+
+    &.invited-users {
+      ul {
+        li {
+          div.user-label {
+            @extend %user-label;
+          }
+        }
+      }
+    }
+  }
+
+  form {
+    fieldset {
+      a.back {
+        @extend .button;
+        display: block;
+        margin: 20px auto 0;
+        text-align: center;
+        width: 100px;
+      }
+    }
+  }
+}

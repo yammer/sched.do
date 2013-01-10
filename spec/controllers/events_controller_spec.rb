@@ -6,7 +6,7 @@ describe EventsController, 'authentication' do
   it 'requires yammer login for #new' do
     get :new
 
-    should redirect_to '/auth/yammer' 
+    should redirect_to '/auth/yammer'
   end
 
   it 'requires yammer login for #create' do
@@ -34,6 +34,28 @@ describe EventsController, 'authentication' do
   end
 end
 
+describe EventsController, '#create' do
+  it 'sets the owner to the current user' do
+    user = create(:user)
+    sign_in_as(user)
+
+    post :create, event: { name: 'test event' }
+
+    assigns(:event).owner.should == user
+  end
+
+  it 'redirects to MultipleInvitationsController#new' do
+    sign_in_as(create(:user))
+    event = build_stubbed(:event)
+    event.stubs(save: true)
+    Event.stubs(new: event)
+
+    post :create
+
+    should redirect_to "/multiple_invitations?event_uuid=#{event.uuid}"
+  end
+end
+
 describe EventsController, '#edit' do
   context 'with the user who created the event' do
     it 'is successful' do
@@ -48,7 +70,7 @@ describe EventsController, '#edit' do
   end
 
   context 'with a user who did not create the event' do
-    it "should raise ActiveRecord::RecordNotFound" do
+    it 'should raise ActiveRecord::RecordNotFound' do
       user = create(:user)
       event = create(:event, owner: user)
       sign_in_as(create(:user))
@@ -101,7 +123,7 @@ describe EventsController, '#show' do
   end
 
   context 'use an invalid uuid as a user who did not create the event' do
-    it "should raise ActiveRecord::RecordNotFound" do
+    it 'should raise ActiveRecord::RecordNotFound' do
       user = create(:user)
       event = create(:event, owner: user)
       sign_in_as(create(:user))
@@ -127,7 +149,7 @@ describe EventsController, '#update' do
   end
 
   context 'with a user who did not create the event' do
-    it "should raise ActiveRecord::RecordNotFound" do
+    it 'should raise ActiveRecord::RecordNotFound' do
       user = create(:user)
       event = create(:event, owner: user)
 

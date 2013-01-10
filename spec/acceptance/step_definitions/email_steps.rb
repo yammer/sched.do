@@ -66,3 +66,7 @@ step ':email_address should receive an email that contains an image of :user_nam
   body = email_body(body)
   body.should include(user.image)
 end
+
+step ':email_address should not receive an email' do |email_address|
+  unread_emails_for(email_address).size.should == 0
+end

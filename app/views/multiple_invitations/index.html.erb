@@ -1,0 +1,71 @@
+<% content_for(:javascript) do %>
+  <%= javascript_include_tag :event_multiple_invite %>
+<% end %>
+
+<% content_for :content do %>
+  <%= render 'shared/navbar' -%>
+
+  <div class="main-content">
+    <div class="new-event-invite">
+      <div class="event-header">
+        <div class="event-name">
+          <h1><%= @event.name %></h1>
+        </div>
+      </div>
+
+      <section class="search-box">
+        <h4>Invite people to the event:</h4>
+
+        <%= form_tag('',  id: 'invitations') do %>
+          <fieldset class="inputs">
+            <ol>
+              <div class="invitee-input">
+                <%= text_field_tag "invitation[invitee_attributes][name_or_email]",
+                  nil,
+                  'data-role' => 'invitation_name',
+                  placeholder: 'enter an email, Yammer group or Yammer contact',
+                  id: 'auto-complete' %>
+              </div>
+              <div class="invitation-autocomplete-suggestions"></div>
+            </ol>
+          </fieldset>
+        <% end %>
+      </section>
+
+      <%= render 'javascript_templates/yammer_autocomplete_templates' %>
+      <%= render 'javascript_templates/multiple_invitation_templates' %>
+
+      <section id='invitees' class="invited-users invited">
+        <h4>Invited Users</h4>
+
+        <h5 id="invite_users">Invite someone to your poll, search for them by name or email.</h5>
+        <ul class="users list-invitees">
+        </ul>
+      </section>
+
+      <section id='groups' class="groups invited-yammer-groups invited">
+        <h4>Invited Yammer Groups</h4>
+
+        <h5 id="invite_groups">Add an entire group to your invite list.</h5>
+        <ul class="invited-groups list-invitees">
+        </ul>
+      </section>
+
+      <form accept-charset="UTF-8" action="/events/<%= @event.uuid %>" class="formtastic event" id="new_event" method="get" novalidate="novalidate">
+        <input id="event_id" type="hidden" value="<%= @event.id %>" />
+        <fieldset class="actions">
+          <ol>
+            <li class="action input_action " id="event_submit_action">
+              <input class="cta" name="commit" type="submit" value="Invite">
+            </li>
+          </ol>
+
+          <%= link_to 'Back', edit_event_path(@event), class: 'back' %>
+        </fieldset>
+      </form>
+
+    </div>
+  </div>
+<% end %>
+
+<%= render file: 'layouts/application' %>

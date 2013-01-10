@@ -1,7 +1,7 @@
 <% if @event.groups.any? %>
   <section class="invited-yammer-groups">
     <h4>Invited Yammer Groups</h4>
-    <ul id="groups">
+    <ul id="groups" class="groups">
       <% @event.groups.each do |group| %>
         <li>
           <div class="group-name"><%= group.name %></div>

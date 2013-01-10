@@ -10,7 +10,7 @@
     yam.config({appId: '<%= ENV['YAMMER_CONSUMER_KEY'] %>'});
   <% end %>
   <% if signed_in? %>
-    var access_token = "<%= current_user.access_token %>";
+    Scheddo.YammerApi.userAccessToken = '<%= current_user.access_token %>';
   <% end %>
 </script>
 <% if signed_in? %>
