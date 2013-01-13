@@ -3,12 +3,12 @@ class EventsController < ApplicationController
   before_filter :require_guest_or_yammer_login, only: :show
 
   def new
-    @event = current_user.events.build
+    @event = EventDecorator.new(current_user.events.build)
     @event.build_suggestions
   end
 
   def create
-    @event = current_user.events.new(params[:event])
+    @event = EventDecorator.new(current_user.events.new(params[:event]))
 
     if @event.save
       redirect_to @event
@@ -26,12 +26,12 @@ class EventsController < ApplicationController
   end
 
   def edit
-    @event = current_user.events.find_by_uuid!(params[:id])
+    @event = EventDecorator.new(current_user.events.find_by_uuid!(params[:id]))
     @event.build_suggestions
   end
 
   def update
-    @event = current_user.events.find_by_uuid!(params[:id])
+    @event = EventDecorator.new(current_user.events.find_by_uuid!(params[:id]))
     @event.attributes = params[:event]
 
     if @event.save
@@ -69,7 +69,7 @@ class EventsController < ApplicationController
   end
 
   def verify_or_setup_invitation_for_current_user
-    if !@event.user_invited?(current_user)
+    if @event.user_not_invited?(current_user)
       invitation = Invitation.new(event: @event, invitee: current_user)
       invitation.invite_without_notification
       @event.reload

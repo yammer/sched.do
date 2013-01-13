@@ -1,12 +1,9 @@
 class EventDecorator < Draper::Base
   decorates :event
 
-  def invitees_with_current_user_first
-    invitees.unshift(current_user).uniq
-  end
-
-  def other_invitees_who_have_not_voted_count
-    other_invitees_who_have_not_voted.count
+  def build_suggestions
+    suggestions[0] ||= Suggestion.new
+    suggestions[1] ||= Suggestion.new
   end
 
   def first_invitee_for_invitation
@@ -15,6 +12,38 @@ class EventDecorator < Draper::Base
     else
       ' '
     end
+  end
+
+  def invitation_for(user)
+    Invitation.where(
+      event_id: self,
+      invitee_id: user,
+      invitee_type: user.class.name
+    ).first
+  end
+
+  def invitees_with_current_user_first
+    invitees.unshift(current_user).uniq
+  end
+
+  def other_invitees_who_have_not_voted_count
+    other_invitees_who_have_not_voted.count
+  end
+
+  def user_not_invited?(user)
+    invitees.exclude?(user)
+  end
+
+  def user_owner?(user)
+    self.owner == user
+  end
+
+  def user_voted?(user)
+    user_votes(user).exists?
+  end
+
+  def user_votes(user)
+    user.votes.joins(:suggestion).where(suggestions: { event_id: self } )
   end
 
   private

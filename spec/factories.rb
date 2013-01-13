@@ -27,7 +27,7 @@ FactoryGirl.define do
     end
 
     after :stub do |event|
-      event.generate_uuid
+      event.send(:generate_uuid)
     end
   end
 

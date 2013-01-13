@@ -36,7 +36,7 @@ describe Event do
     event.should be_invalid
   end
 
-  it 'has a uuid after creation' do
+  it 'generates an 8 character uuid' do
     event = create(:event)
     event.uuid.length.should eq(8)
   end
@@ -49,35 +49,14 @@ describe Event do
 
     Event.any_instance.should have_received(:set_first_suggestion)
   end
-end
 
-describe Event, '#build_suggestions' do
-  it 'builds 2 suggestions' do
+  it 'sets the first suggestion if it is blank' do
     event = build(:event)
-    event.build_suggestions
+    event.suggestions[0] = nil
 
-    event.suggestions.length.should == 2
-    event.suggestions.each do |suggestion|
-      suggestion.should be_a Suggestion
-    end
-  end
+    event.valid?
 
-  it 'does not replace suggestions if they were already set' do
-    event = build(:event)
-    first_suggestion = Suggestion.new
-    second_suggestion = Suggestion.new
-    event.suggestions = [first_suggestion, second_suggestion]
-
-    event.build_suggestions
-
-    event.suggestions[0].should == first_suggestion
-    event.suggestions[1].should == second_suggestion
-  end
-
-  it 'adds the owner as the first invitee upon event creation' do
-    event = create(:event)
-
-    event.invitees.first.should == event.owner
+    event.suggestions[0].should be_a Suggestion
   end
 end
 
@@ -98,33 +77,12 @@ describe Event, '#deliver_reminder_from' do
   end
 end
 
-describe Event, '#generate_uuid' do
-  it 'generates an 8 character uuid' do
-    event = create(:event, uuid: '123')
-
-    event.generate_uuid
-
-    uuid_length = event.uuid.length
-    uuid_length.should == 8
-  end
-end
-
 describe Event, '#add_errors_if_no_suggestions' do
-  it 'adds errors if an event has no suggestions' do
-    event = create(:event)
-    event.suggestions.destroy_all
-
-    event.add_errors_if_no_suggestions
-    error = event.errors.messages[:suggestions].first
-
-    error.should == 'An event must have at least one suggestion'
-  end
-
   it 'adds errors if an event has suggestions marked_for_destruction' do
     event = create(:event)
     event.suggestions.map(&:mark_for_destruction)
 
-    event.add_errors_if_no_suggestions
+    event.valid?
     error = event.errors.messages[:suggestions].first
 
     error.should == 'An event must have at least one suggestion'
@@ -133,7 +91,6 @@ describe Event, '#add_errors_if_no_suggestions' do
   it 'adds no errors if an event has suggestions' do
     event = create(:event)
 
-    event.add_errors_if_no_suggestions
     error = event.errors.messages
 
     error.should be_empty
@@ -165,71 +122,6 @@ describe Event, '#invitees' do
   end
 end
 
-describe Event, '#user_voted?' do
-  it 'returns true if the user has voted on the event' do
-    event = create(:event)
-    user = event.owner
-    suggestion = create(:suggestion, event: event)
-    vote = create(:vote, voter: user, suggestion: suggestion)
-
-    event.user_voted?(user).should be_true
-  end
-
-  it 'returns false if the user has not voted on the event' do
-    event = create(:event)
-    user = event.owner
-    suggestion = create(:suggestion, event: event)
-
-    event.user_voted?(user).should be_false
-  end
-end
-
-describe Event, '#user_owner?' do
-  it 'returns true if the user is the owner of the event' do
-    event = create(:event)
-    user = event.owner
-
-    event.should be_user_owner(user)
-  end
-
-  it 'returns false if the user is not the owner of the event' do
-    event = create(:event)
-
-    event.should_not be_user_owner(build(:user))
-  end
-end
-
-describe Event, '#user_votes' do
-  it 'does not return an event\'s votes for a user unless they voted' do
-    event = create(:event)
-    user = event.owner
-    suggestion = create(:suggestion, event: event)
-    vote = create(:vote, suggestion: suggestion)
-
-    event.user_votes(user).should_not include(vote)
-  end
-
-  it 'returns an events votes for a specific user if they voted' do
-    event = create(:event)
-    user = event.owner
-    suggestion = create(:suggestion, event: event)
-    vote = create(:vote, voter: user, suggestion: suggestion)
-
-    event.user_votes(user).should include(vote)
-  end
-end
-
-describe Event, '#set_first_suggestion' do
-  it 'sets the first suggestion if it is blank' do
-    event = build(:event)
-    event.suggestions[0] = nil
-
-    event.set_first_suggestion
-
-    event.suggestions[0].should be_a Suggestion
-  end
-end
-
 describe Event, '#enqueue_event_created_job' do
   it 'enqueues an EventCreatedEmailJob' do
     EventCreatedEmailJob.stubs(:enqueue)
@@ -250,12 +142,12 @@ describe Event, '#enqueue_event_created_job' do
   end
 end
 
-describe Event, '#invitation_for' do
-  it 'returns the invitation for this user' do
-    invitation = create(:invitation)
-    invitee = invitation.invitee
-    event = invitation.event
+describe Event, '#to_param' do
+  it 'returns the uuid for use in monkeypatching the to_param path helper' do
+    event = build(:event)
 
-    event.invitation_for(invitee).should == invitation
+    output = event.to_param
+
+    output.should == event.uuid
   end
 end

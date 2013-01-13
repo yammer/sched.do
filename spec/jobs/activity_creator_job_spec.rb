@@ -61,8 +61,12 @@ describe ActivityCreatorJob, '#perform' do
         }
       },
       message: '',
-      users: event.invitees_for_json
+      users: invitees_for_json(event)
     }
+  end
+
+  def invitees_for_json(event)
+    event.invitees.map { |i| { name: i.name, email: i.email } }
   end
 end
 

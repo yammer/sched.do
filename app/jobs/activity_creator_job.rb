@@ -46,11 +46,15 @@ class ActivityCreatorJob < Struct.new(:user_id, :action, :event_id)
         }
       },
       message: '',
-      users: event.invitees_for_json
+      users: invitees_for_json
     }
   end
 
   def event
     @event ||= Event.find(event_id)
+  end
+
+  def invitees_for_json
+    event.invitees.map { |i| { name: i.name, email: i.email } }
   end
 end
