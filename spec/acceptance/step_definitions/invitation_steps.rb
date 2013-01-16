@@ -2,18 +2,24 @@ step 'I invite the Yammer user :user_name to :event_name' do |user_name, event_n
   user = User.find_by_name!(user_name)
   event = Event.find_by_name!(event_name)
   visit event_path(event)
-
   mock_out_yammer_api({ name:  user_name, id: user.yammer_user_id, return_type: 'user' })
   fill_in_autocomplete('#auto-complete', user_name)
   choose_autocomplete('.name', user_name)
 end
 
-step 'I invite the Yammer group :user_name to :event_name' do |group_name, event_name|
+step 'I invite the new Yammer group :group_name to :event_name by typing :text into the autocomplete' do |group_name, event_name, text|
+  event = Event.find_by_name!(event_name)
+  visit event_path(event)
+  mock_out_yammer_api( { name: group_name, id: 12345, return_type: 'group' } )
+  fill_in_autocomplete('#auto-complete', text)
+  choose_autocomplete('.name', group_name) 
+end
+
+step 'I invite the Yammer group :group_name to :event_name' do |group_name, event_name|
   event = Event.find_by_name!(event_name)
   group = Group.new(name: group_name, yammer_group_id: 12345)
   group.save!
   visit event_path(event)
-
   mock_out_yammer_api({ name: group_name, id: group.yammer_group_id, return_type: 'group' })
   fill_in_autocomplete('#auto-complete', group_name)
   choose_autocomplete('.name', group_name)

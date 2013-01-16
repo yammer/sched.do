@@ -11,7 +11,7 @@ scheddo.translators.autocomplete = {
       user.submit = function(event, form){
         inviteeFormAction = '<%= Rails.application.routes.url_helpers.yammer_user_invitations_path %>';
         form.attr('action', inviteeFormAction);
-        scheddo.util.dataRoleUpdater(userObject.id, event.target, 'yammer_user_id');
+        scheddo.util.dataRoleUpdater(user.id, event.target, 'yammer_user_id');
         form.submit();
       };
       user.render = function(){
@@ -31,9 +31,10 @@ scheddo.translators.autocomplete = {
       group.value = group.fullName;
       group.type = 'group'
       group.submit = function(event, form){
+        $('#auto-complete').val(group.fullName);
         inviteeFormAction = '<%= Rails.application.routes.url_helpers.yammer_group_invitations_path %>';
         form.attr('action', inviteeFormAction);
-        scheddo.util.dataRoleUpdater(groupObject.id, event.target, 'yammer_group_id');
+        scheddo.util.dataRoleUpdater(group.id, event.target, 'yammer_group_id');
         form.submit();
       };
       group.render = function(){
