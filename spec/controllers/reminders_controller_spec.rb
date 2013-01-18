@@ -28,4 +28,35 @@ describe RemindersController, '#create' do
     reminder.sender.should == user
     Reminder.any_instance.should have_received(:save)
   end
+
+  context 'the Reminder is successfully saved' do
+    it 'adds a message to flash[:notice]' do
+      user = create(:user)
+      event = create(:event)
+      sign_in_as(user)
+      reminder = Reminder.new
+      Reminder.stubs(create: reminder)
+      Reminder.any_instance.stubs(:save).returns true
+
+      post :create, event_id: event
+
+      flash[:notice].should match /sent/
+    end
+  end
+
+  context 'the Reminder is not saved' do
+    it 'adds a message to flash[:error]' do
+      user = create(:user)
+      event = create(:event)
+      sign_in_as(user)
+      reminder = Reminder.new
+      Reminder.stubs(create: reminder)
+
+      Reminder.any_instance.stubs(:save)
+
+      post :create, event_id: event
+
+      flash[:error].should match /error/
+    end
+  end
 end
