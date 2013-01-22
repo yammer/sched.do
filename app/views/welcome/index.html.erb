@@ -1,4 +1,7 @@
-<%= render 'shared/flashes' -%>
+<%= render 'shared/flashes' %>
+<% content_for(:javascript) do %>
+  <%= javascript_include_tag :home_page %>
+<% end %>
 <div class= "welcome" id="js-welcome-header">
   <%= form_tag "/auth/yammer" do %>
   <div class="logo">
