@@ -15,7 +15,7 @@ bundle exec rake db:setup
 
 # Set up configurable environment variables
 if [ ! -f .env ]; then
-  cp .sample.env .env
+  cp sample.env .env
 fi
 
 # Set up DNS
