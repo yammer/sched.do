@@ -38,7 +38,6 @@ taken straight from the Ruby on Rails guide:
 * Update the documentation, the surrounding one, examples elsewhere, guides,
   whatever is affected by your contribution
 
-
 Requirements
 --------------
 
@@ -49,41 +48,25 @@ committing to the master branch.
 Please remember this is open-source, so don't commit any passwords or API keys.
 Those should go in config variables like `ENV['API_KEY']`.
 
-
 Laptop setup
 ------------
 
 Fork the repo and clone the app:
 
-    git clone git@github.com:[GIT_USERNAME]/sched.do.git
-
-
-Install Bundler 1.2.0.pre or higher:
-
-    gem install bundler --pre
+    git clone git@github.com:[GIT_USERNAME]/sched.do.git scheddo
 
 Set up the app:
 
-    cd sched.do
-    bundle --binstubs
-    rake db:setup
+    cd scheddo
+    ./bin/setup
 
-Edit your .env file to store the keys given to you by Yammer:
+Run the server:
 
-    cp sample.env .env
-    vi .env
-
-Run the server using [foreman:](https://github.com/ddollar/foreman)
-
-    foreman start -p 3000
-
-We use foreman because it picks up the `.env` file. Also, it will use Thin as
-the app server instead of Webrick, same as Heroku's Cedar stack.
+    foreman start
 
 Check it out:
 
-    http://localhost:3000
-
+    http://scheddo.dev
 
 Running tests
 -------------
@@ -103,7 +86,6 @@ working on. In that case, specify a line number:
 
     rspec spec/models/user_spec.rb:8
 
-
 Syntax
 ------
 
@@ -115,7 +97,6 @@ Syntax
 * Follow the conventions you see used in the source already.
 
 And in case we didn't emphasize it enough: we love tests!
-
 
 Development process
 -------------------

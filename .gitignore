@@ -24,6 +24,7 @@ vendor/bundler_gems
 .env
 /public/assets
 bin/
+!bin/setup
 coverage
 .tddium*
 vendor/cache

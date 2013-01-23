@@ -1,0 +1,27 @@
+#!/usr/bin/env sh
+
+# Run this script immediately after cloning the codebase.
+# https://github.com/thoughtbot/guides/tree/master/protocol
+
+# Set up Ruby dependencies
+bundle install --binstubs=bin/stubs
+
+# Set up staging and production git remotes
+git remote add staging git@heroku.com:scheddo-staging.git
+git remote add production git@heroku.com:scheddo-prod.git
+
+# Set up database
+bundle exec rake db:setup
+
+# Set up configurable environment variables
+if [ ! -f .env ]; then
+  cp .sample.env .env
+fi
+
+# Set up DNS
+if [ ! -f ~/.pow ]; then
+  curl get.pow.cx | sh
+fi
+
+echo "port: 3100" > .foreman
+echo 3100 > ~/.pow/`basename $PWD`
