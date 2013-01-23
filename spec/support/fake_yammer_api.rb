@@ -1,5 +1,5 @@
 module FakeYammerApi
-  class YammerAutoCompleteMock
+  class ScheddoYammerMock
     def initialize(params={})
       @id = params[:id]
       @name = params[:name]
@@ -14,6 +14,12 @@ module FakeYammerApi
 
     def build_no_response_script
       mock_yammer_api_script = mock_yammer_api_with_no_response
+
+      mock_yammer_api_script
+    end
+
+    def build_failed_response_script
+      mock_yammer_api_script = mock_failed_yammer_api_response
 
       mock_yammer_api_script
     end
@@ -39,6 +45,14 @@ module FakeYammerApi
       eos
     end
 
+    def mock_failed_yammer_api_response
+      <<-eos
+        yam.request = function(options){
+        options['error']();
+        }
+      eos
+    end
+
     def mock_user_json
       <<-eos
         {
@@ -55,14 +69,20 @@ module FakeYammerApi
   end
 
   def mock_out_yammer_api_with_no_response()
-    mock_data_provider = YammerAutoCompleteMock.new()
+    mock_data_provider = ScheddoYammerMock.new()
     page.execute_script(mock_data_provider.build_no_response_script)
   end
 
   def mock_out_yammer_api(params)
-    mock_data_provider = YammerAutoCompleteMock.new(params)
+    mock_data_provider = ScheddoYammerMock.new(params)
     page.execute_script(mock_data_provider.build_script)
   end
+
+  def mock_failed_yam_request
+    mock_data_provider = ScheddoYammerMock.new()
+    page.execute_script(mock_data_provider.build_failed_response_script)
+  end
+
 
   def fill_in_autocomplete(selector, value)
     page.execute_script %Q{$('#{selector}').val('#{value}').keydown()}

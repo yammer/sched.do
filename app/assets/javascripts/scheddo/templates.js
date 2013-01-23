@@ -28,6 +28,11 @@ scheddo.templates = (function(){
     getEmailItemTemplate: function(params) {
       configureUnderscore();
       return _.template($('#emailItem').html(), params);
+    },
+
+    getShareSuccessTemplate: function(params) {
+      configureUnderscore();
+      return _.template($('#shareFlash').html(), params);
     }
   };
 })();

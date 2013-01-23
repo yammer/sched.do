@@ -97,34 +97,7 @@ div.new-event {
       }
 
       a.remove_fields {
-        background-color: rgb(220,220,220);
-        @include background-image(url(delete-icon.svg));
-        @include background-image(url(delete-icon.svg), linear-gradient(rgb(230,230,230), rgb(210,210,210)));
-        background-position: center, left;
-        -ms-background-position-x: center;
-        -ms-background-position-y: center;
-        background-repeat: no-repeat;
-        border: 1px solid rgb(190,190,190);
-        @include border-radius(20px);
-        @include box-shadow(inset 0 1px 0 rgb(240,240,240), 0 1px 3px darken($bg-color, 15%));
-        color: #fff;
-        display: none;
-        font-size: 0.9em;
-        @include no-text;
-        outline: none;
-        padding: 2px 3px;
-        position: absolute;
-        right: -10px;
-        text-decoration: none;
-        text-shadow: 0 -1px 0 rgba(0,0,0, 0.2);
-        top:-10px;
-        vertical-align: bottom;
-        width: 16px;
-
-        &:hover {
-          background-color: rgb(210,210,210);
-          @include background-image(url(delete-icon.svg), linear-gradient(rgb(220,220,220), rgb(200,200,200)));
-        }
+        @extend %close-button;
       }
     }
 
