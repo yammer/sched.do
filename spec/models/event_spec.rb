@@ -1,32 +1,72 @@
 require 'spec_helper'
 
-describe Event do
-  include DelayedJobSpecHelper
+describe Event, 'accessors' do
+  it { should allow_mass_assignment_of(:name) }
+  it { should allow_mass_assignment_of(:suggestion) }
+  it { should allow_mass_assignment_of(:suggestions_attributes) }
+  it { should allow_mass_assignment_of(:uuid) }
+end
 
-  NAME_MAX_LENGTH = Event::NAME_MAX_LENGTH
+describe Event, 'associations' do
+  it { should belong_to(:owner).class_name('User') }
+end
 
-  it { should belong_to(:owner) }
+describe Event, 'Suggestion associations' do
   it { should have_many(:suggestions) }
   it { should have_many(:votes).through(:suggestions) }
+end
+
+describe Event, 'Invitation associations' do
   it { should have_many(:invitations) }
   it { should have_many(:users).through(:invitations) }
   it { should have_many(:guests).through(:invitations) }
   it { should have_many(:groups).through(:invitations) }
+end
 
-  it { should validate_presence_of(:name).
-       with_message(/This field is required/) }
-  it { should validate_presence_of(:user_id) }
-  it { should ensure_length_of(:name).is_at_most(NAME_MAX_LENGTH) }
-
-  it { should allow_mass_assignment_of(:suggestion) }
-  it { should allow_mass_assignment_of(:suggestions_attributes) }
-
+describe Event, 'accepts_nested_attributes_for' do
   it { should accept_nested_attributes_for(:suggestions).allow_destroy(true) }
+end
 
-  it 'allows the event to have one or more suggestions' do
+describe Event, 'before_validation' do
+  it 'generates an 8 character uuid' do
+    event = build(:event, uuid: '')
+
+    event.valid?
+
+    event.uuid.length.should == 8
+  end
+
+  it 'sets the first suggestion' do
+    event = build(:event)
+
+    event.valid?
+
+    event.suggestions[0].should be_present
+  end
+end
+
+describe Event, 'validations'do
+  it { should validate_presence_of(:name).with_message(/field is required/) }
+  it { should ensure_length_of(:name).is_at_most(Event::NAME_MAX_LENGTH) }
+  it { should validate_presence_of(:user_id) }
+
+  it 'validates presence of a uuid' do
     event = create(:event)
+    event.uuid = nil
 
-    event.should be_valid
+    event.should_not be_valid
+  end
+end
+
+describe Event, 'add_errors_if_no_suggestions'do
+  it 'adds errors if there are no suggestions' do
+    event = create(:event)
+    event.suggestions.map(&:mark_for_destruction)
+
+    event.valid?
+
+    error = event.errors.messages[:suggestions].first
+    error.should == 'An event must have at least one suggestion'
   end
 
   it 'requires an event to have suggestions' do
@@ -35,28 +75,34 @@ describe Event do
 
     event.should be_invalid
   end
+end
 
-  it 'generates an 8 character uuid' do
-    event = create(:event)
-    event.uuid.length.should eq(8)
+describe Event, 'after_create callbacks'do
+  it 'invites the owner' do
+    owner = create(:user)
+    event = create(:event, owner: owner)
+
+    event.invitees.should include(owner)
   end
 
- it 'runs #set_first_suggestion on validate' do
-    event = build(:event)
-    Event.any_instance.stubs(:set_first_suggestion)
+  context '#enqueue_event_created_job' do
+    it 'enqueues an EventCreatedEmailJob' do
+      EventCreatedEmailJob.stubs(:enqueue)
 
-    event.valid?
+      event = create(:event)
 
-    Event.any_instance.should have_received(:set_first_suggestion)
-  end
+      EventCreatedEmailJob.should have_received(:enqueue).with(event)
+    end
 
-  it 'sets the first suggestion if it is blank' do
-    event = build(:event)
-    event.suggestions[0] = nil
+    it 'enqueues a ActivityCreatorJob' do
+      ActivityCreatorJob.stubs(:enqueue)
+      action = 'create'
 
-    event.valid?
+      event = create(:event)
 
-    event.suggestions[0].should be_a Suggestion
+      user = event.owner
+      ActivityCreatorJob.should have_received(:enqueue).with(user, action, event)
+    end
   end
 end
 
@@ -74,26 +120,6 @@ describe Event, '#deliver_reminder_from' do
     event.deliver_reminder_from(sender)
 
     user_invitation.should have_received(:deliver_reminder_from).with(sender)
-  end
-end
-
-describe Event, '#add_errors_if_no_suggestions' do
-  it 'adds errors if an event has suggestions marked_for_destruction' do
-    event = create(:event)
-    event.suggestions.map(&:mark_for_destruction)
-
-    event.valid?
-    error = event.errors.messages[:suggestions].first
-
-    error.should == 'An event must have at least one suggestion'
-  end
-
-  it 'adds no errors if an event has suggestions' do
-    event = create(:event)
-
-    error = event.errors.messages
-
-    error.should be_empty
   end
 end
 
@@ -119,26 +145,6 @@ describe Event, '#invitees' do
     event.reload
 
     event.invitees.should == [second_invitee, first_invitee, event.owner]
-  end
-end
-
-describe Event, '#enqueue_event_created_job' do
-  it 'enqueues an EventCreatedEmailJob' do
-    EventCreatedEmailJob.stubs(:enqueue)
-
-    event = create(:event)
-
-    EventCreatedEmailJob.should have_received(:enqueue).with(event)
-  end
-
-  it 'enqueues a ActivityCreatorJob' do
-    ActivityCreatorJob.stubs(:enqueue)
-
-    action = 'create'
-    event = create(:event)
-    user = event.owner
-
-    ActivityCreatorJob.should have_received(:enqueue).with(user, action, event)
   end
 end
 

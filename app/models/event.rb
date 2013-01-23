@@ -4,8 +4,10 @@ class Event < ActiveRecord::Base
   attr_accessible :name, :suggestion, :suggestions_attributes, :uuid
 
   belongs_to :owner, foreign_key: 'user_id', class_name: 'User'
+
   has_many :suggestions
   has_many :votes, through: :suggestions
+
   has_many :invitations
   has_many :users, through: :invitations, source: :invitee, source_type: 'User'
   has_many :guests, through: :invitations, source: :invitee, source_type: 'Guest'
@@ -17,11 +19,12 @@ class Event < ActiveRecord::Base
   before_validation :generate_uuid, on: :create
   before_validation :set_first_suggestion
 
-  validate :add_errors_if_no_suggestions
   validates :name, presence: { message: 'This field is required' }
   validates :name, length: { maximum: NAME_MAX_LENGTH }
   validates :user_id, presence: true
   validates :uuid, presence: true
+
+  validate :add_errors_if_no_suggestions
 
   after_create :invite_owner
   after_create :enqueue_event_created_jobs
