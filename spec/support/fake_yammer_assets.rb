@@ -1,5 +1,3 @@
-# Fakes out the yam.js asset loading to use a local copy
-
 class FakeYammerAssets < Sinatra::Base
   def self.boot
     instance = new

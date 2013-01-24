@@ -2,7 +2,7 @@ FactoryGirl.define do
   sequence(:yammer_uid) { |n| "12345#{n}" }
   sequence(:email) { |n| "user#{n}@example.com" }
   sequence(:extra) { |n| { raw_info: { network_id: 1 }, expertise: "Rails#{n}" } }
-  sequence(:image) { |n| YAMMER_HOST + "/mugshot/48x48/#{n}" }
+  sequence(:image) { |n| "https://mug0.assets-yammer.com/#{n}" }
   sequence(:yammer_nickname) { |n| "Yams #{n}" }
   sequence(:yammer_profile_url) { |n| YAMMER_HOST + "/example.com/users/#{n}" }
   sequence(:yammer_token) { |n| "token_#{n}" }
@@ -21,7 +21,6 @@ FactoryGirl.define do
   factory :event do
     name 'Clown party'
     owner(factory: :user)
-
     before :create do |event|
       event.primary_suggestions << build(:primary_suggestion, event: event)
     end

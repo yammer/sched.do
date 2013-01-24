@@ -1,7 +1,7 @@
 class Event < ActiveRecord::Base
   NAME_MAX_LENGTH = 70
 
-  attr_accessible :name, :primary_suggestions_attributes, :uuid
+  attr_accessible :name, :primary_suggestions_attributes, :uuid, :watermarked_image
 
   belongs_to :owner, foreign_key: 'user_id', class_name: 'User'
 
@@ -13,12 +13,15 @@ class Event < ActiveRecord::Base
   has_many :guests, through: :invitations, source: :invitee, source_type: 'Guest'
   has_many :groups, through: :invitations, source: :invitee, source_type: 'Group'
 
+  delegate :watermarked_image, to: :owner
+
   accepts_nested_attributes_for :primary_suggestions,
     reject_if: :reject_primary_suggestion?,
     allow_destroy: true
 
   before_validation :generate_uuid, on: :create
   before_validation :set_first_suggestion
+  before_create :set_owner_watermark
 
   validates :name, presence: { message: 'This field is required' }
   validates :name, length: { maximum: NAME_MAX_LENGTH }
@@ -61,7 +64,7 @@ class Event < ActiveRecord::Base
   def add_errors_if_no_suggestions
     if lacks_suggestions?
       errors.add(
-        :primary_suggestions, 
+        :primary_suggestions,
         'An event must have at least one suggestion'
       )
     end
@@ -69,6 +72,11 @@ class Event < ActiveRecord::Base
 
   def lacks_suggestions?
     remaining_suggestions.none?
+  end
+
+  def set_owner_watermark
+    owner.watermarked_image ||=
+      File.open(Rails.root.join('public', 'logo.png'))
   end
 
   def remaining_suggestions
@@ -92,7 +100,7 @@ class Event < ActiveRecord::Base
 
   def reject_primary_suggestion?(attributes)
     attributes['id'].nil? &&
-      attributes['description'].empty? && 
+      attributes['description'].empty? &&
       (
         attributes['secondary_suggestions_attributes'].nil? ||
         attributes['secondary_suggestions_attributes']['0']['description'].empty?

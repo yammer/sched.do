@@ -42,7 +42,7 @@ class ActivityCreatorJob < Struct.new(:user_id, :action, :event_id)
           url: event_url(event),
           type: 'poll',
           title: event.name,
-          image: 'http://' + ENV['HOSTNAME'] + '/logo.png'
+          image: event.watermarked_image.url
         }
       },
       message: '',

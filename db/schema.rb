@@ -139,19 +139,23 @@ ActiveRecord::Schema.define(:version => 20130205230425) do
   add_index "user_votes", ["user_id"], :name => "index_user_votes_on_user_id"
 
   create_table "users", :force => true do |t|
-    t.string   "name",                                      :null => false
+    t.string   "name",                                              :null => false
     t.string   "encrypted_access_token"
-    t.integer  "yammer_user_id",                            :null => false
-    t.datetime "created_at",                                :null => false
-    t.datetime "updated_at",                                :null => false
+    t.integer  "yammer_user_id",                                    :null => false
+    t.datetime "created_at",                                        :null => false
+    t.datetime "updated_at",                                        :null => false
     t.text     "email"
     t.text     "nickname"
     t.text     "image"
-    t.text     "yammer_profile_url",                        :null => false
+    t.text     "yammer_profile_url",                                :null => false
     t.text     "extra"
-    t.boolean  "yammer_staging",         :default => false
-    t.integer  "yammer_network_id",                         :null => false
-    t.string   "yammer_network_name",    :default => "",    :null => false
+    t.boolean  "yammer_staging",                 :default => false
+    t.integer  "yammer_network_id",                                 :null => false
+    t.string   "watermarked_image_file_name"
+    t.string   "watermarked_image_content_type"
+    t.integer  "watermarked_image_file_size"
+    t.datetime "watermarked_image_updated_at"
+    t.string   "yammer_network_name",            :default => "",    :null => false
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"

@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
   attr_accessible :access_token, :encrypted_access_token, :name,
-    :yammer_user_id, :yammer_staging
+    :yammer_user_id, :yammer_staging, :watermarked_image
   attr_encrypted :access_token, key: ENV['ACCESS_TOKEN_ENCRYPTION_KEY']
 
   has_many :events
@@ -13,6 +13,10 @@ class User < ActiveRecord::Base
   validates :encrypted_access_token, presence: true
   validates :name, presence: true
   validates :yammer_user_id, presence: true
+
+  has_attached_file :watermarked_image,
+    styles: { original: '100x100' },
+    processors: [:thumbnail, :watermark]
 
   def able_to_edit?(event)
     event.owner == self
@@ -60,10 +64,16 @@ class User < ActiveRecord::Base
     name
   end
 
+  def update_watermark
+    if watermarked_image
+      watermarked_image = File.open(Rails.root.join('public', 'logo.png'))
+    end
+  end
+
   def vote_for_suggestion(suggestion)
     votes.
       where(
-        suggestion_id: suggestion.id, 
+        suggestion_id: suggestion.id,
         suggestion_type: suggestion.class.name
       ).
       first
@@ -79,6 +89,10 @@ class User < ActiveRecord::Base
 
   def votes_for_event(event)
     event.votes.where(voter_id: self, voter_type: self.class.name)
+  end
+
+  def watermark
+    image
   end
 
   def yammer_user?

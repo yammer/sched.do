@@ -1,5 +1,14 @@
 require 'spec_helper'
 
+describe User, 'accessors' do
+  it { should allow_mass_assignment_of(:access_token) }
+  it { should allow_mass_assignment_of(:encrypted_access_token) }
+  it { should allow_mass_assignment_of(:name) }
+  it { should allow_mass_assignment_of(:yammer_user_id) }
+  it { should allow_mass_assignment_of(:yammer_staging) }
+  it { should allow_mass_assignment_of(:watermarked_image) }
+end
+
 describe User, 'validations' do
   it { should have_many(:events) }
   it { should have_many(:invitations) }
@@ -32,6 +41,10 @@ describe User, 'validations' do
       user.encrypted_access_token.should == expected_encrypted_access_token
     end
   end
+end
+
+describe User, 'has_attached_file' do
+  it { should have_attached_file(:watermarked_image) }
 end
 
 describe User, '#associate_guest_invitations' do
@@ -96,7 +109,7 @@ describe User, '#image' do
 
   it 'returns the absolute image url if one exists' do
     user = create(:user)
-    user.image.should include(YAMMER_HOST + '/mugshot/48x48/')
+    user.image.should include('https://mug0.assets-yammer.com/')
   end
 end
 
@@ -237,5 +250,24 @@ describe User, '#remind' do
       invitee.remind(invitation, invitation.sender)
       work_off_delayed_jobs
     }.to change(FakeYammer, :messages_endpoint_hits).by(1)
+  end
+end
+
+describe User, '#update_watermark' do
+  it 'does not update the watermark for users without an existing watermark' do
+    user = build(:user, watermarked_image: nil)
+
+    user.update_watermark
+
+    user.watermarked_image.url.should ==
+      "/watermarked_images/original/missing.png"
+  end
+end
+
+describe User, '#watermark' do
+  it 'returns a URL string pointing to the event owner profile photo' do
+    user = build(:user)
+
+    user.watermark.should == user.image
   end
 end

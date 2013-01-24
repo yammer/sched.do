@@ -57,7 +57,7 @@ describe ActivityCreatorJob, '#perform' do
           url: Rails.application.routes.url_helpers.event_url(event),
           type: 'poll',
           title: event.name,
-          image: 'http://' + ENV['HOSTNAME'] + '/logo.png'
+          image: event.watermarked_image.url
         }
       },
       message: '',
