@@ -178,6 +178,7 @@ describe User, '#fetch_yammer_user_data' do
     user.nickname.should == oauth_hash['name']
     user.yammer_profile_url.should == oauth_hash['web_url']
     user.yammer_network_id.should == oauth_hash['network_id']
+    user.yammer_network_name.should == oauth_hash['network_name']
     user.extra.should == oauth_hash.to_yaml
   end
 end
