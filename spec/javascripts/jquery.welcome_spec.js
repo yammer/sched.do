@@ -1,7 +1,6 @@
-require('/assets/jquery.js');
-require('/assets/waypoints.js');
+require('/assets/jquery.js')
 require('/assets/jquery.welcome.js');
-
+require('/assets/waypoints.js');
 require('/assets/jasmine-jquery.js');
 
 describe ('accept terms of service', function(){

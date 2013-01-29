@@ -48,6 +48,7 @@ group :test do
   gem 'database_cleaner'
   gem 'email_spec'
   gem 'factory_girl_rails', '~> 3.0'
+  gem 'jasmine'
   gem 'launchy'
   gem 'shoulda-matchers', '~> 1.4'
   gem 'simplecov', require: false

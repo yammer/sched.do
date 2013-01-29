@@ -35,7 +35,6 @@ Feature: Multiple invitations
     And I press "Invite"
     Then group "Scheddo-Devs" should receive a private invitation message
     And the private invitation message should be sent regarding "sched.do Meeting"
-    And I should not see "Add an entire group to your invite list."
 
   @javascript
   Scenario: Owner adds a user by email to the invite list and invites the user

@@ -107,82 +107,6 @@
   @include colorful-container($orange);
 }
 
-%close-button {
-  background-color: rgb(220,220,220);
-  @include background-image(url(delete-icon.svg));
-  @include background-image(url(delete-icon.svg), linear-gradient(rgb(230,230,230), rgb(210,210,210)));
-  background-position: center, left;
-  -ms-background-position-x: center;
-  -ms-background-position-y: center;
-  background-repeat: no-repeat;
-  border: 1px solid rgb(190,190,190);
-  @include border-radius(20px);
-  @include box-shadow(inset 0 1px 0 rgb(240,240,240), 0 1px 3px darken($bg-color, 15%));
-  color: #fff;
-  display: none;
-  font-size: 0.9em;
-  @include no-text;
-  outline: none;
-  padding: 2px 3px;
-  position: absolute;
-  right: -10px;
-  text-decoration: none;
-  text-shadow: 0 -1px 0 rgba(0,0,0, 0.2);
-  top:-10px;
-  vertical-align: bottom;
-  width: 16px;
-
-  &:hover, &.ui-state-hover {
-    background-color: rgb(210,210,210);
-    @include background-image(url(delete-icon.svg), linear-gradient(rgb(220,220,220), rgb(200,200,200)));
-    @include border-radius(20px);
-    background-position: center, left;
-    -ms-background-position-x: center;
-    -ms-background-position-y: center;
-    background-repeat: no-repeat;
-  }
-}
-
-%group-label {
-  $color: darken($bg-color, 45%);
-  background-color: $color;
-  @include background-image(url(group.svg), linear-gradient(tint($color, 35%), shade($color, 10%)));
-  background-position: 10px center;
-  background-repeat: no-repeat, repeat;
-  border: 1px solid darken($color, 5%);
-  border-bottom-color: darken($color, 20%);
-  @include border-radius(4px);
-  @include box-shadow(inset 0 1px 0px lighten($color, 30%));
-  font-size: 0.9em;
-  @include inline-block;
-  padding: 0.5em 1em 0.5em 30px;
-  @include colorful-container-text($color)
-}
-
-%user-label {
-  $color: darken($bg-color, 45%);
-  background-color: $color;
-  @include background-image(linear-gradient(tint($color, 35%), shade($color, 10%)));
-  border: 1px solid darken($color, 5%);
-  border-bottom-color: darken($color, 20%);
-  @include border-radius(4px);
-  @include box-shadow(inset 0 1px 0px lighten($color, 30%));
-  font-size: 1em;
-  @include inline-block;
-  padding: 0.6em;
-  @include colorful-container-text($color);
-
-  .avatar {
-    @extend %avatar;
-    border: 1px solid darken($color, 15%);
-    @include box-shadow(inset 0 1px 0 0 rgba(255,255,255, 0.3), 0 1px 0 0 lighten($color, 20%));
-    vertical-align: -25%;
-    margin-right: 8px;
-    height: 24px;
-    width: 24px;
-  }
-}
-
 %delete-button {
   background-color: lighten($blue, 20%);
   @include background-image(url(delete-icon.svg));
@@ -292,29 +216,8 @@
   }
 }
 
-%delete-button {
-  background-color: lighten($blue, 20%);
-  @include background-image(url(delete-icon.svg));
-  background-position: center, left;
-  -ms-background-position-x: center;
-  -ms-background-position-y: center;
-  background-repeat: no-repeat;
-  @include border-radius(20px);
-  color: #fff;
-  display: none;
-  font-size: 0.9em;
-  @include no-text;
-  outline: none;
-  padding: 2px 3px;
-  position: absolute;
-  right: -10px;
-  text-decoration: none;
-  top:-10px;
-  vertical-align: bottom;
-  width: 16px;
-
-  &:hover {
-    background-color: lighten($orange, 10%);
-    @include background-image(url(delete-icon.svg));
-  }
+%blank {
+  text-align: center;
+  font-style: italic;
+  padding:1em;
 }

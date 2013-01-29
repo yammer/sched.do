@@ -56,8 +56,10 @@ Feature: Users can vote on suggestions
     And I created an event named "Clown party" with a suggestion of "lunch"
     And I visit the event page for "Clown party"
     When I vote for "lunch"
+    And I close the share sched.do modal
     Then I should see that "lunch" has 1 vote
     When I unvote for "lunch"
+    And I close the share sched.do modal
     Then I should see that "lunch" has 0 votes
 
   @javascript
@@ -80,7 +82,9 @@ Feature: Users can vote on suggestions
       | dinner |
     And I view the "Clown party" event
     When I vote for "lunch"
+    And I close the share sched.do modal
     And I vote for "dinner"
+    And I close the share sched.do modal
     Then I should see that "lunch" has 1 vote
     And I should see that "dinner" has 1 vote
 

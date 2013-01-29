@@ -1,5 +1,4 @@
-require('/assets/namespaced.js');
-require('/assets/jquery.js');
+require('/assets/application.js');
 require('/assets/votes.coffee');
 
 describe ('vote callback', function(){

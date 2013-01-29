@@ -1,0 +1,43 @@
+<div class="hide-modal">
+  <div class="dialog-modal share-app <%= share_trigger %>">
+    <h2><%= dialog_header %></h2>
+    <form>
+      <fieldset class="inputs">
+        <ol>
+          <% if invite_groups %>
+            <div class="suggestions">
+              <p>Share the sched.do app with specific groups</p>
+            </div>
+            <li>
+              <input type="text" id="auto-complete" placeholder="Ex. Sales Team" />
+              <div class="invitation-autocomplete-suggestions" /></div>
+              <div id="invitees">
+                <section class="groups invited-yammer-groups invited">
+                  <h4>Invited Yammer Groups</h4>
+                  <h5 id="invite_groups">If no specific groups are selected, this message will be sent to your company's feed.</h5>
+                  <ul class="invited-groups list-invitees"> </ul>
+                </section>
+              </div>
+            </li>
+          <% end %>
+          <div class="suggestions">
+            <p>Customize message</p>
+          </div>
+          <div class="nested-field">
+            <li>
+              <textarea rows="4" cols="50"><%= share_message_body %>
+              </textarea>
+            </li>
+          </div>
+        </ol>
+      </fieldset>
+
+      <fieldset class="actions">
+        <ol>
+        <li class="action input-action"><%= button_to 'Share', '#', class: "share-button cta #{share_trigger}-button" %></li>
+        </ol>
+      </fieldset>
+    </form>
+  </div>
+</div>
+<%= render 'javascript_templates/multiple_invitation_templates' %>

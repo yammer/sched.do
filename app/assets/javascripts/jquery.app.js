@@ -1,6 +1,6 @@
-$(document).ready(function(){
-  Namespaced.declare('Scheddo');
+Namespaced.declare('Scheddo');
 
+$(document).ready(function(){
   Scheddo.setNextDatePicker = function() {
     nextDateField = $(this).parent().
       parent().

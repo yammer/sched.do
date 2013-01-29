@@ -1,0 +1,34 @@
+Namespaced.declare('Scheddo.Translators');
+
+Scheddo.Translators.RenderInInviteeList = {
+  setRemoveClickEvent: function(markup, invitee){
+    markup.children('.remove').click(function(){
+      Scheddo.Util.removeInviteeFromQueue(invitee);
+      markup.remove();
+    });
+  },
+
+  renderGroup: function(group){
+    markup = $(Scheddo.Templates.getGroupInviteeTemplate(group));
+    this.setRemoveClickEvent(markup, group);
+
+    $('#invite_groups').hide();
+    $('.invited-groups.list-invitees').append(markup);
+  },
+
+  renderUser: function(user){
+    var markup = $(Scheddo.Templates.getUserInviteeTemplate(user));
+    this.setRemoveClickEvent(markup, user);
+
+    $('.users.list-invitees').append(markup);
+    $('#invite_users').hide();
+  },
+
+  renderEmail: function(email){
+    markup = $(Scheddo.Templates.getEmailInviteeTemplate(email));
+    this.setRemoveClickEvent(markup, email);
+
+    $('#invite_users').hide();
+    $('.users.list-invitees').append(markup);
+  }
+};

@@ -59,6 +59,10 @@ RSpec.configure do |config|
     GC.disable
   end
 
+  config.after(:each, javascript: true) do 
+    page.execute_script('localStorage.clear();')
+  end
+
   config.after(:each) do
     Timecop.return
     DatabaseCleaner.clean

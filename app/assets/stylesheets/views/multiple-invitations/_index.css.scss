@@ -9,9 +9,7 @@ div.new-event-invite {
     }
     
     h5 {
-      text-align: center;
-      font-style: italic;
-      padding:1em;
+      @extend %blank;
     }
 
     ul.list-invitees {

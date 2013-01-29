@@ -1,11 +1,6 @@
-require('/assets/namespaced.js');
-require('/assets/scheddo/models/user.js');
-require('/assets/scheddo/models/group.js');
-require('/assets/scheddo/translators.js');
-require('/assets/scheddo/translators_autocompleteAsyncronousPost.js');
-require('/assets/underscore.js');
+require('/assets/application.js')
 
-describe('Scheddo.Translators.AutocompleteAsyncronousPost', function(){
+describe('Scheddo.Translators.MultiInvite', function(){
   describe('translateUsers', function(){
     it('reverses the order of the users', function(){
       var users = [
@@ -13,7 +8,7 @@ describe('Scheddo.Translators.AutocompleteAsyncronousPost', function(){
         { full_name: 'test user 2' }
       ];
 
-      var translatedUsers = Scheddo.Translators.AutocompleteAsyncronousPost.translateUsers(users);
+      var translatedUsers = Scheddo.Translators.MultiInvite.translateUsers(users);
 
       expect(translatedUsers[0].fullName).toBe('test user 2');
       expect(translatedUsers[1].fullName).toBe('test user 1');
@@ -27,7 +22,7 @@ describe('Scheddo.Translators.AutocompleteAsyncronousPost', function(){
         { full_name: 'test group 2' }
       ];
 
-      var translatedGroups = Scheddo.Translators.AutocompleteAsyncronousPost.translateGroups(groups);
+      var translatedGroups = Scheddo.Translators.MultiInvite.translateGroups(groups);
 
       expect(translatedGroups[0].fullName).toBe('test group 2');
       expect(translatedGroups[1].fullName).toBe('test group 1');
@@ -36,7 +31,7 @@ describe('Scheddo.Translators.AutocompleteAsyncronousPost', function(){
 
   describe('translateEmail', function(){
     it('translates the input the user has entered into an autocomplete email object', function(){
-      var translatedEmail = Scheddo.Translators.AutocompleteAsyncronousPost.translateEmail('email@user.com');
+      var translatedEmail = Scheddo.Translators.MultiInvite.translateEmail('email@user.com');
 
       expect(typeof translatedEmail.submit).toBe('function');
       expect(typeof translatedEmail.post).toBe('function');
@@ -49,7 +44,7 @@ describe('Scheddo.Translators.AutocompleteAsyncronousPost', function(){
 
       var translatedUser = Scheddo.
         Translators.
-        AutocompleteAsyncronousPost.
+        MultiInvite.
         addMethodsToUser(users);
 
       expect(typeof translatedUser.submit).toBe('function');
@@ -63,7 +58,7 @@ describe('Scheddo.Translators.AutocompleteAsyncronousPost', function(){
 
       var translatedGroup = Scheddo.
         Translators.
-        AutocompleteAsyncronousPost.
+        MultiInvite.
         addMethodsToGroup(group);
 
       expect(typeof translatedGroup.submit).toBe('function');
@@ -75,7 +70,7 @@ describe('Scheddo.Translators.AutocompleteAsyncronousPost', function(){
     it('translates the input the user has entered into an autocomplete email object', function(){
       var translatedEmail = Scheddo.
         Translators.
-        AutocompleteAsyncronousPost.
+        MultiInvite.
         addMethodsToEmail({});
 
       expect(typeof translatedEmail.submit).toBe('function');

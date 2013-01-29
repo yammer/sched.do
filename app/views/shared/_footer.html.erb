@@ -4,8 +4,10 @@
     <% if current_user.present? %>
       <%= link_to 'Terms of Service', YAMMER_HOST + '/about/terms/', target:'_blank' %>
       <%= link_to 'Sign out', sign_out_path %>
-      <%= link_to 'Share sched.do', '#', class: 'dialog_link share_link' %>
-      <%= render 'shared/share_dialog' %>
+      <% if current_user.yammer_user? %>
+        <%= link_to 'Share sched.do', '#', class: 'dialog_link' %>
+        <%= render 'shared/footer_share_app' %>
+      <% end %>
     <% else %>
       <%= link_to 'Staging', '/auth/yammer_staging' %>
     <% end %>

@@ -1,4 +1,4 @@
-Scheddo.autocompleteConfiguration = function(translator){
+Scheddo.autocompleteConfiguration = function(options){
   renderUsers = function(ul, users) {
     if(users){
       var userHeader = Scheddo.
@@ -31,7 +31,9 @@ Scheddo.autocompleteConfiguration = function(translator){
 
       renderUsers(ul, groupedEntities.user);
       renderGroups(ul, groupedEntities.group);
-      groupedEntities.email[0].render().appendTo(ul);
+      if(groupedEntities.email){
+        groupedEntities.email[0].render().appendTo(ul);
+      }
 
       return ul;
     },
@@ -45,23 +47,23 @@ Scheddo.autocompleteConfiguration = function(translator){
       autoFocus: true,
       delay: 250,
       minLength: 1,
-      appendTo: '.invitation-autocomplete-suggestions',
+      appendTo: options.autocompleteListSelector,
       open: function(event, ui){
-        $('#auto-complete').addClass('autocomplete-true')
+        options.autocompleteInput.addClass('autocomplete-true')
       },
       close: function(event, ui){
-        $('#auto-complete').removeClass('autocomplete-true')
-        $('#auto-complete').val('');
+        options.autocompleteInput.removeClass('autocomplete-true')
+        options.autocompleteInput.val('');
       },
       select: function(event, ui) {
-        $('#auto-complete').val(ui.item.value);
         ui.item.submit(event, $(this).parents('form'));
       },
       source: function(request, response) {
         var yammerApi = Scheddo.YammerApi;
 
         yammerApi.setAccessToken(Scheddo.YammerApi.userAccessToken);
-        yammerApi.autocomplete(translator).ranked(request.term, response);
+        yammerApi.autocomplete(options.translator).
+          ranked(request.term, response, options.maxUsersReturned);
       }
     }
   };

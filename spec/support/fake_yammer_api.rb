@@ -36,12 +36,12 @@ module FakeYammerApi
 
     def mock_yam_request(response_json='{ user: [], group: [] }')
       <<-eos
-        var request = _.clone(yam.request);
-        yam.request = function(options){
-          options['success'](#{response_json});
-        };
+      var request = _.clone(yam.request);
+      yam.request = function(options){
+        options['success'](#{response_json});
+      };
 
-        _.extend(yam.request, request);
+      _.extend(yam.request, request);
       eos
     end
 
@@ -59,7 +59,7 @@ module FakeYammerApi
     def mock_user_json
       <<-eos
         {
-          #{@return_type.downcase}: [{
+      #{@return_type.downcase}: [{
             id: #{@id},
             full_name: '#{@name}',
             jobTitle: 'test',
@@ -87,13 +87,13 @@ module FakeYammerApi
   end
 
 
-  def fill_in_autocomplete(value)
-    page.execute_script %Q{$('#auto-complete').val('#{value}').keydown()}
+  def fill_in_autocomplete(value, parent='')
+    page.execute_script %Q{$('#{parent} #auto-complete').val('#{value}').keydown()}
   end
 
-  def choose_autocomplete(selector, text)
-    expect(find(selector)).to have_content(text)
-    page.execute_script("$('.ui-menu-item:contains(\"#{text}\"):first').find('a').trigger('mouseenter').click()")
+  def choose_autocomplete(selector, text, parent='')
+    find(selector).should have_content(text)
+    page.execute_script("$('#{parent} .ui-menu-item:contains(\"#{text}\"):first').find('a').trigger('mouseenter').click()")
   end
 end
 

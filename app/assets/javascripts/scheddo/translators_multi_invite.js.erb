@@ -1,0 +1,96 @@
+Namespaced.declare('Scheddo.Translators');
+
+Scheddo.Translators.MultiInvite = _.extend((function(){
+  return {
+    addMethodsToUser: function(user){
+      user.submit = function(event, form){
+        Scheddo.Util.inviteeQueue.push(user);
+        Scheddo.
+          Translators.
+          RenderInInviteeList.
+          renderUser(user);
+      };
+
+      user.post = function(eventId){
+        Scheddo.
+          Translators.
+          Requests.
+          Async.
+          userAsync(user, eventId);
+      };
+
+      return user;
+    },
+
+    translateUsers: function(userData){
+      var self = this;
+      return _(userData).map(function(userObject) {
+        var user = Scheddo.Translators.translateUser(userObject);
+        return self.addMethodsToUser(user);
+      }).reverse();
+    },
+
+    addMethodsToGroup: function(group){
+      group.submit = function(event, form){
+        Scheddo.Util.inviteeQueue.push(group);
+        Scheddo.
+          Translators.
+          RenderInInviteeList.
+          renderGroup(group);
+      };
+
+      group.post = function(eventId){
+        Scheddo.
+          Translators.
+          Requests.
+          Async.
+          groupAsync(group, eventId);
+      };
+
+      return group;
+    },
+
+    translateGroups: function(groupData){
+      var self = this;
+      return _(groupData).map(function(groupObject) {
+        var group = Scheddo.Translators.translateGroup(groupObject);
+        return self.addMethodsToGroup(group);
+      }).reverse();
+    },
+
+    addMethodsToEmail: function(email){
+      email.submit = function(event, form){
+        var emailRegEx = /^([^@\s]+)@(([-a-z0-9]+\.)+[a-z]{2,})$/i
+        if (email.value.search(emailRegEx) == -1) {
+          Scheddo.Util.setFlash(
+            'flash-error',
+            'Invitee email is not an email, Invitee is invalid'
+          );
+        }
+        else{
+          Scheddo.Util.inviteeQueue.push(email);
+          Scheddo.
+            Translators.
+            RenderInInviteeList.
+            renderEmail(email);
+        }
+      };
+
+      email.post = function(eventId){
+        Scheddo.
+          Translators.
+          Requests.
+          Async.
+          emailAsync(email, eventId);
+      };
+
+      return email;
+    },
+
+    translateEmail: function(term){
+      var self = this;
+      var email = Scheddo.Translators.translateEmail(term);
+      return self.addMethodsToEmail(email);
+    }
+  };
+})(), Scheddo.Translators.FullResults);

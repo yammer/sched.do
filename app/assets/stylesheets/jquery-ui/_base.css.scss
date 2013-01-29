@@ -1,5 +1,73 @@
-#dialog {
+.dialog-modal {
   @extend .sheet;
+
+  #invitees {
+    padding:1em 0;
+    border-bottom:1px dashed #e3f3f6;
+
+    section.invited-yammer-groups {
+      border: 1px solid darken($bg-color, 20%);
+      @include border-radius(4px 4px 0 0);
+
+      h4 {
+        background-color: $bg-color;
+        @include background-image(linear-gradient(#fff, darken($bg-color, 2%)));
+        border-bottom: 1px solid darken($bg-color, 20%);
+        @include border-radius(3px 3px 0 0);
+        margin-bottom: 0px;
+        padding: 10px 15px;
+      }
+
+      h5 {
+        @extend %blank;
+      }
+
+      ul{
+        padding: 0.8em 0px;
+
+        li {
+          margin: 0 0.3em;
+          list-style: none;
+          position: relative;
+          display: inline-block;
+
+          &:last-child {
+            border-bottom: none;
+          }
+
+          div.group-name {
+            @extend %group-label;
+          }
+
+          a.group-reminder {
+            background: lighten($bg-color, 1%);
+            border: 1px solid darken($bg-color, 2%);
+            @include border-radius(3px);
+            color: darken($bg-color, 20%);
+            display: block;
+            float: right;
+            font-size: 0.9em;
+            padding: 0.5em 1em;
+
+            &:hover {
+              @extend .light-cta-button;
+            }
+          }
+
+          a.remove {
+            @extend %delete-button;
+            background-color: $orange;
+          }
+
+          &:hover {
+            a.remove {
+              display: block;
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 .ui-helper-hidden {
@@ -72,20 +140,19 @@
   }
 }
 
-.ui-widget-content {
+.ui-datepicker {
   background-color: #333;
   @include background-image(linear-gradient(#555, #000));
   border: 1px solid #000;
+  @include border-radius(3px);
+  @include box-shadow(inset 0 1px 0 #999, 0 1px 5px #aaa, inset 0 -1px 0 #333);
+  color: #fff;
   
   &.ui-dialog {
     background-color: transparent;
     border: none;
   }
-  
-  @include border-radius(3px);
-  @include box-shadow(inset 0 1px 0 #999, 0 1px 5px #aaa, inset 0 -1px 0 #333);
-  color: #fff;
-    
+
   a {
     color: #222222;
   }

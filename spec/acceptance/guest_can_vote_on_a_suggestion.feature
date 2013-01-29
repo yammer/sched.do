@@ -8,6 +8,7 @@ Feature: Guests can vote on suggestions
     Then I should see that "lunch" has 0 votes
     When I vote for "lunch"
     Then I should see that "lunch" has 1 vote
+    And I should not see "Thanks for voting, please share Sched.do"
 
   Scenario: Guest gets a vote confimation email
     Given someone created an event named "Clown party" with a suggestion of "lunch"

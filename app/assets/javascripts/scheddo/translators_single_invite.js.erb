@@ -1,14 +1,15 @@
 Namespaced.declare('Scheddo.Translators');
 
-Scheddo.Translators.AutocompletePost = {
+Scheddo.Translators.SingleInvite = _.extend({
   translateUsers: function(userData){
     return _(userData).map(function(userObject) {
       var user = Scheddo.Translators.translateUser(userObject);
       user.submit = function(event, form){
-        inviteeFormAction = '<%= Rails.application.routes.url_helpers.yammer_user_invitations_path %>';
-        form.attr('action', inviteeFormAction);
-        Scheddo.Util.dataRoleUpdater(userObject.id, event.target, 'yammer_user_id');
-        form.submit();
+        Scheddo.
+          Translators.
+          Requests.
+          Sync.
+          userSync(event, form, user);
       };
 
       return user;
@@ -19,11 +20,11 @@ Scheddo.Translators.AutocompletePost = {
     return _(groupData).map(function(groupObject) {
       var group = Scheddo.Translators.translateGroup(groupObject);
       group.submit = function(event, form){
-        $('#auto-complete').val(group.fullName);
-        inviteeFormAction = '<%= Rails.application.routes.url_helpers.yammer_group_invitations_path %>';
-        form.attr('action', inviteeFormAction);
-        Scheddo.Util.dataRoleUpdater(groupObject.id, event.target, 'yammer_group_id');
-        form.submit();
+        Scheddo.
+          Translators.
+          Requests.
+          Sync.
+          groupSync(event, form, group);
       };
 
       return group;
@@ -33,9 +34,13 @@ Scheddo.Translators.AutocompletePost = {
   translateEmail: function(term){
     var email = Scheddo.Translators.translateEmail(term);
     email.submit = function(event, form){
-      form.submit();
+      Scheddo.
+        Translators.
+        Requests.
+        Sync.
+        emailSync(event, form);
     }
 
     return email;
   }
-};
+}, Scheddo.Translators.FullResults);

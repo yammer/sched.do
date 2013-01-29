@@ -1,8 +1,5 @@
-require('/assets/namespaced.js');
-require('/assets/modernizr.custom.js');
-require('/assets/jquery.js');
-require('/assets/jquery.app.js');
-require('/assets/jquery-ui.js');
+require('/assets/application.js');
+require('/assets/jquery.app.js);
 
 describe ('setNextDatePicker', function(){
   it ('sets the next date picker', function(){

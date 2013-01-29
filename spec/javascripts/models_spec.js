@@ -1,7 +1,4 @@
-require('/assets/namespaced.js');
-require('/assets/scheddo/models/user.js');
-require('/assets/scheddo/models/group.js');
-require('/assets/underscore.js');
+require('/assets/application.js');
 
 describe('Scheddo.Models', function(){
   describe('user', function(){

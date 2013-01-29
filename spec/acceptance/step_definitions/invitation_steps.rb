@@ -71,18 +71,21 @@ step 'I invite the Yammer user :user_name to :event_name from the multiple invit
   mock_out_yammer_api(name: user_name, id: 1, return_type: 'user')
   fill_in_autocomplete(user_name)
   choose_autocomplete('.name', user_name)
+  page.should have_content(user_name)
 end
 
 step 'I invite the Yammer group :group_name to :event_name from the multiple invite page' do |group_name, event_name|
   mock_out_yammer_api(name: group_name, id: 1, return_type: 'group')
   fill_in_autocomplete(group_name)
   choose_autocomplete('.name', group_name)
+  page.should have_content(group_name)
 end
 
 step 'I invite :email to :event_name via the autocomplete from the multiple invite page' do |email, event_name|
   mock_out_yammer_api_with_no_response
   fill_in_autocomplete(email)
   choose_autocomplete('.email', email)
+  page.should have_content(email)
 end
 
 step 'I should see :name in the list of invitees' do |name|

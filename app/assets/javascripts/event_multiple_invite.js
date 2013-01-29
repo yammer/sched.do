@@ -1,11 +1,17 @@
 $(document).ready(function(){
+  var autocomplete = $('#auto-complete');
+
   $.widget(
     'custom.yammerAutocomplete',
     $.ui.autocomplete,
-    Scheddo.autocompleteConfiguration(Scheddo.Translators.AutocompleteAsyncronousPost)
+    Scheddo.autocompleteConfiguration({
+      translator: Scheddo.Translators.MultiInvite,
+      autocompleteListSelector: '.invitation-autocomplete-suggestions',
+      autocompleteInput: autocomplete
+    })
   );
 
-  $("input[data-role='invitation_name']").yammerAutocomplete();
+  autocomplete.yammerAutocomplete();
 
   $('#invitations, #new_event').submit(function(event){
     event.preventDefault();
@@ -49,7 +55,7 @@ $(document).ready(function(){
       _.each(inviteesGroupedByType['user'], function(invitee){
         Scheddo.
           Translators.
-          AutocompleteAsyncronousPost.
+          MultiInvite.
           addMethodsToUser(invitee).
           submit();
       });
@@ -57,7 +63,7 @@ $(document).ready(function(){
       _.each(inviteesGroupedByType['group'], function(invitee){
         Scheddo.
           Translators.
-          AutocompleteAsyncronousPost.
+          MultiInvite.
           addMethodsToGroup(invitee).
           submit();
       });
@@ -65,7 +71,7 @@ $(document).ready(function(){
       _.each(inviteesGroupedByType['email'], function(invitee){
         Scheddo.
           Translators.
-          AutocompleteAsyncronousPost.
+          MultiInvite.
           addMethodsToEmail(invitee).
           submit();
       });

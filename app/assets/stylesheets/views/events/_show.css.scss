@@ -365,4 +365,8 @@ div.show-event {
     border-top: 1px solid darken($bg-color, 10%);
     padding-top: 15px;
   }
+
+  div#invitees {
+    @extend section.invited-yammer-groups;
+  }
 }

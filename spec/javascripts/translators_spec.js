@@ -1,8 +1,4 @@
-require('/assets/namespaced.js');
-require('/assets/scheddo/models/user.js');
-require('/assets/scheddo/models/group.js');
-require('/assets/scheddo/translators.js');
-require('/assets/underscore.js');
+require('/assets/application.js');
 
 describe('Scheddo.Translators', function(){
   describe('translateUsers', function(){
@@ -37,7 +33,9 @@ describe('Scheddo.Translators', function(){
 
   describe('translateEmail', function(){
     it('translates the input the user has entered into an autocomplete email object', function(){
-      var translatedEmail = Scheddo.Translators.translateEmail('email@user.com');
+      var translatedEmail = Scheddo.
+        Translators.
+        translateEmail('email@user.com');
 
       expect(translatedEmail.label).toBe('email@user.com');
       expect(translatedEmail.value).toBe('email@user.com');
@@ -45,4 +43,5 @@ describe('Scheddo.Translators', function(){
       expect(typeof translatedEmail.render).toBe('function');
     });
   });
+
 });
