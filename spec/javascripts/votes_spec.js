@@ -1,3 +1,4 @@
+require('/assets/namespaced.js');
 require('/assets/jquery.js');
 require('/assets/votes.coffee');
 
@@ -7,7 +8,7 @@ describe ('vote callback', function(){
   beforeEach(function(){
     vote_element = $('.vote').get(0)
     vote_data = {vote: {id: 1}}
-    voteCallback.call(vote_element, vote_data)
+    Scheddo.voteCallback.call(vote_element, vote_data)
   })
 
   it ('sets the data-role to delete', function(){
@@ -38,7 +39,7 @@ describe ('unvote callback', function(){
   beforeEach(function(){
     vote_element = $('.vote').get(0)
     vote_data = {vote: {id: 1}}
-    unvoteCallback.call(vote_element, vote_data)
+    Scheddo.unvoteCallback.call(vote_element, vote_data)
   })
 
   it ('sets the data-role to create', function(){
@@ -69,7 +70,7 @@ describe ('error callback', function(){
   beforeEach(function(){
     vote_element = $('.vote').get(0)
     vote_data = {statusText: "Internal Server Error"}
-    voteErrorCallback.call(vote_element, vote_data)
+    Scheddo.voteErrorCallback.call(vote_element, vote_data)
   })
 
   it ('displays an flash error', function(){

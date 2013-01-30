@@ -17,12 +17,11 @@ class VotesController < ApplicationController
   end
 
   def destroy
-    suggestion = Suggestion.find(params[:vote][:suggestion_id])
-    vote = current_user.vote_for_suggestion(suggestion)
+    vote = current_user.votes.find(params[:vote][:id])
     vote.destroy
 
     respond_to do |format|
-      format.html { redirect_to suggestion.event }
+      format.html { redirect_to vote.event }
       format.json { render json: { status: :ok }  }
     end
   end

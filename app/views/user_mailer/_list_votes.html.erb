@@ -1,5 +1,9 @@
 <ul>
   <% event.user_votes(voter).each do |vote| %>
-    <li><strong><%= vote.suggestion.primary %><%= ',' if vote.suggestion.secondary.present? %> <%= vote.suggestion.secondary %></strong></li>
+    <li>
+      <strong>
+        <%= vote.suggestion.full_description %>
+      </strong>
+    </li>
   <% end %>
 </ul>

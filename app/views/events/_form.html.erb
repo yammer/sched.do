@@ -14,23 +14,25 @@
     <div class="suggestions">
       <p>Suggest Dates &amp; Times</p>
 
-      <%= form.semantic_fields_for(:suggestions, @event.suggestions) do |suggestion_form| %>
-        <%= render 'existing_suggestion_fields', f: suggestion_form %>
+      <%= form.semantic_fields_for(:primary_suggestions) do |primary| %>
+        <%= render 'primary_suggestion_fields', f: primary %>
       <% end %>
     </div>
 
-    <%= link_to_add_association 'Add Another Date', form, :suggestions,
+    <%= link_to_add_association 'Add Another Date',
+      form,
+      :primary_suggestions,
       partial: 'primary_suggestion_fields',
       link_partial: 'link_to_add_secondary_fields',
       'data-link-insertion-node' => '.times',
       'data-link-insertion-method' => :append,
       'data-association-insertion-node' => '.suggestions',
       'data-association-insertion-method' => :append %>
-    <% end %>
-
-    <%= form.actions do %>
-      <%= form.action :submit,
-        label: submit_label,
-        button_html: { class: 'cta' } %>
-    <% end %>
   <% end %>
+
+  <%= form.actions do %>
+    <%= form.action :submit,
+      label: submit_label,
+      button_html: { class: 'cta' } %>
+  <% end %>
+<% end %>

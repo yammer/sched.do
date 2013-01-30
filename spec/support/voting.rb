@@ -1,22 +1,16 @@
 module VotingHelpers
-  def assert_vote_count(suggestion_primary, vote_count)
-    wait_until {
-      Suggestion.find_by_primary(suggestion_primary).present?
-    }
-
-    suggestion = Suggestion.find_by_primary!(suggestion_primary)
+  def assert_vote_count(description, count, suggestion_type=PrimarySuggestion)
+    suggestion = suggestion_type.
+      find_by_description!(description)
 
     within '.grid' do
-      find(".vote-count[data-id='#{suggestion.id}']").text.strip.should == vote_count.to_s
+      find(".vote-count[data-id='#{suggestion.id}']").text.strip.should == count.to_s
     end
   end
 
-  def vote_for(suggestion_primary)
-    wait_until {
-      Suggestion.find_by_primary(suggestion_primary).present?
-    }
-
-    suggestion = Suggestion.find_by_primary!(suggestion_primary)
+  def vote_for(description, suggestion_type=PrimarySuggestion)
+    suggestion = suggestion_type.
+      find_by_description!(description)
 
     within '.grid' do
       find(".votable div[data-id='#{suggestion.id}'] input[name='commit']").click

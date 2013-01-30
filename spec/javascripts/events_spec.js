@@ -1,3 +1,4 @@
+require('/assets/namespaced.js');
 require('/assets/modernizr.custom.js');
 require('/assets/jquery.js');
 require('/assets/jquery.app.js');
@@ -11,7 +12,7 @@ describe ('setNextDatePicker', function(){
     tomorrow.setDate(today.getDate()+1)
     datepickerSpy = spyOn($.fn, 'datepicker').andReturn(today)
 
-    window.setNextDatePicker.call(first_date_picker)
+    Scheddo.setNextDatePicker.call(first_date_picker)
 
     expect($.fn.datepicker).toHaveBeenCalled()
     nextSelector= 'input[data-role="primary-suggestion"]:first.parent().parent().parent().next() input[data-role="primary-suggestion"]'

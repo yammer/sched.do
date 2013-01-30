@@ -31,9 +31,14 @@ describe Vote, '#no_votes_witin_delay_window?' do
   it 'is false if a second email is sent within the delay window' do
     first_vote = create(:vote)
     voter = first_vote.voter
-    event = first_vote.suggestion.event
+    event = first_vote.event
     second_suggestion = create(:suggestion, event: event)
-    second_vote = create(:vote, voter: voter, suggestion: second_suggestion)
+    second_vote = create(
+      :vote, 
+      event: event,
+      voter: voter, 
+      suggestion: second_suggestion
+    )
 
     first_vote_check = first_vote.has_no_other_votes_within_delay_window?
     second_vote_check = second_vote.has_no_other_votes_within_delay_window?
@@ -59,13 +64,6 @@ describe Vote, '#no_votes_witin_delay_window?' do
   end
 end
 
-describe Vote, '#event' do
-  it 'returns the vote\'s event' do
-    vote = create(:vote)
-    vote.event.should == vote.suggestion.event
-  end
-end
-
 describe Vote, '#create' do
   it 'creates a delayed job' do
     VoteCreatedJob.stubs(:enqueue)
@@ -79,7 +77,12 @@ describe Vote, '#create' do
     event = create(:event)
     suggestion = create(:suggestion, event: event)
     invitation = create(:invitation, event: event)
-    vote = build(:vote, voter: invitation.invitee, suggestion: suggestion)
+    vote = build(
+      :vote, 
+      event: event, 
+      voter: invitation.invitee, 
+      suggestion: suggestion
+    )
 
     vote.save!
 

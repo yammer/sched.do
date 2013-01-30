@@ -26,12 +26,7 @@ gem 'tddium'
 gem 'thin'
 gem 'yam', '0.0.5'
 gem 'zclip-rails'
-
-# We currently use this forked repo as it allows you to nest links to add
-# associations. We can move back to the original gem when the gem fixes a bug
-# where nesting causes infinite looping and the gem correctly adds nested
-# dynamically added objects to the params.
-gem 'cocoon', git: 'git://github.com/jsteiner/cocoon.git', branch: 'scheddo'
+gem 'cocoon'
 
 # Gems used only for assets, not required in production environments by default.
 group :assets do

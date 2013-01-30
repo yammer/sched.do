@@ -1,19 +1,20 @@
 class Event < ActiveRecord::Base
   NAME_MAX_LENGTH = 70
 
-  attr_accessible :name, :suggestion, :suggestions_attributes, :uuid
+  attr_accessible :name, :primary_suggestions_attributes, :uuid
 
   belongs_to :owner, foreign_key: 'user_id', class_name: 'User'
 
-  has_many :suggestions
-  has_many :votes, through: :suggestions
+  has_many :primary_suggestions
+  has_many :votes
 
   has_many :invitations
   has_many :users, through: :invitations, source: :invitee, source_type: 'User'
   has_many :guests, through: :invitations, source: :invitee, source_type: 'Guest'
   has_many :groups, through: :invitations, source: :invitee, source_type: 'Group'
 
-  accepts_nested_attributes_for :suggestions, reject_if: :all_blank,
+  accepts_nested_attributes_for :primary_suggestions,
+    reject_if: :reject_primary_suggestion?,
     allow_destroy: true
 
   before_validation :generate_uuid, on: :create
@@ -39,6 +40,10 @@ class Event < ActiveRecord::Base
     (users + guests).sort { |a, b| b.created_at <=> a.created_at }
   end
 
+  def suggestions
+    primary_suggestions
+  end
+
   def to_param
     uuid
   end
@@ -50,12 +55,15 @@ class Event < ActiveRecord::Base
   end
 
   def set_first_suggestion
-    suggestions[0] ||= Suggestion.new
+    primary_suggestions[0] ||= PrimarySuggestion.new
   end
 
   def add_errors_if_no_suggestions
     if lacks_suggestions?
-      errors.add(:suggestions, 'An event must have at least one suggestion')
+      errors.add(
+        :primary_suggestions, 
+        'An event must have at least one suggestion'
+      )
     end
   end
 
@@ -64,7 +72,7 @@ class Event < ActiveRecord::Base
   end
 
   def remaining_suggestions
-    suggestions.reject do |s|
+    primary_suggestions.reject do |s|
       s.marked_for_destruction?
     end
   end
@@ -80,5 +88,11 @@ class Event < ActiveRecord::Base
 
   def invitations_without(user)
     invitations.reject { |i| i.invitee == user }
+  end
+
+  def reject_primary_suggestion?(attributes)
+    attributes['id'].nil? &&
+      attributes['description'].empty? && 
+      attributes['secondary_suggestions_attributes']['0']['description'].empty?
   end
 end

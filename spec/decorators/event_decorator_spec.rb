@@ -7,19 +7,27 @@ describe EventDecorator, '#build_suggestions' do
     event.build_suggestions
 
     event.suggestions.length.should == 2
-    event.suggestions.each { |suggestion| suggestion.should be_a Suggestion }
+    event.suggestions.each do |suggestion| 
+      suggestion.should be_a(PrimarySuggestion)
+      suggestion.secondary_suggestions.each do |secondary|
+        secondary.should be_a(SecondarySuggestion)
+      end
+    end
   end
 
   it 'does not replace suggestions if they were already set' do
     event = EventDecorator.new(build(:event))
-    first_suggestion = Suggestion.new
-    second_suggestion = Suggestion.new
-    event.suggestions = [first_suggestion, second_suggestion]
+    first_suggestion = PrimarySuggestion.new
+    second_suggestion = PrimarySuggestion.new
+    secondary_suggestion = SecondarySuggestion.new
+    second_suggestion.secondary_suggestions = [secondary_suggestion]
+    event.primary_suggestions = [first_suggestion, second_suggestion]
 
     event.build_suggestions
 
     event.suggestions[0].should == first_suggestion
     event.suggestions[1].should == second_suggestion
+    event.suggestions[1].secondary_suggestions[0].should == secondary_suggestion
   end
 end
 
@@ -100,7 +108,12 @@ describe EventDecorator, '#other_invitees_who_have_not_voted_count' do
     invitees = event.invitees
     suggestion = event.suggestions.first
     EventDecorator.any_instance.stubs(current_user: event.owner)
-    vote = create(:vote, voter: invitees.first, suggestion: suggestion)
+    vote = create(
+      :vote, 
+      event: event, 
+      voter: invitees.first, 
+      suggestion: suggestion
+    )
 
     invitees_count = event.other_invitees_who_have_not_voted_count
 
@@ -146,7 +159,12 @@ describe EventDecorator, '#user_voted?' do
     event = EventDecorator.new(create(:event))
     user = event.owner
     suggestion = create(:suggestion, event: event)
-    vote = create(:vote, voter: user, suggestion: suggestion)
+    vote = create(
+      :vote, 
+      event: event,
+      voter: user, 
+      suggestion: suggestion
+    )
 
     event.user_voted?(user).should be_true
   end
@@ -165,7 +183,12 @@ describe EventDecorator, '#user_votes' do
     event = EventDecorator.new(create(:event))
     user = event.owner
     suggestion = create(:suggestion, event: event)
-    vote = create(:vote, voter: user, suggestion: suggestion)
+    vote = create(
+      :vote, 
+      event: event,
+      voter: user, 
+      suggestion: suggestion
+    )
 
     user_votes = event.user_votes(user)
 

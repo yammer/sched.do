@@ -3,17 +3,48 @@ Feature: Users can vote on suggestions
   Scenario: User votes for a single suggestion
     Given I am signed in
     And I created an event named "Clown party" with a suggestion of "lunch"
+
+  @javascript
+  Scenario: User votes for a single secondary suggestion
+    Given I am signed in
+    And I create an event "Clown party" with the following suggestions:
+      | breakfast| eggs     |
+      | lunch    | chipotle |
     And I visit the event page for "Clown party"
-    Then I should see that "lunch" has 0 votes
-    When I vote for "lunch"
-    Then I should see that "lunch" has 1 vote
+    When I vote for secondary "chipotle"
+    Then I should see that secondary "chipotle" has 1 vote
+    And I should see that secondary "eggs" has 0 votes
+
+  @javascript
+  Scenario: User votes for multiple secondary suggestions
+    Given I am signed in
+    And I create an event "Clown party" with the following suggestions:
+      | breakfast| eggs     |
+      | lunch    | chipotle |
+    And I visit the event page for "Clown party"
+    When I vote for secondary "chipotle"
+    And I vote for secondary "eggs"
+    Then I should see that secondary "chipotle" has 1 vote
+    And I should see that secondary "eggs" has 1 votes
+
+  @javascript
+  Scenario: User unvotes for a single secondary suggestion
+    Given I am signed in
+    And I create an event "Clown party" with the following suggestions:
+      | breakfast| eggs     |
+      | lunch    | chipotle |
+    And I visit the event page for "Clown party"
+    And I vote for secondary "chipotle"
+    When I unvote for secondary "chipotle"
+    Then I should see that secondary "chipotle" has 0 votes
+    And I should see that secondary "eggs" has 0 votes
 
   Scenario: User votes twice for a single suggestion
     Given I am signed in
     And I created an event named "Clown party" with a suggestion of "lunch"
     And I visit the event page for "Clown party"
     When I vote for "lunch"
-    And I vote for "lunch" again
+    And I vote for "lunch" for the "Clown party" again
     Then I should see "Sorry, you cannot duplicate votes"
 
   @javascript

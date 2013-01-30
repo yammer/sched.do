@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130129180011) do
+ActiveRecord::Schema.define(:version => 20130205230425) do
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
@@ -85,6 +85,17 @@ ActiveRecord::Schema.define(:version => 20130129180011) do
   add_index "invitations", ["sender_type"], :name => "index_invitations_on_sender_type"
   add_index "invitations", ["vote_id"], :name => "index_invitations_on_vote_id"
 
+  create_table "primary_suggestions", :force => true do |t|
+    t.integer  "event_id",                 :null => false
+    t.string   "description",              :null => false
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
+    t.integer  "suggestion_id_deprecated"
+  end
+
+  add_index "primary_suggestions", ["description"], :name => "index_primary_suggestions_on_description"
+  add_index "primary_suggestions", ["event_id"], :name => "index_primary_suggestions_on_event_id"
+
   create_table "reminders", :force => true do |t|
     t.integer  "sender_id",     :null => false
     t.string   "sender_type",   :null => false
@@ -99,7 +110,18 @@ ActiveRecord::Schema.define(:version => 20130129180011) do
   add_index "reminders", ["sender_id"], :name => "index_reminders_on_sender_id"
   add_index "reminders", ["sender_type"], :name => "index_reminders_on_sender_type"
 
-  create_table "suggestions", :force => true do |t|
+  create_table "secondary_suggestions", :force => true do |t|
+    t.integer  "primary_suggestion_id"
+    t.string   "description",              :null => false
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
+    t.integer  "suggestion_id_deprecated"
+  end
+
+  add_index "secondary_suggestions", ["description"], :name => "index_secondary_suggestions_on_description"
+  add_index "secondary_suggestions", ["primary_suggestion_id"], :name => "index_secondary_suggestions_on_primary_suggestion_id"
+
+  create_table "suggestions_deprecated", :force => true do |t|
     t.integer  "event_id",                   :null => false
     t.datetime "created_at",                 :null => false
     t.datetime "updated_at",                 :null => false
@@ -107,8 +129,8 @@ ActiveRecord::Schema.define(:version => 20130129180011) do
     t.string   "secondary",  :default => "", :null => false
   end
 
-  add_index "suggestions", ["event_id"], :name => "index_suggestions_on_event_id"
-  add_index "suggestions", ["primary"], :name => "index_suggestions_on_primary"
+  add_index "suggestions_deprecated", ["event_id"], :name => "index_suggestions_on_event_id"
+  add_index "suggestions_deprecated", ["primary"], :name => "index_suggestions_on_primary"
 
   create_table "user_votes", :force => true do |t|
     t.integer "user_id", :null => false
@@ -139,14 +161,17 @@ ActiveRecord::Schema.define(:version => 20130129180011) do
   add_index "users", ["yammer_user_id"], :name => "index_users_on_yammer_user_id"
 
   create_table "votes", :force => true do |t|
-    t.integer  "suggestion_id", :null => false
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
-    t.integer  "voter_id",      :null => false
-    t.string   "voter_type",    :null => false
+    t.integer  "suggestion_id_deprecated"
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
+    t.integer  "voter_id",                 :null => false
+    t.string   "voter_type",               :null => false
+    t.integer  "suggestion_id",            :null => false
+    t.string   "suggestion_type",          :null => false
+    t.integer  "event_id"
   end
 
-  add_index "votes", ["suggestion_id"], :name => "index_votes_on_suggestion_id"
+  add_index "votes", ["suggestion_id_deprecated"], :name => "index_votes_on_suggestion_id"
   add_index "votes", ["voter_id"], :name => "index_votes_on_votable_id"
   add_index "votes", ["voter_type"], :name => "index_votes_on_votable_type"
 

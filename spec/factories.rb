@@ -23,7 +23,7 @@ FactoryGirl.define do
     owner(factory: :user)
 
     before :create do |event|
-      event.suggestions << build(:suggestion, event: event)
+      event.primary_suggestions << build(:primary_suggestion, event: event)
     end
 
     after :stub do |event|
@@ -41,9 +41,14 @@ FactoryGirl.define do
     sequence(:name) { |n| "Joe Guest #{n}" }
   end
 
-  factory :suggestion do
-    primary 'A pretty good suggestion.'
+  factory :primary_suggestion, aliases: [:suggestion] do
+    description 'A pretty good suggestion.'
     event
+  end
+
+  factory :secondary_suggestion do
+    description 'A pretty good secondary.'
+    primary_suggestion
   end
 
   factory :reminder do
@@ -84,7 +89,8 @@ FactoryGirl.define do
   end
 
   factory :vote do
-    suggestion
+    event
+    association :suggestion
     association :voter, factory: :user
 
     factory :guest_vote do
@@ -94,12 +100,12 @@ FactoryGirl.define do
     after :build do |vote, attributes|
       if Invitation.
         where(invitee_id: attributes.voter_id).
-        where(event_id: attributes.suggestion.event.id).
+        where(event_id: vote.event.id).
         empty?
         create(
           :invitation,
           invitee: attributes.voter,
-          event: attributes.suggestion.event
+          event: vote.event
         )
       end
     end

@@ -100,7 +100,6 @@ describe UserMailer, '.vote_confirmation' do
     suggestion = vote.suggestion
     event = suggestion.event
     user_name = vote.voter.name
-
     mail = UserMailer.vote_confirmation(vote)
 
     mail.subject.should ==

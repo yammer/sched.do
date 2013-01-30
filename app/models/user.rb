@@ -61,7 +61,12 @@ class User < ActiveRecord::Base
   end
 
   def vote_for_suggestion(suggestion)
-    votes.find_by_suggestion_id(suggestion.id)
+    votes.
+      where(
+        suggestion_id: suggestion.id, 
+        suggestion_type: suggestion.class.name
+      ).
+      first
   end
 
   def voted_for_suggestion?(suggestion)

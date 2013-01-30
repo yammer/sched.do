@@ -3,7 +3,7 @@ Thanks for helping <%= @event.owner %> with “<%= @event.name %>”.
 You voted for:
 
 <% @event.user_votes(@user).each do |vote| %>
-  "<%= vote.suggestion.primary %><%= "," if vote.suggestion.secondary.present? %> <%= vote.suggestion.secondary %>"
+  "<%= vote.suggestion.full_description %>"
 <% end %>
 
 To change your vote or find out how other people have voted, visit <%= event_url(@event) %>.

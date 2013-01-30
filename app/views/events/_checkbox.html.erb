@@ -1,0 +1,13 @@
+<% if current_user == invitee %>
+  <%= render 'events/vote',
+    suggestion: suggestion,
+    vote_for_suggestion: vote_for_suggestion %>
+<% else %>
+  <% if invitee.voted_for_suggestion?(primary) %>
+    <td class="voted">
+      <%= image_tag('checkmark.png') %>
+    </td>
+  <% else %>
+    <td></td>
+  <% end %>
+<% end %>

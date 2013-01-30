@@ -2,8 +2,7 @@ require 'spec_helper'
 
 describe Event, 'accessors' do
   it { should allow_mass_assignment_of(:name) }
-  it { should allow_mass_assignment_of(:suggestion) }
-  it { should allow_mass_assignment_of(:suggestions_attributes) }
+  it { should allow_mass_assignment_of(:primary_suggestions_attributes) }
   it { should allow_mass_assignment_of(:uuid) }
 end
 
@@ -12,8 +11,8 @@ describe Event, 'associations' do
 end
 
 describe Event, 'Suggestion associations' do
-  it { should have_many(:suggestions) }
-  it { should have_many(:votes).through(:suggestions) }
+  it { should have_many(:primary_suggestions) }
+  it { should have_many(:votes) }
 end
 
 describe Event, 'Invitation associations' do
@@ -24,7 +23,8 @@ describe Event, 'Invitation associations' do
 end
 
 describe Event, 'accepts_nested_attributes_for' do
-  it { should accept_nested_attributes_for(:suggestions).allow_destroy(true) }
+  it { should accept_nested_attributes_for(:primary_suggestions).
+    allow_destroy(true) }
 end
 
 describe Event, 'before_validation' do
@@ -59,17 +59,17 @@ describe Event, 'validations'do
 end
 
 describe Event, 'add_errors_if_no_suggestions'do
-  it 'adds errors if there are no suggestions' do
+  it 'adds errors if there are no primary suggestions' do
     event = create(:event)
     event.suggestions.map(&:mark_for_destruction)
 
     event.valid?
 
-    error = event.errors.messages[:suggestions].first
+    error = event.errors.messages[:primary_suggestions].first
     error.should == 'An event must have at least one suggestion'
   end
 
-  it 'requires an event to have suggestions' do
+  it 'requires an event to have primary suggestions' do
     event = create(:event)
     event.suggestions.destroy_all
 
@@ -155,5 +155,13 @@ describe Event, '#to_param' do
     output = event.to_param
 
     output.should == event.uuid
+  end
+end
+
+describe Event, '#suggestions' do
+  it 'returns the primary suggestions' do
+    event = build(:event)
+
+    event.primary_suggestions.should == event.suggestions
   end
 end

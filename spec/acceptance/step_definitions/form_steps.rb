@@ -20,6 +20,6 @@ step 'I should see :error under the title' do |error|
 end
 
 step 'I should see :error under the first suggestion' do |error|
-  find("#event_suggestions_attributes_0_primary + p").
+  find("#event_primary_suggestions_attributes_0_description + p").
     should have_content(error)
 end

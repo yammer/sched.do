@@ -1,13 +1,14 @@
- var setNextDatePicker = function () {
-    nextDateField = $(this)
-            .parent()
-            .parent()
-            .parent()
-            .next()
-            .find('input[data-role="primary-suggestion"]');
-    nextDate = $(this).datepicker('getDate');
-    nextDate.setDate(nextDate.getDate()+1);
-    $(nextDateField).datepicker('option', 'defaultDate', nextDate);
+Namespaced.declare('Scheddo');
+
+Scheddo.setNextDatePicker = function() {
+  nextDateField = $(this).parent().
+    parent().
+    parent().
+    next().
+    find('input[data-role="primary-suggestion"]');
+  nextDate = $(this).datepicker('getDate');
+  nextDate.setDate(nextDate.getDate()+1);
+  $(nextDateField).datepicker('option', 'defaultDate', nextDate);
 }
 
 $(document).ready(function() {
@@ -29,7 +30,7 @@ $(document).ready(function() {
       prevText: '◀',
       dateFormat: 'D, M dd yy',
       constrainInput: false,
-      onSelect: setNextDatePicker
+      onSelect: Scheddo.setNextDatePicker
     });
   };
 
@@ -83,7 +84,7 @@ $(document).ready(function() {
   var forms = $('form[id*=new_event], form[id*="edit_event"]');
   forms.find('div.nested-fields input').removeAttr('maxlength');
 
-  forms.bind('insertion-callback', function(){
+  forms.bind('cocoon:after-insert', function(){
     datepicker();
     addRemovalAnimation();
     showRemoveIcons();
@@ -103,14 +104,14 @@ $(document).ready(function() {
   bind_to_new_time_fields();
   bind_to_changed_primary_fields();
 
-  $('#new_event ol').bind('insertion-callback', function() {
+  $('#new_event ol').bind('cocoon:after-insert', function() {
     set_default_date();
     bind_to_new_time_fields();
     bind_to_changed_primary_fields();
   });
 
   function bind_to_new_time_fields() {
-    $('.nested-fields.primary').bind('insertion-callback', function() {
+    $('.nested-fields.primary').bind('cocoon:after-insert', function() {
       var primary_suggestions = $(this).find('[data-role="primary-suggestion"]');
       var primary_suggestion_value = primary_suggestions.first().val();
       primary_suggestions.last().val(primary_suggestion_value);

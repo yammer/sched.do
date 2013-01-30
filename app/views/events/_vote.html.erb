@@ -1,19 +1,15 @@
 <% if vote_for_suggestion %>
-  <td>
-    <div data-id="<%= suggestion.id %>">
-      <%= semantic_form_for vote_for_suggestion, remote: true,  html: { method: :delete, "data-role" => :delete, "data-type" => :json } do |f| %>
-        <%= f.input :suggestion_id, as: :hidden, input_html: { value: suggestion.id } %>
-        <%= f.action :submit, button_html: { value: "Unvote", class: "unvote" } %>
-      <% end %>
-    </div>
-  </td>
+  <%= render 'vote_form',
+    input: { method: :delete, 'data-role' => :delete, 'data-type' => :json },
+    vote_id: { value: vote_for_suggestion.id },
+    button: { value: 'Unvote', class: 'unvote' },
+    suggestion: suggestion,
+    form_object: vote_for_suggestion %>
 <% else %>
-  <td>
-    <div data-id="<%= suggestion.id %>">
-      <%= semantic_form_for suggestion.votes.build, remote: true, html: { "data-role" => :create, "data-type" => :json} do |f| %>
-        <%= f.input :suggestion_id, as: :hidden, input_html: { value: suggestion.id }%>
-        <%= f.action :submit, button_html: { value: "Vote", class: "vote" } %>
-      <% end %>
-    </div>
-  </td>
+  <%= render 'vote_form',
+    input: { 'data-role' => :create, 'data-type' => :json },
+    vote_id: { value: nil },
+    button: { value:'Vote', class: 'vote' }, 
+    suggestion: suggestion,
+    form_object: suggestion.votes.build %>
 <% end %>

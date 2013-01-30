@@ -2,8 +2,10 @@ class EventDecorator < Draper::Base
   decorates :event
 
   def build_suggestions
-    suggestions[0] ||= Suggestion.new
-    suggestions[1] ||= Suggestion.new
+    primary_suggestions[0] ||= PrimarySuggestion.new
+    primary_suggestions[1] ||= PrimarySuggestion.new
+    primary_suggestions[0].secondary_suggestions[0] ||= SecondarySuggestion.new
+    primary_suggestions[1].secondary_suggestions[0] ||= SecondarySuggestion.new
   end
 
   def first_invitee_for_invitation
@@ -43,7 +45,7 @@ class EventDecorator < Draper::Base
   end
 
   def user_votes(user)
-    user.votes.joins(:suggestion).where(suggestions: { event_id: self } )
+    user.votes.where(event_id: self)
   end
 
   private

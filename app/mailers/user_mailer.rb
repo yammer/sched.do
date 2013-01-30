@@ -41,7 +41,7 @@ class UserMailer < ActionMailer::Base
 
   def vote_confirmation(vote)
     @user = vote.voter
-    @event = EventDecorator.new(vote.suggestion.event)
+    @event = EventDecorator.new(vote.event)
 
     mail(
       to: @user.email,
@@ -51,7 +51,7 @@ class UserMailer < ActionMailer::Base
 
   def vote_notification(vote)
     @voter = vote.voter
-    @event = EventDecorator.new(vote.suggestion.event)
+    @event = EventDecorator.new(vote.event)
 
     mail(
       to: @event.owner.email,

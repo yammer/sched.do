@@ -1,19 +1,27 @@
+Namespaced.declare('Scheddo')
+
 $('.votable').delegate '.vote[data-role=create]', 'ajax:success', (e, data, textStatus, jqXHR) ->
-  voteCallback.call(this, data)
+  Scheddo.voteCallback.call(this, data)
+
 $('.votable').delegate '.vote[data-role=delete]', 'ajax:success', (e, data, textStatus, jqXHR) ->
-  unvoteCallback.call(this, data)
+  Scheddo.unvoteCallback.call(this, data)
+
 $('.votable').delegate '.vote', 'ajax:error', (e, data, textStatus, jqXHR) ->
-  voteErrorCallback.call(this, data)
+  Scheddo.voteErrorCallback.call(this, data)
+
 $('.votable').delegate '.vote', 'ajax:beforeSend', (e, data, textStatus, jqXHR) ->
   if $('body').hasClass('loading')
     return false
   $('body').addClass('loading')
 
+$('.votable').on 'click', (e, data, status, jqXhr) ->
 
-window.voteCallback = (data) ->
+
+Scheddo.voteCallback = (data) ->
   $('body').removeClass('loading')
   $(this).attr('data-role','delete')
   $(this).attr('action',"/votes/#{data.vote.id}")
+  $(this).find('#vote_id').val(data.vote.id)
   $(this).append($('<input name=_method type=hidden value=delete />'))
   if($(this).data('hover'))
     $(this).one 'mouseout', ->
@@ -24,7 +32,7 @@ window.voteCallback = (data) ->
   $(".vote-count[data-id=#{id}]").text(parseInt($(".vote-count[data-id=#{id}]").text()) + 1 )
 
 
-window.unvoteCallback = (data) ->
+Scheddo.unvoteCallback = (data) ->
   $('body').removeClass('loading')
   $(this).attr('data-role','create')
   $(this).attr('action','/votes')
@@ -37,7 +45,7 @@ window.unvoteCallback = (data) ->
   id = $(this).parent().data('id')
   $(".vote-count[data-id=#{id}]").text(parseInt($(".vote-count[data-id=#{id}]").text()) - 1 )
 
-window.voteErrorCallback = (data) ->
+Scheddo.voteErrorCallback = (data) ->
   $('body').removeClass('loading')
   $(".flash").append($("<div id=flash-error>#{data.statusText}</div>"))
 

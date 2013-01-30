@@ -111,11 +111,11 @@ step 'my network should see an activity message announcing the event' do
 end
 
 step 'I enter :secondary in the first secondary field' do |secondary|
-  fill_in "event_suggestions_attributes_0_secondary", with: secondary
+  fill_in "event_primary_suggestions_attributes_0_secondary_suggestions_attributes_0_description", with: secondary
 end
 
 step 'I should see :expected_time in the first secondary field' do |expected_time|
-  find("#event_suggestions_attributes_0_secondary").value.should == expected_time
+  find("#event_primary_suggestions_attributes_0_secondary_suggestions_attributes_0_description").value.should == expected_time
 end
 
 step 'I should see the appropriate change in the character counter' do
