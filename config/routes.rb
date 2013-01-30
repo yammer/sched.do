@@ -17,11 +17,10 @@ SchedDo::Application.routes.draw do
   get(
     '',
     to: redirect do |segments, request|
-      /auth=yammer\?code=(?<code>.+)/ =~ request.query_string
-      "/auth/yammer/callback?code=#{code}"
+      "/auth/yammer/callback?#{request.query_string}"
     end,
     constraints: lambda do |request|
-      request.query_string.include?('auth=yammer?code=')
+      request.query_string.include?('auth=yammer&code=')
     end
   )
 
