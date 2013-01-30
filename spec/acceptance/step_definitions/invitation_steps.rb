@@ -1,4 +1,3 @@
-# Given / When
 step 'I invite the Yammer user :user_name to :event_name' do |user_name, event_name|
   user = User.find_by_name!(user_name)
   event = Event.find_by_name!(event_name)
@@ -8,7 +7,7 @@ step 'I invite the Yammer user :user_name to :event_name' do |user_name, event_n
   choose_autocomplete('.name', user_name)
 end
 
-step 'I invite the new Yammer group :group_name to :event_name by typing :text into the autocomplete' do |group_name, event_name, text|
+step 'I invite the Yammer group :group_name to :event_name by typing :text into the autocomplete' do |group_name, event_name, text|
   event = Event.find_by_name!(event_name)
   visit event_path(event)
   mock_out_yammer_api(name: group_name, id: 12345, return_type: 'group')
@@ -69,13 +68,13 @@ end
 
 # Multi-invite page
 step 'I invite the Yammer user :user_name to :event_name from the multiple invite page' do |user_name, event_name|
-  mock_out_yammer_api(name:  user_name, id: 1, return_type: 'user')
+  mock_out_yammer_api(name: user_name, id: 1, return_type: 'user')
   fill_in_autocomplete(user_name)
   choose_autocomplete('.name', user_name)
 end
 
 step 'I invite the Yammer group :group_name to :event_name from the multiple invite page' do |group_name, event_name|
-  mock_out_yammer_api(name:  group_name, id: 1, return_type: 'group')
+  mock_out_yammer_api(name: group_name, id: 1, return_type: 'group')
   fill_in_autocomplete(group_name)
   choose_autocomplete('.name', group_name)
 end
@@ -86,7 +85,6 @@ step 'I invite :email to :event_name via the autocomplete from the multiple invi
   choose_autocomplete('.email', email)
 end
 
-# Then
 step 'I should see :name in the list of invitees' do |name|
   within '#invitees' do
     page.should have_content name

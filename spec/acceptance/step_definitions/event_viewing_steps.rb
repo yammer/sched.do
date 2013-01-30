@@ -10,10 +10,6 @@ step 'I should see :title in the header' do |title|
   end
 end
 
-step 'I visit the event page' do
-  visit event_url(Event.last)
-end
-
 step 'I visit the event page for :event_name' do |event_name|
   event = Event.find_by_name!(event_name)
   visit "/events/#{event.uuid}"

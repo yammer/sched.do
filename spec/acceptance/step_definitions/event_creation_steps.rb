@@ -10,8 +10,8 @@ step 'I suggest an empty string' do
   find_field_by_data_role('primary-suggestion').set('')
 end
 
-step 'I submit the create event form for :event_name' do |event_name|
-  click_button 'Create event'
+step 'I successfully submit the create event form for :event_name' do |event_name|
+  send 'I submit the create event form'
   page.should have_content(event_name)
 end
 
@@ -126,10 +126,6 @@ end
 
 step 'I should see :count in the text counter' do |count|
   find(".text-counter").should have_content(count)
-end
-
-step 'I enter :name in the name field' do |name|
-  fill_in "event_name", with: name
 end
 
 step 'I enter a long name in the Event title field' do

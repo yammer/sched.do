@@ -40,7 +40,7 @@ step 'I should see my name :name prepopulated' do |name|
   find_field('guest_name').value.should == name
 end
 
-step 'I should see :m in the errors' do |message|
+step 'I should see :message in the errors' do |message|
   find('.errors').should have_content(message)
 end
 

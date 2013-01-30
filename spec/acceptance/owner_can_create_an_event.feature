@@ -32,7 +32,7 @@ Feature: Owner can create an event
       | breakfast |
       | lunch     |
       | dinner    |
-    And I submit the create event form for "Clown party"
+    And I successfully submit the create event form for "Clown party"
     And I visit the event page for "Clown party"
     Then I should see an event with the following suggestions in order:
       | breakfast |
@@ -46,7 +46,7 @@ Feature: Owner can create an event
       | breakfast |
       | lunch     |
     And I remove the first suggestion
-    And I submit the create event form for "Clown party"
+    And I successfully submit the create event form for "Clown party"
     And I visit the event page for "Clown party"
     Then I should see an event with the following suggestions in order:
       | lunch     |

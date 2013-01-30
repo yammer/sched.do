@@ -2,9 +2,7 @@
 Feature: Owner cannot enter long Event names
 
   Scenario: Owner showed remaining characters
-    Given I am signed in
-    When I visit the new event page
-    And I enter "1234567890" in the name field
+    Given I sign in and fill in the event name as "1234567890"
     Then I should see the appropriate change in the character counter
 
   Scenario: Owner can enter long Event names
