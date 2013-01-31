@@ -4,7 +4,7 @@ module EventCreation
     suggestion_manager = SuggestionManager.new(suggestions, page)
 
     fill_in 'event_name', with: name
-    
+
     suggestion_manager.fill_in_fields
     click_button 'Create event'
   end

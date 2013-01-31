@@ -63,7 +63,7 @@ describe InviteeBuilder, '#find_user_by_email_or_create_guest' do
     it 'creates a guest with only an email address' do
       invitation = create(:invitation)
       event = invitation.event
-      email = 'george@example.com' 
+      email = 'george@example.com'
       params = { email: email }
       Guest.stubs(:create)
 
