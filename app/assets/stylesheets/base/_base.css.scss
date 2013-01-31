@@ -143,4 +143,8 @@ footer {
   a:link:hover, a:visited:hover {
     color: darken($bg-color, 50%);
   }
+
+  div.hide-modal {
+    display: none;
+  }
 }
