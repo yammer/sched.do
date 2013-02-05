@@ -138,10 +138,22 @@ footer {
     color: darken($bg-color, 25%);
     font-size: 0.8em;
     margin: 0 6px;
-  }
 
-  a:link:hover, a:visited:hover {
-    color: darken($bg-color, 50%);
+    &:hover {
+      color: darken($bg-color, 50%);
+    }
+
+    &.share_link {
+      @include button();
+      @extend .light-cta-button;
+      @include box-sizing(border-box);
+      display: inline-block;
+      padding: 0.35em 1.2em;
+
+      &:hover {
+        color: $orange;
+      }
+    }
   }
 
   div.hide-modal {
