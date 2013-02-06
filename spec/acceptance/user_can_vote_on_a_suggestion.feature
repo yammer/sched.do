@@ -3,6 +3,9 @@ Feature: Users can vote on suggestions
   Scenario: User votes for a single suggestion
     Given I am signed in
     And I created an event named "Clown party" with a suggestion of "lunch"
+    And I visit the event page for "Clown party"
+    When I vote for "lunch"
+    Then I should see that "lunch" has 1 vote
 
   @javascript
   Scenario: User votes for a single secondary suggestion
@@ -95,3 +98,13 @@ Feature: Users can vote on suggestions
     And I invite "batman@example.com" to "Clown party"
     When "batman@example.com" votes for "lunch"
     Then I should receive a vote notification email with a link to "Clown party"
+
+  @javascript
+  Scenario: User votes for a single suggestion
+    Given I am signed in
+    And I created an event named "Clown party" with a suggestion of "lunch"
+    And I visit the event page for "Clown party"
+    And I vote for "lunch"
+    When I sign in as a different user
+    And I visit the event page for "Clown party"
+    Then I should see that "lunch" has 1 vote
