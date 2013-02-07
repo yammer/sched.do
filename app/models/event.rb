@@ -93,6 +93,9 @@ class Event < ActiveRecord::Base
   def reject_primary_suggestion?(attributes)
     attributes['id'].nil? &&
       attributes['description'].empty? && 
-      attributes['secondary_suggestions_attributes']['0']['description'].empty?
+      (
+        attributes['secondary_suggestions_attributes'].nil? ||
+        attributes['secondary_suggestions_attributes']['0']['description'].empty?
+      )
   end
 end

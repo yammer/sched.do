@@ -8,6 +8,17 @@ Feature: Owner can create an event
     And my network should see an activity message announcing the event
 
   @javascript
+  Scenario: Owner creates event after pressing the "Add Another Date" button
+    Given I am signed in
+    And I fill in the event name with "Event"
+    And I suggest "lunch"
+    And I click "Add Another Date"
+    When I successfully submit the create event form for "Event"
+    And I visit the event page for "Event"
+    Then I should see an event named "Event" with a suggestion of "lunch"
+    And my network should see an activity message announcing the event
+
+  @javascript
   Scenario: Owner creates event with multiple suggestions
     Given I am signed in
     And I create an event "Clown party" with the following suggestions:
