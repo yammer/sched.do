@@ -3,12 +3,12 @@ class EventsController < ApplicationController
   before_filter :require_guest_or_yammer_login, only: :show
 
   def new
-    @event = EventDecorator.new(current_user.events.build)
+    @event = current_user.events.build.decorate
     @event.build_suggestions
   end
 
   def create
-    @event = EventDecorator.new(current_user.events.new(params[:event]))
+    @event = current_user.events.new(params[:event]).decorate
 
     if @event.save
       redirect_to multiple_invitations_path(event_uuid: @event.uuid)
@@ -19,7 +19,7 @@ class EventsController < ApplicationController
   end
 
   def show
-    @event = EventDecorator.find_by_uuid!(params[:id])
+    @event = Event.find_by_uuid!(params[:id]).decorate
     verify_or_setup_invitation_for_current_user
     setup_invitations
     render "events/show/#{current_user_class_name}"
@@ -27,12 +27,12 @@ class EventsController < ApplicationController
 
   def edit
     session[:return_to] = request.referer
-    @event = EventDecorator.new(current_user.events.find_by_uuid!(params[:id]))
+    @event = current_user.events.find_by_uuid!(params[:id]).decorate
     @event.build_suggestions
   end
 
   def update
-    @event = EventDecorator.new(current_user.events.find_by_uuid!(params[:id]))
+    @event = current_user.events.find_by_uuid!(params[:id]).decorate
     @event.attributes = params[:event]
 
     if @event.save

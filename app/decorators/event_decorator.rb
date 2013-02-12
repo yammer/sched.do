@@ -1,5 +1,5 @@
-class EventDecorator < Draper::Base
-  decorates :event
+class EventDecorator < Draper::Decorator
+  delegate_all
 
   def build_suggestions
     primary_suggestions[0] ||= PrimarySuggestion.new

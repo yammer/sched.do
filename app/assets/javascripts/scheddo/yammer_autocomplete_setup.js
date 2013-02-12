@@ -1,7 +1,10 @@
 Scheddo.autocompleteConfiguration = function(translator){
   renderUsers = function(ul, users) {
     if(users){
-      var userHeader = Scheddo.Templates.getHeaderTemplate({ type: 'people' });
+      var userHeader = Scheddo.
+        Templates.
+        getHeaderTemplate({ type: 'people' });
+
       $(userHeader).appendTo(ul);
       _.each(users,
         function(user) {
@@ -12,7 +15,10 @@ Scheddo.autocompleteConfiguration = function(translator){
 
   renderGroups = function(ul, groups) {
     if(groups){
-      var groupHeader = Scheddo.Templates.getHeaderTemplate({ type: 'groups' });
+      var groupHeader = Scheddo.
+        Templates.
+        getHeaderTemplate({ type: 'groups' });
+
       $(groupHeader).appendTo(ul);
       _.each(groups,
         function(group) { group.render().appendTo(ul); });
