@@ -86,10 +86,10 @@ ActiveRecord::Schema.define(:version => 20130205230425) do
   add_index "invitations", ["vote_id"], :name => "index_invitations_on_vote_id"
 
   create_table "primary_suggestions", :force => true do |t|
-    t.integer  "event_id",                 :null => false
-    t.string   "description",              :null => false
     t.datetime "created_at",               :null => false
     t.datetime "updated_at",               :null => false
+    t.integer  "event_id",                 :null => false
+    t.string   "description",              :null => false
     t.integer  "suggestion_id_deprecated"
   end
 
@@ -111,10 +111,10 @@ ActiveRecord::Schema.define(:version => 20130205230425) do
   add_index "reminders", ["sender_type"], :name => "index_reminders_on_sender_type"
 
   create_table "secondary_suggestions", :force => true do |t|
-    t.integer  "primary_suggestion_id"
-    t.string   "description",              :null => false
     t.datetime "created_at",               :null => false
     t.datetime "updated_at",               :null => false
+    t.integer  "primary_suggestion_id",    :null => false
+    t.string   "description",              :null => false
     t.integer  "suggestion_id_deprecated"
   end
 

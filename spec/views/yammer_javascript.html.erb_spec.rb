@@ -11,6 +11,7 @@ describe "app/views/shared/_yammer_javascript.html.erb" do
 
       rendered.should include('<meta property="yammer-network" content="1">')
     end
+
     context "when the user is not logged in" do
       it "it does not render the network_id meta tag" do
         user = build_stubbed(:user)

@@ -4,6 +4,9 @@ html.no-svg {
   body.welcome {
     div.sign-in > input.sign-in {
       @include background-image(url(yammer-logo.png));
+      background-repeat:no-repeat ;
+      -ms-background-position-x: 20px left;
+      -ms-background-position-y: 0 center;
     }
   }
 

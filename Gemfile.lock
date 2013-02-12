@@ -203,8 +203,6 @@ GEM
     rdoc (3.12.1)
       json (~> 1.4)
     request_store (1.0.5)
-    rest-client (1.6.7)
-      mime-types (>= 1.16)
     rspec (2.12.0)
       rspec-core (~> 2.12.0)
       rspec-expectations (~> 2.12.0)
@@ -332,7 +330,6 @@ DEPENDENCIES
   pry
   quiet_assets
   rails (~> 3.2)
-  rest-client
   rspec-rails
   sass
   sass-rails (~> 3.2)

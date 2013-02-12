@@ -6,7 +6,6 @@ gem 'rails', '~> 3.2'
 
 gem 'airbrake', '~> 3.1'
 gem 'attr_encrypted'
-gem 'awesome_print'
 gem 'bourbon', '~> 2.1'
 gem 'delayed_job_active_record'
 gem 'draper'
@@ -19,7 +18,6 @@ gem 'newrelic_rpm'
 gem 'omniauth-oauth2'
 gem 'paperclip', '~> 3.0'
 gem 'pg'
-gem 'rest-client'
 gem 'sass'
 gem 'swfobject-rails'
 gem 'tddium'
@@ -44,6 +42,7 @@ group :development do
 end
 
 group :test do
+  gem 'awesome_print'
   gem 'bourne', require: false
   gem 'capybara-webkit', '~> 0.12.0'
   gem 'database_cleaner'

@@ -1,9 +1,7 @@
 <header>
   <div class="header-content">
     <a href="/" class="logo">
-      <img src="/assets/navbar-logo.svg"
-        data-png-fallback="/assets/navbar-logo.png"
-        alt="sched.do" />
+      <%= image_tag 'navbar-logo.svg', 'data-png-fallback' => asset_path('navbar-logo.png'), :alt => 'sched.do' %>
     </a>
 
     <nav>
