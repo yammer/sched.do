@@ -339,8 +339,8 @@ div.show-event {
           color: darken($bg-color, 20%);
           display: block;
           float: right;
-          font-size: 0.9em;
-          padding: 0.5em 1em;
+          font-size: 0.8em;
+          padding: 0.25em 1em;
 
           &:hover {
             @extend .light-cta-button;

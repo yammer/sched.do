@@ -4,7 +4,6 @@
     <ul id="groups" class="groups">
       <% @event.groups.each do |group| %>
         <li>
-          <div class="group-name"><%= group.name %></div>
           <%= link_to 'Remind them to Vote!',
             reminders_path(
               event_id: @event,
@@ -15,6 +14,7 @@
             ),
             method: :post,
             class: 'group-reminder' %>
+          <div class="group-name"><%= group.name %></div>
         </li>
       <% end %>
     </ul>
