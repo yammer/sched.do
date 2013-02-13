@@ -5,7 +5,7 @@ class Event < ActiveRecord::Base
 
   belongs_to :owner, foreign_key: 'user_id', class_name: 'User'
 
-  has_many :primary_suggestions
+  has_many :primary_suggestions, order: 'created_at'
   has_many :votes
 
   has_many :invitations

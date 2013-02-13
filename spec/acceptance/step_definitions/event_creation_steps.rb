@@ -6,6 +6,10 @@ step 'I suggest :suggestion' do |suggestion|
   find_field_by_data_role('primary-suggestion').set(suggestion)
 end
 
+step 'I add suggestion :suggestion' do |suggestion|
+  all('input[data-role=primary-suggestion]').last.set(suggestion)
+end
+
 step 'I suggest an empty string' do
   find_field_by_data_role('primary-suggestion').set('')
 end
@@ -136,4 +140,17 @@ end
 step 'I should see a truncated name in the Event title field' do
   max = Event::NAME_MAX_LENGTH
   find("#event_name").value.length.should == max
+end
+
+step 'I created an event named :event_name with a suggestion of :primary with the following secondary suggestions:' do |event_name, primary, secondaries|
+  suggestions = secondaries.raw.map(&:first)
+  fill_in 'event_name', with: event_name
+  all('input[data-role=primary-suggestion]')[0].set(primary)
+  suggestions.each_with_index do |suggestion, index|
+    all('input[data-role=secondary-suggestion]')[index]
+      .set(suggestions[index]) 
+    click_link 'Add Another Time'
+  end
+  click_button 'Create event'
+  page.should have_content(event_name)
 end

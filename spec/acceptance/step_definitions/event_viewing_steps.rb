@@ -88,3 +88,13 @@ step 'I should see :user_name within the created by section' do |user_name|
     page.should have_content user_name
   end
 end
+
+step ':first_suggestion should appear before :second_suggestion in the list' do |first_suggestion, second_suggestion|
+  within(:xpath, "//div[contains(@class, 'options')]//th[1]") do
+    page.should have_content(first_suggestion)
+  end
+
+  within(:xpath,  "//div[contains(@class, 'options')]//th[2]") do 
+    page.should have_content(second_suggestion)
+  end
+end

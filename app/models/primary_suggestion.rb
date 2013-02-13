@@ -6,7 +6,7 @@ class PrimarySuggestion < ActiveRecord::Base
   validates :description, presence: { message: 'This field is required' }
 
   belongs_to :event
-  has_many :secondary_suggestions
+  has_many :secondary_suggestions, order: 'created_at'
   has_many :votes, as: :suggestion, dependent: :destroy
 
   accepts_nested_attributes_for :secondary_suggestions, 
