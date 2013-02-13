@@ -75,8 +75,9 @@ class Event < ActiveRecord::Base
   end
 
   def set_owner_watermark
-    owner.watermarked_image =
-      File.open(Rails.root.join('public', 'logo.png'))
+    File.open(Rails.root.join('public', 'logo.png')) do |file|
+      owner.watermarked_image = file
+    end
   end
 
   def remaining_suggestions
@@ -99,11 +100,21 @@ class Event < ActiveRecord::Base
   end
 
   def reject_primary_suggestion?(attributes)
-    attributes['id'].nil? &&
-      attributes['description'].empty? &&
-      (
-        attributes['secondary_suggestions_attributes'].nil? ||
-        attributes['secondary_suggestions_attributes']['0']['description'].empty?
-      )
+     is_new_primary_suggestion?(attributes) &&
+       is_primary_suggestion_present?(attributes) &&
+       is_secondary_suggestion_present?(attributes)
+  end
+
+  def is_new_primary_suggestion?(attributes)
+    attributes['id'].nil?
+  end
+
+  def is_primary_suggestion_present?(attributes)
+    attributes['description'].empty? 
+  end
+
+  def is_secondary_suggestion_present?(attributes)
+    attributes['secondary_suggestions_attributes'].nil? ||
+    attributes['secondary_suggestions_attributes'].to_a[0][1]['description'].empty?
   end
 end

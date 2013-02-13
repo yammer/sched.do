@@ -43,7 +43,6 @@ group :development do
 end
 
 group :test do
-  gem 'awesome_print'
   gem 'bourne', require: false
   gem 'capybara-webkit', '~> 0.12.0'
   gem 'database_cleaner'
@@ -59,6 +58,7 @@ group :test do
 end
 
 group :development, :test do
+  gem 'awesome_print'
   gem 'dotenv'
   gem 'evergreen', require: 'evergreen/rails'
   gem 'mail_view'
