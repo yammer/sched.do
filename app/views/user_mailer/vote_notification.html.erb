@@ -10,5 +10,11 @@
 
 <p>
   Click here to change your vote or see the results.
-  <%= render 'click_here', event: @event, email: @event.owner.email %>
+  <%= render 'click_here',
+    event: @event,
+    email: @event.owner.email,
+    source: 'event-vote-notification',
+    medium: 'email',
+    campaign: 'sched.do'
+  %>
 </p>

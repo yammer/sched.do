@@ -1,5 +1,10 @@
 Attention <%= @recipient.name %>: <%= @event_creator %> created the <%= @event.name %> poll and I want your input.
 
-Click here to vote and see the results: <%= event_url(@event) %>
+Click here to vote and see the results: <%= event_url(
+  @event,
+  utm_source: 'group-event-invitation',
+  utm_medium: 'private-message',
+  utm_campaign: 'sched.do'
+) %>
 
 *This poll was sent using sched.do. Create your own polls for free at <%= root_url %>

@@ -1,15 +1,21 @@
 <%= link_to 'Click Here',
-      event_url(event, guest_email: email),
-      html_options = {
-        style: 'background-color: #30AADE;
-        border: 1px solid #0F7CC4;
-        border-radius: 3px;
-        color: #fff;
-        display: block;
-        margin: 20px auto;
-        padding: 8px 12px;
-        text-align: center;
-        text-decoration: none;
-        width: 100px'
-      }
+  event_url(
+    event,
+    guest_email: email,
+    utm_source: source,
+    utm_medium: medium,
+    utm_campaign: campaign
+  ),
+  html_options = {
+    style: 'background-color: #30AADE;
+    border: 1px solid #0F7CC4;
+    border-radius: 3px;
+    color: #fff;
+    display: block;
+    margin: 20px auto;
+    padding: 8px 12px;
+    text-align: center;
+    text-decoration: none;
+    width: 100px'
+  }
 %>

@@ -16,14 +16,16 @@ step ':email_address should receive a vote confirmation email with a link to :ev
   event = Event.find_by_name(event_name)
   guest = event.invitees.first
   body = email_body(last_email_sent_to(guest.email))
-  body.should have_link('Click Here', href: event_url(event, guest_email: guest.email))
+  body.should have_link('Click Here')
+  body.should include(event_url(event))
   body.should include('Thanks for voting!')
 end
 
 step 'I should receive a vote notification email with a link to :event_name' do |event_name|
   event = Event.find_by_name(event_name)
   body = email_body(last_email_sent_to(event.owner.email))
-  body.should have_link('Click Here', href: event_url(event, guest_email: event.owner.email))
+  body.should have_link('Click Here')
+  body.should include(event_url(event))
   body.should include('voted on your')
 end
 
@@ -31,7 +33,8 @@ step ':email_address should receive a reminder email with a link to :event_name'
   event = Event.find_by_name(event_name)
   guest = event.invitees.first
   body = email_body(last_email_sent_to(guest.email))
-  body.should have_link('Click Here', href: event_url(event, guest_email: guest.email))
+  body.should have_link('Click Here')
+  body.should include(event_url(event))
   body.should include('Reminder to vote')
 end
 
@@ -39,7 +42,8 @@ step ':email_address should receive an invitation email with a link to :event_na
   event = Event.find_by_name(event_name)
   guest = event.invitees.first
   body = email_body(last_email_sent_to(guest.email))
-  body.should have_link('Click Here', href: event_url(event, guest_email: guest.email))
+  body.should have_link('Click Here')
+  body.should include(event_url(event))
   body.should include('invited')
 end
 

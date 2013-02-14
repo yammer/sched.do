@@ -7,7 +7,13 @@
 
 <p>
   Click here to vote and see the results.
-  <%= render 'click_here', event: @event, email: @guest.email %>
+  <%= render 'click_here',
+    event: @event,
+    email: @guest.email,
+    source: 'event-invitation',
+    medium: 'email',
+    campaign: 'sched.do'
+  %>
 </p>
 
 <p>

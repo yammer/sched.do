@@ -8,7 +8,13 @@ describe MailHelper, '#get_first_line_of_invitation' do
     invitation = build_stubbed(:invitation, sender: owner, event: event)
     poll_link = link_to(
       invitation.event.name,
-      event_url(invitation.event, guest_email: invitation.invitee.email),
+      event_url(
+        invitation.event,
+        utm_campaign: 'sched.do',
+        utm_medium: 'email',
+        utm_source: 'event-invitation',
+        guest_email: invitation.invitee.email
+      ),
       html_options = { style: 'color: #EC6E4D' }
     )
 
@@ -22,7 +28,13 @@ describe MailHelper, '#get_first_line_of_invitation' do
     sender_name = invitation.sender.name
     poll_link = link_to(
       invitation.event.name,
-      event_url(invitation.event, guest_email: invitation.invitee.email),
+      event_url(
+        invitation.event,
+        utm_campaign: 'sched.do',
+        utm_medium: 'email',
+        utm_source: 'event-invitation',
+        guest_email: invitation.invitee.email
+      ),
       html_options = { style: 'color: #EC6E4D' }
     )
 

@@ -4,5 +4,11 @@
 
 <p>
   Click here to vote and see the results.
-  <%= render 'click_here', event: @event, email: @event.owner.email %>
+  <%= render 'click_here',
+    event: @event,
+    email: @event.owner.email,
+    source: 'event-created-confirmation',
+    medium: 'email',
+    campaign: 'sched.do'
+  %>
 </p>

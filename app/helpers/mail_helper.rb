@@ -14,7 +14,13 @@ module MailHelper
   def poll_link
     link_to(
       @invitation.event.name,
-      event_url(@invitation.event, guest_email: @invitation.invitee.email),
+      event_url(
+        @invitation.event,
+        utm_source: 'event-invitation',
+        utm_medium: 'email',
+        utm_campaign: 'sched.do',
+        guest_email: @invitation.invitee.email
+      ),
       html_options = { style: 'color: #EC6E4D' }
     )
   end
