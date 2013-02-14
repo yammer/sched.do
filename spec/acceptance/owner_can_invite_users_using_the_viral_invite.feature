@@ -88,7 +88,7 @@ Feature: Multiple invitations
   @javascript
   Scenario: Owner tries to add a user to the invite list with an invalid email
     Given I sign in and create an event named "Clown party"
-    When I invite "ba33nmail.com x" to "Clown party" via the autocomplete from the multiple invite page
+    When I invite "ba33nmail.com" to "Clown party" via the autocomplete from the multiple invite page
     Then I should see "Invitee email is not an email, Invitee is invalid"
 
   @javascript
