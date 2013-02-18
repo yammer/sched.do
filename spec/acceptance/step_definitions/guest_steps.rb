@@ -15,39 +15,39 @@ end
 
 step 'no guest exists with email :email' do |email|
   guest = Guest.find_by_email(email)
-  guest.should be_nil
+  expect(guest).to be_nil
 end
 
 step 'I should be prompted to login or enter my name and email' do
-  page.should have_css('a#sign-in')
-  page.should have_css('form#new_guest')
-  page.should have_css('#guest_name')
-  page.should have_css('#guest_email')
+  expect(page).to have_css('a#sign-in')
+  expect(page).to have_css('form#new_guest')
+  expect(page).to have_css('#guest_name')
+  expect(page).to have_css('#guest_email')
 end
 
 step 'I should not be prompted to enter my name and email' do
-  page.should have_css('a#sign-in')
-  page.should_not have_css('form#new_guest')
-  page.should_not have_css('#guest_name')
-  page.should_not have_css('#guest_email')
+  expect(page).to have_css('a#sign-in')
+  expect(page).to_not have_css('form#new_guest')
+  expect(page).to_not have_css('#guest_name')
+  expect(page).to_not have_css('#guest_email')
 end
 
 step 'I should see my email address :email_address prepopulated' do |email|
-  find_field('guest_email').value.should == email
+  expect(find_field('guest_email').value).to eq email
 end
 
 step 'I should see my name :name prepopulated' do |name|
-  find_field('guest_name').value.should == name
+  expect(find_field('guest_name').value).to eq name
 end
 
 step 'I should see :message in the errors' do |message|
-  find('.errors').should have_content(message)
+  expect(find('.errors')).to have_content(message)
 end
 
 # Email
 step 'I should receive a vote confirmation email for :event_name' do |event_name|
   event = Event.find_by_name!(event_name)
-  email_body(last_email_sent).should =~ /#{event_url(event)}/
+  expect(email_body(last_email_sent)).to match /#{event_url(event)}/
 end
 
 # Navigation

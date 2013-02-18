@@ -83,13 +83,13 @@ end
 # Should
 
 step 'I should be redirected to the new event page' do
-  page.should have_content 'Schedule an Event'
+  expect(page).to have_content 'Schedule an Event'
 end
 
 step 'I should not see a sign out button' do
-  page.should have_no_content 'Sign out'
+  expect(page).to have_no_content 'Sign out'
 end
 
 step 'I should be signed out' do
-  current_url.should == root_url
+  expect(current_url).to eq root_url
 end

@@ -6,31 +6,31 @@ describe EventsController, 'authentication' do
   it 'requires yammer login for #new' do
     get :new
 
-    should redirect_to '/auth/yammer'
+    expect(page).to redirect_to '/auth/yammer'
   end
 
   it 'requires yammer login for #create' do
     post :create
 
-    should redirect_to '/auth/yammer'
+    expect(page).to redirect_to '/auth/yammer'
   end
 
   it 'requires yammer login for #edit' do
     get :edit, id: YAMMER_EVENT_ID_FROM_FAKE
 
-    should redirect_to '/auth/yammer'
+    expect(page).to redirect_to '/auth/yammer'
   end
 
   it 'requires yammer login for #update' do
     put :update, id: YAMMER_EVENT_ID_FROM_FAKE
 
-    should redirect_to '/auth/yammer'
+    expect(page).to redirect_to '/auth/yammer'
   end
 
   it 'requires guest or yammer login for #show' do
     get :show, id: YAMMER_EVENT_ID_FROM_FAKE
 
-    should redirect_to new_guest_url(event_id: YAMMER_EVENT_ID_FROM_FAKE)
+    expect(page).to redirect_to new_guest_url(event_id: YAMMER_EVENT_ID_FROM_FAKE)
   end
 end
 
@@ -41,7 +41,7 @@ describe EventsController, '#create' do
 
     post :create, event: { name: 'test event' }
 
-    assigns(:event).owner.should == user
+    expect(assigns(:event).owner).to eq user
   end
 
   it 'redirects to MultipleInvitationsController#new' do
@@ -52,7 +52,7 @@ describe EventsController, '#create' do
 
     post :create, event: { name: event.name }
 
-    should redirect_to "/multiple_invitations?event_uuid=#{event.uuid}"
+    expect(page).to redirect_to "/multiple_invitations?event_uuid=#{event.uuid}"
   end
 end
 
@@ -65,7 +65,7 @@ describe EventsController, '#edit' do
 
       get :edit, id: event.uuid
 
-      response.should be_success
+      expect(response).to be_success
     end
   end
 
@@ -77,8 +77,8 @@ describe EventsController, '#edit' do
 
       sign_in_as(create(:user))
 
-      lambda { get :update, id: event.uuid }.
-        should raise_error(ActiveRecord::RecordNotFound)
+      expect { get :update, id: event.uuid }.
+        to raise_error(ActiveRecord::RecordNotFound)
     end
   end
 end
@@ -92,7 +92,7 @@ describe EventsController, '#show' do
 
       get :show, id: event.uuid
 
-      response.should be_success
+      expect(response).to be_success
     end
   end
 
@@ -105,7 +105,7 @@ describe EventsController, '#show' do
 
       get :show, id: event.uuid
 
-      response.should be_success
+      expect(response).to be_success
     end
   end
 
@@ -117,8 +117,8 @@ describe EventsController, '#show' do
 
       sign_in_as(user)
 
-      lambda { get :show, id: fake_uuid }.
-        should raise_error(ActiveRecord::RecordNotFound)
+      expect { get :show, id: fake_uuid }.
+        to raise_error(ActiveRecord::RecordNotFound)
     end
   end
 
@@ -129,8 +129,8 @@ describe EventsController, '#show' do
       sign_in_as(create(:user))
       fake_uuid = 'fakefake'
 
-      lambda { get :show, id: fake_uuid }.
-        should raise_error(ActiveRecord::RecordNotFound)
+      expect { get :show, id: fake_uuid }.
+        to raise_error(ActiveRecord::RecordNotFound)
     end
   end
 end
@@ -144,7 +144,7 @@ describe EventsController, '#update' do
 
       put :update, event: { name: 'new name' }, id: event.uuid
 
-      response.should redirect_to(event)
+      expect(response).to redirect_to(event)
     end
   end
 
@@ -155,8 +155,8 @@ describe EventsController, '#update' do
 
       sign_in_as(create(:user))
 
-      lambda { put :update, id: event.uuid }.
-        should raise_error(ActiveRecord::RecordNotFound)
+      expect { put :update, id: event.uuid }.
+        to raise_error(ActiveRecord::RecordNotFound)
     end
   end
 end

@@ -11,7 +11,7 @@ describe VoteEmailJob, '.enqueue' do
 
       VoteEmailJob.enqueue(vote, :test_vote_email)
 
-      Delayed::Job.should have_received(:enqueue).
+      expect(Delayed::Job).to have_received(:enqueue).
         with(vote_email_job, priority: priority, run_at: delay.from_now)
     end
   end
@@ -26,7 +26,7 @@ describe VoteEmailJob, '#error' do
     job = VoteEmailJob.new(vote.id, :test_message)
     job.error(job, exception)
 
-    Airbrake.should have_received(:notify).with(exception)
+    expect(Airbrake).to have_received(:notify).with(exception)
   end
 end
 
@@ -40,8 +40,8 @@ describe VoteEmailJob, '#perform' do
 
     VoteEmailJob.new(vote.id, :test_vote_email).perform
 
-    UserMailer.should have_received(:test_vote_email).once
-    message.should have_received(:deliver).once
+    expect(UserMailer).to have_received(:test_vote_email).once
+    expect(message).to have_received(:deliver).once
   end
 
   it 'quietly fails and logs the error if the Vote is destroyed before the job runs' do
@@ -53,9 +53,9 @@ describe VoteEmailJob, '#perform' do
 
     VoteEmailJob.new(vote_id, :test_vote_email).perform
 
-    fake_logger.should have_received(:error).
+    expect(fake_logger).to have_received(:error).
       with("NOTE: VoteEmailJob cannot find Vote id=#{vote_id}")
-    UserMailer.should have_received(:test_vote_email).never
+    expect(UserMailer).to have_received(:test_vote_email).never
   end
 
   it 'does not send an email if there is a new vote by the same user for the event in the time window' do
@@ -66,6 +66,6 @@ describe VoteEmailJob, '#perform' do
 
     VoteEmailJob.new(vote.id, :test_vote_email).perform
 
-    UserMailer.should have_received(:test_vote_email).never
+    expect(UserMailer).to have_received(:test_vote_email).never
   end
 end

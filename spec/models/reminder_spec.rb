@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe Reminder do
-  it { should belong_to(:sender) }
-  it { should belong_to(:receiver) }
+  it { expect(subject).to belong_to(:sender) }
+  it { expect(subject).to belong_to(:receiver) }
 end
 
 describe Reminder do
@@ -11,7 +11,7 @@ describe Reminder do
 
     create(:reminder)
 
-    ReminderCreatedJob.should have_received(:enqueue)
+    expect(ReminderCreatedJob).to have_received(:enqueue)
   end
 end
 
@@ -23,6 +23,6 @@ describe Reminder, '#deliver' do
 
     reminder.deliver
 
-    Event.any_instance.should have_received(:deliver_reminder_from)
+    expect(Event.any_instance).to have_received(:deliver_reminder_from)
   end
 end

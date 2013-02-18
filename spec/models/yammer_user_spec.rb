@@ -11,8 +11,8 @@ describe YammerUser, '.find_or_create' do
 
     found_user = YammerUser.new(auth).find_or_create
 
-    found_user.should == user
-    found_user.access_token.should == auth[:access_token]
+    expect(found_user).to eq user
+    expect(found_user.access_token).to eq auth[:access_token]
   end
 
   it 'creates a new user if one does not exist' do
@@ -22,9 +22,9 @@ describe YammerUser, '.find_or_create' do
       yammer_user_id: 321123
     }
 
-    lambda {
+    expect{
       YammerUser.new(auth).find_or_create
-    }.should change(User, :count).by(1)
+    }.to change(User, :count).by(1)
   end
 
   it 'sets the right attributes for the new user' do
@@ -37,9 +37,9 @@ describe YammerUser, '.find_or_create' do
     YammerUser.new(auth).find_or_create
 
     user = User.last
-    user.yammer_user_id.should == auth[:yammer_user_id]
-    user.access_token.should == auth[:access_token]
-    user.yammer_staging.should == auth[:yammer_staging]
+    expect(user.yammer_user_id).to eq auth[:yammer_user_id]
+    expect(user.access_token).to eq auth[:access_token]
+    expect(user.yammer_staging).to eq auth[:yammer_staging]
   end
 
   it 'calls associate_guest_invitations' do
@@ -52,6 +52,6 @@ describe YammerUser, '.find_or_create' do
 
     YammerUser.new(auth).find_or_create
 
-    User.any_instance.should have_received(:associate_guest_invitations)
+    expect(User.any_instance).to have_received(:associate_guest_invitations)
   end
 end

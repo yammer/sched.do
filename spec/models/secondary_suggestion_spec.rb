@@ -1,13 +1,13 @@
 require 'spec_helper'
 
 describe SecondarySuggestion do
-  it { should validate_presence_of(:description).
+  it { expect(subject).to validate_presence_of(:description).
        with_message(/This field is required/) }
 
-  it { should belong_to :primary_suggestion }
-  it { should have_many(:votes).dependent(:destroy) }
+  it { expect(subject).to belong_to :primary_suggestion }
+  it { expect(subject).to have_many(:votes).dependent(:destroy) }
 
-  it { should allow_mass_assignment_of(:description) }
+  it { expect(subject).to allow_mass_assignment_of(:description) }
 end
 
 describe SecondarySuggestion, '#vote_count' do
@@ -16,18 +16,18 @@ describe SecondarySuggestion, '#vote_count' do
     suggestion.votes << create(:vote, suggestion: suggestion)
     suggestion.votes << create(:vote, suggestion: suggestion)
 
-    suggestion.vote_count.should == 2
+    expect(suggestion.vote_count).to eq 2
   end
 
   it 'returns 0 votes when no votes exist' do
     suggestion = SecondarySuggestion.new
-    suggestion.vote_count.should == 0
+    expect(suggestion.vote_count).to eq 0
   end
 
   it 'returns 0 votes when an unpersisted vote shows up for no reason' do
     suggestion_with_unpersisted_vote = SecondarySuggestion.new
     suggestion_with_unpersisted_vote.votes.build
-    suggestion_with_unpersisted_vote.vote_count.should == 0
+    expect(suggestion_with_unpersisted_vote.vote_count).to eq 0
   end
 end
 
@@ -35,7 +35,7 @@ describe SecondarySuggestion, '#event' do
   it 'returns the event the Primary Suggestion belongs to' do 
     suggestion = build(:secondary_suggestion)
 
-    suggestion.event.should == suggestion.primary_suggestion.event
+    expect(suggestion.event).to eq suggestion.primary_suggestion.event
   end
 end
 
@@ -44,6 +44,6 @@ describe SecondarySuggestion, '#full_description' do
     suggestion = build(:secondary_suggestion, description: 'secondary')
     suggestion.primary_suggestion.description = 'primary'
 
-    suggestion.full_description.should == 'primary, secondary'
+    expect(suggestion.full_description).to eq 'primary, secondary'
   end
 end

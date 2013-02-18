@@ -14,11 +14,11 @@ describe GroupPrivateMessenger, '#invitation' do
 
     GroupPrivateMessenger.new(invitation).invite
 
-    FakeYammer.messages_endpoint_hits.should == 1
-    FakeYammer.message.should include('I want your input')
-    FakeYammer.message.should include(event.name)
-    FakeYammer.message.should include(group.name)
-    FakeYammer.message.should_not include(event.owner.name)
+    expect(FakeYammer.messages_endpoint_hits).to eq 1
+    expect(FakeYammer.message).to include('I want your input')
+    expect(FakeYammer.message).to include(event.name)
+    expect(FakeYammer.message).to include(group.name)
+    expect(FakeYammer.message).to_not include(event.owner.name)
   end
 
   it 'should include the event owner name if the sender is not the event owner' do
@@ -26,6 +26,6 @@ describe GroupPrivateMessenger, '#invitation' do
 
     GroupPrivateMessenger.new(invitation).invite
 
-    FakeYammer.message.should include(invitation.event.owner.name)
+    expect(FakeYammer.message).to include(invitation.event.owner.name)
   end
 end

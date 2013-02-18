@@ -6,11 +6,11 @@ describe EventDecorator, '#build_suggestions' do
 
     event.build_suggestions
 
-    event.suggestions.length.should == 2
+    expect(event.suggestions.length).to eq 2
     event.suggestions.each do |suggestion| 
-      suggestion.should be_a(PrimarySuggestion)
+      expect(suggestion).to be_a(PrimarySuggestion)
       suggestion.secondary_suggestions.each do |secondary|
-        secondary.should be_a(SecondarySuggestion)
+        expect(secondary).to be_a(SecondarySuggestion)
       end
     end
   end
@@ -25,9 +25,9 @@ describe EventDecorator, '#build_suggestions' do
 
     event.build_suggestions
 
-    event.suggestions[0].should == first_suggestion
-    event.suggestions[1].should == second_suggestion
-    event.suggestions[1].secondary_suggestions[0].should == secondary_suggestion
+    expect(event.suggestions[0]).to eq first_suggestion
+    expect(event.suggestions[1]).to eq second_suggestion
+    expect(event.suggestions[1].secondary_suggestions[0]).to eq secondary_suggestion
   end
 end
 
@@ -41,7 +41,7 @@ describe EventDecorator, '#first_invitee_for_invitation' do
 
       string = EventDecorator.new(event).first_invitee_for_invitation
 
-      string.should == ", #{user.name}, "
+      expect(string).to eq ", #{user.name}, "
     end
 
     it 'returns the first invitee if one exists' do
@@ -50,18 +50,18 @@ describe EventDecorator, '#first_invitee_for_invitation' do
 
       string = EventDecorator.new(event).first_invitee_for_invitation
 
-      string.should == ", #{first_invitee.name}, "
+      expect(string).to eq ", #{first_invitee.name}, "
     end
   end
 
   context 'when an event has no invitees' do
     it 'returns a space if no invitees' do
       event = build_stubbed(:event)
-      event.invitees.should be_empty
+      expect(event.invitees).to be_empty
 
       string = EventDecorator.new(event).first_invitee_for_invitation
 
-      string.should == ' '
+      expect(string).to eq ' '
     end
   end
 end
@@ -74,7 +74,7 @@ describe EventDecorator, '#invitation_for' do
 
     invitation_for = event.invitation_for(invitee)
 
-    invitation_for.should == invitation
+    expect(invitation_for).to eq invitation
   end
 end
 
@@ -87,9 +87,9 @@ describe EventDecorator, '#invitees_with_current_user_first' do
 
     sorted_invitees = EventDecorator.new(event).invitees_with_current_user_first
 
-    sorted_invitees.first.should == current_user
-    sorted_invitees.should_not == unsorted_invitees
-    sorted_invitees.select { |user| user == current_user }.length.should == 1
+    expect(sorted_invitees.first).to eq current_user
+    expect(sorted_invitees).to_not eq unsorted_invitees
+    expect(sorted_invitees.select { |user| user == current_user }.length).to eq 1
   end
 
   it 'includes the event creator' do
@@ -98,7 +98,7 @@ describe EventDecorator, '#invitees_with_current_user_first' do
 
     sorted_invitees = EventDecorator.new(event).invitees_with_current_user_first
 
-    sorted_invitees.should include(event_creator)
+    expect(sorted_invitees).to include(event_creator)
   end
 end
 
@@ -109,16 +109,16 @@ describe EventDecorator, '#other_invitees_who_have_not_voted_count' do
     suggestion = event.suggestions.first
     EventDecorator.any_instance.stubs(current_user: event.owner)
     vote = create(
-      :vote, 
-      event: event, 
-      voter: invitees.first, 
+      :vote,
+      event: event,
+      voter: invitees.first,
       suggestion: suggestion
     )
 
     invitees_count = event.other_invitees_who_have_not_voted_count
 
-    invitees_count.should == 1
-    invitees.count.should == 3
+    expect(invitees_count).to eq 1
+    expect(invitees.count).to eq 3
   end
 end
 
@@ -127,14 +127,14 @@ describe EventDecorator, '#user_not_invited?' do
     event = EventDecorator.new(event_with_invitees)
     outside_user = build_stubbed(:user)
 
-    event.user_not_invited?(outside_user).should == true
+    expect(event.user_not_invited?(outside_user)).to eq true
   end
 
   it 'returns false if the user is invited' do
     event = EventDecorator.new(event_with_invitees)
     owner = event.owner
 
-    event.user_not_invited?(owner).should == false
+    expect(event.user_not_invited?(owner)).to eq false
   end
 end
 
@@ -143,14 +143,14 @@ describe EventDecorator, '#user_owner?' do
     event = EventDecorator.new(create(:event))
     owner = event.owner
 
-    event.should be_user_owner(owner)
+    expect(event).to be_user_owner(owner)
   end
 
   it 'returns false if the user is not the owner of the event' do
     event = EventDecorator.new(create(:event))
     another_invitee = event.invitees.find { |i| i != event.owner }
 
-    event.should_not be_user_owner(another_invitee)
+    expect(event).to_not be_user_owner(another_invitee)
   end
 end
 
@@ -160,13 +160,13 @@ describe EventDecorator, '#user_voted?' do
     user = event.owner
     suggestion = create(:suggestion, event: event)
     vote = create(
-      :vote, 
+      :vote,
       event: event,
-      voter: user, 
+      voter: user,
       suggestion: suggestion
     )
 
-    event.user_voted?(user).should be_true
+    expect(event.user_voted?(user)).to be_true
   end
 
   it 'returns false if the user has not voted on the event' do
@@ -174,7 +174,7 @@ describe EventDecorator, '#user_voted?' do
     user = event.owner
     suggestion = create(:suggestion, event: event)
 
-    event.user_voted?(user).should be_false
+    expect(event.user_voted?(user)).to be_false
   end
 end
 
@@ -184,15 +184,15 @@ describe EventDecorator, '#user_votes' do
     user = event.owner
     suggestion = create(:suggestion, event: event)
     vote = create(
-      :vote, 
+      :vote,
       event: event,
-      voter: user, 
+      voter: user,
       suggestion: suggestion
     )
 
     user_votes = event.user_votes(user)
 
-    user_votes.should include(vote)
+    expect(user_votes).to include(vote)
   end
 
   it 'does not return an events votes for a user unless they voted' do
@@ -203,7 +203,7 @@ describe EventDecorator, '#user_votes' do
 
     user_votes = event.user_votes(user)
 
-    user_votes.should_not include(vote)
+    expect(user_votes).to_not include(vote)
   end
 end
 

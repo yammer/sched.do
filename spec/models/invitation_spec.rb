@@ -1,26 +1,26 @@
 require 'spec_helper'
 
 describe Invitation do
-  it { should allow_mass_assignment_of(:event) }
-  it { should allow_mass_assignment_of(:invitee) }
-  it { should allow_mass_assignment_of(:sender) }
+  it { expect(subject).to allow_mass_assignment_of(:event) }
+  it { expect(subject).to allow_mass_assignment_of(:invitee) }
+  it { expect(subject).to allow_mass_assignment_of(:sender) }
 
-  it { should belong_to(:event) }
-  it { should belong_to(:invitee) }
-  it { should belong_to(:sender) }
+  it { expect(subject).to belong_to(:event) }
+  it { expect(subject).to belong_to(:invitee) }
+  it { expect(subject).to belong_to(:sender) }
 
-  it { should accept_nested_attributes_for :invitee }
+  it { expect(subject).to accept_nested_attributes_for :invitee }
 
-  it { should validate_presence_of(:event_id) }
-  it { should validate_presence_of(:invitee_type) }
-  it { should validate_presence_of(:invitee_id).with_message(/is invalid/) }
+  it { expect(subject).to validate_presence_of(:event_id) }
+  it { expect(subject).to validate_presence_of(:invitee_type) }
+  it { expect(subject).to validate_presence_of(:invitee_id).with_message(/is invalid/) }
 
   it 'is valid if the event owner is not invited' do
     user = build_stubbed(:user)
 
     invitation = build_stubbed(:invitation, invitee: user)
 
-    invitation.should be_valid
+    expect(invitation).to be_valid
   end
 
   it 'is invalid if the invitee was already invited' do
@@ -32,7 +32,7 @@ describe Invitation do
       :invitation, event: event, invitee: invitee
     )
 
-    second_invitation.should be_invalid
+    expect(second_invitation).to be_invalid
   end
 end
 
@@ -47,7 +47,7 @@ describe Invitation, '#invite' do
 
       invitation.invite
 
-      InvitationCreatedMessageJob.should have_received(:enqueue)
+      expect(InvitationCreatedMessageJob).to have_received(:enqueue)
     end
   end
 
@@ -58,7 +58,7 @@ describe Invitation, '#invite' do
 
       invitation.invite
 
-      InvitationCreatedMessageJob.should have_received(:enqueue).never
+      expect(InvitationCreatedMessageJob).to have_received(:enqueue).never
     end
   end
 
@@ -71,7 +71,7 @@ describe Invitation, '#invite' do
       invitation = Invitation.new(event: event, invitee: invitee, sender: sender)
       invitation.invite
 
-      ActivityCreatorJob.should have_received(:enqueue).
+      expect(ActivityCreatorJob).to have_received(:enqueue).
         with(sender, 'share', event)
     end
   end
@@ -85,7 +85,7 @@ describe Invitation, '#invite' do
       invitation = Invitation.new(event: event, invitee: invitee, sender: sender)
       invitation.invite
 
-      ActivityCreatorJob.should have_received(:enqueue).never
+      expect(ActivityCreatorJob).to have_received(:enqueue).never
     end
   end
 end
@@ -99,7 +99,7 @@ describe Invitation, '#invite_without_notification' do
 
     invitation.invite_without_notification
 
-    InvitationCreatedMessageJob.should have_received(:enqueue).never
+    expect(InvitationCreatedMessageJob).to have_received(:enqueue).never
   end
 end
 
@@ -113,8 +113,8 @@ describe Invitation, '#deliver_reminder_from' do
 
       invitation.deliver_reminder_from(sender)
 
-      invitee.should have_received(:remind).once
-      invitation.reminded_at.should == Time.now
+      expect(invitee).to have_received(:remind).once
+      expect(invitation.reminded_at).to eq Time.now
     end
   end
 end
@@ -131,12 +131,12 @@ describe Invitation, '.deliver_automatic_reminders' do
     Invitation.deliver_automatic_reminders
 
     invitations.each do |invitation|
-      UserMailer.should have_received(:reminder).with(
+      expect(UserMailer).to have_received(:reminder).with(
         invitation,
         invitation.sender
       )
     end
-    message.should have_received(:deliver).at_least_once
+    expect(message).to have_received(:deliver).at_least_once
   end
 
   it 'does not send an automatic reminder to the event creator' do
@@ -146,7 +146,7 @@ describe Invitation, '.deliver_automatic_reminders' do
 
     Invitation.deliver_automatic_reminders
 
-    message.should have_received(:deliver).never
+    expect(message).to have_received(:deliver).never
   end
 
   it 'does not send an automatic reminder before the invitation is five days old' do
@@ -157,7 +157,7 @@ describe Invitation, '.deliver_automatic_reminders' do
 
       Invitation.deliver_automatic_reminders
 
-      message.should have_received(:deliver).never
+      expect(message).to have_received(:deliver).never
     end
   end
 
@@ -169,7 +169,7 @@ describe Invitation, '.deliver_automatic_reminders' do
 
     Invitation.deliver_automatic_reminders
 
-    message.should have_received(:deliver).never
+    expect(message).to have_received(:deliver).never
   end
 
   it 'does not send an automatic reminder when the invitee has already been reminded' do
@@ -183,7 +183,7 @@ describe Invitation, '.deliver_automatic_reminders' do
 
     Invitation.deliver_automatic_reminders
 
-    message.should have_received(:deliver).never
+    expect(message).to have_received(:deliver).never
   end
 
   it 'does not send automatic reminders to groups' do
@@ -198,7 +198,7 @@ describe Invitation, '.deliver_automatic_reminders' do
 
     Invitation.deliver_automatic_reminders
 
-    message.should have_received(:deliver).never
+    expect(message).to have_received(:deliver).never
   end
 
   it 'sets reminded_at on the invitation'do
@@ -209,7 +209,7 @@ describe Invitation, '.deliver_automatic_reminders' do
 
       Invitation.deliver_automatic_reminders
 
-      invitation.reload.reminded_at.should be_within(1).of(Time.now)
+      expect(invitation.reload.reminded_at).to be_within(1).of(Time.now)
     end
   end
 
@@ -220,7 +220,7 @@ describe Invitation, '.deliver_automatic_reminders' do
 
         invitation.remind!
 
-        invitation.reminded_at.should == Time.now
+        expect(invitation.reminded_at).to eq Time.now
       end
     end
   end

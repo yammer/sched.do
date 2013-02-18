@@ -19,7 +19,7 @@ describe PrivateMessageTemplate, '#body' do
 
     rendered_erb = PrivateMessageTemplate.new('dummy file path', ivar_container.get_binding).body
 
-    rendered_erb.should == ivar_container.test_ivar
+    expect(rendered_erb).to eq ivar_container.test_ivar
   end
 
   it 'reads the file at the path provided' do
@@ -27,6 +27,6 @@ describe PrivateMessageTemplate, '#body' do
 
     PrivateMessageTemplate.new('dummy file path', nil).body
 
-    File.should have_received(:read).with('app/private_messages/dummy file path')
+    expect(File).to have_received(:read).with('app/private_messages/dummy file path')
   end
 end

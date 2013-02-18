@@ -14,7 +14,7 @@ module FormErrorHelpers
   def expect_error_on_field(error_message, field)
     surrounding_li = find("##{field[:id]}_input")
     errors = surrounding_li.find('.inline-errors').text
-    errors.should include error_message
+    expect(errors).to include error_message
   end
 end
 

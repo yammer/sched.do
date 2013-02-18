@@ -4,7 +4,7 @@ describe InvitationsController, 'authentication' do
   it 'requires guest or yammer login for #create' do
     post :create
 
-    should redirect_to new_guest_url
+    expect(page).to redirect_to new_guest_url
   end
 end
 
@@ -20,7 +20,7 @@ describe InvitationsController, '.create' do
           event_id: event.id
         }
 
-      should redirect_to event_url(event.uuid)
+      expect(page).to redirect_to event_url(event.uuid)
     end
 
     it 'displays flash errors if the invitation does not save' do
@@ -34,7 +34,7 @@ describe InvitationsController, '.create' do
           event_id: event.id
         }
 
-      flash[:error].should == expected_errors
+      expect(flash[:error]).to eq expected_errors
     end
 
     it 'creates the appropriate invitation' do
@@ -50,11 +50,11 @@ describe InvitationsController, '.create' do
 
       invitation = Invitation.find_by_invitee_id(invitee)
 
-      invitation.event_id.should == event.id
-      invitation.invitee_id.should == invitee.id
-      invitation.invitee_type.should == invitee.class.name
-      invitation.sender_id.should == event_creator.id
-      invitation.sender_type.should == event_creator.class.name
+      expect(invitation.event_id).to eq event.id
+      expect(invitation.invitee_id).to eq invitee.id
+      expect(invitation.invitee_type).to eq invitee.class.name
+      expect(invitation.sender_id).to eq event_creator.id
+      expect(invitation.sender_type).to eq event_creator.class.name
     end
 
     it 'creates multiple invitations when multiple guests are invited' do
@@ -68,7 +68,7 @@ describe InvitationsController, '.create' do
           event_id: event.id
         }
 
-      Invitation.count.should == 2
+      expect(Invitation.count).to eq 2
     end
 
     it 'creates multiple invitations for the correct users' do
@@ -87,16 +87,16 @@ describe InvitationsController, '.create' do
           event_id: event.id
         }
 
-      Invitation.should have_received(:new).with(
+      expect(Invitation).to have_received(:new).with(
         event: event,
         invitee: invitee,
         sender: event_creator
       ).twice
 
-      invitation.should have_received(:invite).twice
+      expect(invitation).to have_received(:invite).twice
 
       emails.split(', ').each do |email|
-        InviteeBuilder.should have_received(:new).with(email, event)
+        expect(InviteeBuilder).to have_received(:new).with(email, event)
       end
     end
 

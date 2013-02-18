@@ -20,7 +20,7 @@ describe MailHelper, '#get_first_line_of_invitation' do
 
     first_line = get_first_line_of_invitation(invitation)
 
-    first_line.should == " created the #{poll_link} poll and wants input."
+    expect(first_line).to eq " created the #{poll_link} poll and wants input."
   end
 
   it 'returns the event creator and sender name when the sender is not the event owner' do
@@ -40,6 +40,6 @@ describe MailHelper, '#get_first_line_of_invitation' do
 
     first_line = get_first_line_of_invitation(invitation)
 
-    first_line.should == " created the #{poll_link} poll and #{sender_name} wants input."
+    expect(first_line).to eq " created the #{poll_link} poll and #{sender_name} wants input."
     end
 end

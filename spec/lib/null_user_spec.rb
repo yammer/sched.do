@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe NullUser do
-  it { should be_blank }
-  it { should_not be_present }
-  it { should_not be_yammer_user }
+  it { expect(subject).to be_blank }
+  it { expect(subject).to_not be_present }
+  it { expect(subject).to_not be_yammer_user }
 end

@@ -87,34 +87,34 @@ end
 
 step 'I should see :name in the list of invitees' do |name|
   within '#invitees' do
-    page.should have_content name
+    expect(page).to have_content name
   end
 end
 
 step 'I should not see :group_name in the groups list' do |group_name|
-  page.should_not have_content group_name
+  expect(page).to_not have_content group_name
 end
 
 step 'I should not see :name in the list of invitees' do |name|
   within '#invitees' do
-    page.should_not have_content name
+    expect(page).to_not have_content name
   end
 end
 
 step 'I should see :name in the groups list' do |name|
   within '#invitees' do
-    page.should_not have_content name
+    expect(page).to_not have_content name
   end
 
   within '#groups' do
-    page.should have_content name
+    expect(page).to have_content name
   end
 end
 
 step ':first_item should appear before :second_item' do |first_item, second_item|
-  page.body.should =~ /#{first_item}.*#{second_item}/m
+  expect(page.body).to match /#{first_item}.*#{second_item}/m
 end
 
 step ':name should receive a private message' do |name|
-  FakeYammer.messages_endpoint_hits.should == 1
+  expect(FakeYammer.messages_endpoint_hits).to eq 1
 end

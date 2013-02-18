@@ -12,7 +12,7 @@ describe YammerUserInvitationsController, '.create' do
         event_id: event.id
       }
 
-    Invitation.last.invitee == invitee
+    expect(Invitation.last.invitee).to eq invitee
   end
 
   it 'displays flash errors if the invitation does not save' do
@@ -28,7 +28,7 @@ describe YammerUserInvitationsController, '.create' do
         }
     end
 
-    flash[:error].should == 'Invitee has already been invited'
+    expect(flash[:error]).to eq 'Invitee has already been invited'
   end
 
   def create_user_and_sign_in

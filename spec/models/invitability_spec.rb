@@ -18,7 +18,7 @@ describe Invitability, '#get_event_creator_text' do
 
     event_creator_text = invitability.get_event_creator_text
 
-    event_creator_text.should == 'I'
+    expect(event_creator_text).to eq 'I'
   end
 
   it 'return owner name when the sender is not the owner' do
@@ -28,6 +28,6 @@ describe Invitability, '#get_event_creator_text' do
 
     event_creator_text = invitability.get_event_creator_text
 
-    event_creator_text.should == event.owner.name
+    expect(event_creator_text).to eq event.owner.name
   end
 end

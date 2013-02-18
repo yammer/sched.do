@@ -11,8 +11,8 @@ describe RemindersController, '#create' do
 
     post :create, reminder: { receiver_id: '123' }, event_id: event
 
-    Reminder.should have_received(:new)
-    Reminder.any_instance.should have_received(:save)
+    expect(Reminder).to have_received(:new)
+    expect(Reminder.any_instance).to have_received(:save)
   end
 
   it 'sets the Reminder sender to current_user' do
@@ -25,8 +25,8 @@ describe RemindersController, '#create' do
 
     post :create, reminder: { receiver_id: '123' }, event_id: event
 
-    reminder.sender.should == user
-    Reminder.any_instance.should have_received(:save)
+    expect(reminder.sender).to eq user
+    expect(Reminder.any_instance).to have_received(:save)
   end
 
   context 'the Reminder is successfully saved' do
@@ -40,7 +40,7 @@ describe RemindersController, '#create' do
 
       post :create, reminder: { receiver_id: '123' }, event_id: event
 
-      flash[:notice].should match /sent/
+      expect(flash[:notice]).to match /sent/
     end
   end
 
@@ -56,7 +56,7 @@ describe RemindersController, '#create' do
 
       post :create, reminder: { receiver_id: '123' }, event_id: event
 
-      flash[:error].should match /error/
+      expect(flash[:error]).to match /error/
     end
   end
 end

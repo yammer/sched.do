@@ -1,12 +1,12 @@
 step 'I should see a suggestion of :suggestion' do |suggestion|
   within '.grid' do
-    page.should have_content suggestion
+    expect(page).to have_content suggestion
   end
 end
 
 step 'I should see :title in the header' do |title|
   within '.event-name' do
-    page.should have_content title
+    expect(page).to have_content title
   end
 end
 
@@ -17,9 +17,9 @@ end
 
 step 'I should not be able to access it by id' do
   create(:event)
-  lambda {
+  expect {
     visit "/events/#{Event.last.id}"
-  }.should raise_error(ActionController::RoutingError)
+  }.to raise_error(ActionController::RoutingError)
 end
 
 step 'I view the :event_name event' do |event_name|
@@ -28,32 +28,32 @@ step 'I view the :event_name event' do |event_name|
 end
 
 step 'I should not see an edit link' do
-  page.should have_no_css('a', text: 'Edit')
+  expect(page).to have_no_css('a', text: 'Edit')
 end
 
 step 'I should not be able to remind everyone to vote' do
-  page.should have_no_css('a.remind-all')
+  expect(page).to have_no_css('a.remind-all')
 end
 
 step 'I should not be able to remind an individual user to vote' do
-  page.should have_no_css('a.remind')
+  expect(page).to have_no_css('a.remind')
 end
 
 step 'I should be on the :event_name event page' do |event_name|
   event = Event.find_by_name!(event_name)
-  current_url.should == event_url(event)
+  expect(current_url).to eq event_url(event)
 end
 
 step 'I should not be on the :event_name event page' do |event_name|
   event = Event.find_by_name(event_name)
-  current_url.should_not == event_url(event)
+  expect(current_url).to_not eq event_url(event)
 end
 
 step 'I should see an event named :event_name with a suggestion of :suggestion' do |event_name, suggestion|
-  page.should have_css('.event-name', text: event_name)
+  expect(page).to have_css('.event-name', text: event_name)
 
   within '.grid' do
-    page.should have_content suggestion
+    expect(page).to have_content suggestion
   end
 end
 
@@ -61,16 +61,16 @@ step 'I should see an event with the following suggestions in order:' do |table|
   suggestions = table.raw
   within '.grid' do
     all('.description').each_with_index do |element, i|
-      element.should have_content suggestions[i][0]
+      expect(element).to have_content suggestions[i][0]
       if suggestions[i][1]
-        element.should have_content suggestions[i][1]
+        expect(element).to have_content suggestions[i][1]
       end
     end
   end
 end
 
 step 'I should see multiple suggestions' do
-  all("input[data-role='primary-suggestion']").size.should be > 1
+  expect(all("input[data-role='primary-suggestion']").size).to be > 1
 end
 
 step 'I should see an event with the following invitees in order:' do |table|
@@ -80,21 +80,21 @@ step 'I should see an event with the following invitees in order:' do |table|
     name.text.gsub("\n", ' ').strip
   end
 
-  actual_invitee_order.should == expected_invitee_order
+  expect(actual_invitee_order).to eq expected_invitee_order
 end
 
 step 'I should see :user_name within the created by section' do |user_name|
   within '.created-by' do
-    page.should have_content user_name
+    expect(page).to have_content user_name
   end
 end
 
 step ':first_suggestion should appear before :second_suggestion in the list' do |first_suggestion, second_suggestion|
   within(:xpath, "//div[contains(@class, 'options')]//th[1]") do
-    page.should have_content(first_suggestion)
+    expect(page).to have_content(first_suggestion)
   end
 
   within(:xpath,  "//div[contains(@class, 'options')]//th[2]") do 
-    page.should have_content(second_suggestion)
+    expect(page).to have_content(second_suggestion)
   end
 end

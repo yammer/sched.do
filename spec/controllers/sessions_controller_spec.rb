@@ -8,7 +8,7 @@ describe SessionsController, '#create' do
 
     post :create
 
-    should_not deny_access
+    expect(page).to_not deny_access
   end
 
   it 'does not create a new user if one exists' do
@@ -18,7 +18,7 @@ describe SessionsController, '#create' do
     post :destroy
     post :create
 
-    User.count.should == 1
+    expect(User.count).to eq 1
   end
 
   it 'signs out a guest when a Yammer user signs in' do
@@ -28,17 +28,17 @@ describe SessionsController, '#create' do
 
     post :create
 
-    session[:name].should be_nil
-    session[:email].should be_nil
+    expect(session[:name]).to be_nil
+    expect(session[:email]).to be_nil
   end
 
   it 'drops a yammer_user_id cookie' do
-    cookies.signed[:yammer_user_id].should be_nil
+    expect(cookies.signed[:yammer_user_id]).to be_nil
     stub_omniauth_env
 
     post :create
 
-    cookies.signed[:yammer_user_id].should be_present
+    expect(cookies.signed[:yammer_user_id]).to be_present
   end
 
   it 'redirects to the new_event_path if return_to is blank' do
@@ -47,7 +47,7 @@ describe SessionsController, '#create' do
 
     post :create
 
-    should redirect_to new_event_path
+    expect(page).to redirect_to new_event_path
   end
 
   it 'deletes return_to if not blank' do
@@ -56,7 +56,7 @@ describe SessionsController, '#create' do
 
     post :create
 
-    session[:return_to].should be_nil
+    expect(session[:return_to]).to be_nil
   end
 end
 
@@ -71,8 +71,8 @@ describe SessionsController, '#destroy' do
 
     delete :destroy
 
-    session[:name].should be_nil
-    session[:email].should be_nil
+    expect(session[:name]).to be_nil
+    expect(session[:email]).to be_nil
   end
 
   it 'deletes the yammer_user_id cookie' do
@@ -80,7 +80,7 @@ describe SessionsController, '#destroy' do
 
     delete :destroy
 
-    cookies.signed[:yammer_user_id].should be_nil
+    expect(cookies.signed[:yammer_user_id]).to be_nil
   end
 
   it 'redirects to the root path' do
@@ -89,6 +89,6 @@ describe SessionsController, '#destroy' do
 
     delete :destroy
 
-    should redirect_to root_path
+    expect(page).to redirect_to root_path
   end
 end

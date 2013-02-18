@@ -9,8 +9,8 @@ describe InviteeBuilder, '#find_user_by_email_or_create_guest' do
     InviteeBuilder.new(user.email, invitation.event).
       find_user_by_email_or_create_guest
 
-    User.should have_received(:find_by_email).with(user.email)
-    Guest.should have_received(:find_by_email).with(user.email).never
+    expect(User).to have_received(:find_by_email).with(user.email)
+    expect(Guest).to have_received(:find_by_email).with(user.email).never
   end
 
   it 'searches for a Guest by email if no User exists' do
@@ -21,7 +21,7 @@ describe InviteeBuilder, '#find_user_by_email_or_create_guest' do
     InviteeBuilder.new(guest.email, invitation.event).
       find_user_by_email_or_create_guest
 
-    Guest.should have_received(:find_by_email).with(guest.email)
+    expect(Guest).to have_received(:find_by_email).with(guest.email)
   end
 
   context 'if no User or Guest is found' do
@@ -35,7 +35,7 @@ describe InviteeBuilder, '#find_user_by_email_or_create_guest' do
       InviteeBuilder.new(invitee_email, invitation.event).
         find_user_by_email_or_create_guest
 
-      yam_client_stub.should have_received(:get)
+      expect(yam_client_stub).to have_received(:get)
     end
 
     it 'creates a User if it finds an existing Yammer user' do
@@ -51,7 +51,7 @@ describe InviteeBuilder, '#find_user_by_email_or_create_guest' do
       InviteeBuilder.new(invitee_email, invitation.event).
         find_user_by_email_or_create_guest
 
-      YammerUser.should have_received(:new).with(
+      expect(YammerUser).to have_received(:new).with(
         access_token: access_token,
         yammer_staging: yammer_staging,
         yammer_user_id: invitee_user_id
@@ -69,7 +69,7 @@ describe InviteeBuilder, '#find_user_by_email_or_create_guest' do
 
       InviteeBuilder.new(email, event).find_user_by_email_or_create_guest
 
-      Guest.should have_received(:create).with(params)
+      expect(Guest).to have_received(:create).with(params)
     end
   end
 end

@@ -1,5 +1,5 @@
 step 'no sched.do user exists with email :email' do |email|
-  User.find_by_email(email).should be_nil
+  expect(User.find_by_email(email)).to be_nil
 end
 
 step 'a Yammer user exists named :name with email :email' do |name, email|
@@ -7,7 +7,7 @@ step 'a Yammer user exists named :name with email :email' do |name, email|
   FakeYammer.yammer_user_name = name
   FakeYammer.yammer_email = email
   users = yammer.get('/users/by_email', email: email)
-  users[0]['id'].should be_present
+  expect(users[0]['id']).to be_present
 end
 
 step 'no Yammer user exists with email :email' do |email|
@@ -15,7 +15,7 @@ step 'no Yammer user exists with email :email' do |email|
   FakeYammer.yammer_user_name = 'Wrong Name'
   FakeYammer.yammer_email = email + '.fake'
   users = yammer.get('/users/by_email', email: email)
-  users.first.should_not be_present
+  expect(users.first).to_not be_present
 end
 
 step ':email signs up for Yammer as :name' do |email, name|
@@ -23,5 +23,5 @@ step ':email signs up for Yammer as :name' do |email, name|
   FakeYammer.yammer_user_name = name
   FakeYammer.yammer_email = email
   users = yammer.get('/users/by_email', email: email)
-  users[0]['id'].should be_present
+  expect(users[0]['id']).to be_present
 end

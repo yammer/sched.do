@@ -9,7 +9,7 @@ describe EventCreatedEmailJob, '.enqueue' do
 
     EventCreatedEmailJob.enqueue(event)
 
-    Delayed::Job.should have_received(:enqueue).
+    expect(Delayed::Job).to have_received(:enqueue).
       with(event_created_email_job, priority: priority)
   end
 end
@@ -23,7 +23,7 @@ describe EventCreatedEmailJob, '.error' do
     job = EventCreatedEmailJob.new(event.id)
     job.error(job, exception)
 
-    Airbrake.should have_received(:notify).with(exception)
+    expect(Airbrake).to have_received(:notify).with(exception)
   end
 end
 
@@ -36,6 +36,6 @@ describe EventCreatedEmailJob, '#perform' do
 
     EventCreatedEmailJob.new(event.id).perform
 
-    UserMailer.should have_received(:event_created_confirmation).with(event)
+    expect(UserMailer).to have_received(:event_created_confirmation).with(event)
   end
 end

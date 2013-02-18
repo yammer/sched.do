@@ -8,7 +8,7 @@ describe MultipleInvitationsController, '#new' do
 
     get :index, event_uuid: users_event.uuid
 
-    response.should be_success
-    assigns(:event).owner.should == user
+    expect(response).to be_success
+    expect(assigns(:event).owner).to eq user
   end
 end

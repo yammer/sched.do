@@ -11,7 +11,7 @@ step 'I blur the title field' do
 end
 
 step 'I should see that the event was not successfully updated' do
-  find('#flash-failure').should have_content 'Please check the errors and try again.'
+  expect(find('#flash-failure')).to have_content 'Please check the errors and try again.'
 end
 
 step 'I update the message with the text :message_text' do |message_text|

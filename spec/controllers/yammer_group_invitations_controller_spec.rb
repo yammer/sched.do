@@ -16,7 +16,7 @@ describe YammerGroupInvitationsController, '.create' do
           event_id: event.id
         }
 
-      Invitation.last.invitee.should == group
+      expect(Invitation.last.invitee).to eq group
     end
 
     it 'displays flash errors if there is an issue creating an event' do
@@ -35,7 +35,7 @@ describe YammerGroupInvitationsController, '.create' do
           }
       end
 
-      flash[:error].should == 'Invitee has already been invited'
+      expect(flash[:error]).to eq 'Invitee has already been invited'
     end
 
     def create_user_and_sign_in

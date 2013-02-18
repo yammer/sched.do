@@ -1,16 +1,16 @@
 require 'spec_helper'
 
 describe Vote do
-  it { should belong_to(:suggestion) }
-  it { should validate_presence_of(:suggestion_id) }
-  it { should belong_to(:voter) }
-  it { should validate_presence_of(:voter_id) }
-  it { should validate_presence_of(:voter_type) }
+  it { expect(subject).to belong_to(:suggestion) }
+  it { expect(subject).to validate_presence_of(:suggestion_id) }
+  it { expect(subject).to belong_to(:voter) }
+  it { expect(subject).to validate_presence_of(:voter_id) }
+  it { expect(subject).to validate_presence_of(:voter_type) }
 
   it 'is valid if the user has not already voted for the suggestion' do
     vote = build(:vote)
 
-    vote.should be_valid
+    expect(vote).to be_valid
   end
 
   it 'is not valid if the user has already voted for the suggestion' do
@@ -21,7 +21,7 @@ describe Vote do
         voter: vote.voter
     )
 
-    duplicated_vote.should be_invalid
+    expect(duplicated_vote).to be_invalid
   end
 end
 
@@ -34,17 +34,17 @@ describe Vote, '#no_votes_witin_delay_window?' do
     event = first_vote.event
     second_suggestion = create(:suggestion, event: event)
     second_vote = create(
-      :vote, 
+      :vote,
       event: event,
-      voter: voter, 
+      voter: voter,
       suggestion: second_suggestion
     )
 
     first_vote_check = first_vote.has_no_other_votes_within_delay_window?
     second_vote_check = second_vote.has_no_other_votes_within_delay_window?
 
-    first_vote_check.should be_false
-    second_vote_check.should be_true
+    expect(first_vote_check).to be_false
+    expect(second_vote_check).to be_true
   end
 
   it 'is true if two emails are sent outside the delay window' do
@@ -59,8 +59,8 @@ describe Vote, '#no_votes_witin_delay_window?' do
     first_vote_check = first_vote.has_no_other_votes_within_delay_window?
     second_vote_check = second_vote.has_no_other_votes_within_delay_window?
 
-    first_vote_check.should be_true
-    second_vote_check.should be_true
+    expect(first_vote_check).to be_true
+    expect(second_vote_check).to be_true
   end
 end
 
@@ -70,7 +70,7 @@ describe Vote, '#create' do
 
     vote = create(:vote)
 
-    VoteCreatedJob.should have_received(:enqueue).with(vote)
+    expect(VoteCreatedJob).to have_received(:enqueue).with(vote)
   end
 
   it 'caches the vote id on the invitation' do
@@ -86,6 +86,6 @@ describe Vote, '#create' do
 
     vote.save!
 
-    invitation.reload.vote.should == vote
+    expect(invitation.reload.vote).to eq vote
   end
 end

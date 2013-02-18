@@ -10,7 +10,7 @@ describe VoteCreatedJob, '.enqueue' do
 
     VoteCreatedJob.enqueue(vote)
 
-    Delayed::Job.should have_received(:enqueue).
+    expect(Delayed::Job).to have_received(:enqueue).
       with(vote_created_job, priority: priority)
   end
 end
@@ -27,7 +27,7 @@ describe VoteCreatedJob, '#perform' do
 
       VoteCreatedJob.new(vote.id).perform
 
-      ActivityCreatorJob.should have_received(:enqueue).
+      expect(ActivityCreatorJob).to have_received(:enqueue).
         with(user, action, event)
     end
 
@@ -41,7 +41,7 @@ describe VoteCreatedJob, '#perform' do
 
       VoteCreatedJob.new(vote.id).perform
 
-      ActivityCreatorJob.should have_received(:enqueue).
+      expect(ActivityCreatorJob).to have_received(:enqueue).
         with(user, action, event).never
     end
 
@@ -52,7 +52,7 @@ describe VoteCreatedJob, '#perform' do
 
       VoteCreatedJob.new(vote.id).perform
 
-      VoteEmailJob.should have_received(:enqueue).with(vote, :vote_confirmation)
+      expect(VoteEmailJob).to have_received(:enqueue).with(vote, :vote_confirmation)
     end
 
     it 'enqueues a VoteEmailJob that sends the vote notification email' do
@@ -62,7 +62,7 @@ describe VoteCreatedJob, '#perform' do
 
       VoteCreatedJob.new(vote.id).perform
 
-      VoteEmailJob.should have_received(:enqueue).with(vote, :vote_notification)
+      expect(VoteEmailJob).to have_received(:enqueue).with(vote, :vote_notification)
     end
 
     it 'configures Yammer' do
@@ -72,7 +72,7 @@ describe VoteCreatedJob, '#perform' do
 
       VoteCreatedJob.new.perform
 
-      voter.yammer_client.oauth_token.should == voter.access_token
+      expect(voter.yammer_client.oauth_token).to eq voter.access_token
     end
   end
 
@@ -83,7 +83,7 @@ describe VoteCreatedJob, '#perform' do
 
       VoteCreatedJob.new(vote_id).perform
 
-      ActivityCreatorJob.should have_received(:enqueue).never
+      expect(ActivityCreatorJob).to have_received(:enqueue).never
     end
 
     it 'does not enqueue a vote email job' do
@@ -92,7 +92,7 @@ describe VoteCreatedJob, '#perform' do
 
       VoteCreatedJob.new(vote_id).perform
 
-      VoteEmailJob.should have_received(:enqueue).never
+      expect(VoteEmailJob).to have_received(:enqueue).never
     end
   end
 end
@@ -106,6 +106,6 @@ describe VoteCreatedJob, '.error' do
     job = VoteCreatedJob.new(vote.id)
     job.error(job, exception)
 
-    Airbrake.should have_received(:notify).with(exception)
+    expect(Airbrake).to have_received(:notify).with(exception)
   end
 end

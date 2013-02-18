@@ -20,8 +20,8 @@ describe Remindability, '#remind' do
 
     remindability.remind
 
-    remindability.message_body.should include('Reminder')
-    remindability.message_body.should_not include(event.owner.name)
+    expect(remindability.message_body).to include('Reminder')
+    expect(remindability.message_body).to_not include(event.owner.name)
   end
 
   it 'calls deliver' do
@@ -32,7 +32,7 @@ describe Remindability, '#remind' do
 
     remindability.remind
 
-    remindability.should have_received(:deliver)
+    expect(remindability).to have_received(:deliver)
   end
 
   it 'calls event_url' do
@@ -43,7 +43,7 @@ describe Remindability, '#remind' do
 
     remindability.remind
 
-    remindability.should have_received(:event_url)
+    expect(remindability).to have_received(:event_url)
   end
 
   it 'calls root_url' do
@@ -54,7 +54,7 @@ describe Remindability, '#remind' do
 
     remindability.remind
 
-    remindability.should have_received(:root_url)
+    expect(remindability).to have_received(:root_url)
   end
 
   def build_remindability(sender, recipient, event)
@@ -75,7 +75,7 @@ describe Remindability, '#get_help_out_text' do
 
       help_out_text = remindability.get_help_out_text
 
-      help_out_text.should == "out #{event.owner.name}"
+      expect(help_out_text).to eq "out #{event.owner.name}"
     end
   end
 
@@ -87,7 +87,7 @@ describe Remindability, '#get_help_out_text' do
 
       help_out_text =  remindability.get_help_out_text
 
-      help_out_text.should == 'me out'
+      expect(help_out_text).to eq 'me out'
     end
   end
 end

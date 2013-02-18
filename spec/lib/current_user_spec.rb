@@ -9,8 +9,8 @@ describe CurrentUser, '.find' do
 
     result = CurrentUser.find(yammer_user_id, name, email)
 
-    result.class.should == User
-    result.should == user
+    expect(result.class).to eq User
+    expect(result).to eq user
   end
 
   it 'returns a Guest if a User cannot be found' do
@@ -20,14 +20,14 @@ describe CurrentUser, '.find' do
 
     result = CurrentUser.find(yammer_user_id, name, email)
 
-    result.class.should == Guest
-    result.name.should == name
-    result.email.should == email
+    expect(result.class).to eq Guest
+    expect(result.name).to eq name
+    expect(result.email).to eq email
   end
 
   it 'returns a null user if a Guest or User cannot be found' do
     result = CurrentUser.find('invalid', nil, nil)
 
-    result.class.should == NullUser
+    expect(result.class).to eq NullUser
   end
 end

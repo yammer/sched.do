@@ -11,7 +11,7 @@ describe InvitationCreatedMessageJob, '.enqueue' do
 
     InvitationCreatedMessageJob.enqueue(invitation)
 
-    Delayed::Job.should have_received(:enqueue).
+    expect(Delayed::Job).to have_received(:enqueue).
       with(invitation_created_message_job, priority: priority)
   end
 end
@@ -25,7 +25,7 @@ describe InvitationCreatedMessageJob, '#perform' do
 
     InvitationCreatedMessageJob.new(invitation.id).perform
 
-    invitee.should have_received(:invite).with(invitation)
+    expect(invitee).to have_received(:invite).with(invitation)
   end
 end
 
@@ -38,6 +38,6 @@ describe InvitationCreatedMessageJob, '.error' do
     job = InvitationCreatedMessageJob.new(invitation.id)
     job.error(job, exception)
 
-    Airbrake.should have_received(:notify).with(exception)
+    expect(Airbrake).to have_received(:notify).with(exception)
   end
 end

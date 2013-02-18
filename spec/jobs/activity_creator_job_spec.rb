@@ -11,7 +11,7 @@ describe ActivityCreatorJob, '.enqueue' do
 
     ActivityCreatorJob.enqueue(user, action, event)
 
-    Delayed::Job.should have_received(:enqueue).
+    expect(Delayed::Job).to have_received(:enqueue).
       with(activity_creator_job, priority: priority)
   end
 end
@@ -30,7 +30,7 @@ describe ActivityCreatorJob, '#perform' do
 
     ActivityCreatorJob.new(user, action, event).perform
 
-    yam_session_stub.should have_received(:post).
+    expect(yam_session_stub).to have_received(:post).
       with('/activity', expected_json(event))
   end
 
@@ -81,6 +81,6 @@ describe ActivityCreatorJob, '.error' do
     job = ActivityCreatorJob.new(user, action, event)
     job.error(job, exception)
 
-    Airbrake.should have_received(:notify).with(exception)
+    expect(Airbrake).to have_received(:notify).with(exception)
   end
 end

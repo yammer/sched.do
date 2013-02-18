@@ -10,7 +10,7 @@ describe ReminderCreatedJob, '.enqueue' do
 
     ReminderCreatedJob.enqueue(reminder)
 
-    Delayed::Job.should have_received(:enqueue).
+    expect(Delayed::Job).to have_received(:enqueue).
       with(reminder_created_job, priority: priority)
   end
 end
@@ -24,7 +24,7 @@ describe ReminderCreatedJob, '.error' do
     job = ReminderCreatedJob.new(reminder.id)
     job.error(job, exception)
 
-    Airbrake.should have_received(:notify).with(exception)
+    expect(Airbrake).to have_received(:notify).with(exception)
   end
 end
 
@@ -36,6 +36,6 @@ describe ReminderCreatedJob, '#perform' do
 
     ReminderCreatedJob.new(reminder.id).perform
 
-    reminder.should have_received(:deliver).once
+    expect(reminder).to have_received(:deliver).once
   end
 end

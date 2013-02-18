@@ -1,21 +1,21 @@
 require 'spec_helper'
 
 describe Guest, 'validations' do
-  it { should have_many(:invitations) }
-  it { should have_many(:votes) }
+  it { expect(subject).to have_many(:invitations) }
+  it { expect(subject).to have_many(:votes) }
 
-  it { should validate_presence_of(:email) }
-  it { should validate_uniqueness_of(:email) }
+  it { expect(subject).to validate_presence_of(:email) }
+  it { expect(subject).to validate_uniqueness_of(:email) }
 
   it 'requires a valid e-mail address' do
-    should allow_value('person@example.com').for(:email)
-    should allow_value('person-awesome@example.com').for(:email)
-    should allow_value('person-awesome@example.co.ul.com').for(:email)
-    should allow_value(' person@example.com').for(:email)
-    should allow_value('person@example.com  ').for(:email)
-    should_not allow_value('person@@example.com').for(:email)
-    should_not allow_value('person').for(:email)
-    should_not allow_value('person @person.com').for(:email)
+    expect(subject).to allow_value('person@example.com').for(:email)
+    expect(subject).to allow_value('person-awesome@example.com').for(:email)
+    expect(subject).to allow_value('person-awesome@example.co.ul.com').for(:email)
+    expect(subject).to allow_value(' person@example.com').for(:email)
+    expect(subject).to allow_value('person@example.com  ').for(:email)
+    expect(subject).to_not allow_value('person@@example.com').for(:email)
+    expect(subject).to_not allow_value('person').for(:email)
+    expect(subject).to_not allow_value('person @person.com').for(:email)
   end
 
   context 'validates :name if has_ever_logged_in == true' do
@@ -27,7 +27,7 @@ describe Guest, 'validations' do
         has_ever_logged_in: true
       )
 
-      guest.should_not be_valid
+      expect(guest).to_not be_valid
     end
 
     it 'is valid without a name if has_ever_logged_in == false' do
@@ -38,7 +38,7 @@ describe Guest, 'validations' do
         has_ever_logged_in: false
       )
 
-      guest.should be_valid
+      expect(guest).to be_valid
     end
   end
 end
@@ -47,13 +47,13 @@ describe Guest, '#normalize_email' do
   it 'trims white space from email' do
     guest = create(:guest, email: ' test@email.com ')
 
-    guest.email.should == 'test@email.com'
+    expect(guest.email).to eq 'test@email.com'
   end
 
   it 'downcases email' do
     guest = create(:guest, email: 'Test@email.com')
 
-    guest.email.should == 'test@email.com'
+    expect(guest.email).to eq 'test@email.com'
   end
 end
 
@@ -64,8 +64,8 @@ describe Guest, '.find_or_initialize_by_email' do
 
     initialized_guest = Guest.find_or_initialize_by_email(params)
 
-    initialized_guest.email.should == guest.email
-    initialized_guest.name.should == guest.name
+    expect(initialized_guest.email).to eq guest.email
+    expect(initialized_guest.name).to eq guest.name
   end
 
   it 'does not create duplicate guests with the same email' do
@@ -74,9 +74,9 @@ describe Guest, '.find_or_initialize_by_email' do
 
     duplicate_guest = Guest.find_or_initialize_by_email(params)
 
-    lambda {
+    expect {
       duplicate_guest.save
-    }.should change(Guest, :count).by(0)
+    }.to change(Guest, :count).by(0)
   end
 
   it 'allows guests with the same name and different emails' do
@@ -85,9 +85,9 @@ describe Guest, '.find_or_initialize_by_email' do
 
     guest_with_same_name = Guest.find_or_initialize_by_email(params)
 
-    lambda {
+    expect {
       guest_with_same_name.save
-    }.should change(Guest, :count).by(1)
+    }.to change(Guest, :count).by(1)
   end
 end
 
@@ -95,7 +95,7 @@ describe Guest, '#image' do
   it 'returns the placeholder image' do
     guest = build_stubbed(:guest)
 
-    guest.image.should == 'http://' + ENV['HOSTNAME'] + '/assets/no_photo.png'
+    expect(guest.image).to eq 'http://' + ENV['HOSTNAME'] + '/assets/no_photo.png'
   end
 end
 
@@ -104,14 +104,14 @@ describe Guest, '#vote_for_suggestion' do
     user = create(:user)
     vote = create(:vote, voter: user)
 
-    user.vote_for_suggestion(vote.suggestion).should == vote
+    expect(user.vote_for_suggestion(vote.suggestion)).to eq vote
   end
 
   it 'returns nil if the user has not voted on the suggestion' do
     user = create(:user)
     suggestion = create(:suggestion)
 
-    user.vote_for_suggestion(suggestion).should be_nil
+    expect(user.vote_for_suggestion(suggestion)).to be_nil
   end
 end
 
@@ -120,14 +120,14 @@ describe Guest, '#voted_for_suggestion?' do
     user = create(:user)
     vote = create(:vote, voter: user)
 
-    user.voted_for_suggestion?(vote.suggestion).should be_true
+    expect(user.voted_for_suggestion?(vote.suggestion)).to be_true
   end
 
   it 'returns false if the user did not vote for the suggestion' do
     user = create(:user)
     suggestion = create(:suggestion)
 
-    user.voted_for_suggestion?(suggestion).should be_false
+    expect(user.voted_for_suggestion?(suggestion)).to be_false
   end
 end
 
@@ -136,39 +136,39 @@ describe User, '#voted_for_event?' do
     guest = create(:guest)
     vote = create(:vote, voter: guest)
 
-    guest.voted_for_event?(vote.event).should be_true
+    expect(guest.voted_for_event?(vote.event)).to be_true
   end
 
   it 'returns false if the guest did not vote for the event' do
     guest = create(:guest)
     event = create(:event)
 
-    guest.voted_for_event?(event).should be_false
+    expect(guest.voted_for_event?(event)).to be_false
   end
 end
 
 describe Guest, '#yammer_user?' do
   it 'always returns false' do
-    build(:guest).should_not be_yammer_user
+    expect(build(:guest)).to_not be_yammer_user
   end
 end
 
 describe Guest, '#yammer_user_id' do
   it 'always returns nil' do
-    build(:guest).yammer_user_id.should be_nil
+    expect(build(:guest).yammer_user_id).to be_nil
   end
 end
 
 describe Guest, '#yammer_group_id' do
   it 'always returns nil' do
-    build(:guest).yammer_group_id.should be_nil
+    expect(build(:guest).yammer_group_id).to be_nil
   end
 end
 
 describe Guest, '#able_to_edit?' do
   it 'always returns false' do
     event = build(:event)
-    build(:guest).should_not be_able_to_edit(event)
+    expect(build(:guest)).to_not be_able_to_edit(event)
   end
 end
 
@@ -176,11 +176,11 @@ describe Guest, '#votes' do
   it "returns the guest's votes if there are any" do
     guest = create(:guest)
     vote = create(:vote, voter: guest)
-    guest.votes.should == [vote]
+    expect(guest.votes).to eq [vote]
   end
 
   it 'returns an empty array if the guest has no votes' do
     guest = build(:guest)
-    guest.votes.should == []
+    expect(guest.votes).to eq []
   end
 end

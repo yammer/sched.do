@@ -4,7 +4,7 @@ module VotingHelpers
       find_by_description!(description)
 
     within '.grid' do
-      find(".vote-count[data-id='#{suggestion.id}']").text.strip.should == count.to_s
+      expect(find(".vote-count[data-id='#{suggestion.id}']").text.strip).to eq count.to_s
     end
   end
 

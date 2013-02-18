@@ -12,18 +12,18 @@ describe UserPrivateMessenger, '#invitation' do
 
     UserPrivateMessenger.new(invitation).invite
 
-    FakeYammer.messages_endpoint_hits.should == 1
-    FakeYammer.message.should include('vote')
-    FakeYammer.message.should include(event.name)
-    FakeYammer.message.should include(URL_HELPERS.event_url(event))
-    FakeYammer.message.should_not include(event_owner.name)
+    expect(FakeYammer.messages_endpoint_hits).to eq 1
+    expect(FakeYammer.message).to include('vote')
+    expect(FakeYammer.message).to include(event.name)
+    expect(FakeYammer.message).to include(URL_HELPERS.event_url(event))
+    expect(FakeYammer.message).to_not include(event_owner.name)
   end
 
-  it 'should include the event owner name if the sender is not the event owner' do
+  it 'includes the event owner name if the sender is not the event owner' do
     invitation = build_stubbed(:invitation)
 
     UserPrivateMessenger.new(invitation).invite
 
-    FakeYammer.message.should include(invitation.event.owner.name)
+    expect(FakeYammer.message).to include(invitation.event.owner.name)
   end
 end

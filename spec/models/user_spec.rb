@@ -1,31 +1,31 @@
 require 'spec_helper'
 
 describe User, 'accessors' do
-  it { should allow_mass_assignment_of(:access_token) }
-  it { should allow_mass_assignment_of(:encrypted_access_token) }
-  it { should allow_mass_assignment_of(:name) }
-  it { should allow_mass_assignment_of(:yammer_user_id) }
-  it { should allow_mass_assignment_of(:yammer_staging) }
-  it { should allow_mass_assignment_of(:watermarked_image) }
+  it { expect(subject).to allow_mass_assignment_of(:access_token) }
+  it { expect(subject).to allow_mass_assignment_of(:encrypted_access_token) }
+  it { expect(subject).to allow_mass_assignment_of(:name) }
+  it { expect(subject).to allow_mass_assignment_of(:yammer_user_id) }
+  it { expect(subject).to allow_mass_assignment_of(:yammer_staging) }
+  it { expect(subject).to allow_mass_assignment_of(:watermarked_image) }
 end
 
 describe User, 'validations' do
-  it { should have_many(:events) }
-  it { should have_many(:invitations) }
+  it { expect(subject).to have_many(:events) }
+  it { expect(subject).to have_many(:invitations) }
 
-  it { should validate_presence_of(:name) }
-  it { should validate_presence_of(:yammer_user_id) }
-  it { should validate_presence_of(:encrypted_access_token) }
+  it { expect(subject).to validate_presence_of(:name) }
+  it { expect(subject).to validate_presence_of(:yammer_user_id) }
+  it { expect(subject).to validate_presence_of(:encrypted_access_token) }
 
   it 'requires a valid e-mail address' do
-    should allow_value('person@example.com').for(:email)
-    should allow_value('person-awesome@example.com').for(:email)
-    should allow_value('person-awesome@example.co.ul.com').for(:email)
-    should allow_value(' person@example.com').for(:email)
-    should allow_value('person@example.com  ').for(:email)
-    should_not allow_value('person@@example.com').for(:email)
-    should_not allow_value('person').for(:email)
-    should_not allow_value('person @person.com').for(:email)
+    expect(subject).to allow_value('person@example.com').for(:email)
+    expect(subject).to allow_value('person-awesome@example.com').for(:email)
+    expect(subject).to allow_value('person-awesome@example.co.ul.com').for(:email)
+    expect(subject).to allow_value(' person@example.com').for(:email)
+    expect(subject).to allow_value('person@example.com  ').for(:email)
+    expect(subject).to_not allow_value('person@@example.com').for(:email)
+    expect(subject).to_not allow_value('person').for(:email)
+    expect(subject).to_not allow_value('person @person.com').for(:email)
   end
 
   context 'encrypted_access_token' do
@@ -38,13 +38,13 @@ describe User, 'validations' do
       user = build(:user, access_token: access_token)
 
       user.save
-      user.encrypted_access_token.should == expected_encrypted_access_token
+      expect(user.encrypted_access_token).to eq expected_encrypted_access_token
     end
   end
 end
 
 describe User, 'has_attached_file' do
-  it { should have_attached_file(:watermarked_image) }
+  it { expect(subject).to have_attached_file(:watermarked_image) }
 end
 
 describe User, '#associate_guest_invitations' do
@@ -56,7 +56,7 @@ describe User, '#associate_guest_invitations' do
 
     user.associate_guest_invitations
 
-    user.invitations.map(&:id).should == guest_invitation_ids
+    expect(user.invitations.map(&:id)).to eq guest_invitation_ids
   end
 
   it 'deletes the guest which we found' do
@@ -67,7 +67,7 @@ describe User, '#associate_guest_invitations' do
     user.associate_guest_invitations
 
     guest_check = Guest.find_by_email(guest.email)
-    guest_check.should be_nil
+    expect(guest_check).to be_nil
   end
 end
 
@@ -76,14 +76,14 @@ describe User, '#in_network?' do
     user = build_stubbed(:user, yammer_network_id: 1)
     in_network_user = build_stubbed(:user, yammer_network_id: 1)
 
-    user.should be_in_network(in_network_user)
+    expect(user).to be_in_network(in_network_user)
   end
 
   it 'returns false if user is out network' do
     user = build_stubbed(:user, yammer_network_id: 1)
     in_network_user = build_stubbed(:user, yammer_network_id: 2)
 
-    user.should_not be_in_network(in_network_user)
+    expect(user).to_not be_in_network(in_network_user)
   end
 end
 
@@ -91,12 +91,12 @@ describe User, '#able_to_edit?' do
   it 'returns true if the user created the event' do
     event = create(:event)
     user = event.owner
-    event.owner.should be_able_to_edit(event)
+    expect(event.owner).to be_able_to_edit(event)
   end
 
   it 'returns false if the user did not create the event' do
     event = create(:event)
-    build(:user).should_not be_able_to_edit(event)
+    expect(build(:user)).to_not be_able_to_edit(event)
   end
 end
 
@@ -104,12 +104,12 @@ describe User, '#image' do
   it 'returns the placeholder if there is no image' do
     user = build_stubbed(:user, image: nil)
 
-    user.image.should == 'http://' + ENV['HOSTNAME'] + '/assets/no_photo.png'
+    expect(user.image).to eq 'http://' + ENV['HOSTNAME'] + '/assets/no_photo.png'
   end
 
   it 'returns the absolute image url if one exists' do
     user = create(:user)
-    user.image.should include('https://mug0.assets-yammer.com/')
+    expect(user.image).to include('https://mug0.assets-yammer.com/')
   end
 end
 
@@ -117,12 +117,12 @@ describe User, '#votes' do
   it 'returns the users votes if there are any' do
     user = create(:user)
     vote = create(:vote, voter: user)
-    user.votes.should == [vote]
+    expect(user.votes).to eq [vote]
   end
 
   it 'returns an empty array if the user has no votes' do
     user = build(:user)
-    user.votes.should == []
+    expect(user.votes).to eq []
   end
 end
 
@@ -130,13 +130,13 @@ describe User, '#vote_for_suggestion' do
   it 'returns the users vote for the given suggestion if the user has one' do
     user = create(:user)
     vote = create(:vote, voter: user)
-    user.vote_for_suggestion(vote.suggestion).should == vote
+    expect(user.vote_for_suggestion(vote.suggestion)).to eq vote
   end
 
   it 'returns nil if the user has not voted on the suggestion' do
     user = create(:user)
     suggestion = create(:suggestion)
-    user.vote_for_suggestion(suggestion).should be_nil
+    expect(user.vote_for_suggestion(suggestion)).to be_nil
   end
 end
 
@@ -144,13 +144,13 @@ describe User, '#voted_for_suggestion?' do
   it 'returns true if the user voted for the suggestion' do
     user = create(:user)
     vote = create(:vote, voter: user)
-    user.voted_for_suggestion?(vote.suggestion).should be_true
+    expect(user.voted_for_suggestion?(vote.suggestion)).to be_true
   end
 
   it 'returns false if the user did not vote for the suggestion' do
     user = create(:user)
     suggestion = create(:suggestion)
-    user.voted_for_suggestion?(suggestion).should be_false
+    expect(user.voted_for_suggestion?(suggestion)).to be_false
   end
 end
 
@@ -158,14 +158,14 @@ describe User, '#voted_for_event?' do
   it 'returns true if the user voted for the event' do
     user = create(:user)
     vote = create(:vote, voter: user)
-    user.voted_for_event?(vote.event).should be_true
+    expect(user.voted_for_event?(vote.event)).to be_true
   end
 
   it 'returns false if the user did not vote for the event' do
     user = create(:user)
     event = create(:event)
 
-    user.voted_for_event?(event).should be_false
+    expect(user.voted_for_event?(event)).to be_false
   end
 end
 
@@ -182,23 +182,23 @@ describe User, '#fetch_yammer_user_data' do
     user.fetch_yammer_user_data
 
     user.reload
-    before_user_id.should == user.yammer_user_id
-    user.yammer_staging?.should == false
-    user.email.should == oauth_hash['contact']['email_addresses'].
+    expect(before_user_id).to eq user.yammer_user_id
+    expect(user.yammer_staging?).to eq false
+    expect(user.email).to eq oauth_hash['contact']['email_addresses'].
       first['address']
-    user.image.should == oauth_hash['mugshot_url']
-    user.name.should == oauth_hash['full_name']
-    user.nickname.should == oauth_hash['name']
-    user.yammer_profile_url.should == oauth_hash['web_url']
-    user.yammer_network_id.should == oauth_hash['network_id']
-    user.yammer_network_name.should == oauth_hash['network_name']
-    user.extra.should == oauth_hash.to_yaml
+    expect(user.image).to eq oauth_hash['mugshot_url']
+    expect(user.name).to eq oauth_hash['full_name']
+    expect(user.nickname).to eq oauth_hash['name']
+    expect(user.yammer_profile_url).to eq oauth_hash['web_url']
+    expect(user.yammer_network_id).to eq oauth_hash['network_id']
+    expect(user.yammer_network_name).to eq oauth_hash['network_name']
+    expect(user.extra).to eq oauth_hash.to_yaml
   end
 end
 
 describe User, '#yammer_user?' do
   it 'always returns true' do
-    build(:user).should be_yammer_user
+    expect(build(:user)).to be_yammer_user
   end
 end
 
@@ -219,8 +219,8 @@ describe User, '#invite' do
     invitee.invite(invitation)
     work_off_delayed_jobs
 
-    organizer.should_not be_in_network(invitee)
-    messenger_instance.should have_received(:invite)
+    expect(organizer).to_not be_in_network(invitee)
+    expect(messenger_instance).to have_received(:invite)
   end
 
   it 'sends a private message notification, if the user is in-network' do
@@ -232,9 +232,9 @@ describe User, '#invite' do
     invitee.remind(invitation, owner)
     work_off_delayed_jobs
 
-    organizer.should be_in_network(invitee)
-    FakeYammer.messages_endpoint_hits.should == 1
-    FakeYammer.message.should include(invitation.event.name)
+    expect(organizer).to be_in_network(invitee)
+    expect(FakeYammer.messages_endpoint_hits).to eq 1
+    expect(FakeYammer.message).to include(invitation.event.name)
   end
 end
 
@@ -259,8 +259,9 @@ describe User, '#update_watermark' do
 
     user.update_watermark
 
-    user.watermarked_image.url.should ==
-      "/watermarked_images/original/missing.png"
+    expect(user.watermarked_image.url).to eq (
+      '/watermarked_images/original/missing.png'
+    )
   end
 end
 
@@ -268,6 +269,6 @@ describe User, '#watermark' do
   it 'returns a URL string pointing to the event owner profile photo' do
     user = build(:user)
 
-    user.watermark.should == user.image
+    expect(user.watermark).to eq user.image
   end
 end

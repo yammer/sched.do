@@ -10,8 +10,8 @@ describe Paperclip::Watermark, '#new' do
 
     paperclip_watermark = Paperclip::Watermark.new(file, {}, attachment)
 
-    paperclip_watermark.format.should == '.png'
-    paperclip_watermark.basename.should == 'logo'
+    expect(paperclip_watermark.format).to eq '.png'
+    expect(paperclip_watermark.basename).to eq 'logo'
   end
 
   it 'assigns watermark to the watermark of the attachment passed in' do
@@ -22,7 +22,7 @@ describe Paperclip::Watermark, '#new' do
 
     paperclip_watermark = Paperclip::Watermark.new(file, {}, attachment)
 
-    paperclip_watermark.watermark.should == 'watermark string'
+    expect(paperclip_watermark.watermark).to eq 'watermark string'
   end
 end
 
@@ -35,6 +35,6 @@ describe Paperclip::Watermark, '#make' do
 
     paperclip_watermark = Paperclip::Watermark.new(file, {}, attachment).make
 
-    paperclip_watermark.should be_an_instance_of(Paperclip::Tempfile)
+    expect(paperclip_watermark).to be_an_instance_of(Paperclip::Tempfile)
   end
 end

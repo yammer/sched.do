@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe Group do
-  it { should validate_presence_of(:yammer_group_id) }
-  it { should validate_presence_of(:name) }
+  it { expect(subject).to validate_presence_of(:yammer_group_id) }
+  it { expect(subject).to validate_presence_of(:name) }
 end
 
 describe Group, '#invite' do
@@ -16,8 +16,8 @@ describe Group, '#invite' do
     invitee.invite(invitation)
     work_off_delayed_jobs
 
-    FakeYammer.messages_endpoint_hits.should == 1
-    FakeYammer.message.should include(invitation.event.name)
+    expect(FakeYammer.messages_endpoint_hits).to eq 1
+    expect(FakeYammer.message).to include(invitation.event.name)
   end
 end
 
@@ -26,7 +26,7 @@ describe Group, '#voted_for_event?' do
     group = build_stubbed(:group)
     event = build_stubbed(:event)
 
-    group.voted_for_event?(event).should be_false
+    expect(group.voted_for_event?(event)).to be_false
   end
 end
 
@@ -34,7 +34,7 @@ describe Group, '#yammer_user?' do
   it 'always returns false' do
     group = build_stubbed(:group)
 
-    group.yammer_user?.should be_false
+    expect(group.yammer_user?).to be_false
   end
 end
 
@@ -42,6 +42,6 @@ describe Group, '#yammer_user_id' do
   it 'always returns nil' do
     group = build_stubbed(:group)
 
-    group.yammer_user_id.should be_nil
+    expect(group.yammer_user_id).to be_nil
   end
 end

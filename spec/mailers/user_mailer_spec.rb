@@ -6,7 +6,7 @@ describe UserMailer do
 
     mail = UserMailer.vote_confirmation(vote)
 
-    mail.from.should == ['no-reply@sched.do']
+    expect(mail.from).to eq ['no-reply@sched.do']
   end
 end
 
@@ -17,7 +17,7 @@ describe UserMailer, '.event_created_confirmation' do
 
     mail = UserMailer.event_created_confirmation(event)
 
-    mail.to.should == [creator.email]
+    expect(mail.to).to eq [creator.email]
   end
 
   it 'sends the email with the correct subject' do
@@ -26,7 +26,7 @@ describe UserMailer, '.event_created_confirmation' do
 
     mail = UserMailer.event_created_confirmation(event)
 
-    mail.subject.should == "You created #{event.name} on sched.do"
+    expect(mail.subject).to eq "You created #{event.name} on sched.do"
   end
 
   it 'sends the email with the correct body' do
@@ -35,8 +35,8 @@ describe UserMailer, '.event_created_confirmation' do
 
     mail = UserMailer.event_created_confirmation(event)
 
-    mail.body.encoded.should include (creator.name)
-    mail.body.encoded.should include (event.name)
+    expect(mail.body.encoded).to include (creator.name)
+    expect(mail.body.encoded).to include (event.name)
   end
 end
 
@@ -48,8 +48,9 @@ describe UserMailer, '.invitation' do
 
     mail = UserMailer.invitation(invitation)
 
-    mail['from'].to_s.should ==
+    expect(mail['from'].to_s).to eq (
       %{"sched.do" <no-reply@sched.do>}
+    )
   end
 
   it 'sends the email to the correct recipient' do
@@ -59,7 +60,7 @@ describe UserMailer, '.invitation' do
 
     mail = UserMailer.invitation(invitation)
 
-    mail.to.should == [guest.email]
+    expect(mail.to).to eq [guest.email]
   end
 
   it 'sends the email with the correct subject' do
@@ -69,7 +70,7 @@ describe UserMailer, '.invitation' do
 
     mail = UserMailer.invitation(invitation)
 
-    mail.subject.should == "Help out #{event.owner}"
+    expect(mail.subject).to eq "Help out #{event.owner}"
   end
 
   it 'sends the email with the correct body when invitees present' do
@@ -80,9 +81,9 @@ describe UserMailer, '.invitation' do
 
     mail = UserMailer.invitation(invitation)
 
-    mail.body.encoded.should include(guest.name)
-    mail.body.encoded.should include(event.name)
-    mail.body.encoded.should include(first_invitee.name)
+    expect(mail.body.encoded).to include(guest.name)
+    expect(mail.body.encoded).to include(event.name)
+    expect(mail.body.encoded).to include(first_invitee.name)
   end
 end
 
@@ -92,7 +93,7 @@ describe UserMailer, '.vote_confirmation' do
 
     mail = UserMailer.vote_confirmation(vote)
 
-    mail.to.should == [vote.voter.email]
+    expect(mail.to).to eq [vote.voter.email]
   end
 
   it 'sends the email with the correct subject' do
@@ -102,8 +103,9 @@ describe UserMailer, '.vote_confirmation' do
     user_name = vote.voter.name
     mail = UserMailer.vote_confirmation(vote)
 
-    mail.subject.should ==
+    expect(mail.subject).to eq (
       %{Thanks for voting on "#{truncate(event.name, length: 23)}" on sched.do}
+    )
   end
 
   it 'sends the email with the correct body' do
@@ -114,8 +116,8 @@ describe UserMailer, '.vote_confirmation' do
 
     mail = UserMailer.vote_confirmation(vote)
 
-    mail.body.encoded.should include(user_name)
-    mail.body.encoded.should include(event_name)
+    expect(mail.body.encoded).to include(user_name)
+    expect(mail.body.encoded).to include(event_name)
   end
 
   it 'includes the last paragraph if the voter is not the poll creator' do
@@ -124,7 +126,7 @@ describe UserMailer, '.vote_confirmation' do
     vote.voter = voter
     mail = UserMailer.vote_confirmation(vote)
 
-    mail.body.encoded.should include 'Did you know you can send your own polls for free?'
+    expect(mail.body.encoded).to include 'Did you know you can send your own polls for free?'
   end
 
   it 'omits the last paragraph if the voter is the poll creator' do
@@ -132,7 +134,7 @@ describe UserMailer, '.vote_confirmation' do
     vote.voter = vote.event.owner
     mail = UserMailer.vote_confirmation(vote)
 
-    mail.body.encoded.should_not include 'Did you know you can send your own polls for free?'
+    expect(mail.body.encoded).to_not include 'Did you know you can send your own polls for free?'
   end
 end
 
@@ -142,7 +144,7 @@ describe UserMailer, 'vote_notification' do
 
     mail = UserMailer.vote_notification(vote)
 
-    mail.to.should == [vote.event.owner.email]
+    expect(mail.to).to eq [vote.event.owner.email]
   end
 
   it 'sends the email with the correct subject' do
@@ -150,8 +152,9 @@ describe UserMailer, 'vote_notification' do
 
     mail = UserMailer.vote_notification(vote)
 
-    mail.subject.should ==
+    expect(mail.subject).to eq (
       %{#{vote.voter.name} voted on "#{truncate(vote.suggestion.event.name, length: 23)}" on sched.do}
+    )
   end
 
   it 'sends the email with the correct body' do
@@ -159,8 +162,8 @@ describe UserMailer, 'vote_notification' do
 
     mail = UserMailer.vote_notification(vote)
 
-    mail.body.encoded.should include(vote.voter.name)
-    mail.body.encoded.should include(vote.event.name)
+    expect(mail.body.encoded).to include(vote.voter.name)
+    expect(mail.body.encoded).to include(vote.event.name)
   end
 end
 
@@ -171,7 +174,7 @@ describe UserMailer, '.reminder' do
 
     mail = UserMailer.reminder(invitation, sender)
 
-    mail.to.should == [invitation.invitee.email]
+    expect(mail.to).to eq [invitation.invitee.email]
   end
 
   it 'send the email from the correct email address' do
@@ -180,7 +183,7 @@ describe UserMailer, '.reminder' do
 
     mail = UserMailer.reminder(invitation, sender)
 
-    mail.from.should == ['no-reply@sched.do']
+    expect(mail.from).to eq ['no-reply@sched.do']
   end
 
   it 'sends the email with the correct subject' do
@@ -189,8 +192,9 @@ describe UserMailer, '.reminder' do
 
     mail = UserMailer.reminder(invitation, sender)
 
-    mail.subject.should ==
+    expect(mail.subject).to eq (
       "Reminder: Help out #{sender.name} by voting on #{invitation.event.name}"
+    )
   end
 
   it 'sends the email with the correct body' do
@@ -199,8 +203,8 @@ describe UserMailer, '.reminder' do
 
     mail = UserMailer.reminder(invitation, sender)
 
-    mail.body.encoded.should include(sender.name)
-    mail.body.encoded.should include(invitation.event.name)
-    mail.body.encoded.should_not include(invitation.event.owner.name)
+    expect(mail.body.encoded).to include(sender.name)
+    expect(mail.body.encoded).to include(invitation.event.name)
+    expect(mail.body.encoded).to_not include(invitation.event.owner.name)
   end
 end

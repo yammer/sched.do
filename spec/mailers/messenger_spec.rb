@@ -9,7 +9,7 @@ describe Messenger, '#invite' do
 
     Messenger.new(invitation).invite
 
-    UserMailer.should have_received(:invitation).with(invitation)
+    expect(UserMailer).to have_received(:invitation).with(invitation)
   end
 end
 
@@ -22,6 +22,6 @@ describe Messenger, '#remind' do
 
     Messenger.new(invitation, user).remind
 
-    UserMailer.should have_received(:reminder).with(invitation, user)
+    expect(UserMailer).to have_received(:reminder).with(invitation, user)
   end
 end
