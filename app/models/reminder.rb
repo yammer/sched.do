@@ -1,6 +1,4 @@
 class Reminder < ActiveRecord::Base
-  attr_accessible :receiver_id, :receiver_type
-
   belongs_to :sender, polymorphic: true
   belongs_to :receiver, polymorphic: true
 

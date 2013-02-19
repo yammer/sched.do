@@ -1,6 +1,4 @@
 class Vote < ActiveRecord::Base
-  attr_accessible :event_id, :suggestion_id, :suggestion_type
-
   belongs_to :event
   belongs_to :suggestion, polymorphic: true
   belongs_to :voter, polymorphic: true

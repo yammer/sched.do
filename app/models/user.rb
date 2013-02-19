@@ -1,6 +1,4 @@
 class User < ActiveRecord::Base
-  attr_accessible :access_token, :encrypted_access_token, :name,
-    :yammer_user_id, :yammer_staging, :watermarked_image
   attr_encrypted :access_token, key: ENV['ACCESS_TOKEN_ENCRYPTION_KEY']
 
   has_many :events

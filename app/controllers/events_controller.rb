@@ -8,7 +8,7 @@ class EventsController < ApplicationController
   end
 
   def create
-    @event = current_user.events.new(params[:event]).decorate
+    @event = current_user.events.new(event_params).decorate
 
     if @event.save
       redirect_to multiple_invitations_path(event_uuid: @event.uuid)
@@ -33,7 +33,7 @@ class EventsController < ApplicationController
 
   def update
     @event = current_user.events.find_by_uuid!(params[:id]).decorate
-    @event.attributes = params[:event]
+    @event.attributes = event_params
 
     if @event.save
       respond_to do |format|
@@ -61,6 +61,15 @@ class EventsController < ApplicationController
 
   def current_user_class_name
     current_user.class.name.downcase
+  end
+
+  def event_params
+    params.require(:event).permit(
+      :name,
+      :primary_suggestions_attributes,
+      :uuid,
+      :watermarked_image
+    )
   end
 
   def setup_invitations

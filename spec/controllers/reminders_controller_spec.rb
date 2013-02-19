@@ -9,7 +9,7 @@ describe RemindersController, '#create' do
     Reminder.stubs(new: reminder)
     Reminder.any_instance.stubs(:save)
 
-    post :create, event_id: event
+    post :create, reminder: { receiver_id: '123' }, event_id: event
 
     Reminder.should have_received(:new)
     Reminder.any_instance.should have_received(:save)
@@ -23,7 +23,7 @@ describe RemindersController, '#create' do
     Reminder.stubs(new: reminder)
     Reminder.any_instance.stubs(:save)
 
-    post :create, event_id: event
+    post :create, reminder: { receiver_id: '123' }, event_id: event
 
     reminder.sender.should == user
     Reminder.any_instance.should have_received(:save)
@@ -38,7 +38,7 @@ describe RemindersController, '#create' do
       Reminder.stubs(create: reminder)
       Reminder.any_instance.stubs(:save).returns true
 
-      post :create, event_id: event
+      post :create, reminder: { receiver_id: '123' }, event_id: event
 
       flash[:notice].should match /sent/
     end
@@ -54,7 +54,7 @@ describe RemindersController, '#create' do
 
       Reminder.any_instance.stubs(:save)
 
-      post :create, event_id: event
+      post :create, reminder: { receiver_id: '123' }, event_id: event
 
       flash[:error].should match /error/
     end

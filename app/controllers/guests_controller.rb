@@ -29,7 +29,7 @@ class GuestsController < ApplicationController
     @guest = Guest.find_by_email!(params[:guest][:email])
     @event = find_event
 
-    if @guest.update_attributes(params[:guest])
+    if @guest.update_attributes(guest_params)
       log_in_guest
       redirect_to event_url(@event)
     else
@@ -55,6 +55,14 @@ class GuestsController < ApplicationController
 
   def find_event
     Event.find_by_uuid!(params[:event_id])
+  end
+
+  def guest_params
+    params.require(:guest).permit(
+      :email,
+      :has_ever_logged_in,
+      :name
+    )
   end
 
   def show_guest_login?

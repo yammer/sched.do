@@ -1,6 +1,4 @@
 class Guest < ActiveRecord::Base
-  attr_accessible :email, :has_ever_logged_in, :name
-
   has_many :invitations, as: :invitee
   has_many :votes, as: :voter
 

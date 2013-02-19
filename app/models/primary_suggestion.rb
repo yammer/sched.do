@@ -1,8 +1,6 @@
 # Generally used to represent a date
 
 class PrimarySuggestion < ActiveRecord::Base
-  attr_accessible :description, :secondary_suggestions_attributes
-
   validates :description, presence: { message: 'This field is required' }
 
   belongs_to :event

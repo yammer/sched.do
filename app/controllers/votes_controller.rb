@@ -3,7 +3,7 @@ class VotesController < ApplicationController
   before_filter :require_guest_or_yammer_login
 
   def create
-    vote = Vote.new(params[:vote])
+    vote = Vote.new(vote_params)
     vote.voter = current_user
 
     if !vote.save
@@ -24,5 +24,15 @@ class VotesController < ApplicationController
       format.html { redirect_to vote.event }
       format.json { render json: { status: :ok }  }
     end
+  end
+
+  private
+
+  def vote_params
+    params.require(:vote).permit(
+      :event_id,
+      :suggestion_id,
+      :suggestion_type
+    )
   end
 end

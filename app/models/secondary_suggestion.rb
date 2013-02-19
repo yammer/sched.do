@@ -1,8 +1,6 @@
 # Generally used to represent a time
 
 class SecondarySuggestion < ActiveRecord::Base
-  attr_accessible :description
-
   validates :description, presence: { message: 'This field is required' }
 
   belongs_to :primary_suggestion

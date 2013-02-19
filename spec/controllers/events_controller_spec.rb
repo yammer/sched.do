@@ -50,7 +50,7 @@ describe EventsController, '#create' do
     event.stubs(save: true)
     Event.stubs(new: event)
 
-    post :create
+    post :create, event: { name: event.name }
 
     should redirect_to "/multiple_invitations?event_uuid=#{event.uuid}"
   end
@@ -142,7 +142,7 @@ describe EventsController, '#update' do
       user = event.owner
       sign_in_as(user)
 
-      put :update, id: event.uuid
+      put :update, event: { name: 'new name' }, id: event.uuid
 
       response.should redirect_to(event)
     end

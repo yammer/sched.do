@@ -1,8 +1,6 @@
 class Event < ActiveRecord::Base
   NAME_MAX_LENGTH = 70
 
-  attr_accessible :name, :primary_suggestions_attributes, :uuid, :watermarked_image
-
   belongs_to :owner, foreign_key: 'user_id', class_name: 'User'
 
   has_many :primary_suggestions, order: 'created_at'

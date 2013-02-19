@@ -258,6 +258,10 @@ GEM
     sprockets-redirect (0.1.0)
       activesupport (>= 3.1.0)
       rack
+    strong_parameters (0.1.6)
+      actionpack (~> 3.0)
+      activemodel (~> 3.0)
+      railties (~> 3.0)
     swfobject-rails (1.1.1)
       rails (~> 3.2)
     tddium (1.7.2)
@@ -348,6 +352,7 @@ DEPENDENCIES
   simplecov
   sinatra
   sprockets-redirect
+  strong_parameters
   swfobject-rails
   tddium
   thin

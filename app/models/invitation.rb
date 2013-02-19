@@ -1,6 +1,4 @@
 class Invitation < ActiveRecord::Base
-  attr_accessible :event, :invitee, :sender, :vote, :reminded_at
-
   belongs_to :event
   belongs_to :invitee, polymorphic: true
   belongs_to :sender, polymorphic: true
