@@ -18,10 +18,7 @@
             </span>
           </li>
           <li>
-            <%= link_to 'Create Poll',
-              new_event_path,
-              id: "new-event",
-              class: "create-poll" %>
+            <%= yield(:poll_create_button) %>
           </li>
         <% else %>
           <li>

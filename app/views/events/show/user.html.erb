@@ -6,3 +6,7 @@
   <%= render 'events/invited_groups' %>
   <%= render 'events/yammer_embed_feed' %>
 </div>
+
+<% content_for(:poll_create_button) do %>
+  <%= render 'shared/create_poll' %>
+<% end %>
