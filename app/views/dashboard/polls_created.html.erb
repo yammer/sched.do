@@ -1,0 +1,8 @@
+<% content_for(:javascript) do %>
+  <%= javascript_include_tag(:dashboard_polls_created) %>
+<% end %>
+<h3>Polls Created</h3>
+
+<p>Number of polls created (weekly, monthly, all time). This dashboard should answer two questions: (1) How many polls were created during the specified period (weekly, monthly, all time)? (2) What is the distribution of time-based polls (events) and other polls?</p>
+
+<%= render 'shared/report' %>

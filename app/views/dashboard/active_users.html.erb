@@ -1,0 +1,8 @@
+<% content_for(:javascript) do %>
+  <%= javascript_include_tag(:dashboard_active_users) %>
+<% end %>
+<h3>Active Users</h3>
+
+<p>An active user is anyone who engaged with Sched.do in any of the following ways; created a poll, visited a poll page, voted on a poll, invited someone else to vote, shared a poll, commented on a poll, or copied the poll link.</p>
+
+<%= render 'shared/report' %>

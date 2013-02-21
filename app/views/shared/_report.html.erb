@@ -1,0 +1,13 @@
+<section>
+  <%= link_to "View Query", @uri, id: "data-url", class: "query", target: "_blank" %>
+  <h4>Monthly</h4>
+  
+  <div id="monthly-report" data-chart='<%= @monthly %>' style="width: 800px; height:600px;"></div>
+</section>
+
+<section>
+  <%= link_to "View Query", @uri, id: "data-url", class: "query", target: "_blank" %>
+  <h4>Weekly</h4>
+
+  <div id="weekly-report" data-chart='<%= @weekly %>' style="width: 800px; height:600px;"></div>
+</section>

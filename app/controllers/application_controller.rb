@@ -56,6 +56,12 @@ class ApplicationController < ActionController::Base
 
   private
 
+  def redirect_non_admin
+    unless(current_user.is_admin)
+      redirect_to new_event_url
+    end
+  end
+
   def referred_from_yammer?
     referring_site.include?('yammer.com')
   end
@@ -70,5 +76,13 @@ class ApplicationController < ActionController::Base
 
   def user_rejected_tos
     request.env["omniauth.params"].try(:[],"agree_to_tos") == "0"
+  end
+
+  def nav_link(link_text, link_path)
+    class_name = current_page?(link_path) ? 'current' : ''
+
+    content_tag(:li, :class => class_name) do
+      link_to link_text, link_path
+    end
   end
 end

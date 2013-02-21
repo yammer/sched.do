@@ -1,0 +1,8 @@
+<% content_for(:javascript) do %>
+  <%= javascript_include_tag(:dashboard_invitees_that_vote) %>
+<% end %>
+<h3>Invitee conversion</h3>
+
+<p>The question this dashboard should answer is: what percentage of invitees actually vote on a poll during a given period (weekly/monthly). # of voters / # of invitees.</p>
+
+<div id="weekly_invite_conversion" data-chart='<%= @weekly %>' style="width: 900px; height: 500px;" />

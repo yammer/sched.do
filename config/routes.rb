@@ -14,6 +14,15 @@ SchedDo::Application.routes.draw do
   resources :yammer_user_invitations, only: [:create]
   resources :yammer_group_invitations, only: [:create]
 
+  resource :dashboard, controller: 'dashboard', only: [:show] do
+    collection do
+      get 'active_users'
+      get 'polls_created'
+      get 'users_invited'
+      get 'invitee_conversion'
+    end
+  end
+
   # Redirects root with param "auth=yammer" to callback with code
   # This is a temporary measure
   get(

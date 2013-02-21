@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130306001103) do
+ActiveRecord::Schema.define(:version => 20130325205951) do
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
@@ -87,10 +87,10 @@ ActiveRecord::Schema.define(:version => 20130306001103) do
   add_index "invitations", ["vote_id"], :name => "index_invitations_on_vote_id"
 
   create_table "primary_suggestions", :force => true do |t|
-    t.datetime "created_at",               :null => false
-    t.datetime "updated_at",               :null => false
     t.integer  "event_id",                 :null => false
     t.string   "description",              :null => false
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
     t.integer  "suggestion_id_deprecated"
   end
 
@@ -112,10 +112,10 @@ ActiveRecord::Schema.define(:version => 20130306001103) do
   add_index "reminders", ["sender_type"], :name => "index_reminders_on_sender_type"
 
   create_table "secondary_suggestions", :force => true do |t|
+    t.integer  "primary_suggestion_id"
+    t.string   "description",              :null => false
     t.datetime "created_at",               :null => false
     t.datetime "updated_at",               :null => false
-    t.integer  "primary_suggestion_id",    :null => false
-    t.string   "description",              :null => false
     t.integer  "suggestion_id_deprecated"
   end
 
@@ -152,11 +152,12 @@ ActiveRecord::Schema.define(:version => 20130306001103) do
     t.text     "extra"
     t.boolean  "yammer_staging",                 :default => false
     t.integer  "yammer_network_id",                                 :null => false
+    t.string   "yammer_network_name",            :default => "",    :null => false
     t.string   "watermarked_image_file_name"
     t.string   "watermarked_image_content_type"
     t.integer  "watermarked_image_file_size"
     t.datetime "watermarked_image_updated_at"
-    t.string   "yammer_network_name",            :default => "",    :null => false
+    t.boolean  "is_admin",                       :default => false
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"

@@ -10,6 +10,10 @@ step 'I visit my polls page' do
   visit polls_path
 end
 
+step 'I navigate to the dashboard' do
+  visit dashboard_path
+end
+
 step 'I click :link' do |link|
   click_link link
 end

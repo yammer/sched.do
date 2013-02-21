@@ -38,6 +38,15 @@ step 'I am signed in as a guest' do
   step 'I fill in the fields then submit'
 end
 
+step 'I am signed in as an admin' do
+  mock_yammer_oauth
+  sign_in
+  expect(page).to have_content('Schedule an Event')
+  user = User.last
+  user.is_admin = true
+  user.save!
+end
+
 step 'I am signed in as the guest :guest_email' do |guest_email|
   visit new_guest_path(event_id: Event.last.uuid)
   step %(I fill in the fields with "#{guest_email}" and 'nil' then submit)

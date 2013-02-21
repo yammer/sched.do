@@ -86,6 +86,10 @@ FactoryGirl.define do
     factory :out_network_user do
       yammer_network_id 2
     end
+
+    factory :admin do
+      is_admin true
+    end
   end
 
   factory :vote do
