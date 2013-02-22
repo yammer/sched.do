@@ -2,7 +2,7 @@ Thanks for helping <%= @event.owner %> with “<%= @event.name %>”.
 
 You voted for:
 
-<% @event.user_votes(@user).each do |vote| %>
+<% user_votes(@event, @user).each do |vote| %>
   "<%= vote.suggestion.full_description %>"
 <% end %>
 

@@ -1,4 +1,5 @@
 class UserMailer < ActionMailer::Base
+  add_template_helper(EventHelper)
   include ActionView::Helpers::TextHelper
 
   NO_REPLY_FROM_EMAIL = '<no-reply@sched.do>'
@@ -18,7 +19,7 @@ class UserMailer < ActionMailer::Base
   def invitation(invitation)
     @guest = invitation.invitee
     @sender = invitation.sender
-    @event = EventDecorator.decorate(invitation.event)
+    @event = invitation.event
     @invitation = invitation
 
     mail(
@@ -30,7 +31,7 @@ class UserMailer < ActionMailer::Base
   def reminder(invitation, sender)
     @guest = invitation.invitee
     @sender = sender
-    @event = EventDecorator.decorate(invitation.event)
+    @event = invitation.event
 
     mail(
       to: @guest.email,
@@ -41,7 +42,7 @@ class UserMailer < ActionMailer::Base
 
   def vote_confirmation(vote)
     @user = vote.voter
-    @event = EventDecorator.new(vote.event)
+    @event = vote.event
 
     mail(
       to: @user.email,
@@ -51,7 +52,7 @@ class UserMailer < ActionMailer::Base
 
   def vote_notification(vote)
     @voter = vote.voter
-    @event = EventDecorator.new(vote.event)
+    @event = vote.event
 
     mail(
       to: @event.owner.email,

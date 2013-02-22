@@ -1,5 +1,5 @@
 <ul>
-  <% event.user_votes(voter).each do |vote| %>
+  <% user_votes(event, voter).each do |vote| %>
     <li>
       <strong>
         <%= vote.suggestion.full_description %>

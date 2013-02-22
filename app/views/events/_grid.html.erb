@@ -24,8 +24,8 @@
         </tr>
       </thead>
       <tbody>
-        <% @event.invitees_with_current_user_first.each do |invitee| %>
-          <% if @event.user_voted?(invitee) || invitee == current_user %>
+        <% invitees_with_current_user_first(@event, current_user).each do |invitee| %>
+          <% if user_voted?(@event, invitee) || invitee == current_user %>
             <tr class="<%= 'votable' if  current_user == invitee %>">
               <% @event.primary_suggestions.each do |primary| %>
                 <% if primary.secondary_suggestions.present? %>
@@ -50,11 +50,11 @@
               <td class="send-reminder" colspan=<%= @event.primary_suggestions.count %>>
                 <% if current_user.yammer_user? and invitee != current_user %>
                   <div class="reminder-wrapper">
-                    <%= link_to "Remind #{invitee.name} to vote", 
+                    <%= link_to "Remind #{invitee.name} to vote",
                       reminders_path(
                         reminder: {
-                          receiver_id: @event.invitation_for(invitee),
-                          receiver_type: @event.invitation_for(invitee).class.name
+                          receiver_id: invitation_for(@event, invitee),
+                          receiver_type: invitation_for(@event, invitee).class.name
                         },
                         event_id: @event.uuid
                       ), method: :post, class: 'remind' %>
@@ -97,9 +97,9 @@
         </tr>
       </thead>
       <tbody>
-        <% @event.invitees_with_current_user_first.each do |invitee| %>
+        <% invitees_with_current_user_first(@event, current_user).each do |invitee| %>
           <tr class="<%= 'current-user' if  current_user == invitee %>">
-          <% if @event.user_owner?(invitee) %>
+          <% if user_owner?(@event, invitee) %>
             <td class="event-creator">
               <div class="avatar" style="background-image: url(<%= invitee.image %>)"></div>
               <img src="/assets/bullhorn.svg" data-png-fallback="/assets/bullhorn.png">

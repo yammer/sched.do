@@ -3,23 +3,23 @@ class EventsController < ApplicationController
   before_filter :require_guest_or_yammer_login, only: :show
 
   def new
-    @event = current_user.events.build.decorate
-    @event.build_suggestions
+    @event = current_user.events.build
+    view_context.build_suggestions(@event)
   end
 
   def create
-    @event = current_user.events.new(event_params).decorate
+    @event = current_user.events.new(event_params)
 
     if @event.save
       redirect_to multiple_invitations_path(event_uuid: @event.uuid)
     else
-      @event.build_suggestions
+      view_context.build_suggestions(@event)
       render :new
     end
   end
 
   def show
-    @event = Event.find_by_uuid!(params[:id]).decorate
+    @event = Event.find_by_uuid!(params[:id])
     verify_or_setup_invitation_for_current_user
     setup_invitations
     render "events/show/#{current_user_class_name}"
@@ -27,12 +27,12 @@ class EventsController < ApplicationController
 
   def edit
     session[:return_to] = request.referer
-    @event = current_user.events.find_by_uuid!(params[:id]).decorate
-    @event.build_suggestions
+    @event = current_user.events.find_by_uuid!(params[:id])
+    view_context.build_suggestions(@event)
   end
 
   def update
-    @event = current_user.events.find_by_uuid!(params[:id]).decorate
+    @event = current_user.events.find_by_uuid!(params[:id])
     @event.attributes = event_params
 
     if @event.save
@@ -41,7 +41,7 @@ class EventsController < ApplicationController
         format.json { render json: { status: :ok } }
       end
     else
-      @event.build_suggestions
+      view_context.build_suggestions(@event)
       add_errors_to_flash
       render :edit
     end
@@ -79,7 +79,7 @@ class EventsController < ApplicationController
   end
 
   def verify_or_setup_invitation_for_current_user
-    if @event.user_not_invited?(current_user)
+    if view_context.user_not_invited?(@event, current_user)
       invitation = Invitation.new(event: @event, invitee: current_user)
       invitation.invite_without_notification
       @event.reload

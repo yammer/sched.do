@@ -8,8 +8,8 @@
             reminders_path(
               event_id: @event,
               reminder:{
-                receiver_id: @event.invitation_for(group),
-                receiver_type: @event.invitation_for(group).class.name
+                receiver_id: invitation_for(@event, group),
+                receiver_type: invitation_for(@event, group).class.name
               }
             ),
             method: :post,

@@ -4,8 +4,8 @@
     <span class="divider">&ndash;</span>
     <span><%= pluralize(@event.invitees.count, "person") %> invited</span>
     <span class="divider">&ndash;</span>
-    <span><%= pluralize(@event.other_invitees_who_have_not_voted_count, 'other invitee has not voted','other invitees have not voted') %></span>
-    <% if @event.other_invitees_who_have_not_voted_count > 0 %>
+    <span><%= pluralize(other_invitees_who_have_not_voted_count(@event, current_user), 'other invitee has not voted','other invitees have not voted') %></span>
+    <% if other_invitees_who_have_not_voted_count(@event, current_user) > 0 %>
       <% if current_user.yammer_user? %>
         <%= link_to 'Remind Them!', reminders_path(reminder: { receiver_id: @event.id, receiver_type: @event.class.name }, event_id: @event), method: :post, class: "remind-all" %>
       <% end %>
