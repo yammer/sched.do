@@ -40,22 +40,15 @@ describe InviteeBuilder, '#find_user_by_email_or_create_guest' do
 
     it 'creates a User if it finds an existing Yammer user' do
       invitation = create(:invitation)
-      event_owner = invitation.event.owner
-      access_token = event_owner.access_token
-      yammer_staging = false
       invitee_email = 'ralph@example.com'
-      invitee_user_id = 1488374236
-      yammer_user = stub('yammer_user', :find_or_create)
-      YammerUser.stubs(new: yammer_user)
+      user = mock(:save!)
+      translator = mock(translate: user)
+      YammerUserResponseTranslator.stubs(new: translator)
 
       InviteeBuilder.new(invitee_email, invitation.event).
         find_user_by_email_or_create_guest
 
-      expect(YammerUser).to have_received(:new).with(
-        access_token: access_token,
-        yammer_staging: yammer_staging,
-        yammer_user_id: invitee_user_id
-      )
+      expect(user).to have_received(:save!)
     end
   end
 

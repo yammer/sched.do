@@ -15,7 +15,13 @@ describe User, 'validations' do
 
   it { expect(subject).to validate_presence_of(:name) }
   it { expect(subject).to validate_presence_of(:yammer_user_id) }
-  it { expect(subject).to validate_presence_of(:encrypted_access_token) }
+  it { expect(subject).to allow_value(nil).for(:encrypted_access_token) }
+
+  it 'is valid with a unique encrypted access token' do
+    user = create(:user)
+
+    expect(user).to validate_uniqueness_of(:encrypted_access_token)
+  end
 
   it 'requires a valid e-mail address' do
     expect(subject).to allow_value('person@example.com').for(:email)
@@ -47,14 +53,14 @@ describe User, 'has_attached_file' do
   it { expect(subject).to have_attached_file(:watermarked_image) }
 end
 
-describe User, '#associate_guest_invitations' do
+describe User, '#usurp_existing_guest_accounts' do
   it 'associates all guest invitations with this user' do
     invitation = create(:invitation_with_guest)
     guest = invitation.invitee
     guest_invitation_ids = guest.invitations.map(&:id)
     user = create(:user, email: guest.email)
 
-    user.associate_guest_invitations
+    user.usurp_existing_guest_accounts
 
     expect(user.invitations.map(&:id)).to eq guest_invitation_ids
   end
@@ -64,7 +70,7 @@ describe User, '#associate_guest_invitations' do
     guest = invitation.invitee
     user = create(:user, email: guest.email)
 
-    user.associate_guest_invitations
+    user.usurp_existing_guest_accounts
 
     guest_check = Guest.find_by_email(guest.email)
     expect(guest_check).to be_nil
@@ -166,33 +172,6 @@ describe User, '#voted_for_event?' do
     event = create(:event)
 
     expect(user.voted_for_event?(event)).to be_false
-  end
-end
-
-describe User, '#fetch_yammer_user_data' do
-  it 'queries the Yammer Users API for Yammer Production data' do
-    user = User.new(
-      access_token: 'Tokenz',
-      yammer_staging: false,
-      yammer_user_id: 123456
-    )
-    oauth_hash = user.send(:yammer_user_data)
-    before_user_id = user.yammer_user_id
-
-    user.fetch_yammer_user_data
-
-    user.reload
-    expect(before_user_id).to eq user.yammer_user_id
-    expect(user.yammer_staging?).to eq false
-    expect(user.email).to eq oauth_hash['contact']['email_addresses'].
-      first['address']
-    expect(user.image).to eq oauth_hash['mugshot_url']
-    expect(user.name).to eq oauth_hash['full_name']
-    expect(user.nickname).to eq oauth_hash['name']
-    expect(user.yammer_profile_url).to eq oauth_hash['web_url']
-    expect(user.yammer_network_id).to eq oauth_hash['network_id']
-    expect(user.yammer_network_name).to eq oauth_hash['network_name']
-    expect(user.extra).to eq oauth_hash.to_yaml
   end
 end
 

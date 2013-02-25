@@ -3,9 +3,7 @@ class SessionsController < ApplicationController
     only: [:create, :destroy, :oauth_failure]
 
   def create
-    user = find_or_create_with_auth
-    user.fetch_yammer_user_data
-    user.update_watermark
+    user = post_authentication_steps
     cookies.signed[:yammer_user_id] = user.yammer_user_id
     log_out_guest
 
@@ -26,16 +24,33 @@ class SessionsController < ApplicationController
 
   private
 
-  def find_or_create_with_auth
-    YammerUser.new(credentials).find_or_create
+  def post_authentication_steps
+    user = find_or_instantiate_user
+    refresh_user_data_from_yammer(user)
+    user.update_watermark
+    user
   end
 
-  def credentials
-    {
-      access_token: omniauth_token,
-      yammer_staging: omniauth_staging?,
-      yammer_user_id: omniauth[:uid]
-    }
+  def find_or_instantiate_user
+    user = User.find_by_yammer_user_id(omniauth[:uid])
+
+    if user.nil?
+      user = User.new(
+        yammer_staging: omniauth_staging?,
+        yammer_user_id: omniauth[:uid]
+      )
+    end
+
+    user.access_token = omniauth_token
+    user
+  end
+
+  def refresh_user_data_from_yammer(user)
+    yammer_user_data = user.yammer_client.get("/users/#{omniauth[:uid]}")
+    YammerUserResponseTranslator.
+      new(yammer_user_data, user).
+      translate.
+      save!
   end
 
   def after_sign_in_path

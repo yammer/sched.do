@@ -6,11 +6,22 @@ class User < ActiveRecord::Base
   has_many :invitations, as: :invitee
 
   before_validation :strip_email_whitespace
+  before_create :usurp_existing_guest_accounts
 
   validates :email, email: true
-  validates :encrypted_access_token, presence: true
   validates :name, presence: true
   validates :yammer_user_id, presence: true
+
+  validates :encrypted_access_token, uniqueness: true, allow_nil: true
+
+  def usurp_existing_guest_accounts
+    guest = Guest.find_by_email(email)
+
+    if guest
+      guest.invitations.reduce(self.invitations, :<<)
+      guest.destroy
+    end
+  end
 
   has_attached_file :watermarked_image,
     styles: { original: '100x100' },
@@ -18,32 +29,6 @@ class User < ActiveRecord::Base
 
   def able_to_edit?(event)
     event.owner == self
-  end
-
-  def associate_guest_invitations
-    guest = Guest.find_by_email(email)
-
-    if guest
-      associate_each_invitation_with(guest)
-      guest.destroy
-    end
-  end
-
-  def fetch_yammer_user_data
-    response = yammer_user_data
-    update_attributes(
-      {
-        email: parse_email_from_response(response),
-        image: response[:mugshot_url],
-        name: response[:full_name],
-        nickname: response[:name],
-        yammer_profile_url: response[:web_url],
-        yammer_network_id: response[:network_id],
-        yammer_network_name: response[:network_name],
-        extra: response
-      },
-      { without_protection: true }
-    )
   end
 
   def image
@@ -102,20 +87,14 @@ class User < ActiveRecord::Base
   end
 
   def yammer_client
+    if access_token.nil?
+      raise 'Yammer client requires an access_token!'
+    end
+
     @yam ||= Yam.new(access_token, yammer_endpoint)
   end
 
   private
-
-  def yammer_user_data
-    yammer_client.get("/users/#{yammer_user_id}")
-  end
-
-  def associate_each_invitation_with(guest)
-    guest.invitations.each do |invitation|
-      self.invitations << invitation
-    end
-  end
 
   def in_network?(test_user)
     yammer_network_id == test_user.yammer_network_id
@@ -127,11 +106,6 @@ class User < ActiveRecord::Base
     else
       return Messenger.new(invitation, sender)
     end
-  end
-
-  def parse_email_from_response(response)
-    response['contact']['email_addresses'].
-      detect{ |address| address['type'] == 'primary' }['address']
   end
 
   def yammer_endpoint

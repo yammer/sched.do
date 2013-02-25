@@ -2,7 +2,7 @@ class YammerUserInvitationsController < ApplicationController
 
   def create
     @event = Event.find(event_id)
-    invitee = YammerUser.new(auth).find_or_create
+    invitee = find_or_create_user
     invitation = Invitation.new(
       event: @event,
       invitee: invitee,
@@ -19,12 +19,18 @@ class YammerUserInvitationsController < ApplicationController
 
   private
 
-  def auth
-    {
-      access_token: current_user.access_token,
-      yammer_staging: current_user.yammer_staging?,
-      yammer_user_id: invitee_id
-    }
+  def find_or_create_user
+    User.find_by_yammer_user_id(invitee_id) || create_user_from(invitee_id)
+  end
+
+  def create_user_from(invitee_id)
+    invitee_data = @event.owner.yammer_client.get("/users/#{invitee_id}")
+    User.new.tap do |user|
+      YammerUserResponseTranslator.
+        new(invitee_data, user).
+        translate.
+        save!
+    end
   end
 
   def event_id
