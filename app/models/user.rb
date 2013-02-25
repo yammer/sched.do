@@ -49,7 +49,7 @@ class User < ActiveRecord::Base
 
   def update_watermark
     if watermarked_image
-      watermarked_image = File.open(Rails.root.join('public', 'logo.png'))
+      watermarked_image = File.open(Rails.root.join('public', 'logo-high-res.png'))
     end
   end
 

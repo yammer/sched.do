@@ -73,7 +73,7 @@ class Event < ActiveRecord::Base
   end
 
   def set_owner_watermark
-    File.open(Rails.root.join('public', 'logo.png')) do |file|
+    File.open(Rails.root.join('public', 'logo-high-res.png')) do |file|
       owner.watermarked_image = file
     end
   end
