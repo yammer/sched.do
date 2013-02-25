@@ -77,7 +77,7 @@ describe Event, 'add_errors_if_no_suggestions'do
   end
 end
 
-describe Event, 'after_create callbacks'do
+describe Event, 'after_create callbacks' do
   it 'invites the owner' do
     owner = create(:user)
     event = create(:event, owner: owner)
@@ -103,6 +103,19 @@ describe Event, 'after_create callbacks'do
       user = event.owner
       expect(ActivityCreatorJob).to have_received(:enqueue).with(user, action, event)
     end
+  end
+end
+
+describe Event, 'after_update callbacks' do
+  it 'enqueues an ActivityCreatorJob' do
+    ActivityCreatorJob.stubs(:enqueue)
+    action = 'update'
+    event = create(:event, name: 'event')
+    user = event.owner
+
+    event.update_attributes(name: 'updated event')
+
+    expect(ActivityCreatorJob).to have_received(:enqueue).with(user, action, event)
   end
 end
 

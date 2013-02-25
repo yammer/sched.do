@@ -31,6 +31,8 @@ class Event < ActiveRecord::Base
   after_create :invite_owner
   after_create :enqueue_event_created_jobs
 
+  after_update :enqueue_event_updated_job
+
   def deliver_reminder_from(sender)
     invitations_without(sender).each do |invitation|
       invitation.deliver_reminder_from(sender)
@@ -91,6 +93,10 @@ class Event < ActiveRecord::Base
   def enqueue_event_created_jobs
     EventCreatedEmailJob.enqueue(self)
     ActivityCreatorJob.enqueue(self.owner, 'create', self)
+  end
+
+  def enqueue_event_updated_job
+    ActivityCreatorJob.enqueue(self.owner, 'update', self)
   end
 
   def invitations_without(user)
