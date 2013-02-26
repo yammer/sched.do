@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
 
   before_filter :require_yammer_login
+  before_filter :update_access_token
 
   hide_action :current_user=
 
@@ -22,6 +23,12 @@ class ApplicationController < ActionController::Base
       session[:name],
       session[:email]
     )
+  end
+
+  def update_access_token
+    if current_user.yammer_user? && current_user.encrypted_access_token.nil?
+      redirect_to sign_out_path
+    end
   end
 
   def require_yammer_login

@@ -80,6 +80,12 @@ step 'I fill in the fields with :email and :name then submit' do |email, name|
   click_button 'Begin Voting'
 end
 
+step 'my access token is erased' do
+  user = User.first
+  user.encrypted_access_token = nil
+  user.save!
+end
+
 # Should
 
 step 'I should be redirected to the new event page' do

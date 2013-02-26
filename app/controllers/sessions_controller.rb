@@ -2,6 +2,9 @@ class SessionsController < ApplicationController
   skip_before_filter :require_yammer_login,
     only: [:create, :destroy, :oauth_failure]
 
+  skip_before_filter :update_access_token,
+    only: [:destroy]
+
   def create
     user = post_authentication_steps
     cookies.signed[:yammer_user_id] = user.yammer_user_id
