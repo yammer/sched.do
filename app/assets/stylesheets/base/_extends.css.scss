@@ -250,9 +250,9 @@
 %group-label {
   $color: darken($bg-color, 45%);
   background-color: $color;
+
   @include background-image(url(group.svg), linear-gradient(tint($color, 35%), shade($color, 10%)));
   background-position: 10px center;
-  background-repeat: no-repeat, repeat;
   border: 1px solid darken($color, 5%);
   border-bottom-color: darken($color, 20%);
   @include border-radius(4px);
@@ -260,7 +260,12 @@
   font-size: 0.9em;
   @include inline-block;
   padding: 0.5em 1em 0.5em 30px;
-  @include colorful-container-text($color)
+  @include colorful-container-text($color);
+
+  background-image: url(group.png);
+  -ms-background-position-x: 5px left;
+  -ms-background-position-y: center;
+  background-repeat: no-repeat;
 }
 
 %user-label {
