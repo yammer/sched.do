@@ -29,8 +29,8 @@ Scheddo.Translators = {
 
   translateEmail: function(term){
     return {
-      label: escape(term),
-      value: escape(term),
+      label: _.escape(term),
+      value: _.escape(term),
       type: 'email',
       render: function(){
         return $(Scheddo.Templates.getEmailItemTemplate(this)).

@@ -42,6 +42,14 @@ describe('Scheddo.Translators', function(){
       expect(translatedEmail.type).toBe('email');
       expect(typeof translatedEmail.render).toBe('function');
     });
-  });
 
+    it('escapes the label and values to avoid xss', function(){
+      var translatedEmail = Scheddo.
+        Translators.
+        translateEmail('<');
+
+      expect(translatedEmail.label).toBe('&lt;');
+      expect(translatedEmail.value).toBe('&lt;');
+    });
+  });
 });
