@@ -48,7 +48,6 @@ $(document).ready(function(){
       });
 
       $('.post-vote-button').click(function(event){
-        alert('sharing');
         event.preventDefault();
         var message = $('.dialog-modal textarea').val();
 
