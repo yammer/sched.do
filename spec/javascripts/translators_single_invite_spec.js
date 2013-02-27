@@ -1,5 +1,3 @@
-require('/assets/application.js');
-
 describe('Scheddo.Translators.SingleInvite', function(){
   describe('translateUsers', function(){
     it('translates an array of Yammer user JSON to an array of autocompletePost users', function(){

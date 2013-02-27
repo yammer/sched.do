@@ -45,7 +45,7 @@ end
 step 'I invite :emails to :event_name' do |emails, event_name|
   event = Event.find_by_name!(event_name)
   visit event_path(event)
-  find('#auto-complete').set(emails)
+  first('#auto-complete').set(emails)
   click_button 'add-invitee'
 end
 
@@ -71,7 +71,7 @@ step 'I invite the Yammer user :user_name to :event_name from the multiple invit
   mock_out_yammer_api(name: user_name, id: 1, return_type: 'user')
   fill_in_autocomplete(user_name)
   choose_autocomplete('.name', user_name)
-  page.should have_content(user_name)
+  expect(page).to have_content(user_name)
 end
 
 step 'I invite the Yammer group :group_name to :event_name from the multiple invite page' do |group_name, event_name|
@@ -85,11 +85,10 @@ step 'I invite :email to :event_name via the autocomplete from the multiple invi
   mock_out_yammer_api_with_no_response
   fill_in_autocomplete(email)
   choose_autocomplete('.email', email)
-  page.should have_content(email)
 end
 
 step 'I should see :name in the list of invitees' do |name|
-  within '#invitees' do
+  within first('#invitees') do
     expect(page).to have_content name
   end
 end
@@ -99,13 +98,13 @@ step 'I should not see :group_name in the groups list' do |group_name|
 end
 
 step 'I should not see :name in the list of invitees' do |name|
-  within '#invitees' do
+  within '.main-content #invitees' do
     expect(page).to_not have_content name
   end
 end
 
 step 'I should see :name in the groups list' do |name|
-  within '#invitees' do
+  within '.main-content #invitees' do
     expect(page).to_not have_content name
   end
 

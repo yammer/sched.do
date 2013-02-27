@@ -3,7 +3,7 @@ step "I fill in :field with :value" do |field, value|
 end
 
 step 'I press :button' do |button|
-  click_button button
+  first(:button, button).click
 end
 
 step 'I should see :field filled in with :value' do |field, expected_value|

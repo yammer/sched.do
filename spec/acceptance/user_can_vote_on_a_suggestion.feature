@@ -1,4 +1,5 @@
 Feature: Users can vote on suggestions
+
   @javascript
   Scenario: User votes for a single suggestion
     Given I am signed in
@@ -26,6 +27,7 @@ Feature: Users can vote on suggestions
       | lunch    | chipotle |
     And I visit the event page for "Clown party"
     When I vote for secondary "chipotle"
+    And I close the share sched.do modal
     And I vote for secondary "eggs"
     Then I should see that secondary "chipotle" has 1 vote
     And I should see that secondary "eggs" has 1 votes
@@ -38,6 +40,7 @@ Feature: Users can vote on suggestions
       | lunch    | chipotle |
     And I visit the event page for "Clown party"
     And I vote for secondary "chipotle"
+    And I close the share sched.do modal
     When I unvote for secondary "chipotle"
     Then I should see that secondary "chipotle" has 0 votes
     And I should see that secondary "eggs" has 0 votes
@@ -84,7 +87,6 @@ Feature: Users can vote on suggestions
     When I vote for "lunch"
     And I close the share sched.do modal
     And I vote for "dinner"
-    And I close the share sched.do modal
     Then I should see that "lunch" has 1 vote
     And I should see that "dinner" has 1 vote
 
@@ -109,6 +111,7 @@ Feature: Users can vote on suggestions
     And I created an event named "Clown party" with a suggestion of "lunch"
     And I visit the event page for "Clown party"
     And I vote for "lunch"
+    And I close the share sched.do modal
     When I sign in as a different user
     And I visit the event page for "Clown party"
     Then I should see that "lunch" has 1 vote

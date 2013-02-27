@@ -15,7 +15,7 @@ module EmailSpec
   end
 
   def email_body(email)
-    email.default_part_body.to_s
+    Capybara::Node::Simple.new(email.default_part_body.to_s)
   end
 end
 

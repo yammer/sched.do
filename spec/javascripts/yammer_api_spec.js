@@ -1,5 +1,3 @@
-require('/assets/application.js');
-
 describe ('Scheddo.YammerApi.setAccessToken', function(){
   it ('sets the users access token on yammer.request for oauth2', function(){
     authSetter = {
@@ -38,7 +36,7 @@ describe('Scheddo.YammerApi.autocomplete', function(){
       var translateResponseData = jasmine.
         createSpy('translateResponseData');
       spyOn(
-        Scheddo.Translators.FullResults, 
+        Scheddo.Translators.FullResults,
         'normalizeTranslatedResponse'
       ).andReturn(translateResponseData);
 

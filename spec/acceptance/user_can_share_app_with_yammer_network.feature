@@ -1,10 +1,11 @@
 Feature: User can share sched.do with her Yammer network
 
+  @javascript
   Scenario: User clicks "Share sched.do"
     Given I am signed in as "Bruce Lee"
     When I click "Share sched.do"
     Then I should see "Share on the Thoughtbot network"
-    And I should see "Did you know you can send your own polls for free?"
+    And the customize message field should contain "Did you know you can send your own polls for free?"
 
   @javascript
   Scenario: User shares the app
@@ -42,27 +43,29 @@ Feature: User can share sched.do with her Yammer network
     And I share the sched.do app and get an error from the Yammer API
     Then I should see "There was an error with the request"
 
+  @javascript
   Scenario: User creates an event and votes
     Given I am signed in as "Bruce Lee"
     And I create an event named "Clown party" with a suggestion of "lunch"
     And I view the "Clown party" event
     When I vote for "lunch"
     Then I should see "Thanks for voting, please share sched.do"
-    And I should see "I created an event in sched.do"
+    And the customize message field should contain "I created an event in sched.do"
 
+  @javascript
   Scenario: User votes on an event she didn't create
     Given someone created an event named "Clown party" with a suggestion of "lunch"
     And I am signed in as "Bruce Lee"
     When I view the "Clown party" event
     And I vote for "lunch"
     Then I should see "Thanks for voting, please share sched.do"
-    And I should see "I voted on an event in sched.do"
+    And the customize message field should contain "I voted on an event in sched.do"
 
-  @javascript
-  Scenario: User votes on an event and shares sched.do
-    Given I am signed in as "Bruce Lee"
-    And I create an event named "Clown party" with a suggestion of "lunch"
-    And I view the "Clown party" event
-    When I vote for "lunch"
-    Then I should see "Thanks for voting, please share sched.do"
-    And I should see "I created an event in sched.do"
+ @javascript
+ Scenario: User votes on an event and shares sched.do
+   Given I am signed in as "Bruce Lee"
+   And I create an event named "Clown party" with a suggestion of "lunch"
+   And I view the "Clown party" event
+   When I vote for "lunch"
+   Then I should see "Thanks for voting, please share sched.do"
+   And the customize message field should contain "I created an event in sched.do"

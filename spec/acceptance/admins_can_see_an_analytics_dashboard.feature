@@ -3,7 +3,7 @@ Feature: Admin can see an analytics dashboard
   Scenario: Admin navigates to the analytics dashboard
     Given I am signed in as an admin
     When I navigate to the dashboard
-    Then I should see "Sched.do Stats"
+    Then I should see "Sched.do/dashboard"
 
   Scenario: Non-Admin navigates to the analytics dashboard
     Given I am signed in

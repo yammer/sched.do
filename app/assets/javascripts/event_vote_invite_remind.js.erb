@@ -29,10 +29,10 @@ $(document).ready(function(){
 
     $('.votable').one('click', '.vote', function() {
       $('.post-vote').
-      delay(45000).
-      queue(function() {
-        $(this).dialog('open')
-      });
+        delay(<%= SHARE_APP_DELAY %>).
+        queue(function() {
+          $(this).dialog('open')
+        });
     });
   }
   else {

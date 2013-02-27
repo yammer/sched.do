@@ -113,7 +113,8 @@ module FakeYammerApi
   end
 
   def choose_autocomplete(selector, text, parent='')
-    find(selector).should have_content(text)
+    expect(page).to have_selector(selector)
+    expect(find(selector, visible: true)).to have_content(text)
     page.execute_script("$('#{parent} .ui-menu-item:contains(\"#{text}\"):first').find('a').trigger('mouseenter').click()")
   end
 end

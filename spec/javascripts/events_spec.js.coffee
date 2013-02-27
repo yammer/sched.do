@@ -1,6 +1,6 @@
-require "/assets/jquery.js"
-require "/assets/events.coffee"
-require "/assets/underscore.js"
+#= require jquery.js
+#= require events.coffee
+#= require underscore.js
 
 describe "window.parse_time", ->
   times =

@@ -41,7 +41,7 @@ step 'I should see my name :name prepopulated' do |name|
 end
 
 step 'I should see :message in the errors' do |message|
-  expect(find('.errors')).to have_content(message)
+  expect(first('.errors')).to have_content(message)
 end
 
 # Email

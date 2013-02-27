@@ -1,5 +1,3 @@
-require('/assets/application.js')
-
 describe('Scheddo.Translators.MultiInvite', function(){
   describe('translateUsers', function(){
     it('reverses the order of the users', function(){

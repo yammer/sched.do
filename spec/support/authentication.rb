@@ -1,7 +1,9 @@
 module TurnipAuthenticationHelpers
   def sign_in
     visit root_path
-    click_button 'Sign in with Yammer'
+    within '#js-welcome-header' do
+      click_button 'Sign in with Yammer'
+    end
   end
 
   def sign_out

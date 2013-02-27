@@ -1,6 +1,10 @@
 Namespaced.declare('Scheddo.Util');
 
 _.extend(Scheddo.Util, {
+  placeholderPolyfill: function() {
+    $('input, textarea').placeholder();
+  },
+
   isOGObject: function (){
     return $("[property='og:url']").length
   },

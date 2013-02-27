@@ -94,7 +94,7 @@ step ':first_suggestion should appear before :second_suggestion in the list' do 
     expect(page).to have_content(first_suggestion)
   end
 
-  within(:xpath,  "//div[contains(@class, 'options')]//th[2]") do 
+  within(:xpath,  "//div[contains(@class, 'options')]//th[2]") do
     expect(page).to have_content(second_suggestion)
   end
 end

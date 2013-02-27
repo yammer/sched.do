@@ -15,7 +15,7 @@ step 'I navigate to the dashboard' do
 end
 
 step 'I click :link' do |link|
-  click_link link
+  first(:link, link).click
 end
 
 step 'I should be on my profile page' do

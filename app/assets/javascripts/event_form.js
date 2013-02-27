@@ -1,38 +1,6 @@
 Namespaced.declare('Scheddo');
 
 $(document).ready(function() {
-  var nextDate = null;
-
-  var placeholderPolyfill = function() {
-    $('input, textarea').placeholder();
-  }
-
-  var setDatepickerDefaultDates = function() {
-    $('.primary-suggestion').
-      datepicker('option', 'defaultDate', nextDate);
-  };
-
-  var datepicker = function() {
-    // Displays a date picker when suggetsion field is focused
-    $('.primary-suggestion').datepicker({
-      nextText: '▶',
-      prevText: '◀',
-      dateFormat: 'D, M dd yy',
-      constrainInput: false,
-      onSelect: function() {
-        nextDate = $(this).datepicker('getDate');
-        nextDate.setDate(nextDate.getDate() + 1);
-        setDatepickerDefaultDates();
-      }
-    });
-  };
-
-  var setDefaultDate = function(datepicker) {
-    if(nextDate) {
-      setDatepickerDefaultDates();
-    }
-  };
-
   $(document).
     on(
       'mouseenter',
@@ -97,8 +65,8 @@ $(document).ready(function() {
   });
 
   var init = function() {
-    datepicker();
-    placeholderPolyfill();
+    Scheddo.Util.datepicker();
+    Scheddo.Util.placeholderPolyfill();
   }
 
   init();

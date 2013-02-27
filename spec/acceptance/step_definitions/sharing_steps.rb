@@ -9,7 +9,7 @@ step 'I share the sched.do app and get an error from the Yammer API' do
 end
 
 step 'I close the share sched.do modal' do
-  find('.ui-dialog-titlebar-close').click
+  first(:css, '.ui-dialog-titlebar-close').click
 end
 
 step 'I choose to share sched.do with the Yammer group :group_name' do |group_name|
@@ -19,7 +19,7 @@ step 'I choose to share sched.do with the Yammer group :group_name' do |group_na
 end
 
 step 'I should see :group_name in the share event dialog groups list' do |group_name|
-  within('.share-app') do
+  within first('.share-app') do
     expect(page).to have_content group_name
   end
 end
@@ -49,7 +49,7 @@ step 'I select :group_name from the group list' do |group_name|
 end
 
 step 'there should be :count options in the group list' do |count|
-  within('.group-list') do
+  within first('.group-list') do
     expect(page).to have_css('.group', count: count)
   end
 end

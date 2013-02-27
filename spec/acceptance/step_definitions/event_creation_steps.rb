@@ -93,7 +93,7 @@ step 'I add another suggestion field' do
 end
 
 step 'I add another secondary suggestion field' do
-  click_link 'Add Another Time'
+  first(:link, 'Add Another Time').click
 end
 
 step 'I visit the new event page' do
@@ -106,16 +106,16 @@ step 'I fill out the event form with the following suggestions:' do |table|
 end
 
 step 'I remove the first suggestion' do
-  click_link 'Remove Suggestion'
+  first(:link, 'Remove Suggestion').click
 end
 
 step 'I can remove one of the suggestions' do
-  page.find('.secondary-suggestion').trigger(:mouseover)
+  page.first(:css, '.secondary-suggestion').trigger(:mouseover)
   expect(page).to have_selector('.remove_fields', visible: true)
 end
 
 step 'I cannot remove the first suggestion' do
-  within '.times' do
+  within(first(:css,'.times')) do
     expect(page).to_not have_selector('.remove_fields', visible: true)
   end
 end
@@ -130,7 +130,9 @@ step 'my network should see an activity message announcing the event' do
 end
 
 step 'I enter :secondary in the first secondary field' do |secondary|
-  fill_in 'event_primary_suggestions_attributes_0_secondary_suggestions_attributes_0_description', with: secondary
+  field = 'event_primary_suggestions_attributes_0_secondary_suggestions_attributes_0_description'
+  fill_in field, with: secondary
+  evaluate_script("$('##{field}').blur()")
 end
 
 step 'I should see :expected_time in the first secondary field' do |expected_time|
@@ -161,11 +163,13 @@ step 'I created an event named :event_name with a suggestion of :primary with th
   suggestions = secondaries.raw.map(&:first)
   fill_in 'event_name', with: event_name
   all('input[data-role=primary-suggestion]')[0].set(primary)
+
   suggestions.each_with_index do |suggestion, index|
     all('input[data-role=secondary-suggestion]')[index]
       .set(suggestions[index])
-    click_link 'Add Another Time'
+    first(:link,'Add Another Time').click
   end
+
   click_button 'Create event'
   expect(page).to have_content(event_name)
 end

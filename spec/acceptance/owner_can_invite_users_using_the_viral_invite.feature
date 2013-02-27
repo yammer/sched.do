@@ -29,11 +29,12 @@ Feature: Multiple invitations
     And I should not see "Invite someone to your poll, search for them by name or email."
 
   @javascript
-  Scenario: Owner add a Yammer group to the invite list and invites the group
+  Scenario: Owner adds a Yammer group to the invite list and invites the group
     Given I sign in and create an event named "sched.do Meeting"
     When I invite the Yammer group "Scheddo-Devs" to "sched.do Meeting" from the multiple invite page
     And I press "Invite"
-    Then group "Scheddo-Devs" should receive a private invitation message
+    Then I should see "Scheddo-Devs" in the groups list
+    And group "Scheddo-Devs" should receive a private invitation message
 
   @javascript
   Scenario: Owner adds a user by email to the invite list and invites the user

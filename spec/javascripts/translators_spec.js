@@ -1,5 +1,3 @@
-require('/assets/application.js');
-
 describe('Scheddo.Translators', function(){
   describe('translateUsers', function(){
     it('translates a Yammer user JSON to an autocomplete user', function(){

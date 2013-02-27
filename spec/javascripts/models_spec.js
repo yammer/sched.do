@@ -1,5 +1,3 @@
-require('/assets/application.js');
-
 describe('Scheddo.Models', function(){
   describe('user', function(){
     it('translates a Yammer JSON user to a scheddo user', function(){

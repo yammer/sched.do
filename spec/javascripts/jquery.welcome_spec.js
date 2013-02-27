@@ -1,12 +1,9 @@
-require('/assets/jquery.js')
-require('/assets/jquery.welcome.js');
-require('/assets/waypoints.js');
-require('/assets/jasmine-jquery.js');
+//=require jquery.welcome
+//=require waypoints
 
 describe ('accept terms of service', function(){
-  template('welcome.html')
-
   it ('shows a flash message if the user does not accept the tos', function(){
+    loadFixtures('welcome.html');
     $('input[name=agree_to_tos]').attr('checked', false);
     event = jQuery.Event('click');
     eventSpy = spyOn(event, 'preventDefault');
@@ -21,6 +18,7 @@ describe ('accept terms of service', function(){
   });
 
   it ('does not show a flash message if the user accepts the tos', function(){
+    loadFixtures('welcome.html');
     event = jQuery.Event('click');
     eventSpy = spyOn(event, 'preventDefault');
 

@@ -44,7 +44,7 @@ end
 
 group :test do
   gem 'bourne', require: false
-  gem 'capybara-webkit', '~> 0.12.0'
+  gem 'capybara-webkit', '~> 0.14.0'
   gem 'database_cleaner'
   gem 'email_spec'
   gem 'factory_girl_rails', '~> 3.0'
@@ -61,7 +61,8 @@ end
 group :development, :test do
   gem 'awesome_print'
   gem 'dotenv'
-  gem 'evergreen', require: 'evergreen/rails'
+  gem 'guard-jasmine', require: false
+  gem 'jasminerice'
   gem 'mail_view'
   gem 'rspec-rails'
   gem 'sham_rack'

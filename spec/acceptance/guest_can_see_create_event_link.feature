@@ -1,4 +1,5 @@
 Feature: Guest can see create event link
+
   @javascript
   Scenario: Guest can see create event link
     Given someone created an event named "Clown party" with a suggestion of "lunch"

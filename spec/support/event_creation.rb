@@ -99,9 +99,7 @@ module EventCreation
 
     def wait_for_primary_fields_to_update
       primary_fields.each do |field|
-        Capybara.wait_until(10) do
-          field.value == primary_field.value
-        end
+        field.value == primary_field.value
       end
     end
 

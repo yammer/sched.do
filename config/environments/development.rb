@@ -3,6 +3,9 @@ SchedDo::Application.configure do
   YAMMER_ASSETS_HOST = 'https://assets.yammer.com'
   YAMMER_ASSETS_STAGING_HOST = 'https://assets.staging.yammer.com'
 
+  # Set wait time for share modal after vote
+  SHARE_APP_DELAY = 45000
+
   # Settings specified here will take precedence over those in config/application.rb
 
   # In the development environment your application's code is reloaded on

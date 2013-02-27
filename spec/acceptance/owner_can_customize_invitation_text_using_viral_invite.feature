@@ -4,17 +4,19 @@ Feature: Custom invitation text for multiple invitations
   Scenario: Owner leaves default invitation text and invites a user
     Given I sign in and create an event named "Cookie party"
     And a user exists with a name of "Jane Doe"
-    And I invite the Yammer user "Jane Doe" to "Cookie party" from the multiple invite page
-    When I press "Invite"
-    Then "Jane Doe" should receive 1 private message
+    When I invite the Yammer user "Jane Doe" to "Cookie party" from the multiple invite page
+    And I press "Invite"
+    Then I should see "I'm using sched.do to schedule an event, and I'd like your input." in the Invitation text field
+    And "Jane Doe" should receive 1 private message
     And the private message should include "I'm using sched.do to schedule an event, and I'd like your input."
 
   @javascript
-  Scenario: Owner leaves deafult invitation text and invites guest by email
+  Scenario: Owner leaves default invitation text and invites guest by email
     Given I sign in and create an event named "Cookie party"
-    And I invite "chocolate@chips.com" to "Cookie party" via the autocomplete from the multiple invite page
+    And I invite "chocolate@example.com" to "Cookie party" via the autocomplete from the multiple invite page
     When I press "Invite"
-    Then "chocolate@chips.com" should receive an email with the text "using sched.do to schedule an event"
+    Then I should see "I'm using sched.do to schedule an event, and I'd like your input." in the Invitation text field
+    And "chocolate@example.com" should receive an email with the text "using sched.do to schedule an event"
 
   @javascript
   Scenario: User adds custom invitation text
@@ -23,16 +25,18 @@ Feature: Custom invitation text for multiple invitations
     And I fill in the multiple invite invitation text field with "Come eat cookies!"
     When I invite the Yammer user "Jane Doe" to "Cookie party" from the multiple invite page
     And I press "Invite"
-    Then "Jane Doe" should receive 1 private message
+    Then I should see "Come eat cookies!" in the Invitation text field
+    And "Jane Doe" should receive 1 private message
     And the private message should include "Come eat cookies!"
 
   @javascript
   Scenario: User adds custom invitation text and invites someone by email
     Given I sign in and create an event named "Cookie party"
     And I fill in the multiple invite invitation text field with "Come eat cookies!"
-    And I invite "chocolate@chips.com" to "Cookie party" via the autocomplete from the multiple invite page
+    And I invite "chocolate@example.com" to "Cookie party" via the autocomplete from the multiple invite page
     When I press "Invite"
-    Then "chocolate@chips.com" should receive an email with the text "Come eat cookies!"
+    Then I should see "Come eat cookies!" in the Invitation text field
+    And "chocolate@example.com" should receive an email with the text "Come eat cookies!"
 
   @javascript
   Scenario: User adds custom invitation text and sees it on the event page

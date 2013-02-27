@@ -32,7 +32,7 @@ module FieldFinderHelpers
 
     def find_by_data_role
       with_error_message(error_message_for_missing_data_role) do
-        @page.find("input[data-role='#{@field_name_or_data_role}']")
+        @page.first("input[data-role='#{@field_name_or_data_role}']")
       end
     end
 

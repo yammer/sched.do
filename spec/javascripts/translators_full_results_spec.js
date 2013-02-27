@@ -1,5 +1,3 @@
-require('/assets/application.js');
-
 describe('normalizeTranslatedResponse', function(){
   it('returns a function that translates Yammer data', function(){
     var returnValue = Scheddo.
