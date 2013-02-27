@@ -1,6 +1,6 @@
 //= require countdown_event_name
 //= require events
-//= require jquery.app
+//= require event_form
 //= require jquery-placeholder
 
 $(document).ready(function(){

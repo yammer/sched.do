@@ -3,7 +3,10 @@
     as: :string,
     label: false,
     placeholder: 'Time, e.g. 11:00am',
-    input_html: { 'data-role' => 'secondary-suggestion' } %>
+    input_html: {
+      'data-role' => 'secondary-suggestion',
+      class: 'secondary-suggestion'
+    } %>
   <%= link_to_remove_association 'Remove Suggestion',
     f,
     tabindex: '-1',

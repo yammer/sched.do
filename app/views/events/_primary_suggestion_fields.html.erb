@@ -1,7 +1,13 @@
 <div class="nested-fields primary">
   <div class="date">
-    <%= f.input :description, as: :string, label: false, placeholder: 'Date',
-          input_html: { 'data-role' => 'primary-suggestion' } %>
+    <%= f.input :description, 
+      as: :string, 
+      label: false, 
+      placeholder: 'Date',
+      input_html: { 
+        'data-role' => 'primary-suggestion',
+        class: 'primary-suggestion'
+      } %>
   </div>
   <div class="times">
     <%= f.semantic_fields_for(:secondary_suggestions) do |secondary| %>
@@ -14,5 +20,9 @@
       partial: 'secondary_suggestion_fields',
       'data-association-insertion-node' => 'this',
       'data-association-insertion-method' => :before %>
+    <%= link_to_remove_association 'Remove Suggestion',
+      f,
+      tabindex: '-1',
+      'data-timeout' => 1500 %>
   </div>
 </div>

@@ -154,3 +154,7 @@ step 'I created an event named :event_name with a suggestion of :primary with th
   click_button 'Create event'
   expect(page).to have_content(event_name)
 end
+
+step 'I should see :number :type fields' do |number, type|
+  expect(all(".#{type}-suggestion", visible: true).count).to eq number.to_i
+end
