@@ -1,6 +1,11 @@
+<% content_for(:javascript) do %>
+  <%= javascript_include_tag :sign_in %>
+<% end %>
+
 <div class="show-event">
   <%= render 'events/header' %>
   <%= render 'events/guest_invitation_form' %>
   <%= render 'events/metadata' %>
   <%= render 'events/grid' %>
+  <%= render 'shared/sign_in_modal' -%>
 </div>

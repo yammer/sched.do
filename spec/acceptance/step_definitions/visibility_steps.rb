@@ -1,3 +1,11 @@
+step 'I should see the :text button' do |text|
+  expect(page).to have_button text
+end
+
+step 'I should not see the :text button' do |text|
+  expect(page).to_not have_button(text)
+end
+
 step 'I should see :text' do |text|
   expect(page).to have_content text
 end
