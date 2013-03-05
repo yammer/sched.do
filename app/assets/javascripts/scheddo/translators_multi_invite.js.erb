@@ -11,12 +11,12 @@ Scheddo.Translators.MultiInvite = _.extend((function(){
           renderUser(user);
       };
 
-      user.post = function(eventId){
+      user.post = function(eventId, invitationText){
         Scheddo.
           Translators.
           Requests.
           Async.
-          userAsync(user, eventId);
+          userAsync(user, eventId, invitationText);
       };
 
       return user;
@@ -39,12 +39,12 @@ Scheddo.Translators.MultiInvite = _.extend((function(){
           renderGroup(group);
       };
 
-      group.post = function(eventId){
+      group.post = function(eventId, invitationText){
         Scheddo.
           Translators.
           Requests.
           Async.
-          groupAsync(group, eventId);
+          groupAsync(group, eventId, invitationText);
       };
 
       return group;
@@ -76,12 +76,12 @@ Scheddo.Translators.MultiInvite = _.extend((function(){
         }
       };
 
-      email.post = function(eventId){
+      email.post = function(eventId, invitationText){
         Scheddo.
           Translators.
           Requests.
           Async.
-          emailAsync(email, eventId);
+          emailAsync(email, eventId, invitationText);
       };
 
       return email;

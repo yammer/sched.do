@@ -13,11 +13,24 @@ class YammerGroupInvitationsController < ApplicationController
   private
 
   def args
-    { event: event, invitee: invitee, sender: current_user }
+    {
+      event: event,
+      invitation_text: invitation_text,
+      invitee: invitee,
+      sender: current_user
+    }
+  end
+
+  def create_flash_errors
+    flash[:error] = @invitation.errors.full_messages.join(', ')
   end
 
   def event
     Event.find(params[:invitation][:event_id])
+  end
+
+  def invitation_text
+    params[:invitation][:invitation_text]
   end
 
   def invitee
@@ -27,15 +40,11 @@ class YammerGroupInvitationsController < ApplicationController
     )
   end
 
-  def yammer_group_id_param
-    params[:invitation][:invitee_attributes][:yammer_group_id]
-  end
-
   def name
     params[:invitation][:invitee_attributes][:name_or_email]
   end
 
-  def create_flash_errors
-    flash[:error] = @invitation.errors.full_messages.join(', ')
+  def yammer_group_id_param
+    params[:invitation][:invitee_attributes][:yammer_group_id]
   end
 end

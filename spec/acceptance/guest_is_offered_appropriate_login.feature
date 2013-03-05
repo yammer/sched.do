@@ -28,7 +28,7 @@ Feature: Guest is shown appropriate login option
     When I vote for "lunch"
     Then I should receive a vote confirmation email with a link to "Clown party"
     When I sign out
-    And "guest@example.com" follows the link "Click Here" in his email
+    And "guest@example.com" follows the "Click Here" button in his email
     Then I should see my email address "guest@example.com" prepopulated
     And I should see my name "Joe Schmoe" prepopulated
 

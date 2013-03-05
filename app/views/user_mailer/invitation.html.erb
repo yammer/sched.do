@@ -2,11 +2,12 @@
 
 <p>
   <%= image_tag(@invitation.sender.image) %>
-  <strong><%= @event.owner %></strong> <%= get_first_line_of_invitation(@invitation) %>
+  <%= @invitation_text %>
 </p>
 
+
 <p>
-  Click here to vote and see the results.
+  Click here to vote and see the results:
   <%= render 'click_here',
     event: @event,
     email: @guest.email,

@@ -57,6 +57,7 @@ FactoryGirl.define do
 
   factory :invitation do
     event
+    invitation_text 'Some text'
     association :invitee, factory: :user
     association :sender, factory: :user
 

@@ -7,9 +7,9 @@ step ':email_address should receive an email with the text :email_text' do |emai
   expect(email_body(last_email_sent)).to match /#{Regexp.escape(email_text)}/
 end
 
-step ':email_address follows the link :link in his email' do |email_address, link|
+step ':email_address follows the :button button in his email' do |email_address, button|
   open_email(email_address)
-  visit_in_email(link)
+  visit_in_email(button)
 end
 
 step ':email_address should receive a vote confirmation email with a link to :event_name' do |email_address, event_name|

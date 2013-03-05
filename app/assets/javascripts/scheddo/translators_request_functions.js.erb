@@ -11,7 +11,7 @@ Scheddo.Translators.Requests.Async = {
     }
   },
 
-  userAsync: function(user, eventId){
+  userAsync: function(user, eventId, invitationText){
     var self = this;
     $.ajax({
       type: 'POST',
@@ -19,6 +19,7 @@ Scheddo.Translators.Requests.Async = {
       data: {
         invitation: {
           event_id: eventId,
+          invitation_text: invitationText,
           invitee_attributes: {
             yammer_user_id: user.id
           }
@@ -30,7 +31,7 @@ Scheddo.Translators.Requests.Async = {
     });
   },
 
-  groupAsync: function(group, eventId){
+  groupAsync: function(group, eventId, invitationText){
     var self = this;
     $.ajax({
       type: 'POST',
@@ -38,6 +39,7 @@ Scheddo.Translators.Requests.Async = {
       data: {
         invitation: {
           event_id: eventId,
+          invitation_text: invitationText,
           invitee_attributes: {
             name_or_email: group.fullName,
             yammer_group_id: group.id
@@ -50,7 +52,7 @@ Scheddo.Translators.Requests.Async = {
     });
   },
 
-  emailAsync: function(email, eventId){
+  emailAsync: function(email, eventId, invitationText){
     var self = this;
     $.ajax({
       type: 'POST',
@@ -58,6 +60,7 @@ Scheddo.Translators.Requests.Async = {
       data: {
         invitation: {
           event_id: eventId,
+          invitation_text: invitationText,
           invitee_attributes: {
             name_or_email: email.value,
           }

@@ -32,6 +32,15 @@
         <% end %>
       </section>
 
+      <section class="custom-text">
+        <div class="suggestions">
+          <h4>Invitation text:</h4>
+          <div class="invitation-text">
+            <textarea id="multiple-invite-text" rows="4" cols="50"> <%= last_non_owner_invitation_text(@event) %> </textarea>
+          </div>
+        </div>
+      </section>
+
       <%= render 'javascript_templates/yammer_autocomplete_templates' %>
       <%= render 'javascript_templates/multiple_invitation_templates' %>
 

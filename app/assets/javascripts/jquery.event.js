@@ -72,6 +72,8 @@ $(document).ready(function() {
     return false;
   });
 
+  $('.invitation-text').tooltip();
+
   $('ul.poll-actions li').tooltip();
 
   $('#copy-event-url').zclip({

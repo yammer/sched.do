@@ -74,7 +74,8 @@ describe UserMailer, '.invitation' do
   end
 
   it 'sends the email with the correct body when invitees present' do
-    invitation = create(:invitation_with_guest)
+    custom_text = 'Custom invite text'
+    invitation = create(:invitation_with_guest, invitation_text: custom_text)
     guest = invitation.invitee
     event = invitation.event
     first_invitee = event.invitees.first
@@ -82,8 +83,8 @@ describe UserMailer, '.invitation' do
     mail = UserMailer.invitation(invitation)
 
     expect(mail.body.encoded).to include(guest.name)
-    expect(mail.body.encoded).to include(event.name)
     expect(mail.body.encoded).to include(first_invitee.name)
+    expect(mail.body.encoded).to include(custom_text)
   end
 end
 

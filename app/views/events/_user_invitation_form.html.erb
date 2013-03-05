@@ -1,32 +1,49 @@
 <section class="search-box">
   <h4>Invite people to the event:</h4>
-  <%= semantic_form_for(@invitation, html: { id: 'invitations' }) do |form| %>
-    <%= form.inputs do %>
+    <%= semantic_form_for(@invitation, html: { id: 'invitations' }) do |form| %>
+      <%= form.inputs do %>
 
-      <div class="invitee-input">
-        <%= text_field_tag "invitation[invitee_attributes][name_or_email]",
-          nil,
-          'data-role' => 'invitation_name',
-          placeholder: 'enter an email, Yammer group or Yammer contact',
-          id: 'auto-complete' %>
-      </div>
+        <div class="invitee-input">
+          <%= text_field_tag "invitation[invitee_attributes][name_or_email]",
+            nil,
+            'data-role' => 'invitation_name',
+            placeholder: 'enter an email, Yammer group or Yammer contact',
+            id: 'auto-complete' %>
+        </div>
 
-      <%= form.input :event_id, as: :hidden %>
+        <%= form.input :event_id, as: :hidden %>
 
-      <%= form.semantic_fields_for :invitee do |invitee_form| %>
-        <%= invitee_form.input :yammer_user_id,
+        <%= form.input :invitation_text,
           as: :hidden,
-          input_html: { 'data-role' => 'yammer_user_id' } %>
+          input_html: { value: last_non_owner_invitation_text(@event) } %>
 
-        <%= invitee_form.input :yammer_group_id,
-          as: :hidden,
-          input_html: { 'data-role' => 'yammer_group_id' } %>
+        <%= form.semantic_fields_for :invitee do |invitee_form| %>
+          <%= invitee_form.input :yammer_user_id,
+            as: :hidden,
+            input_html: { 'data-role' => 'yammer_user_id' } %>
+
+          <%= invitee_form.input :yammer_group_id,
+            as: :hidden,
+            input_html: { 'data-role' => 'yammer_group_id' } %>
+        <% end %>
+
+        <%= form.action :submit, button_html: { id: "add-invitee" } %>
+          <div class="invitation-autocomplete-suggestions"></div>
       <% end %>
+</section>
 
-      <%= form.action :submit, button_html: { id: "add-invitee" } %>
-      <div class="invitation-autocomplete-suggestions"></div>
+<section class="custom-text">
+  <h4>Invitation text:</h4>
+    <div class="invitation-text" data-toggle="tooltip" title="This message will be posted to invited groups and sent as a private message to all individual invitees.">
+      <%= form.input :invitation_text,
+        label: false,
+        input_html: {
+          disable_with: 'disabled',
+          disabled: invitation_text_disabled?(@event, current_user),
+          value: last_non_owner_invitation_text(@event)
+        }
+      %>
     <% end %>
-  <% end %>
 </section>
 
 <%= render 'javascript_templates/yammer_autocomplete_templates' %>

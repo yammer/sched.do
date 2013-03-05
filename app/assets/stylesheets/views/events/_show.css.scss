@@ -155,7 +155,7 @@ div.show-event {
     }
   }
 
-  section.search-box, section.invitee-sharing {
+  .search-box, section.invitee-sharing {
     @extend %blue-container;
     @include border-radius(4px);
     @include box-sizing(border-box);
@@ -164,7 +164,7 @@ div.show-event {
     position: relative;
     margin-top: 20px;
 
-    form#invitations {
+    form {
       fieldset {
         border: none;
         margin: 0px;
@@ -368,5 +368,41 @@ div.show-event {
 
   div#invitees {
     @extend section.invited-yammer-groups;
+  }
+
+  section.custom-text {
+    @extend .search-box;
+    @include clearfix;
+    border: 1px solid #a9d9e3;
+    background-image: -webkit-linear-gradient(top, #f6fbfc, #dff1f4);
+
+    h4 {
+      color: #3da2b6;
+      float: left;
+      text-shadow: none;
+      width: 242px;
+      margin-top: 5px;
+    }
+
+    li {list-style-type: none;}
+
+    input[type="text"] {
+      @include invitation-text;
+      height: 20px;
+    }
+
+    input[disabled="disabled"] {
+      background-color: #E6E6E6;
+      color: grey;
+      }
+
+    input[type="submit"] {
+      display: none;
+    }
+
+    textarea {
+      @include invitation-text;
+      height: 80px;
+    }
   }
 }

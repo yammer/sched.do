@@ -80,7 +80,8 @@ class EventsController < ApplicationController
 
   def verify_or_setup_invitation_for_current_user
     if view_context.user_not_invited?(@event, current_user)
-      invitation = Invitation.new(event: @event, invitee: current_user)
+      text = view_context.last_non_owner_invitation_text(@event)
+      invitation = Invitation.new(event: @event, invitation_text: text, invitee: current_user)
       invitation.invite_without_notification
       @event.reload
     end

@@ -1,13 +1,7 @@
 class YammerUserInvitationsController < ApplicationController
 
   def create
-    @event = Event.find(event_id)
-    invitee = find_or_create_user
-    invitation = Invitation.new(
-      event: @event,
-      invitee: invitee,
-      sender: current_user
-    )
+    invitation = Invitation.new(args)
     invitation.invite
 
     if invitation.invalid?
@@ -19,12 +13,17 @@ class YammerUserInvitationsController < ApplicationController
 
   private
 
-  def find_or_create_user
-    User.find_by_yammer_user_id(invitee_id) || create_user_from(invitee_id)
+  def args
+    {
+      event: event,
+      invitation_text: invitation_text,
+      invitee: find_or_create_user,
+      sender: current_user
+    }
   end
 
   def create_user_from(invitee_id)
-    invitee_data = @event.owner.yammer_client.get("/users/#{invitee_id}")
+    invitee_data = owner_yammer_client.get("/users/#{invitee_id}")
     User.new.tap do |user|
       YammerUserResponseTranslator.
         new(invitee_data, user).
@@ -33,8 +32,20 @@ class YammerUserInvitationsController < ApplicationController
     end
   end
 
-  def event_id
-    params[:invitation][:event_id]
+  def event
+    Event.find(params[:invitation][:event_id])
+  end
+
+  def find_or_create_user
+    User.find_by_yammer_user_id(invitee_id) || create_user_from(invitee_id)
+  end
+
+  def owner_yammer_client
+    event.owner.yammer_client
+  end
+
+  def invitation_text
+    params[:invitation][:invitation_text]
   end
 
   def invitee_id

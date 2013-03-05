@@ -1,4 +1,4 @@
-step 'I should see a page asking me to invite my friends' do
+step 'I should see a page asking me to invite people to the event' do
   expect(page).to have_content('Invite people to the event')
 end
 

@@ -57,8 +57,6 @@ describe Preview, 'invitation' do
     mail = Preview.new.invitation
 
     expect(mail.body.encoded).to include (guest.name)
-    expect(mail.body.encoded).to include (event.name)
-    expect(mail.body.encoded).to include (event.name)
   end
 end
 

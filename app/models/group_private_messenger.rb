@@ -8,6 +8,7 @@ class GroupPrivateMessenger
     @sender = sender
     @event = invitation.event
     @invitation_template_path = '/groups/invitation.erb'
+    @invitation_text = invitation.invitation_text
   end
 
   private

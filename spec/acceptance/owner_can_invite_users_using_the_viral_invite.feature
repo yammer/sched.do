@@ -34,7 +34,6 @@ Feature: Multiple invitations
     When I invite the Yammer group "Scheddo-Devs" to "sched.do Meeting" from the multiple invite page
     And I press "Invite"
     Then group "Scheddo-Devs" should receive a private invitation message
-    And the private invitation message should be sent regarding "sched.do Meeting"
 
   @javascript
   Scenario: Owner adds a user by email to the invite list and invites the user

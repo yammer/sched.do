@@ -18,19 +18,36 @@ $(document).ready(function(){
   });
 
   $('#multi-invite-submit').on('click', function(event){
-    if(Scheddo.Util.inviteeQueue.length > 0){
+    var invitationText = $('.invitation-text textarea').val().trim();
+    var validText = isValidText(invitationText);
+    if(Scheddo.Util.inviteeQueue.length > 0 && validText){
       $(this).val('Loading...');
       $("input[data-role='invitation_name']").prop('disabled', true);
 
       _.each(Scheddo.Util.inviteeQueue, function(element, index){
-        element.post($('#event_id').val());
+        var eventId = $('#event_id').val();
+        element.post(eventId, invitationText);
       });
+    }
+    else if(validText === false) {
+      $('.flash').append('<div id="flash-error">Invitation text cannot be blank.</div>')
+      var defaultText = "I\'m using sched.do to schedule an event, and I\'d like your input.";
+      $('.invitation-text textarea').val(defaultText);
     }
     else{
       $('#new_event').unbind('submit');
       $('#new_event').submit();
     }
   });
+
+  isValidText = function(invitationText) {
+    if(invitationText.length > 0) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
 
   $('.back').on('click', function(event){
     if(Modernizr.localstorage){

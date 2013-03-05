@@ -11,6 +11,10 @@ step 'the private message should include a link to :event_name' do |event_name|
   expect(FakeYammer.message).to include(event_url(event))
 end
 
+step 'the private message should include :text' do |text|
+  expect(FakeYammer.message).to include(text)
+end
+
 step 'the private reminder message sent should be from :name' do |name|
   sender = User.find_by_name!(name)
   expect(FakeYammer.access_token).to eq sender.access_token
@@ -26,10 +30,6 @@ end
 step 'group :name should not receive a private invitation message' do |name|
   expect(FakeYammer.group_id).to eq 0
   expect(FakeYammer.messages_endpoint_hits).to eq 0
-end
-
-step 'the private invitation message should be sent regarding :event' do |event|
-  expect(FakeYammer.message).to include(event)
 end
 
 step 'the private invitation message sent should be from :sender' do |sender|

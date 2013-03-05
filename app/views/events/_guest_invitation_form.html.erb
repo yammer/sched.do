@@ -13,6 +13,10 @@
 
       <%= form.input :event_id, as: :hidden %>
 
+      <%= form.input :invitation_text,
+        as: :hidden,
+        input_html: { value: last_non_owner_invitation_text(@event) } %>
+
       <%= form.semantic_fields_for :invitee do |invitee_form| %>
         <%= invitee_form.input :yammer_user_id,
           as: :hidden,
@@ -23,7 +27,21 @@
           input_html: { 'data-role' => 'yammer_group_id' } %>
       <% end %>
 
+
       <%= form.action :submit, button_html: { id: "add-invitee" } %>
+</section>
+
+<section class="custom-text">
+    <h4>Invitation text:</h4>
+    <div class="invitation-text" data-toggle="tooltip" title="This message will be posted to invited groups and sent as a private message to all individual invitees.">
+      <%= form.input :invitation_text,
+        label: false,
+        input_html: {
+          disable_with: 'disabled',
+          disabled: invitation_text_disabled?(@event, current_user),
+          value: last_non_owner_invitation_text(@event)
+        }
+      %>
+</section>
     <% end %>
   <% end %>
-</section>

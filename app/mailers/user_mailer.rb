@@ -21,6 +21,7 @@ class UserMailer < ActionMailer::Base
     @sender = invitation.sender
     @event = invitation.event
     @invitation = invitation
+    @invitation_text = invitation.invitation_text
 
     mail(
       to: @guest.email,

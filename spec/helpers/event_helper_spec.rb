@@ -79,6 +79,23 @@ describe EventHelper, '#invitation_for' do
   end
 end
 
+describe EventHelper, '#invitation_text_disabled?' do
+  it 'returns true of the user is not the event owner' do
+    user = build(:user)
+    event = build(:event, owner: user)
+    other_user = build(:user)
+
+    expect(invitation_text_disabled?(event, other_user)).to be true
+  end
+
+  it 'returns false if the user is the event owner' do
+    user = build(:user)
+    event = build(:event, owner: user)
+
+    expect(invitation_text_disabled?(event, user)).to be false
+  end
+end
+
 describe EventHelper, '#invitees_with_current_user_first' do
   it 'creates an array of invitees, with the current user first' do
     event = event_with_invitees
@@ -100,6 +117,26 @@ describe EventHelper, '#invitees_with_current_user_first' do
     sorted_invitees = invitees_with_current_user_first(event, current_user)
 
     expect(sorted_invitees).to include(event_creator)
+  end
+end
+
+describe EventHelper, '#last_non_owner_invitation_text' do
+  it 'returns the default text if the event owner is the only invitee' do
+   event = create(:event)
+
+   text = last_non_owner_invitation_text(event)
+
+   expect(text).to eq "I'm using sched.do to schedule an event, and I'd like your input."
+  end
+
+  it 'returns the text used for the last invitation if there are invitees' do
+    event = create(:event)
+    custom_text = 'Custom text'
+    invitation = create(:invitation, event: event, invitation_text: custom_text)
+
+    text = last_non_owner_invitation_text(event)
+
+    expect(text).to eq custom_text
   end
 end
 

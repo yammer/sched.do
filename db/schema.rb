@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130205230425) do
+ActiveRecord::Schema.define(:version => 20130306001103) do
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
@@ -67,15 +67,16 @@ ActiveRecord::Schema.define(:version => 20130205230425) do
   add_index "guests", ["email"], :name => "index_guests_on_email"
 
   create_table "invitations", :force => true do |t|
-    t.integer  "event_id",     :null => false
-    t.integer  "invitee_id",   :null => false
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
-    t.string   "invitee_type", :null => false
+    t.integer  "event_id",                       :null => false
+    t.integer  "invitee_id",                     :null => false
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
+    t.string   "invitee_type",                   :null => false
     t.integer  "sender_id"
     t.string   "sender_type"
     t.integer  "vote_id"
     t.datetime "reminded_at"
+    t.string   "invitation_text", :limit => 400
   end
 
   add_index "invitations", ["event_id"], :name => "index_invitations_on_event_id"

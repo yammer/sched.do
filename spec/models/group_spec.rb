@@ -17,7 +17,6 @@ describe Group, '#invite' do
     work_off_delayed_jobs
 
     expect(FakeYammer.messages_endpoint_hits).to eq 1
-    expect(FakeYammer.message).to include(invitation.event.name)
   end
 end
 
