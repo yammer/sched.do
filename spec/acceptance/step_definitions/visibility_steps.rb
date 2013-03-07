@@ -17,3 +17,7 @@ end
 step 'I should not see the :text link' do |text|
   expect(page).to_not have_link(text)
 end
+
+step 'the share modal should not be visible' do
+  expect(find(:css, '.footer-link')).to_not be_visible
+end

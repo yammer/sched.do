@@ -12,6 +12,6 @@ $(document).ready(function(){
 
     Scheddo.YammerApi.publicMessage(message);
 
-    $('#dialog').dialog('close');
+    $('.footer-link').dialog('close');
   });
 });

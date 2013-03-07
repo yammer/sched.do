@@ -12,6 +12,7 @@ Feature: User can share sched.do with her Yammer network
     When I click "Share sched.do"
     And I share the sched.do application with my Yammer network
     Then I should see "Thank you for sharing sched.do!"
+    And the share modal should not be visible
 
   @javascript
   Scenario: User unsuccessfully shares the app
