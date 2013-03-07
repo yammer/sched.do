@@ -17,7 +17,7 @@ $(document).ready(function(){
     event.preventDefault();
   });
 
-  $('.cta').on('click', function(event){
+  $('#multi-invite-submit').on('click', function(event){
     if(Scheddo.Util.inviteeQueue.length > 0){
       $(this).val('Loading...');
       $("input[data-role='invitation_name']").prop('disabled', true);
