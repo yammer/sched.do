@@ -12,7 +12,7 @@ Scheddo.YammerApi = {
     yam.request.getAuthenticator({ auth: 'oauth2' }).setAuthToken(token);
   },
 
-  groupMessage: function(message, group){
+  groupMessage: function(message, group_id){
     var flashMessage = function(div, flash) {
       return function(){
         Scheddo.Util.setFlash(div, flash);
@@ -24,7 +24,7 @@ Scheddo.YammerApi = {
       method: 'POST',
       data: {
         body: message,
-        group_id: group.id
+        group_id: group_id
       },
       success: flashMessage('flash-notice', 'Thank you for sharing sched.do!'),
       error: flashMessage('flash-error', 'There was an error with the request')
@@ -51,6 +51,22 @@ Scheddo.YammerApi = {
     yam.request(options);
   },
 
+  getGroups: function(callback){
+    var options = {
+      url: '/api/v1/groups.json',
+      method: 'GET',
+      success: function(yammerData){
+        groups = _.map(
+          yammerData,
+          Scheddo.Translators.translateGroup
+        );
+        callback(groups);
+      }
+    };
+
+    yam.request(options);
+  },
+
   autocomplete: function(translator){
     var maxGroupsReturned = 2;
     return {
@@ -66,32 +82,6 @@ Scheddo.YammerApi = {
             prefix: term,
             models: 'user:' + maxUsersReturned + ',group:' + maxGroupsReturned},
           success: translator.normalizeTranslatedResponse(term, response)
-        };
-
-        yam.request(options);
-      },
-
-      getUser: function(id, displayCallback){
-        var options = {
-          url: '/api/v1/users/' + id,
-          method: 'GET',
-          success: function(yammerData){
-            user = _.first(translator.translateUsers([yammerData]));
-            displayCallback(user);
-          }
-        };
-
-        yam.request(options);
-      },
-
-      getGroup: function(id, displayCallback){
-        var options = {
-          url: '/api/v1/groups/' + id,
-          method: 'GET',
-          success: function(yammerData){
-            group = _.first(translator.translateGroups([yammerData]));
-            displayCallback(group);
-          }
         };
 
         yam.request(options);

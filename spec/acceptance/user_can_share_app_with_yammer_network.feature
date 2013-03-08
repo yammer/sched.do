@@ -10,7 +10,28 @@ Feature: User can share sched.do with her Yammer network
   Scenario: User shares the app
     Given I am signed in as "Bruce Lee"
     When I click "Share sched.do"
-    And I share the sched.do application with my Yammer network
+    And I share the sched.do application
+    Then I should see "Thank you for sharing sched.do!"
+    And the share modal should not be visible
+
+  @javascript
+  Scenario: User opens the share app and sees the correct group list
+    Given I am signed in as "Bruce Lee"
+    And a group exists named "Scheddopeeps"
+    When I click "Share sched.do"
+    And I share the sched.do application
+    And I click "Share sched.do"
+    And I expand the Group list
+    Then there should be 2 options in the group list
+
+  @javascript
+  Scenario: User shares the app and selects a group
+    Given I am signed in as "Bruce Lee"
+    And a group exists named "Scheddopeeps"
+    When I click "Share sched.do"
+    And I expand the Group list
+    And I select "Scheddopeeps" from the group list
+    And I share the sched.do application
     Then I should see "Thank you for sharing sched.do!"
     And the share modal should not be visible
 
@@ -45,23 +66,3 @@ Feature: User can share sched.do with her Yammer network
     When I vote for "lunch"
     Then I should see "Thanks for voting, please share sched.do"
     And I should see "I created an event in sched.do"
-
-  @javascript
-  Scenario: User votes on an event and shares sched.do with a group
-    Given someone created an event named "Clown party" with a suggestion of "lunch"
-    And I am signed in as "Bruce Lee"
-    When I view the "Clown party" event
-    And I vote for "lunch"
-    And I choose to share sched.do with the Yammer group "scheddo-developers"
-    Then I should see "scheddo-developers" in the share event dialog groups list
-
-  @javascript
-  Scenario: User adds a Yammer group to the share list and then removes the group
-    Given someone created an event named "Clown party" with a suggestion of "lunch"
-    And I am signed in as "Bruce Lee"
-    When I view the "Clown party" event
-    And I vote for "lunch"
-    And I choose to share sched.do with the Yammer group "scheddo-developers"
-    And I remove "Scheddo-Devs" from the list of invited users
-    Then I should not see "Scheddo-Devs" in the groups list
-

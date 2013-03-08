@@ -4,22 +4,6 @@
     <form>
       <fieldset class="inputs">
         <ol>
-          <% if invite_groups %>
-            <div class="suggestions">
-              <p>Share the sched.do app with specific groups</p>
-            </div>
-            <li>
-              <input type="text" id="auto-complete" placeholder="Ex. Sales Team" />
-              <div class="invitation-autocomplete-suggestions" /></div>
-              <div id="invitees">
-                <section class="groups invited-yammer-groups invited">
-                  <h4>Invited Yammer Groups</h4>
-                  <h5 id="invite_groups">If no specific groups are selected, this message will be sent to your company's feed.</h5>
-                  <ul class="invited-groups list-invitees"> </ul>
-                </section>
-              </div>
-            </li>
-          <% end %>
           <div class="suggestions">
             <p>Customize message</p>
           </div>
@@ -29,15 +13,33 @@
               </textarea>
             </li>
           </div>
+          <li>
+            Post to: <a class="recipients">My Colleagues</a>
+            <div class="group-list">
+              <h3>Change group ▾</h3>
+              <div>
+                <ol class="selectable groups">
+                  <li class="group" data-group-id="null">
+                    My Colleagues
+                  </li>
+                </ol>
+              </div>
+            </div>
+          </li>
         </ol>
       </fieldset>
 
       <fieldset class="actions">
         <ol>
-        <li class="action input-action"><%= button_to 'Share', '#', class: "share-button cta #{share_trigger}-button" %></li>
+          <li class="action input-action">
+          <%= button_to 'Share',
+            '#',
+            class: "share-button cta" %>
+          </li>
         </ol>
       </fieldset>
     </form>
   </div>
 </div>
-<%= render 'javascript_templates/multiple_invitation_templates' %>
+<%= render 'javascript_templates/group_selector_templates' %>
+

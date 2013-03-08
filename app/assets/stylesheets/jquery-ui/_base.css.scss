@@ -70,6 +70,44 @@
   }
 }
 
+.group-list {
+  float:right;
+  
+  h3 {
+    color: rgba(0,0,0,.2);
+    cursor: pointer;
+    display: inline;
+    font-size: .8em;
+    line-height: 1em;
+    vertical-align: middle;
+  }
+
+  .ui-selectable {
+    background-color: #fff;
+    border:1px solid rgba(0,0,0,.5);
+    border-radius: 4px;
+    @include box-shadow(0 1px 6px 0 rgba(0,0,0, 0.3));
+    position: absolute;
+    width:200px;
+    display:none;
+
+    li {
+      border-bottom: 1px solid rgba(0,0,0,.12);
+      cursor: pointer;
+      margin: 0;
+      padding: 5px 10px;
+      
+      &:hover {
+        background-color: rgba(0,0,0,.04);
+      }
+
+      &:last-child {
+        border-bottom:none;
+      }
+    }
+  }
+}
+
 .ui-helper-hidden {
   display: none;
 }
