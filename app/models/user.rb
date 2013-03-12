@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   attr_encrypted :access_token, key: ENV['ACCESS_TOKEN_ENCRYPTION_KEY']
 
-  has_many :events
+  has_many :events, order: 'created_at DESC'
   has_many :votes, as: :voter
   has_many :invitations, as: :invitee
 

@@ -18,6 +18,9 @@
             </span>
           </li>
           <li>
+            <%= link_to 'My Polls', polls_path, id: 'my-polls' %>
+          </li>
+          <li>
             <%= yield(:poll_create_button) %>
           </li>
         <% else %>

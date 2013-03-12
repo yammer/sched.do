@@ -1,0 +1,19 @@
+<div class="my-events">
+  <h2>My Polls</h2>
+  <div class="table-wrapper">
+    <table id="my-events">
+      <tbody>
+        <% @events.each do |event| %>
+          <tr>
+            <td class="event-name"><%= link_to event.name, event_path(event) %></td>
+            <td class="event-created"><%= distance_of_time_in_words(Time.now, event.created_at) %></td>
+            <td class="event-invitees"><%= pluralize(event.invitees.count - 1,'invitee') %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<% content_for(:poll_create_button) do %>
+  <%= render 'shared/create_poll' %>
+<% end %>

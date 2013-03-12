@@ -98,3 +98,9 @@ step ':first_suggestion should appear before :second_suggestion in the list' do 
     expect(page).to have_content(second_suggestion)
   end
 end
+
+step 'I should see :event_name in my Events list' do |event_name|
+  within '#my-events' do
+    expect(page).to have_content(event_name)
+  end
+end
