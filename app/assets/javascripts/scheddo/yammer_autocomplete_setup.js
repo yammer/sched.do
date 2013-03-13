@@ -53,10 +53,11 @@ Scheddo.autocompleteConfiguration = function(options){
       },
       close: function(event, ui){
         options.autocompleteInput.removeClass('autocomplete-true')
-        options.autocompleteInput.val('');
       },
       select: function(event, ui) {
         ui.item.submit(event, $(this).parents('form'));
+        options.autocompleteInput.val('');
+        return false;
       },
       source: function(request, response) {
         var yammerApi = Scheddo.YammerApi;
