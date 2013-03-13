@@ -41,7 +41,7 @@ $(document).ready(function(){
 
       $('.votable').one('click', '.vote', function() {
         $('.post-vote').
-        delay(800).
+        delay(45000).
         queue(function() {
           $(this).dialog('open')
         });
