@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '1.9.3'
+ruby '2.0.0'
 
 gem 'rails', '~> 3.2'
 
@@ -8,6 +8,7 @@ gem 'airbrake', '~> 3.1'
 gem 'attr_encrypted'
 gem 'aws-sdk', '~> 1.3.4'
 gem 'bourbon', '~> 2.1'
+gem 'cocoon'
 gem 'delayed_job_active_record'
 gem 'flutie', '= 1.3.3'
 gem 'formtastic'
@@ -25,7 +26,6 @@ gem 'tddium'
 gem 'thin'
 gem 'yam'
 gem 'zclip-rails'
-gem 'cocoon'
 
 # Gems used only for assets, not required in production environments by default.
 group :assets do

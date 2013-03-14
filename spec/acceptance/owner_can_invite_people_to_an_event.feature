@@ -1,6 +1,5 @@
 Feature: Owner can invite people to an event
 
-  @javascript
   Scenario: Owner invites an invalid user
     Given I sign in and create an event named "Clown party"
     When I invite "Unknown Owner" to "Clown party"
@@ -14,7 +13,6 @@ Feature: Owner can invite people to an event
     And I invite the Yammer user "Joe Smith" to "Clown party"
     Then I should see "Invitee has already been invited"
 
-  @javascript
   Scenario: Owner invites a guest by email address
     Given I sign in and create an event named "Clown party"
     When I invite "batman@example.com" to "Clown party"
@@ -45,16 +43,14 @@ Feature: Owner can invite people to an event
     Then I should see "Frank Drebin" in the list of invitees
     And out-network Yammer user "Frank Drebin" should get an email notification
 
-  @javascript
   Scenario: Owner invites multiple guests, each guest only receives 1 invitation
     Given I sign in and create an event named "Clown party"
     When I invite "batman@example.com" to "Clown party"
     When I invite "spiderman@example.com" to "Clown party"
     Then "batman@example.com" should have 1 email
 
-  @javascript
   Scenario: Invitees are placed in reverse chronological order
     Given I sign in and create an event named "Clown party"
-    When I invite "batman@example.com" to "Clown party"
+    And I invite "batman@example.com" to "Clown party"
     When I invite "spiderman@example.com" to "Clown party"
     Then "spiderman@example.com" should appear before "batman@example.com"
