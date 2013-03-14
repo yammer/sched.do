@@ -1,10 +1,11 @@
 class EventsController < ApplicationController
+  include EventHelper
   skip_before_filter :require_yammer_login, only: :show
   before_filter :require_guest_or_yammer_login, only: :show
 
   def new
     @event = current_user.events.build
-    view_context.build_suggestions(@event)
+    build_suggestions(@event)
   end
 
   def create
@@ -13,7 +14,7 @@ class EventsController < ApplicationController
     if @event.save
       redirect_to multiple_invitations_path(event_uuid: @event.uuid)
     else
-      view_context.build_suggestions(@event)
+      build_suggestions(@event)
       render :new
     end
   end
@@ -28,7 +29,7 @@ class EventsController < ApplicationController
   def edit
     session[:return_to] = request.referer
     @event = current_user.events.find_by_uuid!(params[:id])
-    view_context.build_suggestions(@event)
+    build_suggestions(@event)
   end
 
   def update
@@ -41,7 +42,7 @@ class EventsController < ApplicationController
         format.json { render json: { status: :ok } }
       end
     else
-      view_context.build_suggestions(@event)
+      build_suggestions(@event)
       add_errors_to_flash
       render :edit
     end
@@ -79,8 +80,8 @@ class EventsController < ApplicationController
   end
 
   def verify_or_setup_invitation_for_current_user
-    if view_context.user_not_invited?(@event, current_user)
-      text = view_context.last_non_owner_invitation_text(@event)
+    if user_not_invited?(@event, current_user)
+      text = last_non_owner_invitation_text(@event)
       invitation = Invitation.new(event: @event, invitation_text: text, invitee: current_user)
       invitation.invite_without_notification
       @event.reload
