@@ -38,7 +38,9 @@ $(document).ready(function() {
       'mouseenter',
       'div.nested-fields.secondary',
       function() {
-        $(this).children('a.remove_fields').css('display', 'block');
+        if($(this).siblings().hasClass('secondary')) {
+          $(this).children('a.remove_fields').css('display', 'block');
+        }
       }
     ).
     on(
@@ -62,15 +64,6 @@ $(document).ready(function() {
       'div.nested-fields.primary',
       function() {
         $(this).find('div.times > a.remove_fields').hide();
-      }
-    );
-
-  $(document).
-    on(
-      'click',
-      'a.remove_fields',
-      function() {
-        $(this).parents('div.nested-fields').addClass('deleted');
       }
     );
 
