@@ -4,11 +4,14 @@
 # available to Rake.
 
 require File.expand_path('../config/application', __FILE__)
-require 'guard/jasmine/task'
-
-Guard::JasmineTask.new
 
 SchedDo::Application.load_tasks
+
+begin
+  require 'guard/jasmine/task'
+  Guard::JasmineTask.new(:jasmine)
+rescue LoadError
+end
 
 if defined?(RSpec)
   desc 'Run factory specs'
