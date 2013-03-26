@@ -1,7 +1,5 @@
 <%= javascript_include_tag :application %>
 <%= render 'shared/yammer_javascript' %>
-<% #FIXME When the Yammer Embed Feed is fixed remove jquery-migrate %>
-<script src="http://code.jquery.com/jquery-migrate-1.1.1.min.js"></script>
 
 <% if Rails.env.test? %>
   <%= javascript_tag do %>
