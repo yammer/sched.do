@@ -72,7 +72,7 @@ $(document).ready(function() {
     return false;
   });
 
-  $('.invitation-text').tooltip();
+  $('.custom-text').tooltip();
 
   $('ul.poll-actions li').tooltip();
 

@@ -32,9 +32,9 @@
       <% end %>
 </section>
 
-<section class="custom-text">
+<section class="custom-text" data-toggle="tooltip" title="This message will be posted to invited groups and sent as a private message to all individual invitees.">
   <h4>Invitation text:</h4>
-    <div class="invitation-text" data-toggle="tooltip" title="This message will be posted to invited groups and sent as a private message to all individual invitees.">
+    <div class="invitation-text">
       <%= form.input :invitation_text,
         label: false,
         input_html: {
@@ -43,6 +43,7 @@
           value: last_non_owner_invitation_text(@event)
         }
       %>
+    </div>
     <% end %>
 </section>
 
