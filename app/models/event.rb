@@ -23,6 +23,7 @@ class Event < ActiveRecord::Base
 
   validates :name, presence: { message: 'This field is required' }
   validates :name, length: { maximum: NAME_MAX_LENGTH }
+  validates :open, inclusion: { in: [true, false] }
   validates :user_id, presence: true
   validates :uuid, presence: true
 
@@ -32,6 +33,14 @@ class Event < ActiveRecord::Base
   after_create :enqueue_event_created_jobs
 
   after_update :enqueue_event_updated_job
+
+  def self.opened
+    where(open: true)
+  end
+
+  def closed?
+    !open
+  end
 
   def deliver_reminder_from(sender)
     invitations_without(sender).each do |invitation|

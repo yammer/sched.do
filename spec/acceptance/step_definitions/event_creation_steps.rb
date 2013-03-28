@@ -49,6 +49,12 @@ step 'someone created an event named :event_name' do |event_name|
   end
 end
 
+step 'someone created a closed event named :event_name' do |event_name|
+  as_random_user do
+    create(:event, open: false, name: event_name)
+  end
+end
+
 step 'someone created an event named :event_name with the following suggestions:' do |event_name, table|
   suggestions = table.raw.map(&:first)
   as_random_user do

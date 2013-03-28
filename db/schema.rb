@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130327224203) do
+ActiveRecord::Schema.define(:version => 20130403234130) do
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
@@ -30,11 +30,12 @@ ActiveRecord::Schema.define(:version => 20130327224203) do
   add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
 
   create_table "events", :force => true do |t|
-    t.string   "name",                    :null => false
-    t.datetime "created_at",              :null => false
-    t.datetime "updated_at",              :null => false
-    t.integer  "user_id",                 :null => false
-    t.string   "uuid",       :limit => 8, :null => false
+    t.string   "name",                                      :null => false
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
+    t.integer  "user_id",                                   :null => false
+    t.string   "uuid",       :limit => 8,                   :null => false
+    t.boolean  "open",                    :default => true
   end
 
   add_index "events", ["name"], :name => "index_events_on_name"
@@ -77,6 +78,7 @@ ActiveRecord::Schema.define(:version => 20130327224203) do
     t.integer  "vote_id"
     t.datetime "reminded_at"
     t.text     "invitation_text"
+    t.datetime "sent_at"
   end
 
   add_index "invitations", ["event_id"], :name => "index_invitations_on_event_id"
@@ -104,6 +106,7 @@ ActiveRecord::Schema.define(:version => 20130327224203) do
     t.string   "receiver_type", :null => false
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
+    t.datetime "sent_at"
   end
 
   add_index "reminders", ["receiver_id"], :name => "index_reminders_on_receiver_id"

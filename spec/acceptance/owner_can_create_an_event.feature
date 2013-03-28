@@ -5,6 +5,7 @@ Feature: Owner can create an event
     When I create an event named "Clown party" with a suggestion of "lunch"
     And I visit the event page for "Clown party"
     Then I should see an event named "Clown party" with a suggestion of "lunch"
+    And I should see "Your poll is now live"
     And my network should see an activity message announcing the event
 
   @javascript

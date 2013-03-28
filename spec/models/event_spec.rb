@@ -49,12 +49,19 @@ describe Event, 'validations' do
   it { expect(subject).to validate_presence_of(:name).with_message(/field is required/) }
   it { expect(subject).to ensure_length_of(:name).is_at_most(Event::NAME_MAX_LENGTH) }
   it { expect(subject).to validate_presence_of(:user_id) }
+  it { expect(subject).to have_db_column(:open).of_type(:boolean) }
 
   it 'validates presence of a uuid' do
     event = create(:event)
     event.uuid = nil
 
     expect(event).to_not be_valid
+  end
+
+  it 'sets the default open value to true' do
+    event = build(:event)
+
+    expect(event.open?).to be_true
   end
 end
 

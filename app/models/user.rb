@@ -28,7 +28,7 @@ class User < ActiveRecord::Base
     processors: [:thumbnail, :watermark]
 
   def able_to_edit?(event)
-    event.owner == self
+    event.owner == self && event.open
   end
 
   def image

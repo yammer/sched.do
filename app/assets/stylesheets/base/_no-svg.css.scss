@@ -38,6 +38,10 @@ html.no-svg {
         a.edit-button {
           @include background-image(url(edit-icon.png));
         }
+
+        a.close-button {
+          @include background-image(url(close-icon.png));
+        }
       }
     }
   }

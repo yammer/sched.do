@@ -48,11 +48,27 @@ div.show-event {
           }
         }
 
+        a.close-button {
+          @include background-image(url('close-icon.svg'), linear-gradient($bg-color, darken($bg-color, 8%)));
+          border-left: none;
+          border-right: none;
+          @include box-shadow(inset 1px 0 1px rgba(255,255,255,1),0 1px 3px darken($bg-color, 11%));
+
+          @include ie9 {
+            background-image: url('close-icon.svg');
+          }
+
+          &:active, &.active {
+            @include background-image(url('close-icon.svg'), linear-gradient(darken($bg-color, 8%), $bg-color));
+          }
+        }
+
         a.edit-button {
           @include background-image(url('edit-icon.svg'), linear-gradient($bg-color, darken($bg-color, 8%)));
           @include border-radius(0 4px 4px 0);
-          border-left: none;
           @include box-shadow(inset 1px 0 1px rgba(255,255,255,1),0 1px 3px darken($bg-color, 11%));
+          position: relative;
+          left: -6px;
 
           @include ie9 {
             background-image: url('edit-icon.svg');
@@ -403,6 +419,50 @@ div.show-event {
     textarea {
       @include invitation-text;
       height: 80px;
+    }
+  }
+
+  .table-wrapper {
+    .total {
+      height: 106px;
+
+      span {
+        display: block;
+        line-height: 30px;
+      }
+
+      td {
+        vertical-align: top;
+        padding:13px;
+      }
+
+      h3 {
+        font-size: 1em;
+        line-height: 30px;
+      }
+
+      .winner-button {
+        @extend .orange-button;
+        display:block;
+        margin:10px 20px;
+        padding:5px 10px;
+        font-size: .8em;
+        border-radius: 4px;
+      }
+    }
+  }
+
+  .closing-time {
+    @extend .search-box;
+    @include clearfix;
+    background: #FFFDE8;
+    border: 1px solid darken(#FFFDE8, 40%);
+    box-shadow: none;
+
+    p {
+      color: rgba(0,0,0,.4);
+      text-shadow:none;
+      text-align: center;
     }
   }
 }

@@ -66,7 +66,7 @@
         <% end %>
       </tbody>
       <tfoot>
-        <tr>
+        <tr class="total">
           <% @event.suggestions.each do |primary| %>
             <% if primary.suggestions.present? %>
               <% primary.suggestions.each do |secondary| %>
@@ -113,8 +113,8 @@
             </td>
           </tr>
         <% end %>
-        <tr class="total">
-         <td>Total Votes</td>
+        <tr class="total" id="total-row">
+         <td class="total-title"><h3>Total Votes</h3></td>
         </tr>
       </tbody>
     </table>

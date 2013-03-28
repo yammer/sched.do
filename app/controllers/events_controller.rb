@@ -23,18 +23,23 @@ class EventsController < ApplicationController
     @event = Event.find_by_uuid!(params[:id])
     verify_or_setup_invitation_for_current_user
     setup_invitations
-    render "events/show/#{current_user_class_name}"
+    if @event.closed?
+      render 'events/show/closed'
+    else
+      render "events/show/#{current_user_class_name}"
+    end
   end
 
   def edit
     session[:return_to] = request.referer
-    @event = current_user.events.find_by_uuid!(params[:id])
+    @event = current_user.events.opened.find_by_uuid!(params[:id])
     build_suggestions(@event)
   end
 
   def update
-    @event = current_user.events.find_by_uuid!(params[:id])
+    @event = current_user.events.opened.find_by_uuid!(params[:id])
     @event.attributes = event_params
+    @event.open = open_flag
 
     if @event.save
       respond_to do |format|
@@ -56,6 +61,10 @@ class EventsController < ApplicationController
     end
   end
 
+  def open_flag
+    !(event_params[:open] == "false")
+  end
+
   def current_user_class
     current_user.class.name.constantize
   end
@@ -67,6 +76,7 @@ class EventsController < ApplicationController
   def event_params
     params.require(:event).permit(
       :name,
+      :open,
       :primary_suggestions_attributes,
       :uuid,
       :watermarked_image
