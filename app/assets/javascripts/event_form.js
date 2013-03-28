@@ -77,17 +77,19 @@ $(document).ready(function() {
   // Warn user of unsaved changes when navigating away from page
   var formClean = $("#new_event").serialize();
 
-  window.onbeforeunload = function(e){
-    var formDirty = $("#new_event").serialize();
-    var confirmationMessage = "Your changes will not be saved.";
+  window.addEventListener('beforeunload', warnChanges);
 
-    if(formClean !== formDirty){
-      (e || window.event).returnValue = confirmationMessage; //Gecko and IE
-      return confirmationMessage; //Webkit, Safari, Chrome
+    function warnChanges(eventObject){
+      var formDirty = $("#new_event").serialize();
+      var confirmationMessage = "Your changes will not be saved.";
+
+      if(formClean !== formDirty){
+        (eventObject || window.event).returnValue = confirmationMessage; //Gecko and IE
+        return confirmationMessage; //Webkit, Safari, Chrome
+      }
     }
-  }
 
   $("#new_event").submit(function(){
-     window.onbeforeunload = null;
+    window.removeEventListener('beforeunload', warnChanges);
   });
 });
