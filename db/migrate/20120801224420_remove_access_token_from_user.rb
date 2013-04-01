@@ -1,4 +1,3 @@
-require 'iconv'
 class RemoveAccessTokenFromUser < ActiveRecord::Migration
   def up
     select_all("SELECT id, access_token FROM users").each do |row|
