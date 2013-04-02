@@ -7,8 +7,6 @@
     <meta name="ROBOTS" content="NOODP">
     <meta name="viewport" content="width=device-width,initial-scale=1">
 
-    <title>sched.do</title>
-
     <meta property="og:site_name" content="sched.do">
     <meta property="og:image"
       content="<%= "https://#{ENV['HOSTNAME']}/logo.png " %>">
@@ -16,9 +14,11 @@
     <% if @event && @event.name %>
       <meta property="og:description"
         content="<%= @event.owner %>'s Sched.do poll for <%= @event.name %>">
+      <title><%= @event.name %> | sched.do</title>
     <% else %>
       <meta property="og:description"
         content="sched.do is your personal administrative assistant here to free you from the drudgery of scheduling. No more email. No more shuffling. No more cancellations. We take out the guesswork so you can move on to more important things – like prepping content for the meeting itself! Sign up for sched.do and eliminate your calendar chaos today!">
+      <title>sched.do</title>
     <% end  %>
 
     <%= content_for(:head) %>
