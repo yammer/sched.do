@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 ruby '2.0.0'
 
-gem 'rails', '~> 3.2'
+gem 'rails', '>= 3.2.13'
 
 gem 'airbrake', '~> 3.1'
 gem 'attr_encrypted'
@@ -50,7 +50,7 @@ group :test do
   gem 'factory_girl_rails', '~> 3.0'
   gem 'jasmine'
   gem 'launchy'
-  gem 'shoulda-matchers', '~> 1.4'
+  gem 'shoulda-matchers', '1.5.2'
   gem 'simplecov', require: false
   gem 'sinatra'
   gem 'timecop'

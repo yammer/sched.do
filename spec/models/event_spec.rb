@@ -45,7 +45,7 @@ describe Event, 'before_validation' do
   end
 end
 
-describe Event, 'validations'do
+describe Event, 'validations' do
   it { expect(subject).to validate_presence_of(:name).with_message(/field is required/) }
   it { expect(subject).to ensure_length_of(:name).is_at_most(Event::NAME_MAX_LENGTH) }
   it { expect(subject).to validate_presence_of(:user_id) }
@@ -58,7 +58,7 @@ describe Event, 'validations'do
   end
 end
 
-describe Event, 'add_errors_if_no_suggestions'do
+describe Event, 'add_errors_if_no_suggestions' do
   it 'adds errors if there are no primary suggestions' do
     event = create(:event)
     event.suggestions.map(&:mark_for_destruction)
