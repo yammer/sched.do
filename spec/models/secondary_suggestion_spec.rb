@@ -44,6 +44,6 @@ describe SecondarySuggestion, '#full_description' do
     suggestion = build(:secondary_suggestion, description: 'secondary')
     suggestion.primary_suggestion.description = 'primary'
 
-    expect(suggestion.full_description).to eq 'primary, secondary'
+    expect(suggestion.full_description).to eq 'primary secondary'
   end
 end

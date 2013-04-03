@@ -15,6 +15,6 @@ class SecondarySuggestion < ActiveRecord::Base
   end
 
   def full_description
-    "#{primary_suggestion.description}, #{description}"
+    "#{primary_suggestion.try(:description)} #{description}".strip
   end
 end

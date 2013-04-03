@@ -17,6 +17,16 @@ class PrimarySuggestion < ActiveRecord::Base
   end
 
   def full_description
-    description
+    "#{description} #{secondary_descriptions}".strip
+  end
+
+  def suggestions
+    @suggestions ||= Sorter.new(secondary_suggestions).sort
+  end
+
+  private
+
+  def secondary_descriptions
+    suggestions.map(&:description).join(' ')
   end
 end

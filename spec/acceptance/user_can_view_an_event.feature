@@ -19,3 +19,11 @@ Feature: User can view an Event
     And I view the "Clown party" event
     Then "chipotle" should appear before "subway" in the list
 
+  @javascript
+  Scenario: Owner creates Event and sees date based suggestions in the correct order
+    When I am signed in
+    And I create an event "Clown party" with the following suggestions:
+      | Wed, Apr 05 2013 |
+      | Wed, Apr 03 2013 |
+    And I view the "Clown party" event
+    Then "Wed, Apr 03 2013" should appear before "Wed, Apr 05 2013" in the list

@@ -172,9 +172,11 @@ describe Event, '#to_param' do
 end
 
 describe Event, '#suggestions' do
-  it 'returns the primary suggestions' do
-    event = build(:event)
+  it 'returns sorted primary suggestions' do
+    suggestion1 = build(:primary_suggestion, description: "Apr 12, 2016")
+    suggestion2 = build(:primary_suggestion, description: "Apr 12, 2015")
+    event = build(:event, primary_suggestions: [suggestion1, suggestion2])
 
-    expect(event.primary_suggestions).to eq event.suggestions
+    expect(event.suggestions).to eq [suggestion2, suggestion1]
   end
 end

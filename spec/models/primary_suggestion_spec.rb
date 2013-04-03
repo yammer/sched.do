@@ -13,7 +13,7 @@ describe PrimarySuggestion do
   end
 
   it { expect(subject).to allow_mass_assignment_of(:description) }
-  it do 
+  it do
     expect(subject).to(
       allow_mass_assignment_of(:secondary_suggestions_attributes)
     )
@@ -41,10 +41,34 @@ describe PrimarySuggestion, '#vote_count' do
   end
 end
 
-describe PrimarySuggestion, '#full_description' do 
-  it 'returns the primary and secondary descriptions' do 
-    suggestion = build(:suggestion, description: 'primary')
+describe PrimarySuggestion, '#full_description' do
+  it 'returns the primary description' do
+    suggestion = build(:suggestion, description: 'Monday')
 
-    expect(suggestion.full_description).to eq 'primary'
+    expect(suggestion.full_description).to eq 'Monday'
+  end
+
+  context 'with secondary suggestions' do
+    it 'returns the primary and secondary descriptions' do
+      secondary1 = build(:secondary_suggestion, description: '10:00pm')
+      secondary2 = build(:secondary_suggestion, description: '10:00am')
+      suggestion = build(
+        :suggestion,
+        description: 'Monday',
+        secondary_suggestions: [secondary1, secondary2]
+      )
+
+      expect(suggestion.full_description).to eq 'Monday 10:00am 10:00pm'
+    end
+  end
+end
+
+describe PrimarySuggestion, '#suggestions' do
+  it 'returns sorted secondary suggestions' do
+    secondary1 = build(:secondary_suggestion, description: '10pm')
+    secondary2 = build(:secondary_suggestion, description: '10am')
+    suggestion = build(:suggestion, secondary_suggestions: [secondary1, secondary2])
+
+    expect(suggestion.suggestions).to eq [secondary2, secondary1]
   end
 end

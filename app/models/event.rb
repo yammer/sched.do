@@ -44,7 +44,7 @@ class Event < ActiveRecord::Base
   end
 
   def suggestions
-    primary_suggestions
+    @suggestions ||= Sorter.new(primary_suggestions).sort
   end
 
   def to_param
