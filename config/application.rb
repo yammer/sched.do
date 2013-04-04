@@ -1,9 +1,3 @@
-# Set global hostnames
-YAMMER_HOST = 'https://www.yammer.com'
-YAMMER_ENDPOINT = YAMMER_HOST + '/api/v1/'
-YAMMER_STAGING_HOST = 'https://www.staging.yammer.com'
-YAMMER_STAGING_ENDPOINT = YAMMER_STAGING_HOST + '/api/v1/'
-
 require File.expand_path('../boot', __FILE__)
 
 # Pick the frameworks you want:
@@ -16,6 +10,17 @@ require "sprockets/railtie"
 if defined?(Bundler)
   Bundler.require(:default, :assets, Rails.env)
 end
+
+# Set global hostnames
+YAMMER_HOST = 'https://www.yammer.com'
+YAMMER_ASSETS_HOST = 'https://assets.yammer.com'
+YAMMER_ENDPOINT = YAMMER_HOST + '/api/v1/'
+YAMMER_STAGING_HOST = 'https://www.staging.yammer.com'
+YAMMER_ASSETS_STAGING_HOST = 'https://assets.staging.yammer.com'
+YAMMER_STAGING_ENDPOINT = YAMMER_STAGING_HOST + '/api/v1/'
+
+# Set wait time for share modal after vote
+SHARE_APP_DELAY = 45000
 
 module SchedDo
   class Application < Rails::Application

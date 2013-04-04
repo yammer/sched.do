@@ -1,11 +1,4 @@
 SchedDo::Application.configure do
-  # Set Yammer asset hostname
-  YAMMER_ASSETS_HOST = 'https://assets.yammer.com'
-  YAMMER_ASSETS_STAGING_HOST = 'https://assets.staging.yammer.com'
-
-  # Set wait time for share modal after vote
-  SHARE_APP_DELAY = 45000
-
   # Settings specified here will take precedence over those in config/application.rb
 
   # Code is not reloaded between requests
@@ -50,8 +43,7 @@ SchedDo::Application.configure do
   # config.cache_store = :mem_cache_store
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server
-  # config.action_controller.asset_host = "http://assets.example.com"
-  config.action_mailer.asset_host = "www.scheddo-staging.herokuapp.com"
+  config.action_mailer.asset_host = 'staging.sched.do'
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
   # config.assets.precompile += %w( search.js )
@@ -73,7 +65,7 @@ SchedDo::Application.configure do
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 
-  config.action_mailer.default_url_options = { :host => 'www.scheddo-staging.herokuapp.com' }
+  config.action_mailer.default_url_options = { :host => 'staging.sched.do' }
 
   ActionMailer::Base.smtp_settings = {
     address:        'smtp.sendgrid.net',
