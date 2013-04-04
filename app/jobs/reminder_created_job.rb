@@ -5,12 +5,18 @@ class ReminderCreatedJob < Struct.new(:reminder_id)
     Delayed::Job.enqueue(new(reminder.id), priority: PRIORITY)
   end
 
-  def error(job, exception)
-    Airbrake.notify(exception)
-  end
-
   def perform
     reminder.deliver
+  end
+
+  def error(job, exception)
+    unless ExceptionSilencer.is_rate_limit?(exception)
+      Airbrake.notify(exception)
+    end
+  end
+
+  def failure(job)
+    Airbrake.notify("Job failure: #{job.last_error}")
   end
 
   private

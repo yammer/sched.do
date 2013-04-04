@@ -29,15 +29,36 @@ describe InvitationCreatedMessageJob, '#perform' do
   end
 end
 
-describe InvitationCreatedMessageJob, '.error' do
-  it 'sends Airbrake an exception if the job fails' do
-    invitation = build_stubbed(:invitation)
-    Airbrake.stubs(:notify)
+describe InvitationCreatedMessageJob, '#error' do
+  it 'sends Airbrake an exception if the job errors' do
+    job = InvitationCreatedMessageJob.new
     exception = 'Hey! you did something wrong!'
+    Airbrake.stubs(:notify)
 
-    job = InvitationCreatedMessageJob.new(invitation.id)
     job.error(job, exception)
 
     expect(Airbrake).to have_received(:notify).with(exception)
+  end
+
+  it 'does not send exception to Airbrake if the job errors due to rate limit' do
+    job = ReminderCreatedJob.new
+    exception = Faraday::Error::ClientError.new('Rate limited!', status: 429)
+    Airbrake.stubs(:notify)
+
+    job.error(job, exception)
+
+    expect(Airbrake).to have_received(:notify).never
+  end
+end
+
+describe InvitationCreatedMessageJob, '#failure' do
+  it 'sends Airbrake an exception if the job fails' do
+    job = InvitationCreatedMessageJob.new
+    job_record = stub(last_error: 'boom')
+    Airbrake.stubs(:notify)
+
+    job.failure(job_record)
+
+    expect(Airbrake).to have_received(:notify).with('Job failure: boom')
   end
 end

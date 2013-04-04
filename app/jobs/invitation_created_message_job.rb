@@ -10,7 +10,13 @@ class InvitationCreatedMessageJob < Struct.new(:invitation_id)
   end
 
   def error(job, exception)
-    Airbrake.notify(exception)
+    unless ExceptionSilencer.is_rate_limit?(exception)
+      Airbrake.notify(exception)
+    end
+  end
+
+  def failure(job)
+    Airbrake.notify("Job failure: #{job.last_error}")
   end
 
   private
