@@ -2,7 +2,7 @@
   <div class="inner">
     <span class="copy-right">&copy;<%= Time.now.year %> sched.do</span>
     <% if current_user.present? %>
-      <%= link_to 'Terms of Service', YAMMER_HOST + '/about/terms/', target:'_blank' %>
+      <%= terms_of_service_link %>
       <%= link_to 'Sign out', sign_out_path %>
       <% if current_user.yammer_user? %>
         <%= link_to 'Share sched.do', '#', class: 'dialog_link' %>

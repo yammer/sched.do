@@ -29,7 +29,7 @@ $(document).ready(function(){
 
     $('.votable').one('click', '.vote', function() {
       $('.post-vote').
-        delay(<%= SHARE_APP_DELAY %>).
+        delay(<%= Rails.configuration.share_app_delay %>).
         queue(function() {
           $(this).dialog('open')
         });

@@ -12,5 +12,5 @@ end
 
 server = FakeYammerAssets.boot
 
-YAMMER_ASSETS_HOST = "http://"  + [server.host, server.port].join(':')
-YAMMER_ASSETS_STAGING_HOST = "http://" + [server.host, server.port].join(':')
+Rails.configuration.yammer_assets_host = "http://"  + [server.host, server.port].join(':')
+Rails.configuration.yammer_assets_staging_host = "http://"  + [server.host, server.port].join(':')

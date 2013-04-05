@@ -109,7 +109,15 @@ class User < ActiveRecord::Base
   end
 
   def yammer_endpoint
-    yammer_staging ? YAMMER_STAGING_ENDPOINT : YAMMER_ENDPOINT
+    "#{yammer_host}/api/v1/"
+  end
+
+  def yammer_host
+    if yammer_staging
+      Rails.configuration.yammer_staging_host
+    else
+      Rails.configuration.yammer_host
+    end
   end
 
   def strip_email_whitespace

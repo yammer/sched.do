@@ -4,7 +4,7 @@ FactoryGirl.define do
   sequence(:extra) { |n| { raw_info: { network_id: 1 }, expertise: "Rails#{n}" } }
   sequence(:image) { |n| "https://mug0.assets-yammer.com/#{n}" }
   sequence(:yammer_nickname) { |n| "Yams #{n}" }
-  sequence(:yammer_profile_url) { |n| YAMMER_HOST + "/example.com/users/#{n}" }
+  sequence(:yammer_profile_url) { |n| "#{Rails.configuration.yammer_host}/example.com/users/#{n}" }
   sequence(:yammer_token) { |n| "token_#{n}" }
   sequence(:yammer_user_name) { |n| "Yammer User #{n}" }
 

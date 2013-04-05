@@ -1,4 +1,12 @@
 module ApplicationHelper
+  def yammer_assets_host
+    if current_user.yammer_staging
+      Rails.configuration.yammer_assets_staging_host
+    else
+      Rails.configuration.yammer_assets_host
+    end
+  end
+
   def auth_yammer_path
     '/auth/yammer'
   end
@@ -17,5 +25,11 @@ module ApplicationHelper
     content_tag(:li, class: :class_name) do
       link_to link_text, link_path
     end
+  end
+
+  def terms_of_service_link
+    link_to 'Terms of service',
+      "#{Rails.configuration.yammer_host}/about/terms/",
+      target: '_blank'
   end
 end

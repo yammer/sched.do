@@ -11,17 +11,6 @@ if defined?(Bundler)
   Bundler.require(:default, :assets, Rails.env)
 end
 
-# Set global hostnames
-YAMMER_HOST = 'https://www.yammer.com'
-YAMMER_ASSETS_HOST = 'https://assets.yammer.com'
-YAMMER_ENDPOINT = YAMMER_HOST + '/api/v1/'
-YAMMER_STAGING_HOST = 'https://www.staging.yammer.com'
-YAMMER_ASSETS_STAGING_HOST = 'https://assets.staging.yammer.com'
-YAMMER_STAGING_ENDPOINT = YAMMER_STAGING_HOST + '/api/v1/'
-
-# Set wait time for share modal after vote
-SHARE_APP_DELAY = 45000
-
 module SchedDo
   class Application < Rails::Application
     config.generators do |generate|
@@ -36,5 +25,14 @@ module SchedDo
     config.autoload_paths += %W(#{config.root}/lib)
     config.encoding = "utf-8"
     config.filter_parameters += [:password]
+
+    # Set wait time for share modal after vote
+    config.share_app_delay = 45000
+
+    # Set yammer hostnames
+    config.yammer_assets_host = 'https://assets.yammer.com'
+    config.yammer_assets_staging_host = 'https://assets.staging.yammer.com'
+    config.yammer_host = 'https://www.yammer.com'
+    config.yammer_staging_host = 'https://www.staging.yammer.com'
   end
 end

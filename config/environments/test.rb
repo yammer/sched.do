@@ -2,7 +2,7 @@ SchedDo::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
   # Set wait time for share modal after vote
-  SHARE_APP_DELAY = 0
+  config.share_app_delay = 0
 
   # The test environment is used exclusively to run your application's
   # test suite. You never need to work with it otherwise. Remember that
