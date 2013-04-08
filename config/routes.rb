@@ -1,6 +1,7 @@
 SchedDo::Application.routes.draw do
   get '/auth/yammer/callback' => 'sessions#create'
   get '/auth/yammer_staging/callback' => 'sessions#create'
+  get '/dashboard' => 'dashboard#active_users'
   get 'polls' => 'users#show'
   get '/sign_out' => 'sessions#destroy', as: 'sign_out'
   get '/tos' => 'pages#terms_of_service'

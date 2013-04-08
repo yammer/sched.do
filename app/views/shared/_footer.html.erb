@@ -8,6 +8,9 @@
         <%= link_to 'Share sched.do', '#', class: 'dialog_link' %>
         <%= render 'shared/footer_share_app' %>
       <% end %>
+      <% if current_user.is_admin? %>
+        <%= link_to 'Admin dashboard', dashboard_path %>
+      <% end %>
     <% else %>
       <%= link_to 'Staging', '/auth/yammer_staging' %>
     <% end %>

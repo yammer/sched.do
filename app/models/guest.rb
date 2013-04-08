@@ -21,6 +21,10 @@ class Guest < ActiveRecord::Base
     Messenger.new(invitation).invite
   end
 
+  def is_admin?
+    false
+  end
+
   def remind(invitation, sender)
     Messenger.new(invitation, sender).remind
   end

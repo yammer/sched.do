@@ -1,19 +1,11 @@
 <!doctype html>
   <head>
     <meta charset="utf-8">
-
-    <!-- Always force latest IE rendering engine or request Chrome Frame -->
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
-
-    <!-- Use title if it's in the page YAML frontmatter -->
     <title>sched.do Stats</title>
 
-    <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700|Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
-
+    <link href='//fonts.googleapis.com/css?family=Montserrat:400,700|Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
     <%= stylesheet_link_tag "dashboard" %>
-
-    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
   </head>
 
   <body class="dashboard">
@@ -35,6 +27,8 @@
     </article>
   </body>
 
-<%= javascript_include_tag :application %>
-<%= yield(:javascript) %>
+  <script type="text/javascript" src="//www.google.com/jsapi"></script>
+  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+  <%= javascript_include_tag :application %>
+  <%= yield(:javascript) %>
 </html>
