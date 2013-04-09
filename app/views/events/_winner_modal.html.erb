@@ -1,0 +1,18 @@
+<div class="hide-modal">
+  <div class="dialog-modal choose-winner">
+    <h2>Send winning option notifications</h2>
+    <%= form_for @event do |f| %>
+      <div class="suggestions">Customize message</div>
+      <div class="nested-field">
+        <%= f.hidden_field :winning_suggestion_id %>
+        <%= f.hidden_field :winning_suggestion_type %>
+        <%= f.hidden_field :open, value: false %>
+        <%= text_area_tag 'message', "I've chosen _description_ for #{@event.name}",
+          class: 'customize-message' %>
+      </div>
+      <div class="action input-action">
+        <%= f.submit 'Close poll and send notifications', class: 'cta' %>
+      </div>
+    <% end %>
+  </div>
+</div>

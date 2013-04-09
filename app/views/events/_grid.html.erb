@@ -1,4 +1,4 @@
-<div class="table-wrapper grid">
+<div class="table-wrapper grid <%= 'disabled' if @event.closed? %>">
   <div class="scroll-notice forward">►</div>
   <div class="options">
     <table class="touch-scrollable">
@@ -50,14 +50,8 @@
               <td class="send-reminder" colspan=<%= @event.suggestions.count %>>
                 <% if current_user.yammer_user? and invitee != current_user %>
                   <div class="reminder-wrapper">
-                    <%= link_to "Remind #{invitee.name} to vote",
-                      reminders_path(
-                        reminder: {
-                          receiver_id: invitation_for(@event, invitee),
-                          receiver_type: invitation_for(@event, invitee).class.name
-                        },
-                        event_id: @event.uuid
-                      ), method: :post, class: 'remind' %>
+                    <%= reminder_link "Remind #{invitee.name} to vote", @event,
+                      receiver: invitation_for(@event, invitee), class: 'remind' %>
                   </div>
                 <% end %>
               </td>
@@ -98,7 +92,7 @@
       </thead>
       <tbody>
         <% invitees_with_current_user_first(@event, current_user).each do |invitee| %>
-          <tr class="<%= 'current-user' if  current_user == invitee %>">
+          <tr class="<%= 'current-user' if current_user == invitee %>">
           <% if user_owner?(@event, invitee) %>
             <td class="event-creator">
               <div class="avatar" style="background-image: url(<%= invitee.image %>)"></div>

@@ -1,12 +1,12 @@
 class VotesController < ApplicationController
   skip_before_filter :require_yammer_login
-  before_filter :require_guest_or_yammer_login
+  before_filter :require_guest_or_yammer_login, :ensure_open_event
 
   def create
     vote = Vote.new(vote_params)
     vote.voter = current_user
 
-    if !vote.save
+    unless vote.save
       flash[:error] = "Sorry, you cannot duplicate votes"
     end
 
@@ -34,5 +34,11 @@ class VotesController < ApplicationController
       :suggestion_id,
       :suggestion_type
     )
+  end
+
+  def ensure_open_event
+    unless Event.find(vote_params[:event_id]).open?
+      render json: {}, status: :forbidden
+    end
   end
 end

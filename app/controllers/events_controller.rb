@@ -2,6 +2,7 @@ class EventsController < ApplicationController
   include EventHelper
   skip_before_filter :require_yammer_login, only: :show
   before_filter :require_guest_or_yammer_login, only: :show
+  before_filter :normalize_params, only: :update
 
   def new
     @event = current_user.events.build
@@ -39,7 +40,6 @@ class EventsController < ApplicationController
   def update
     @event = current_user.events.opened.find_by_uuid!(params[:id])
     @event.attributes = event_params
-    @event.open = open_flag
 
     if @event.save
       respond_to do |format|
@@ -61,10 +61,6 @@ class EventsController < ApplicationController
     end
   end
 
-  def open_flag
-    !(event_params[:open] == "false")
-  end
-
   def current_user_class
     current_user.class.name.constantize
   end
@@ -76,11 +72,19 @@ class EventsController < ApplicationController
   def event_params
     params.require(:event).permit(
       :name,
-      :open,
       :primary_suggestions_attributes,
       :uuid,
-      :watermarked_image
+      :watermarked_image,
+      :winning_suggestion_id,
+      :winning_suggestion_type,
+      :open
     )
+  end
+
+  def normalize_params
+    if params[:event]
+      params[:event][:open] = (params[:event][:open] != "false")
+    end
   end
 
   def setup_invitations

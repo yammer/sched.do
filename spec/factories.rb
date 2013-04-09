@@ -20,13 +20,22 @@ FactoryGirl.define do
 
   factory :event do
     name 'Clown party'
-    owner(factory: :user)
+    owner factory: :user
+
+    after :stub do |event|
+      event.send(:generate_uuid)
+    end
+
     before :create do |event|
       event.primary_suggestions << build(:primary_suggestion, event: event)
     end
 
-    after :stub do |event|
-      event.send(:generate_uuid)
+    factory :closed_event do
+      open false
+
+      before :create do |event|
+        event.winning_suggestion = event.primary_suggestions.first
+      end
     end
   end
 

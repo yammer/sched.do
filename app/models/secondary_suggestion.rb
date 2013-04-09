@@ -1,5 +1,3 @@
-# Generally used to represent a time
-
 class SecondarySuggestion < ActiveRecord::Base
   validates :description, presence: { message: 'This field is required' }
 

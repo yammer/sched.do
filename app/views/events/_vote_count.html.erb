@@ -1,6 +1,15 @@
 <td>
- <div  class="vote-count" data-id="<%= suggestion.id %>">
-  <span><%= suggestion.vote_count %></span>
- </div>
-  <a href="#" class="winner-button">Choose Winner</a>
+  <div class="vote-count" data-id="<%= suggestion.id %>">
+    <span><%= suggestion.vote_count %></span>
+  </div>
+  <% if current_user.able_to_edit?(suggestion.event) %>
+    <%= link_to 'Choose Winner', '#', class: 'winner-button',
+      title: suggestion.full_description,
+      data: {
+        'description' => suggestion.full_description,
+        'suggestion-id' => suggestion.id,
+        'suggestion-type' => "#{suggestion.class}" } %>
+  <% elsif suggestion.event.winning_suggestion == suggestion %>
+    Winner!
+  <% end %>
 </td>

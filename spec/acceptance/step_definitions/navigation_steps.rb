@@ -21,10 +21,3 @@ end
 step 'I should be on my profile page' do
   expect(current_url).to eq polls_url
 end
-
-step 'I cannot visit the edit page for :event_name' do |event_name|
-  event = Event.find_by_name(event_name)
-  expect {
-    visit edit_event_path(event)
-  }.to raise_error ActiveRecord::RecordNotFound
-end

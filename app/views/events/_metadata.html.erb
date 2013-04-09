@@ -7,7 +7,7 @@
     <span><%= pluralize(other_invitees_who_have_not_voted_count(@event, current_user), 'other invitee has not voted','other invitees have not voted') %></span>
     <% if other_invitees_who_have_not_voted_count(@event, current_user) > 0 %>
       <% if current_user.yammer_user? %>
-        <%= link_to 'Remind Them!', reminders_path(reminder: { receiver_id: @event.id, receiver_type: @event.class.name }, event_id: @event), method: :post, class: "remind-all" %>
+        <%= reminder_link 'Remind Them!', @event, class: 'remind-all' %>
       <% end %>
     <% end %>
   </div>

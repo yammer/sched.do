@@ -87,4 +87,27 @@ module EventHelper
   def user_votes(event, user)
     user.votes.where(event_id: event)
   end
+
+  def reminder_link(text, event, options = {})
+    if event.open?
+      receiver = options.fetch(:receiver, event)
+      path = reminders_path(
+        reminder: {
+          receiver_id: receiver.id,
+          receiver_type: receiver.class.name
+        },
+        event_id: event.uuid
+      )
+
+      link_to(text, path, method: :post, class: options[:class])
+    end
+  end
+
+  def table_cell_classes_for_user(invitee, event)
+    if user_owner?(event, invitee)
+      'current-user event-creator'
+    elsif current_user == invitee
+      'current-user'
+    end
+  end
 end

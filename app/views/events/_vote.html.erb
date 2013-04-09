@@ -9,7 +9,7 @@
   <%= render 'vote_form',
     input: { 'data-role' => :create, 'data-type' => :json },
     vote_id: { value: nil },
-    button: { value:'Vote', class: 'vote' }, 
+    button: { value:'Vote', class: 'vote' },
     suggestion: suggestion,
     form_object: suggestion.votes.build %>
 <% end %>

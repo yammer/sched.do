@@ -2,10 +2,10 @@ class Event < ActiveRecord::Base
   NAME_MAX_LENGTH = 70
 
   belongs_to :owner, foreign_key: 'user_id', class_name: 'User'
+  belongs_to :winning_suggestion, polymorphic: true
 
   has_many :primary_suggestions, order: 'created_at'
   has_many :votes
-
   has_many :invitations
   has_many :users, through: :invitations, source: :invitee, source_type: 'User'
   has_many :guests, through: :invitations, source: :invitee, source_type: 'Guest'

@@ -51,7 +51,7 @@ end
 
 step 'someone created a closed event named :event_name' do |event_name|
   as_random_user do
-    create(:event, open: false, name: event_name)
+    create(:closed_event, name: event_name)
   end
 end
 
