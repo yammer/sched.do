@@ -70,17 +70,36 @@ describe ActivityCreatorJob, '#perform' do
   end
 end
 
-describe ActivityCreatorJob, '.error' do
-  it 'sends Airbrake an exception if the job fails' do
-    user = build_stubbed(:user)
-    action = 'vote'
-    event = build_stubbed(:event)
+describe ActivityCreatorJob, '#error' do
+  it 'sends Airbrake an exception if the job errors' do
+    job = ActivityCreatorJob.new
+    exception = 'Hey! you did something wrong!'
     Airbrake.stubs(:notify)
-    exception = 'Hey! You did something wrong!'
 
-    job = ActivityCreatorJob.new(user, action, event)
     job.error(job, exception)
 
     expect(Airbrake).to have_received(:notify).with(exception)
+  end
+
+  it 'does not send exception to Airbrake if the job errors due to rate limit' do
+    job = ActivityCreatorJob.new
+    exception = Faraday::Error::ClientError.new('Rate limited!', status: 429)
+    Airbrake.stubs(:notify)
+
+    job.error(job, exception)
+
+    expect(Airbrake).to have_received(:notify).never
+  end
+end
+
+describe ActivityCreatorJob, '#failure' do
+  it 'sends Airbrake an exception if the job fails' do
+    job = ActivityCreatorJob.new
+    job_record = stub(last_error: 'boom')
+    Airbrake.stubs(:notify)
+
+    job.failure(job_record)
+
+    expect(Airbrake).to have_received(:notify).with('Job failure: boom')
   end
 end
