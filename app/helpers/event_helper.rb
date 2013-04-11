@@ -43,7 +43,7 @@ module EventHelper
   end
 
   def invitees_who_have_not_voted(event)
-    event.invitees.select { |invitee| not invitee.voted_for_event?(event) } 
+    event.invitees.reject { |invitee| invitee.voted_for_event?(event) }
   end
 
   def invitees_with_current_user_first(event, user)
@@ -100,6 +100,8 @@ module EventHelper
       )
 
       link_to(text, path, method: :post, class: options[:class])
+    else
+      "Invitee did not vote"
     end
   end
 
@@ -108,6 +110,18 @@ module EventHelper
       'current-user event-creator'
     elsif current_user == invitee
       'current-user'
+    end
+  end
+
+  def votable_suggestions(event)
+    event.suggestions.inject([]) do |result, suggestion|
+      if suggestion.suggestions.any?
+        result += suggestion.suggestions.map(&:full_description)
+      else
+        result << suggestion.full_description
+      end
+
+      result
     end
   end
 end

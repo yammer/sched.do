@@ -10,34 +10,39 @@ class UserMailer < ActionMailer::Base
     @event = event
     @creator = @event.owner
 
-    mail(
-      to: @creator.email,
-      subject: "You created #{@event.name} on sched.do"
-    )
+    mail(to: @creator.email, subject: "You created #{@event.name} on sched.do")
   end
 
   def invitation(invitation)
-    @guest = invitation.invitee
+    @recipient = invitation.invitee
     @sender = invitation.sender
     @event = invitation.event
-    @invitation = invitation
-    @invitation_text = invitation.invitation_text
+    @custom_text = invitation.invitation_text
+
+    mail(to: @recipient.email, subject: "Help out #{@event.owner}")
+  end
+
+  def reminder(recipient, sender, event)
+    @recipient = recipient
+    @sender = sender
+    @event = event
 
     mail(
-      to: @guest.email,
-      subject: "Help out #{@event.owner}"
+      to: @recipient.email,
+      subject: "Reminder: #{@sender.name} wants you to vote on #{@event.name}"
     )
   end
 
-  def reminder(invitation, sender)
-    @guest = invitation.invitee
-    @sender = sender
-    @event = invitation.event
+  def winner_notification(recipient, event, custom_text)
+    @recipient = recipient
+    @sender = event.owner
+    @event = event
+    @custom_text = custom_text
+    winning_suggestion = @event.winning_suggestion.full_description
 
     mail(
-      to: @guest.email,
-      subject:
-        "Reminder: Help out #{@sender.name} by voting on #{@event.name}"
+      to: @recipient.email,
+      subject: "#{@event.owner} has chosen #{winning_suggestion} for #{@event.name}"
     )
   end
 

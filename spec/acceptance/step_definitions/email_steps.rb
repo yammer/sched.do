@@ -3,8 +3,8 @@ step ':email_address should receive an email' do |email_address|
 end
 
 step ':email_address should receive an email with the text :email_text' do |email_address, email_text|
-  expect(unread_emails_for(email_address).size).to eq 1
-  expect(email_body(last_email_sent)).to have_content(/#{Regexp.escape(email_text)}/)
+  body = email_body(last_email_sent_to(email_address))
+  expect(body).to have_content(/#{Regexp.escape(email_text)}/)
 end
 
 step ':email_address follows the :button button in his email' do |email_address, button|

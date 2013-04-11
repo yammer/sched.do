@@ -47,7 +47,7 @@
             </tr>
           <% else %>
             <tr>
-              <td class="send-reminder" colspan=<%= @event.suggestions.count %>>
+              <td class="send-reminder" colspan=<%= votable_suggestions(@event).size %>>
                 <% if current_user.yammer_user? and invitee != current_user %>
                   <div class="reminder-wrapper">
                     <%= reminder_link "Remind #{invitee.name} to vote", @event,
@@ -95,15 +95,16 @@
           <tr class="<%= 'current-user' if current_user == invitee %>">
           <% if user_owner?(@event, invitee) %>
             <td class="event-creator">
-              <div class="avatar" style="background-image: url(<%= invitee.image %>)"></div>
-              <img src="/assets/bullhorn.svg" data-png-fallback="/assets/bullhorn.png">
           <% else %>
             <td>
-              <div class="avatar" style="background-image: url(<%= invitee.image %>)"></div>
           <% end %>
+              <div class="avatar" style="background-image: url(<%= invitee.image %>)"></div>
               <span class="user-name">
                 <%= invitee.name || invitee.email %>
               </span>
+              <% if user_owner?(@event, invitee) %>
+                <span class="bullhorn">(Creator)</span>
+              <% end %>
             </td>
           </tr>
         <% end %>

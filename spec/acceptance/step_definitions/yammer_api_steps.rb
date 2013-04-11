@@ -36,3 +36,7 @@ step 'the private invitation message sent should be from :sender' do |sender|
   sender = User.find_by_name!(sender)
   expect(FakeYammer.access_token).to eq sender.access_token
 end
+
+step 'I reset Yammer endpoint stats' do
+  FakeYammer.reset
+end

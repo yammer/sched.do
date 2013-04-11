@@ -16,16 +16,12 @@ class ReminderCreatedJob < Struct.new(:reminder_id)
   end
 
   def failure(job)
-    Airbrake.notify("Job failure: #{job.last_error}")
+    Airbrake.notify(error_message: "Job failure: #{job.last_error}")
   end
 
   private
 
   def reminder
     @reminder ||= Reminder.find(reminder_id)
-  end
-
-  def sender
-    @sender ||= reminder.sender
   end
 end

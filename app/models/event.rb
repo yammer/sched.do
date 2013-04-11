@@ -39,7 +39,7 @@ class Event < ActiveRecord::Base
   end
 
   def closed?
-    !open
+    !open?
   end
 
   def deliver_reminder_from(sender)

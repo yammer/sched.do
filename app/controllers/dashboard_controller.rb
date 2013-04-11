@@ -26,9 +26,7 @@ class DashboardController < ApplicationController
   end
 
   def invitee_conversion
-    setup_weekly(
-      'https://dataclips.heroku.com/rsqhikhvkgrhhlbcitzcvxukmucu'
-    )
+    setup_weekly('https://dataclips.heroku.com/rsqhikhvkgrhhlbcitzcvxukmucu')
   end
 
   private

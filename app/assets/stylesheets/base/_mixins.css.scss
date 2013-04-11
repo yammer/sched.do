@@ -89,3 +89,9 @@
   color: #3da2b6;
   margin-right: 0;
 }
+
+@mixin disabled {
+  cursor: no-drop;
+  background-color: transparent;
+  background-image: none;
+}

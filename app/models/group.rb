@@ -4,11 +4,15 @@ class Group < ActiveRecord::Base
   validates :yammer_group_id, :name, presence: true
 
   def invite(invitation)
-    GroupPrivateMessenger.new(invitation).invite
+    messenger.invite(invitation)
   end
 
-  def remind(invitation, sender)
-    GroupPrivateMessenger.new(invitation, sender).remind
+  def remind(event, sender)
+    messenger.remind(event, sender)
+  end
+
+  def notify(event, message)
+    messenger.notify(event, message)
   end
 
   def voted_for_event?(_)
@@ -21,5 +25,11 @@ class Group < ActiveRecord::Base
 
   def yammer_user_id
     nil
+  end
+
+  private
+
+  def messenger
+    @messenger ||= GroupYammerMessenger.new(self)
   end
 end

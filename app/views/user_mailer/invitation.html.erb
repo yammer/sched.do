@@ -1,8 +1,8 @@
-<%= render 'title', title: "#{@guest.name.try(:+, ' ')}You’re invited!" %>
+<%= render 'title', title: "#{@recipient.name.try(:+, ' ')}You’re invited!" %>
 
 <p>
-  <%= image_tag(@invitation.sender.image) %>
-  <%= @invitation_text %>
+  <%= image_tag(@sender.image) %>
+  <%= @custom_text %>
 </p>
 
 
@@ -10,7 +10,7 @@
   Click here to vote and see the results:
   <%= render 'click_here',
     event: @event,
-    email: @guest.email,
+    email: @recipient.email,
     source: 'event-invitation',
     medium: 'email',
     campaign: 'sched.do'

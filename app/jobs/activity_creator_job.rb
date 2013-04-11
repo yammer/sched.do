@@ -23,7 +23,7 @@ class ActivityCreatorJob < Struct.new(:user_id, :action, :event_id)
   end
 
   def failure(job)
-    Airbrake.notify("Job failure: #{job.last_error}")
+    Airbrake.notify(error_message: "Job failure: #{job.last_error}")
   end
 
   private

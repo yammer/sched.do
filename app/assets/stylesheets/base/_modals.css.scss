@@ -74,3 +74,21 @@
     }
   }
 }
+
+.choose-winner {
+  h2 {
+    margin-bottom: .25em;
+  }
+
+  small {
+    text-align: center;
+    display: block;
+    color: rgba(0,0,0,.3);
+    line-height: 1.5em;
+    font-size: .75em;
+  }
+
+  form ol li {
+    margin: 0;
+  }
+}

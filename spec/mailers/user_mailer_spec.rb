@@ -169,43 +169,35 @@ describe UserMailer, 'vote_notification' do
 end
 
 describe UserMailer, '.reminder' do
-  it 'sends the email to the correct receipient' do
-    invitation = build_stubbed(:invitation)
-    sender = build_stubbed(:user)
+  let(:event) { build_stubbed(:event) }
+  let(:sender) { build(:user) }
+  let(:recipient) { build(:user) }
 
-    mail = UserMailer.reminder(invitation, sender)
+  it 'sends the email to the correct recipient' do
+    mail = UserMailer.reminder(recipient, sender, event)
 
-    expect(mail.to).to eq [invitation.invitee.email]
+    expect(mail.to).to eq [recipient.email]
   end
 
   it 'send the email from the correct email address' do
-    invitation = build_stubbed(:invitation)
-    sender = build_stubbed(:user)
-
-    mail = UserMailer.reminder(invitation, sender)
+    mail = UserMailer.reminder(recipient, sender, event)
 
     expect(mail.from).to eq ['no-reply@sched.do']
   end
 
   it 'sends the email with the correct subject' do
-    invitation = build_stubbed(:invitation)
-    sender = build_stubbed(:user)
-
-    mail = UserMailer.reminder(invitation, sender)
+    mail = UserMailer.reminder(recipient, sender, event)
 
     expect(mail.subject).to eq (
-      "Reminder: Help out #{sender.name} by voting on #{invitation.event.name}"
+      "Reminder: #{sender.name} wants you to vote on #{event.name}"
     )
   end
 
   it 'sends the email with the correct body' do
-    invitation = build_stubbed(:invitation)
-    sender = build_stubbed(:user)
-
-    mail = UserMailer.reminder(invitation, sender)
+    mail = UserMailer.reminder(recipient, sender, event)
 
     expect(mail.body.encoded).to include(sender.name)
-    expect(mail.body.encoded).to include(invitation.event.name)
-    expect(mail.body.encoded).to_not include(invitation.event.owner.name)
+    expect(mail.body.encoded).to include(event.name)
+    expect(mail.body.encoded).to_not include(event.owner.name)
   end
 end

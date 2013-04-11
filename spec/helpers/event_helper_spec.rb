@@ -245,6 +245,23 @@ describe EventHelper, '#user_votes' do
   end
 end
 
+describe EventHelper, '#votable_suggestions' do
+  it 'returns votable suggestion strings' do
+    suggestion1 = build(:suggestion)
+    suggestion2 = build(
+      :suggestion,
+      secondary_suggestions: build_list(:secondary_suggestion, 2)
+    )
+    event = build(:event, primary_suggestions: [suggestion1, suggestion2])
+
+    expect(votable_suggestions(event)).to eq [
+      suggestion1.full_description,
+      suggestion2.suggestions.first.full_description,
+      suggestion2.suggestions.last.full_description
+    ]
+  end
+end
+
 def event_with_invitees
   event = create(:event)
   invitation = create(:invitation_with_user, event: event)

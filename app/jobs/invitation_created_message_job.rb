@@ -16,7 +16,7 @@ class InvitationCreatedMessageJob < Struct.new(:invitation_id)
   end
 
   def failure(job)
-    Airbrake.notify("Job failure: #{job.last_error}")
+    Airbrake.notify(error_message: "Job failure: #{job.last_error}")
   end
 
   private
@@ -27,9 +27,5 @@ class InvitationCreatedMessageJob < Struct.new(:invitation_id)
 
   def invitee
     @invitee ||= invitation.invitee
-  end
-
-  def sender
-    @sender ||= invitation.sender
   end
 end

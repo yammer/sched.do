@@ -1,18 +1,34 @@
 <div class="hide-modal">
   <div class="dialog-modal choose-winner">
-    <h2>Send winning option notifications</h2>
-    <%= form_for @event do |f| %>
-      <div class="suggestions">Customize message</div>
-      <div class="nested-field">
-        <%= f.hidden_field :winning_suggestion_id %>
-        <%= f.hidden_field :winning_suggestion_type %>
-        <%= f.hidden_field :open, value: false %>
-        <%= text_area_tag 'message', "I've chosen _description_ for #{@event.name}",
-          class: 'customize-message' %>
-      </div>
-      <div class="action input-action">
-        <%= f.submit 'Close poll and send notifications', class: 'cta' %>
-      </div>
+    <h2>Placeholder</h2>
+    <%= form_tag '/winning_suggestions' do %>
+      <fieldset class="inputs">
+        <ol>
+          <div class="suggestions">
+            <p>Notify <strong><%= @event.invitees.size %></strong> invitees</p>
+          </div>
+          <div class="nested-field">
+            <li>
+              <%= text_area_tag :message, '', class: 'customize-message' %>
+            </li>
+            <%= hidden_field_tag :event_id, @event.id %>
+            <%= hidden_field_tag :winning_suggestion_id %>
+            <%= hidden_field_tag :winning_suggestion_type %>
+          </div>
+        </ol>
+      </fieldset>
+
+      <fieldset class="actions">
+        <ol>
+          <li class="action input-action">
+            <%= submit_tag 'Send message and close poll', class: 'cta' %>
+            <small>
+              After your poll is closed, no invitees can be added and voting
+              will be disabled. <br />This is irreversible.
+            </small>
+          </li>
+        </ol>
+      </fieldset>
     <% end %>
   </div>
 </div>

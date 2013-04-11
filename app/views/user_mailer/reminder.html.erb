@@ -1,21 +1,21 @@
 <%= render 'title', title: 'Reminder to vote' %>
 
 <p>
-<%= image_tag(@sender.image) %>You haven't voted on
-<%= link_to @event.name,
-  event_url(
-    @event,
-    utm_source: 'event-reminder',
-    utm_medium: 'email',
-    utm_campaign: 'sched.do'
-  ) %> and <%= @sender.name %> wants your input.
+  <%= image_tag(@sender.image) %>You haven't voted on
+  <%= link_to @event.name,
+    event_url(
+      @event,
+      utm_source: 'event-reminder',
+      utm_medium: 'email',
+      utm_campaign: 'sched.do'
+    ) %> and <%= @sender.name %> wants your input.
 </p>
 
 <p>
-  Click here to change your vote or see the results.
+  Click here to vote or see the results.
   <%= render 'click_here',
     event: @event,
-    email: @guest.email,
+    email: @recipient.email,
     source: 'event-reminder',
     medium: 'email',
     campaign: 'sched.do'

@@ -182,18 +182,12 @@ describe User, '#yammer_user?' do
 end
 
 describe User, '#invite' do
-  include DelayedJobSpecHelper
-
   it 'if the user is out-network, it sends an email notification' do
     invitee = create(:out_network_user)
     invitation = build(:invitation_with_user, invitee: invitee)
     messenger_instance = mock('messenger instance', :invite)
-    Messenger.expects(:new).
-      with(invitation, invitation.sender).
-      returns(messenger_instance)
-
     organizer = invitation.sender
-    event = invitation.event
+    Messenger.expects(:new).with(invitee).returns(messenger_instance)
 
     invitee.invite(invitation)
     work_off_delayed_jobs
@@ -208,25 +202,22 @@ describe User, '#invite' do
     organizer = invitation.sender
     owner = invitation.event.owner
 
-    invitee.remind(invitation, owner)
+    invitee.remind(invitation.event, owner)
     work_off_delayed_jobs
 
     expect(organizer).to be_in_network(invitee)
     expect(FakeYammer.messages_endpoint_hits).to eq 1
-    expect(FakeYammer.message).to include(invitation.event.name)
+    expect(FakeYammer.message).to include("Reminder: Help me out by voting")
   end
 end
 
 describe User, '#remind' do
-  include DelayedJobSpecHelper
-
   it 'hits the Yammer messages API, if the user is in-network' do
     invitee = build_stubbed(:user)
-    invitation = build_stubbed(:invitation_with_user,
-                               invitee: invitee)
+    invitation = build_stubbed(:invitation_with_user, invitee: invitee)
 
     expect {
-      invitee.remind(invitation, invitation.sender)
+      invitee.remind(invitation.event, invitation.sender)
       work_off_delayed_jobs
     }.to change(FakeYammer, :messages_endpoint_hits).by(1)
   end

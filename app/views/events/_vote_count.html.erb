@@ -6,9 +6,12 @@
     <%= link_to 'Choose Winner', '#', class: 'winner-button',
       title: suggestion.full_description,
       data: {
+        'event-name' => @event.name,
         'description' => suggestion.full_description,
         'suggestion-id' => suggestion.id,
-        'suggestion-type' => "#{suggestion.class}" } %>
+        'suggestion-type' => suggestion.class.name
+      }
+    %>
   <% elsif suggestion.event.winning_suggestion == suggestion %>
     Winner!
   <% end %>

@@ -26,15 +26,17 @@ class Invitation < ActiveRecord::Base
 
   def deliver_reminder_from(reminder_sender)
     if not invitee.voted_for_event?(event)
-      invitee.remind(self, reminder_sender)
+      invitee.remind(event, reminder_sender)
       set_reminded_at
     end
   end
 
   def self.deliver_automatic_reminders
-      due_for_reminder.each do |invitation|
-        UserMailer.reminder(invitation, invitation.sender).deliver
-        invitation.set_reminded_at
+    due_for_reminder.each do |invitation|
+      UserMailer.reminder(
+        invitation.invitee, invitation.sender, invitation.event
+      ).deliver
+      invitation.set_reminded_at
     end
   end
 

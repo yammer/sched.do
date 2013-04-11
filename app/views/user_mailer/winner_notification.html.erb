@@ -1,0 +1,16 @@
+<%= render 'title', title: 'A winner has been chosen' %>
+
+<%= @custom_text %>
+
+<p>
+  Click here to see the results:
+  <%= render 'click_here',
+    event: @event,
+    email: @recipient.email,
+    source: 'event-winner-notification',
+    medium: 'email',
+    campaign: 'sched.do'
+  %>
+</p>
+
+<p><%= render 'footer' %></p>

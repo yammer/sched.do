@@ -12,6 +12,7 @@ SchedDo::Application.routes.draw do
   resources :invitations, only: [:create, :update]
   resources :guests, only: [:new, :create, :update]
   resources :reminders, only: [:create]
+  resources :winning_suggestions, only: [:create]
   resources :yammer_user_invitations, only: [:create]
   resources :yammer_group_invitations, only: [:create]
 

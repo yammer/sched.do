@@ -18,15 +18,19 @@ class Guest < ActiveRecord::Base
   end
 
   def invite(invitation)
-    Messenger.new(invitation).invite
+    messenger.invite(invitation)
   end
 
   def is_admin?
     false
   end
 
-  def remind(invitation, sender)
-    Messenger.new(invitation, sender).remind
+  def remind(event, sender)
+    messenger.remind(event, sender)
+  end
+
+  def notify(event, message)
+    messenger.notify(event, message)
   end
 
   def vote_for_suggestion(suggestion)
@@ -66,6 +70,10 @@ class Guest < ActiveRecord::Base
   end
 
   private
+
+  def messenger
+    Messenger.new(self)
+  end
 
   def normalize_email
     self.email = email.to_s.strip.downcase

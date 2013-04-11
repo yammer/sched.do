@@ -1,8 +1,8 @@
-Reminder: Help <%= @help_out %> by voting on <%= @event.name %>.
+<%= @custom_text %>
 
 Click here to vote and see the results: <%= event_url(
   @event,
-  utm_source: 'event-reminder',
+  utm_source: @utm_source,
   utm_medium: 'private-message',
   utm_campaign: 'sched.do'
 ) %>

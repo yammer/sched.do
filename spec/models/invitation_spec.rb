@@ -131,10 +131,8 @@ describe Invitation, '.deliver_automatic_reminders' do
     Invitation.deliver_automatic_reminders
 
     invitations.each do |invitation|
-      expect(UserMailer).to have_received(:reminder).with(
-        invitation,
-        invitation.sender
-      )
+      expect(UserMailer).to have_received(:reminder).
+        with(invitation.invitee, invitation.sender, invitation.event)
     end
     expect(message).to have_received(:deliver).at_least_once
   end

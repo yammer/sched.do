@@ -100,6 +100,7 @@ describe ActivityCreatorJob, '#failure' do
 
     job.failure(job_record)
 
-    expect(Airbrake).to have_received(:notify).with('Job failure: boom')
+    expect(Airbrake).to have_received(:notify).
+      with(error_message: 'Job failure: boom')
   end
 end

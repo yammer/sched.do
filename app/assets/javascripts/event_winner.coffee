@@ -3,10 +3,11 @@ $('.winner-button').on 'click', (event) ->
 
   data = $(event.currentTarget).data()
   form = $('.choose-winner form')
-  message = form.find('#message')
-  message.text(message.text().replace('_description_', data.description))
+  messageEl = form.find('.customize-message')
+  messageEl.text("I've chosen #{data.description} for #{data.eventName}.")
+  $('.choose-winner h2').text(data.description)
 
-  form.find('#event_winning_suggestion_id').val(data.suggestionId)
-  form.find('#event_winning_suggestion_type').val(data.suggestionType)
+  form.find('#winning_suggestion_id').val(data.suggestionId)
+  form.find('#winning_suggestion_type').val(data.suggestionType)
 
   $('.choose-winner').dialog('open')

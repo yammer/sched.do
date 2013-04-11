@@ -9,10 +9,6 @@
     </button>
   </li>
   <% if current_user.able_to_edit?(@event) %>
-    <li title="Close Poll">
-    <%= link_to 'Close Poll', event_path(@event, event: { open: false }),
-      method: :put, class: 'close-button icon-button closable' %>
-    </li>
     <li title="Edit Poll">
       <%= link_to 'Edit Poll', edit_event_path(@event), class: "edit-button icon-button" %>
     </li>

@@ -31,6 +31,7 @@ RSpec.configure do |config|
   config.include EmailSpec::Matchers
   config.include FactoryGirl::Syntax::Default
   config.include Paperclip::Shoulda::Matchers
+  config.include DelayedJobSpecHelper
 
   config.use_transactional_fixtures = false
   config.infer_base_class_for_anonymous_controllers = false

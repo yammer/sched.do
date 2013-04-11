@@ -36,11 +36,15 @@ class User < ActiveRecord::Base
   end
 
   def invite(invitation)
-    get_messenger(invitation, invitation.sender).invite
+    messenger(invitation.sender).invite(invitation)
   end
 
-  def remind(invitation, sender)
-    get_messenger(invitation, sender).remind
+  def remind(event, sender)
+    messenger(sender).remind(event, sender)
+  end
+
+  def notify(event, message)
+    messenger(event.owner).notify(event, message)
   end
 
   def to_s
@@ -100,11 +104,11 @@ class User < ActiveRecord::Base
     yammer_network_id == test_user.yammer_network_id
   end
 
-  def get_messenger(invitation, sender)
+  def messenger(sender)
     if in_network?(sender)
-      return UserPrivateMessenger.new(invitation, sender)
+      YammerMessenger.new(self)
     else
-      return Messenger.new(invitation, sender)
+      Messenger.new(self)
     end
   end
 

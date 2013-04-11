@@ -48,27 +48,11 @@ div.show-event {
           }
         }
 
-        a.close-button {
-          @include background-image(url('close-icon.svg'), linear-gradient($bg-color, darken($bg-color, 8%)));
-          border-left: none;
-          border-right: none;
-          @include box-shadow(inset 1px 0 1px rgba(255,255,255,1),0 1px 3px darken($bg-color, 11%));
-
-          @include ie9 {
-            background-image: url('close-icon.svg');
-          }
-
-          &:active, &.active {
-            @include background-image(url('close-icon.svg'), linear-gradient(darken($bg-color, 8%), $bg-color));
-          }
-        }
-
         a.edit-button {
           @include background-image(url('edit-icon.svg'), linear-gradient($bg-color, darken($bg-color, 8%)));
           @include border-radius(0 4px 4px 0);
           @include box-shadow(inset 1px 0 1px rgba(255,255,255,1),0 1px 3px darken($bg-color, 11%));
           position: relative;
-          left: -6px;
 
           @include ie9 {
             background-image: url('edit-icon.svg');
@@ -458,11 +442,21 @@ div.show-event {
     background: #FFFDE8;
     border: 1px solid darken(#FFFDE8, 40%);
     box-shadow: none;
+    text-align: center;
 
     p {
       color: rgba(0,0,0,.4);
-      text-shadow:none;
-      text-align: center;
+      text-shadow: 0 1px rgba(255,255,255, .08);
+      margin-bottom: 0;
+
+      span {
+        font-weight: bold;
+        color: rgba(0,0,0,.6);
+      }
     }
+  }
+
+  .disabled .send-reminder {
+    font-style: italic;
   }
 }

@@ -1,6 +1,6 @@
 step 'I choose :option as the winning option' do |option|
   find("a[@title='#{option}']", text: 'Choose Winner').click
-  click_button('Close poll and send notification')
+  click_button('Send message and close poll')
 end
 
 step 'I should not be able to choose a winning option' do
