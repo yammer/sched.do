@@ -14,13 +14,14 @@ describe UsersController do
 
       it 'sets the events variable to the users sorted events' do
         user = create(:user)
-        events = mock('events')
-        user.stubs(:events).returns(events)
+        user_event = create(:event, owner: user)
+        invitation = create(:invitation, invitee: user)
+
         sign_in_as(user)
 
         get :show
 
-        expect(assigns(:events)).to eq(events)
+        expect(assigns(:events)).to eq([invitation.event, user_event])
       end
     end
 
