@@ -15,5 +15,5 @@ Feature: User can view a profile page
 
   Scenario: User clicks on their name to navigate to their profile
     Given I am signed in as "Bruce Lee"
-    When I click "My Polls"
+    When I click "My Events"
     Then I should be on my profile page

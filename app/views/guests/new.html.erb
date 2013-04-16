@@ -7,7 +7,11 @@
 <% end %>
 
 <div class="guest-sign-in">
-  <div class="sign-in-message"><p>Sign in to sched.do (Skeh-DOO) and help <%= @event.owner %> decide on "<%= @event.name %>".</p></div>
+  <div class="sign-in-message">
+    <p><%=t 'invitee_login_flow.sign_in_help_message',
+    owner: @event.owner,
+    event_name: @event.name %></p>
+  </div>
   <%= form_tag "/auth/yammer" do %>
     <section class="signin-with-yammer">
       <%= submit_tag "Sign in with Yammer", class: "sign-in",  id: "sign-in" %>
@@ -46,7 +50,9 @@
         </div>
       <% end %>
       <%= f.actions do %>
-        <%= f.action :submit, label: 'Begin Voting', button_html: { class: "cta" } %>
+        <%= f.action :submit,
+            label: t('invitee_login_flow.begin_voting_button'),
+            button_html: { class: "cta" } %>
       <% end %>
     <% end %>
   <% end %>

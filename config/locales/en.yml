@@ -1,4 +1,32 @@
-# Sample localization file for English. Add more files in this directory for other locales.
-# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
-
 en:
+  navbar:
+    my_polls: My Events
+    create_poll: Create Event
+  events_show:
+    my_polls: My Events
+  welcome_index:
+    tagline: Make scheduling simple and social
+    help_text_create_event: Create an event
+    help_text_add_suggestions: Suggest dates & times
+    help_text_invite_people: Invite people to vote
+    help_text_choose_winner: Choose a winning date and time
+  event_new:
+    schedule_an_event: Organize an Event
+    watermark: Name your event (e.g. &ldquo;Status Meeting&rdquo; or &ldquo;Company Picnic&rdquo;)
+    time_example: Time (e.g. 11:00am)
+  multiple_invitations_index:
+    invite_people_to_event: Invite people to vote
+    invitation_text_label: Invitation Message
+    invited_users_label: Invited People
+    invited_users_text: Invite people by name or by email
+    invited_yammer_groups_label: Invited Yammer Groups
+    invited_yammer_groups_text: Post your invite to a Yammer Group
+    watermark: Enter a name, an email or a Yammer group
+    invitation_text_tooltip: This is the message that will appear on your invitation
+  share_modal:
+    header_prompt: Let your coworkers know about sched.do
+    subheader_prompt:  Share it on your Yammer network
+    customize_message: Customize your message
+  invitee_login_flow:
+    sign_in_help_message: Sign in to sched.do and help %{owner} with %{event_name}…
+    begin_voting_button: View This Event

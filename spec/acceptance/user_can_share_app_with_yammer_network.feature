@@ -4,7 +4,7 @@ Feature: User can share sched.do with her Yammer network
   Scenario: User clicks "Share sched.do"
     Given I am signed in as "Bruce Lee"
     When I click "Share sched.do"
-    Then I should see "Share on the Thoughtbot network"
+    Then I should see "Share it on your Yammer network"
     And the customize message field should contain "Did you know you can send your own polls for free?"
 
   @javascript
@@ -49,7 +49,7 @@ Feature: User can share sched.do with her Yammer network
     And I create an event named "Clown party" with a suggestion of "lunch"
     And I view the "Clown party" event
     When I vote for "lunch"
-    Then I should see "Thanks for voting, please share sched.do"
+    Then I should see "Let your coworkers know about sched.do"
     And the customize message field should contain "I created an event in sched.do"
 
   @javascript
@@ -58,7 +58,7 @@ Feature: User can share sched.do with her Yammer network
     And I am signed in as "Bruce Lee"
     When I view the "Clown party" event
     And I vote for "lunch"
-    Then I should see "Thanks for voting, please share sched.do"
+    Then I should see "Let your coworkers know about sched.do"
     And the customize message field should contain "I voted on an event in sched.do"
 
  @javascript
@@ -67,5 +67,5 @@ Feature: User can share sched.do with her Yammer network
    And I create an event named "Clown party" with a suggestion of "lunch"
    And I view the "Clown party" event
    When I vote for "lunch"
-   Then I should see "Thanks for voting, please share sched.do"
+   Then I should see "Let your coworkers know about sched.do"
    And the customize message field should contain "I created an event in sched.do"

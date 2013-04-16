@@ -31,8 +31,8 @@
       <%= form.action :submit, button_html: { id: "add-invitee" } %>
 </section>
 
-<section class="custom-text" data-toggle="tooltip" title="This message will be posted to invited groups and sent as a private message to all individual invitees.">
-    <h4>Invitation text:</h4>
+<section class="custom-text" data-toggle="tooltip" title="<%= t 'multiple_invitations_index.invitation_text_tooltip' %>">
+    <h4><%= t 'multiple_invitations_index.invitation_text_label' %></h4>
     <div class="invitation-text">
       <%= form.input :invitation_text,
         label: false,

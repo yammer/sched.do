@@ -18,14 +18,14 @@
             </span>
           </li>
           <li>
-            <%= link_to 'My Polls', polls_path, id: 'my-polls' %>
+            <%= link_to t('navbar.my_polls'), polls_path, id: 'my-polls' %>
           </li>
           <li>
             <%= yield(:poll_create_button) %>
           </li>
         <% else %>
           <li>
-            <%= link_to 'Create Poll',
+            <%= link_to t('navbar.create_poll'),
               "#sign-in-modal",
               id: "new-event",
               name: "sign-in-modal" %>

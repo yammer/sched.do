@@ -14,7 +14,7 @@
       </div>
 
       <section class="search-box">
-        <h4>Invite people to the event:</h4>
+        <h4><%= t 'multiple_invitations_index.invite_people_to_event' %></h4>
 
         <%= form_tag('',  id: 'invitations') do %>
           <fieldset class="inputs">
@@ -23,7 +23,7 @@
                 <%= text_field_tag "invitation[invitee_attributes][name_or_email]",
                   nil,
                   'data-role' => 'invitation_name',
-                  placeholder: 'enter an email, Yammer group or Yammer contact',
+                  placeholder: t('multiple_invitations_index.watermark'),
                   id: 'auto-complete' %>
               </div>
               <div class="invitation-autocomplete-suggestions"></div>
@@ -34,7 +34,7 @@
 
       <section class="custom-text">
         <div class="suggestions">
-          <h4>Invitation text:</h4>
+          <h4><%= t 'multiple_invitations_index.invitation_text_label' %></h4>
           <div class="invitation-text">
             <textarea id="multiple-invite-text" rows="4" cols="50"> <%= last_non_owner_invitation_text(@event) %> </textarea>
           </div>
@@ -45,17 +45,17 @@
       <%= render 'javascript_templates/multiple_invitation_templates' %>
 
       <section id='invitees' class="invited-users invited">
-        <h4>Invited Users</h4>
+        <h4><%= t 'multiple_invitations_index.invited_users_label' %></h4>
 
-        <h5 id="invite_users">Invite someone to your poll, search for them by name or email.</h5>
+        <h5 id="invite_users"><%= t 'multiple_invitations_index.invited_users_text' %>.</h5>
         <ul class="users list-invitees">
         </ul>
       </section>
 
       <section id='groups' class="groups invited-yammer-groups invited">
-        <h4>Invited Yammer Groups</h4>
+        <h4><%= t 'multiple_invitations_index.invited_yammer_groups_label' %></h4>
 
-        <h5 id="invite_groups">Add an entire group to your invite list.</h5>
+        <h5 id="invite_groups"><%= t 'multiple_invitations_index.invited_yammer_groups_text' %></h5>
         <ul class="invited-groups list-invitees">
         </ul>
       </section>

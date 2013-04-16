@@ -10,7 +10,7 @@ end
 
 step 'I fill in the guest fields with only :email' do |email|
   fill_in 'guest_email', with: email
-  click_button 'Begin Voting'
+  click_button 'View This Event'
 end
 
 step 'no guest exists with email :email' do |email|

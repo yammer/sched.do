@@ -4,9 +4,9 @@ Feature: User can see create poll button on the show page
     And "user@example.com" was invited to the event "Clown party"
     And I am signed in as "user@example.com"
     When I view the "Clown party" event
-    Then I should see the "Create Poll" link
+    Then I should see the "Create Event" link
 
   Scenario: User views the new event page
     Given I am signed in as "user@example.com"
     When I visit the homepage
-    Then I should not see the "Create Poll" link
+    Then I should not see the "Create Event" link

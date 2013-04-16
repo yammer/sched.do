@@ -1,11 +1,12 @@
 <div class="hide-modal">
   <div class="dialog-modal share-app <%= share_trigger %>">
-    <h2><%= dialog_header %></h2>
+    <h2><%= t 'share_modal.header_prompt' %></h2>
+    <h3><%= t 'share_modal.subheader_prompt' %></h3>
     <form>
       <fieldset class="inputs">
         <ol>
           <div class="suggestions">
-            <p>Customize message</p>
+            <p><%= t 'share_modal.customize_message' %></p>
           </div>
           <div class="nested-field">
             <li>

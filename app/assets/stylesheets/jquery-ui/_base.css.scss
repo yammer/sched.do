@@ -70,8 +70,18 @@
   }
 }
 
+.share-app h2 {
+  margin-bottom: .25em;
+}
+
+.share-app h3 {
+  color: rgba(0,0,0,.3);
+  font-size: 1em;
+  margin-bottom: 1em;
+}
+
 .group-list {
-  float:right;
+  float: right;
 
   h3 {
     color: rgba(0,0,0,.2);

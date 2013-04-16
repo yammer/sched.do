@@ -41,7 +41,7 @@ end
 step 'I am signed in as an admin' do
   mock_yammer_oauth
   sign_in
-  expect(page).to have_content('Schedule an Event')
+  expect(page).to have_content('Organize an Event')
   user = User.last
   user.is_admin = true
   user.save!
@@ -86,7 +86,7 @@ step 'I fill in the fields with :email and :name then submit' do |email, name|
   name ||= 'Joe Schmoe'
   fill_in 'guest_name', with: name
   fill_in 'guest_email', with: email
-  click_button 'Begin Voting'
+  click_button 'View This Event'
 end
 
 step 'my access token is erased' do
@@ -98,7 +98,7 @@ end
 # Should
 
 step 'I should be redirected to the new event page' do
-  expect(page).to have_content 'Schedule an Event'
+  expect(page).to have_content 'Organize an Event'
 end
 
 step 'I should not see a sign out button' do

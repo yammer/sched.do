@@ -1,5 +1,5 @@
 step 'I should see a page asking me to invite people to the event' do
-  expect(page).to have_content('Invite people to the event')
+  expect(page).to have_content('Invite people to vote')
 end
 
 step 'I press the :button_text button for the :event_name event' do |button_text, event_name|

@@ -1,5 +1,5 @@
 <section class="search-box">
-  <h4>Invite people to the event:</h4>
+  <h4><%= t 'multiple_invitations_index.invite_people_to_event' %></h4>
     <%= semantic_form_for(@invitation, html: { id: 'invitations' }) do |form| %>
       <%= form.inputs do %>
 
@@ -7,7 +7,7 @@
           <%= text_field_tag "invitation[invitee_attributes][name_or_email]",
             nil,
             'data-role' => 'invitation_name',
-            placeholder: 'enter an email, Yammer group or Yammer contact',
+            placeholder: t('multiple_invitations_index.watermark'),
             id: 'auto-complete' %>
         </div>
 
@@ -32,8 +32,8 @@
       <% end %>
 </section>
 
-<section class="custom-text" data-toggle="tooltip" title="This message will be posted to invited groups and sent as a private message to all individual invitees.">
-  <h4>Invitation text:</h4>
+<section class="custom-text" data-toggle="tooltip" title="<%= t 'multiple_invitations_index.invitation_text_tooltip' %>">
+  <h4><%= t 'multiple_invitations_index.invitation_text_label' %></h4>
     <div class="invitation-text">
       <%= form.input :invitation_text,
         label: false,
