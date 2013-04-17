@@ -10,6 +10,9 @@
     <p>
       This poll is closed. <%= @event.owner.name %> chose
       <span><%= @event.winning_suggestion.full_description %></span>.
+      <% if user_owner?(@event, current_user) %>
+        <%= link_to 'Add to Calendar', calendar_path(@event) %>
+      <% end %>
     </p>
   </div>
 <% end %>

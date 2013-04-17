@@ -248,11 +248,9 @@ end
 describe EventHelper, '#votable_suggestions' do
   it 'returns votable suggestion strings' do
     suggestion1 = build(:suggestion)
-    suggestion2 = build(
-      :suggestion,
-      secondary_suggestions: build_list(:secondary_suggestion, 2)
-    )
+    suggestion2 = build(:suggestion)
     event = build(:event, primary_suggestions: [suggestion1, suggestion2])
+    suggestion2.secondary_suggestions = build_list(:secondary_suggestion, 2)
 
     expect(votable_suggestions(event)).to eq [
       suggestion1.full_description,

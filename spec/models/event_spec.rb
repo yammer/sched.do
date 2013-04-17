@@ -77,8 +77,8 @@ describe Event, 'add_errors_if_no_suggestions' do
   end
 
   it 'requires an event to have primary suggestions' do
-    event = create(:event)
-    event.suggestions.destroy_all
+    event = build(:event)
+    event.primary_suggestions.clear
 
     expect(event).to be_invalid
   end
@@ -180,9 +180,10 @@ end
 
 describe Event, '#suggestions' do
   it 'returns sorted primary suggestions' do
+    event = build(:event)
     suggestion1 = build(:primary_suggestion, description: "Apr 12, 2016")
     suggestion2 = build(:primary_suggestion, description: "Apr 12, 2015")
-    event = build(:event, primary_suggestions: [suggestion1, suggestion2])
+    event.primary_suggestions = [suggestion1, suggestion2]
 
     expect(event.suggestions).to eq [suggestion2, suggestion1]
   end

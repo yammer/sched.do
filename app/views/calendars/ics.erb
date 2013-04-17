@@ -1,0 +1,9 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Yammer//Scheddo//EN
+BEGIN:VEVENT
+ORGANIZER;CN=<%= @organizer_name %>:MAILTO:<%= @organizer_email %>
+DTSTART:<%= @start %>
+SUMMARY:<%= @summary %>
+END:VEVENT
+END:VCALENDAR

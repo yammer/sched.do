@@ -26,14 +26,16 @@ FactoryGirl.define do
       event.send(:generate_uuid)
     end
 
-    before :create do |event|
-      event.primary_suggestions << build(:primary_suggestion, event: event)
+    after :build do |event|
+      if event.primary_suggestions.empty?
+        event.primary_suggestions << build(:primary_suggestion, event: event)
+      end
     end
 
     factory :closed_event do
       open false
 
-      before :create do |event|
+      after :build do |event|
         event.winning_suggestion = event.primary_suggestions.first
       end
     end
@@ -50,12 +52,12 @@ FactoryGirl.define do
   end
 
   factory :primary_suggestion, aliases: [:suggestion] do
-    description 'A pretty good suggestion.'
+    description 'Monday'
     event
   end
 
   factory :secondary_suggestion do
-    description 'A pretty good secondary.'
+    description '4:00pm'
     primary_suggestion
   end
 

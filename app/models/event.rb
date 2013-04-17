@@ -12,6 +12,7 @@ class Event < ActiveRecord::Base
   has_many :groups, through: :invitations, source: :invitee, source_type: 'Group'
 
   delegate :watermarked_image, to: :owner
+  delegate :name, :email, to: :owner, prefix: true
 
   accepts_nested_attributes_for :primary_suggestions,
     reject_if: :reject_primary_suggestion?,
