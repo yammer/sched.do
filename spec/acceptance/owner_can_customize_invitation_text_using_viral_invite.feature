@@ -6,17 +6,17 @@ Feature: Custom invitation text for multiple invitations
     And a user exists with a name of "Jane Doe"
     When I invite the Yammer user "Jane Doe" to "Cookie party" from the multiple invite page
     And I press "Invite"
-    Then I should see "I'm using sched.do to schedule an event, and I'd like your input." in the Invitation text field
+    Then I should see "I'm organizing Cookie party on sched.do and I need your input." in the Invitation text field
     And "Jane Doe" should receive 1 private message
-    And the private message should include "I'm using sched.do to schedule an event, and I'd like your input."
+    And the private message should include "I'm organizing Cookie party on sched.do and I need your input."
 
   @javascript
   Scenario: Owner leaves default invitation text and invites guest by email
     Given I sign in and create an event named "Cookie party"
     And I invite "chocolate@example.com" to "Cookie party" via the autocomplete from the multiple invite page
     When I press "Invite"
-    Then I should see "I'm using sched.do to schedule an event, and I'd like your input." in the Invitation text field
-    And "chocolate@example.com" should receive an email with the text "using sched.do to schedule an event"
+    Then I should see "I'm organizing Cookie party on sched.do and I need your input." in the Invitation text field
+    And "chocolate@example.com" should receive an email with the text "I'm organizing Cookie party"
 
   @javascript
   Scenario: User adds custom invitation text

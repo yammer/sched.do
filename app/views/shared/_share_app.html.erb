@@ -10,8 +10,8 @@
           </div>
           <div class="nested-field">
             <li>
-              <textarea class="customize-message" rows="4" cols="50"><%= share_message_body %>
-              </textarea>
+            <%= text_area_tag '', (t'share_modal.default_text'),
+              class: 'customize-message', size: '50x4' %>
             </li>
           </div>
           <li>
@@ -35,7 +35,7 @@
           <li class="action input-action">
           <%= button_to 'Share',
             '#',
-            class: "share-button cta" %>
+            class: 'share-button cta' %>
           </li>
         </ol>
       </fieldset>

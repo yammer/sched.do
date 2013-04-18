@@ -8,7 +8,7 @@
     <table id="my-events">
       <thead>
         <tr>
-          <th>Poll name</th>
+          <th>Event name</th>
           <th>Created</th>
           <th>Number of invitees</th>
         </tr>
@@ -19,6 +19,7 @@
             <td class="event-name">
               <%= image_tag(event.owner.image, class: "show-avatar", "data-toggle" => "tooltip", title: "Created by #{event.owner.name}" ) %>
               <%= link_to event.name, event_path(event) %>
+              <span class="closed-label"><%= closed_event_text(event) %></span>
             </td>
             <td class="event-created"><%= distance_of_time_in_words(Time.now, event.created_at) %> ago</td>
             <td class="event-invitees"><%= pluralize(event.invitees.count - 1,'invitee') %></td>

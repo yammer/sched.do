@@ -5,7 +5,7 @@ Feature: User can share sched.do with her Yammer network
     Given I am signed in as "Bruce Lee"
     When I click "Share sched.do"
     Then I should see "Share it on your Yammer network"
-    And the customize message field should contain "Did you know you can send your own polls for free?"
+    And the customize message field should contain "Check out this scheduling app"
 
   @javascript
   Scenario: User shares the app
@@ -50,7 +50,7 @@ Feature: User can share sched.do with her Yammer network
     And I view the "Clown party" event
     When I vote for "lunch"
     Then I should see "Let your coworkers know about sched.do"
-    And the customize message field should contain "I created an event in sched.do"
+    And the customize message field should contain "Check out this scheduling app"
 
   @javascript
   Scenario: User votes on an event she didn't create
@@ -59,7 +59,7 @@ Feature: User can share sched.do with her Yammer network
     When I view the "Clown party" event
     And I vote for "lunch"
     Then I should see "Let your coworkers know about sched.do"
-    And the customize message field should contain "I voted on an event in sched.do"
+    And the customize message field should contain "Check out this scheduling app"
 
  @javascript
  Scenario: User votes on an event and shares sched.do
@@ -68,4 +68,4 @@ Feature: User can share sched.do with her Yammer network
    And I view the "Clown party" event
    When I vote for "lunch"
    Then I should see "Let your coworkers know about sched.do"
-   And the customize message field should contain "I created an event in sched.do"
+   And the customize message field should contain "Check out this scheduling app"

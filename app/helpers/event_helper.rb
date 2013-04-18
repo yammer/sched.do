@@ -6,6 +6,12 @@ module EventHelper
     event.primary_suggestions[1].secondary_suggestions[0] ||= SecondarySuggestion.new
   end
 
+  def closed_event_text(event)
+    if event.closed?
+      '(Closed)'
+    end
+  end
+
   def first_invitee_for_invitation(event)
     if invitees?(event)
       first_invitee_name_with_commas(event)
@@ -51,7 +57,8 @@ module EventHelper
   end
 
   def last_non_owner_invitation_text(event)
-    default_text = "I'm using sched.do to schedule an event, and I'd like your input."
+    default_text =
+      t('events_show.default_custom_invitation_text', event_name: event.name)
     invitations = event.invitations
     non_owner_invitations = invitations.select { |i| i.invitee != event.owner }
 
@@ -100,8 +107,8 @@ module EventHelper
       )
 
       link_to(text, path, method: :post, class: options[:class])
-    else
-      "Invitee did not vote"
+    elsif options[:remind_all].nil?
+      'Invitee did not vote'
     end
   end
 

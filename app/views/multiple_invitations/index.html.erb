@@ -36,7 +36,8 @@
         <div class="suggestions">
           <h4><%= t 'multiple_invitations_index.invitation_text_label' %></h4>
           <div class="invitation-text">
-            <textarea id="multiple-invite-text" rows="4" cols="50"> <%= last_non_owner_invitation_text(@event) %> </textarea>
+            <%= text_area_tag '', last_non_owner_invitation_text(@event),
+              id: 'multiple-invite-text', size: '50x4' %>
           </div>
         </div>
       </section>

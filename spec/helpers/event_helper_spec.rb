@@ -126,7 +126,7 @@ describe EventHelper, '#last_non_owner_invitation_text' do
 
    text = last_non_owner_invitation_text(event)
 
-   expect(text).to eq "I'm using sched.do to schedule an event, and I'd like your input."
+   expect(text).to eq "I'm organizing #{event.name} on sched.do and I need your input."
   end
 
   it 'returns the text used for the last invitation if there are invitees' do
