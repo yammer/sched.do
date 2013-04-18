@@ -9,6 +9,8 @@ en:
       My Events
     default_custom_invitation_text:
       I'm organizing %{event_name} on sched.do and I need your input.
+    poll_live_text_html:
+      <strong>Your poll is now live</strong>. You will receive notifications via email when invitees vote.
   welcome_index:
     tagline:
       Make scheduling simple and social

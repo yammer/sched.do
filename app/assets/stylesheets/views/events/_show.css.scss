@@ -371,39 +371,33 @@ div.show-event {
     @extend section.invited-yammer-groups;
   }
 
-  section.custom-text {
-    @extend .search-box;
-    @include clearfix;
-    border: 1px solid #a9d9e3;
-    background-image: -webkit-linear-gradient(top, #f6fbfc, #dff1f4);
+  .user-show-custom-text {
+    display: none;
+  }
 
-    h4 {
-      color: #3da2b6;
-      float: left;
-      text-shadow: none;
-      width: 242px;
-      margin-top: 5px;
-    }
+  .custom-text {
+    @include clearfix;
+    margin-top: 18px;
+    position: relative;
 
     li {list-style-type: none;}
 
-    input[type="text"] {
-      @include invitation-text;
-      height: 20px;
-    }
-
-    input[disabled="disabled"] {
-      background-color: #E6E6E6;
-      color: grey;
-      }
-
-    input[type="submit"] {
-      display: none;
-    }
-
     textarea {
+      @include background-image(none);
+      @include border-radius(4px);
+      @include box-shadow(0 1px 0 lighten($yammer-blue, 20%));
+      @include box-sizing(border-box);
       @include invitation-text;
+      border: 1px solid darken($yammer-blue, 20%);
+      float: none;
+      font-size: 0.8em;
       height: 80px;
+      padding: 0.6em 0.8em;
+      width: 100%;
+
+      &:focus {
+        outline: 0;
+      }
     }
   }
 

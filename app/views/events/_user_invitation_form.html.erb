@@ -1,5 +1,6 @@
 <section class="search-box">
   <h4><%= t 'multiple_invitations_index.invite_people_to_event' %></h4>
+
     <%= semantic_form_for(@invitation, html: { id: 'invitations' }) do |form| %>
       <%= form.inputs do %>
 
@@ -30,20 +31,21 @@
         <%= form.action :submit, button_html: { id: "add-invitee" } %>
           <div class="invitation-autocomplete-suggestions"></div>
       <% end %>
-</section>
 
-<section class="custom-text" data-toggle="tooltip" title="<%= t 'multiple_invitations_index.invitation_text_tooltip' %>">
-  <h4><%= t 'multiple_invitations_index.invitation_text_label' %></h4>
-    <div class="invitation-text">
-      <%= form.input :invitation_text,
-        label: false,
-        input_html: {
-          disable_with: 'disabled',
-          disabled: invitation_text_disabled?(@event, current_user),
-          value: last_non_owner_invitation_text(@event)
-        }
-      %>
-    </div>
+  <div class="custom-text user-show-custom-text" data-toggle="tooltip" title="<%= t 'multiple_invitations_index.invitation_text_tooltip' %>">
+    <h4><%= t 'multiple_invitations_index.invitation_text_label' %></h4>
+      <div class="invitation-text">
+        <%= form.input :invitation_text,
+          label: false,
+          input_html: {
+            class: 'show-view-textarea',
+            disable_with: 'disabled',
+            disabled: invitation_text_disabled?(@event, current_user),
+            value: last_non_owner_invitation_text(@event)
+          }
+        %>
+      </div>
+  </div>
     <% end %>
 </section>
 

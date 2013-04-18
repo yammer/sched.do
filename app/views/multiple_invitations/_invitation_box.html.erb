@@ -1,0 +1,25 @@
+<section class="search-box">
+  <h4><%= t 'multiple_invitations_index.invite_people_to_event' %></h4>
+
+  <%= form_tag('',  id: 'invitations') do %>
+    <fieldset class="inputs">
+      <ol>
+        <div class="invitee-input">
+          <%= text_field_tag "invitation[invitee_attributes][name_or_email]",
+            nil,
+            'data-role' => 'invitation_name',
+            placeholder: t('multiple_invitations_index.watermark'),
+            id: 'auto-complete' %>
+        </div>
+        <div class="invitation-autocomplete-suggestions"></div>
+      </ol>
+    </fieldset>
+  <% end %>
+
+  <div class="suggestions custom-text">
+    <h4><%= t 'multiple_invitations_index.invitation_text_label' %></h4>
+    <div class="invitation-text">
+      <textarea id="multiple-invite-text" rows="4" cols="50"> <%= last_non_owner_invitation_text(@event) %> </textarea>
+    </div>
+  </div>
+</section>

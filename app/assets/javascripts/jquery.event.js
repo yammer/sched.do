@@ -128,4 +128,10 @@ $(document).ready(function() {
         }
       );
   })
+
+  // Slide in the invitation message textarea
+  $('#auto-complete').focus(function(){
+    $('.user-show-custom-text').fadeIn(400);
+  });
+
 });

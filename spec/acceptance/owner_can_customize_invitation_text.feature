@@ -5,8 +5,8 @@ Feature: User can customize invitation text
     Given I am signed in
     And I create an event named "Clown party" with a suggestion of "tomorrow"
     When I visit the event page for "Clown party"
-    Then I should see "Invitation Message"
-    And I should see "I'm organizing Clown party on sched.do and I need your input." in the Invitation text field
+    And I fill in "user@example.com" in the invitation field
+    Then I should see "I'm organizing Clown party on sched.do and I need your input." in the Invitation text field
 
   @javascript
   Scenario: User invites a user and customizes the invitation text

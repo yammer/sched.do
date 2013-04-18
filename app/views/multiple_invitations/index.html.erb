@@ -13,34 +13,7 @@
         </div>
       </div>
 
-      <section class="search-box">
-        <h4><%= t 'multiple_invitations_index.invite_people_to_event' %></h4>
-
-        <%= form_tag('',  id: 'invitations') do %>
-          <fieldset class="inputs">
-            <ol>
-              <div class="invitee-input">
-                <%= text_field_tag "invitation[invitee_attributes][name_or_email]",
-                  nil,
-                  'data-role' => 'invitation_name',
-                  placeholder: t('multiple_invitations_index.watermark'),
-                  id: 'auto-complete' %>
-              </div>
-              <div class="invitation-autocomplete-suggestions"></div>
-            </ol>
-          </fieldset>
-        <% end %>
-      </section>
-
-      <section class="custom-text">
-        <div class="suggestions">
-          <h4><%= t 'multiple_invitations_index.invitation_text_label' %></h4>
-          <div class="invitation-text">
-            <%= text_area_tag '', last_non_owner_invitation_text(@event),
-              id: 'multiple-invite-text', size: '50x4' %>
-          </div>
-        </div>
-      </section>
+      <%= render 'invitation_box' %>
 
       <%= render 'javascript_templates/yammer_autocomplete_templates' %>
       <%= render 'javascript_templates/multiple_invitation_templates' %>
@@ -70,7 +43,9 @@
             </li>
           </ol>
 
-          <%= link_to 'Back', edit_event_path(@event), class: 'back' %>
+          <%= link_to edit_event_path(@event), class: 'back' do %>
+            &larr; Back
+          <% end %>
         </fieldset>
       </form>
 

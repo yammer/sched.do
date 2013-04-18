@@ -7,8 +7,17 @@ div.show-event {
       top: 18px
     }
 
-    form#invitations {
+    div.invitation-text, .invitee-input {
       margin-left: 240px;
+    }
+
+    .custom-text {
+      h4 {
+        margin-left: 5px;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
     }
 
     &.guest {
