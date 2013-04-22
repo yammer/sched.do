@@ -20,7 +20,10 @@ class YammerUserResponseTranslator
   private
 
   def parse_email_from_response
-    @response['contact']['email_addresses'].
-      detect{ |address| address['type'] == 'primary' }['address']
+    if @response && @response['contact'] && @response['contact']['email_addresses']
+      primary_email = @response['contact']['email_addresses'].
+        detect{ |address| address['type'] == 'primary' }
+      primary_email && primary_email['address']
+    end
   end
 end
