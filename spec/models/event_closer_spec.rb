@@ -16,10 +16,9 @@ describe EventCloser, '#process' do
   context 'with an open poll' do
     it 'sends a group notification' do
       invitation = create(:invitation_with_group)
-      event_closer = EventCloser.new(invitation.event, message: 'hello')
       GroupYammerMessenger.any_instance.stubs(:deliver)
 
-      event_closer.process
+      event_closer(invitation.event).process
       work_off_delayed_jobs
 
       expect(GroupYammerMessenger.any_instance).to have_received(:deliver)
@@ -27,10 +26,9 @@ describe EventCloser, '#process' do
 
     it 'sends a personal notification' do
       event = create(:event)
-      event_closer = EventCloser.new(event, message: 'hello')
       YammerMessenger.any_instance.stubs(:deliver)
 
-      event_closer.process
+      event_closer(event).process
       work_off_delayed_jobs
 
       expect(YammerMessenger.any_instance).to have_received(:deliver)
@@ -38,13 +36,33 @@ describe EventCloser, '#process' do
 
     it 'sends an email' do
       invitation = create(:invitation_with_guest)
-      event_closer = EventCloser.new(invitation.event, message: 'hello')
       Messenger.any_instance.stubs(:notify)
 
-      event_closer.process
+      event_closer(invitation.event).process
       work_off_delayed_jobs
 
       expect(Messenger.any_instance).to have_received(:notify)
+    end
+
+    it 'sends an email to the owner' do
+      event = create(:event)
+      fake_email = stub(:deliver)
+      UserMailer.stubs(:closed_event_notification).returns(fake_email)
+
+      event_closer(event).process
+      work_off_delayed_jobs
+
+      expect(UserMailer).to have_received(:closed_event_notification).
+        with(event)
+    end
+
+    def event_closer(event)
+      EventCloser.new(
+        event,
+        winning_suggestion_id: event.suggestions.first.id,
+        winning_suggestion_type: event.suggestions.first.class.name,
+        message: 'I have chosen this suggestion'
+      )
     end
   end
 end

@@ -36,6 +36,7 @@ module AuthenticationHelpers
       },
       extra: generate(:extra)
     }
+    FakeYammer.yammer_email = email
   end
 
   def mock_deny_yammer_oauth

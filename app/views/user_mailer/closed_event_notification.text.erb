@@ -1,0 +1,15 @@
+<%= "You chose #{@event.winning_suggestion.full_description} for #{@event.name}." %>
+
+<%= "Invitees who voted for #{@event.winning_suggestion.full_description}:" %>
+<% @voter_calculator.voters.each do |voter| %>
+  * <%= voter.name %>
+<% end %>
+
+Other invitees:
+<% @voter_calculator.non_voters.each do |non_voter| %>
+  * <%= non_voter.name %>
+<% end %>
+
+You can still view the results of your event <%= link_to 'here', event_url(@event) %>.
+
+Export your event to Outlook Calendar, gCal, or iCal by opening the attached .ics file.

@@ -2,7 +2,7 @@ Feature: Closed poll
 
   @javascript
   Scenario: Owner chooses a winning option
-    Given I am signed in
+    Given I am signed in as "owner@example.com"
     And a user exists with a name of "Jane Doe"
     And I create an event "Fun Event" with the following suggestions:
       | Monday  |
@@ -17,6 +17,7 @@ Feature: Closed poll
     And Yammer should receive 3 private messages
     And the private message should include "I've chosen Tuesday for Fun Event"
     And "guest@example.com" should receive an email with the text "I've chosen Tuesday for Fun Event"
+    And "owner@example.com" should receive an email with the text "Invitees who voted for Tuesday"
 
   @javascript
   Scenario: Owner chooses a winning option for a time-based event

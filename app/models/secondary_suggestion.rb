@@ -1,12 +1,7 @@
 class SecondarySuggestion < ActiveRecord::Base
-  validates :description, presence: { message: 'This field is required' }
+  include Votable
 
   belongs_to :primary_suggestion
-  has_many :votes, as: :suggestion, dependent: :destroy
-
-  def vote_count
-    votes.count
-  end
 
   def event
     primary_suggestion.event

@@ -26,5 +26,7 @@ class EventCloser
     participants.each do |invitee|
       invitee.delay.notify(@event, @message)
     end
+
+    UserMailer.delay.closed_event_notification(@event)
   end
 end

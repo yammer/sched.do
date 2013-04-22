@@ -46,6 +46,20 @@ class UserMailer < ActionMailer::Base
     )
   end
 
+  def closed_event_notification(event)
+    @event = event
+    @voter_calculator = VoterCalculator.new(event.winning_suggestion)
+
+    if event.time_based?
+      attachments['event.ics'] = {
+        mime_type: 'text/calendar',
+        content: Calendar.generate(event)
+      }
+    end
+
+    mail(to: event.owner_email, subject: "You closed #{@event.name} on sched.do")
+  end
+
   def vote_confirmation(vote)
     @user = vote.voter
     @event = vote.event

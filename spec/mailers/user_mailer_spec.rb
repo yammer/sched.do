@@ -201,3 +201,33 @@ describe UserMailer, '.reminder' do
     expect(mail.body.encoded).to_not include(event.owner.name)
   end
 end
+
+describe UserMailer, '.closed_event_notification' do
+  let(:event) { create(:closed_event) }
+
+  it 'sends to the event owner' do
+    mail = UserMailer.closed_event_notification(event)
+
+    expect(mail.to).to eq [event.owner.email]
+  end
+
+  it 'has a subject' do
+    mail = UserMailer.closed_event_notification(event)
+
+    expect(mail.subject).to eq "You closed #{event.name} on sched.do"
+  end
+
+  it 'has an attachment' do
+    mail = UserMailer.closed_event_notification(event)
+
+    expect(mail).to have(1).attachments
+  end
+
+  it 'generates a calendar' do
+    Calendar.stubs(:generate)
+
+    UserMailer.closed_event_notification(event)
+
+    expect(Calendar).to have_received(:generate).with(event)
+  end
+end

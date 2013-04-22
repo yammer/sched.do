@@ -112,16 +112,15 @@ FactoryGirl.define do
       association :voter, factory: :guest
     end
 
-    after :build do |vote, attributes|
-      if Invitation.
-        where(invitee_id: attributes.voter_id).
-        where(event_id: vote.event.id).
-        empty?
-        create(
-          :invitation,
-          invitee: attributes.voter,
-          event: vote.event
-        )
+    before :create do |vote, attributes|
+      existing_invitations = Invitation.where(
+        invitee_id: attributes.voter_id,
+        invitee_type: attributes.voter_type,
+        event_id: vote.event.id
+      )
+
+      if existing_invitations.none?
+        create(:invitation, invitee: attributes.voter, event: vote.event)
       end
     end
   end

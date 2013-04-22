@@ -14,6 +14,6 @@ Feature: User can view a profile page
     Then I should be on the "Clown party" event page
 
   Scenario: User clicks on their name to navigate to their profile
-    Given I am signed in as "Bruce Lee"
+    Given I am signed in as "user@example.com"
     When I click "My Events"
     Then I should be on my profile page

@@ -23,8 +23,8 @@ end
 describe PrimarySuggestion, '#vote_count' do
   it 'returns the number of votes for this suggestion' do
     suggestion = create(:suggestion)
-    suggestion.votes << create(:vote, suggestion: suggestion)
-    suggestion.votes << create(:vote, suggestion: suggestion)
+    create(:vote, suggestion: suggestion)
+    create(:vote, suggestion: suggestion)
 
     expect(suggestion.vote_count).to eq 2
   end

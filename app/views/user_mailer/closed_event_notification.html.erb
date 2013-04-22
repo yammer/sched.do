@@ -1,0 +1,20 @@
+<%= render 'title',
+  title: "You chose #{@event.winning_suggestion.full_description} for #{@event.name}." %>
+
+<p>Invitees who voted for <%= @event.winning_suggestion.full_description %>:</p>
+<ul>
+  <% @voter_calculator.voters.each do |voter| %>
+    <li><%= voter.name %></li>
+  <% end %>
+</ul>
+
+<p>Other invitees:</p>
+<ul>
+  <% @voter_calculator.non_voters.each do |non_voter| %>
+    <li><%= non_voter.name %></li>
+  <% end %>
+</ul>
+
+<p>You can still view the results of your event <%= link_to 'here', event_url(@event) %>.</p>
+
+<p>Export your event to Outlook Calendar, gCal, or iCal by opening the attached .ics file.</p>
