@@ -57,6 +57,15 @@ class Event < ActiveRecord::Base
     @suggestions ||= Sorter.new(primary_suggestions).sort
   end
 
+  def time_based?
+    begin
+      DateTime.parse(winning_suggestion.full_description)
+      true
+    rescue ArgumentError
+      false
+    end
+  end
+
   def to_param
     uuid
   end

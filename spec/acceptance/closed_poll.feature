@@ -18,6 +18,26 @@ Feature: Closed poll
     And the private message should include "I've chosen Tuesday for Fun Event"
     And "guest@example.com" should receive an email with the text "I've chosen Tuesday for Fun Event"
 
+  @javascript
+  Scenario: Owner chooses a winning option for a time-based event
+    Given I am signed in
+    And I create an event "Fun Event" with the following suggestions:
+      | Monday  |
+      | Tuesday |
+    When I visit the event page for "Fun Event"
+    And I choose "Tuesday" as the winning option
+    Then I should see the "Add to Calendar" link
+
+  @javascript
+  Scenario: Owner chooses a winning option for a non time-based event
+    Given I am signed in
+    And I create an event "Fun Event" with the following suggestions:
+      | Happy |
+      | Sad   |
+    When I visit the event page for "Fun Event"
+    And I choose "Happy" as the winning option
+    Then I should not see the "Add to Calendar" link
+
   Scenario: Non-owner user does not see a button to choose a winner
     Given someone created an event named "Party"
     When I am signed in
