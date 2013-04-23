@@ -9,10 +9,6 @@ class Guest < ActiveRecord::Base
   validates :email, email: true
   validates :name, presence: true, if: :has_ever_logged_in?
 
-  def able_to_edit?(event)
-    false
-  end
-
   def image
     'http://' + ENV['HOSTNAME'] + '/assets/no_photo.png'
   end

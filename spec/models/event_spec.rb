@@ -188,3 +188,42 @@ describe Event, '#suggestions' do
     expect(event.suggestions).to eq [suggestion2, suggestion1]
   end
 end
+
+describe Event, '#editable_by?' do
+  context 'with creator' do
+    it 'returns true' do
+      event = build(:event)
+
+      expect(event).to be_editable_by(event.owner)
+    end
+
+    context 'with closed event' do
+      it 'returns false' do
+        event = build(:closed_event)
+
+        expect(event).not_to be_editable_by(event.owner)
+      end
+    end
+  end
+
+  context 'with invitee' do
+    it 'returns false' do
+      invitation = build(:invitation_with_user)
+      event = invitation.event
+      invitee = invitation.invitee
+
+      expect(event).not_to be_editable_by(invitee)
+    end
+  end
+
+  context 'with guest' do
+    it 'returns false' do
+      invitation = build(:invitation_with_guest)
+      event = invitation.event
+      guest = invitation.invitee
+
+      expect(event).not_to be_editable_by(guest)
+    end
+  end
+end
+

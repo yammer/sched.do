@@ -8,7 +8,7 @@ describe InvitationsController, 'authentication' do
   end
 end
 
-describe InvitationsController, '.create' do
+describe InvitationsController, '#create' do
   context 'signed in as a user' do
     it 'redirects to the event page' do
       event_creator = create_user_and_sign_in
@@ -123,6 +123,74 @@ describe InvitationsController, '.create' do
     def mock_invitee_builder(invitee)
       builder = stub('builder', find_user_by_email_or_create_guest: invitee)
       InviteeBuilder.stubs(new: builder)
+    end
+  end
+end
+
+describe InvitationsController, '#destroy' do
+  context 'as event creator' do
+    it 'deletes invitation for an invited user' do
+      invitation = create(:invitation)
+      sign_in_as(invitation.event.owner)
+
+      delete :destroy, id: invitation.id
+
+      expect(response).to redirect_to(event_path(invitation.event))
+      expect { invitation.reload }.to raise_error(ActiveRecord::RecordNotFound)
+    end
+
+    it 'cannot delete invitation for the event creator' do
+      event = create(:event)
+      invitation = event.owner.invitations.first
+      sign_in_as(event.owner)
+
+      delete :destroy, id: invitation.id
+      expect(response).to redirect_to(event_path(invitation.event))
+      expect(invitation.reload).to be_present
+    end
+  end
+
+  context 'as invited guest' do
+    it 'deletes invitation for the current user' do
+      invitation = create(:invitation)
+      sign_in_as(invitation.invitee)
+
+      delete :destroy, id: invitation.id
+
+      expect(response).to redirect_to(polls_path)
+      expect { invitation.reload }.to raise_error(ActiveRecord::RecordNotFound)
+    end
+
+    it 'cannot delete invitation for another user' do
+      invitation = create(:invitation)
+      user = create(:user)
+      sign_in_as(user)
+
+      delete :destroy, id: invitation.id
+
+      expect(invitation.reload).to be_present
+    end
+  end
+
+  context 'as invited guest' do
+    it 'deletes invitation for the logged in invitee' do
+      invitation = create(:invitation_with_guest)
+      sign_in_as(invitation.invitee)
+
+      delete :destroy, id: invitation.id
+
+      expect(response).to redirect_to(root_path)
+      expect { invitation.reload }.to raise_error(ActiveRecord::RecordNotFound)
+    end
+
+    it 'deletes votes for the logged in invitee' do
+      vote = create(:vote)
+      invitation = vote.voter.invitations.first
+      sign_in_as(vote.voter)
+
+      delete :destroy, id: invitation.id
+
+      expect { vote.reload }.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
 end

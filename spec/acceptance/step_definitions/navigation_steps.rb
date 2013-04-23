@@ -21,3 +21,7 @@ end
 step 'I should be on my profile page' do
   expect(current_url).to eq polls_url
 end
+
+step 'I should be on the homepage' do
+  expect(current_url).to eq root_url
+end

@@ -2,7 +2,7 @@
   <div class="vote-count" data-id="<%= suggestion.id %>">
     <span><%= suggestion.vote_count %></span>
   </div>
-  <% if current_user.able_to_edit?(suggestion.event) %>
+  <% if suggestion.event.editable_by?(current_user) %>
     <%= link_to 'Choose Winner', '#', class: 'winner-button',
       title: suggestion.full_description,
       data: {

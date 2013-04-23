@@ -93,19 +93,6 @@ describe User, '#in_network?' do
   end
 end
 
-describe User, '#able_to_edit?' do
-  it 'returns true if the user created the event' do
-    event = create(:event)
-    user = event.owner
-    expect(event.owner).to be_able_to_edit(event)
-  end
-
-  it 'returns false if the user did not create the event' do
-    event = create(:event)
-    expect(build(:user)).to_not be_able_to_edit(event)
-  end
-end
-
 describe User, '#image' do
   it 'returns the placeholder if there is no image' do
     user = build_stubbed(:user, image: nil)

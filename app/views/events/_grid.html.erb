@@ -77,7 +77,7 @@
       </tfoot>
     </table>
   </div>
-  <div id="invitees" <% if current_user.able_to_edit?(@event) %>class="blank"<% end %>>
+  <div id="invitees" <% if @event.editable_by?(current_user) %>class="blank"<% end %>>
     <div class="scroll-notice backward">◄</div>
     <table>
       <thead>
@@ -104,6 +104,10 @@
               </span>
               <% if user_owner?(@event, invitee) %>
                 <span class="bullhorn">(Creator)</span>
+              <% end %>
+              <% if invitation_for(@event, invitee).deletable_by?(current_user) %>
+                <%= link_to 'Remove user', invitation_path(invitation_for(@event, invitee)),
+                  method: :delete, class: 'remove-user', confirm: 'Remove from this event?' %>
               <% end %>
             </td>
           </tr>

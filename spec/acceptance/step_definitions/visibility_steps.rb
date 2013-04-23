@@ -25,3 +25,7 @@ end
 step 'the customize message field should contain :text' do |text|
   expect(first(:css, '.customize-message').value).to include(text)
 end
+
+step 'I should not see :event_name as one of my events' do |event_name|
+  expect(find(:css, '#my-events')).not_to have_content(event_name)
+end

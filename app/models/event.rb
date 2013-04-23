@@ -43,6 +43,14 @@ class Event < ActiveRecord::Base
     !open?
   end
 
+  def owned_by?(user)
+    owner == user
+  end
+
+  def editable_by?(user)
+    open? && owned_by?(user)
+  end
+
   def deliver_reminder_from(sender)
     invitations_without(sender).each do |invitation|
       invitation.deliver_reminder_from(sender)

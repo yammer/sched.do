@@ -27,10 +27,6 @@ class User < ActiveRecord::Base
     styles: { original: '100x100' },
     processors: [:thumbnail, :watermark]
 
-  def able_to_edit?(event)
-    event.owner == self && event.open
-  end
-
   def image
     self[:image] || 'http://' + ENV['HOSTNAME'] + '/assets/no_photo.png'
   end

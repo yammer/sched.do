@@ -10,7 +10,7 @@ SchedDo::Application.routes.draw do
   resources :events, only: [:new, :create, :show, :edit, :update], :id => /.{8}/
   resources :multiple_invitations, only: [:index]
   resources :votes, only: [:create, :destroy]
-  resources :invitations, only: [:create, :update]
+  resources :invitations, only: [:create, :update, :destroy]
   resources :guests, only: [:new, :create, :update]
   resources :reminders, only: [:create]
   resources :winning_suggestions, only: [:create]

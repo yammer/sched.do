@@ -460,4 +460,13 @@ div.show-event {
   .disabled .send-reminder {
     font-style: italic;
   }
+
+  .remove-user {
+    @extend %close-button;
+    display: block;
+    float: right;
+    position: relative;
+    right: 2px;
+    top: 2px;
+  }
 }

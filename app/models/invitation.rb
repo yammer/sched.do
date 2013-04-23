@@ -2,7 +2,7 @@ class Invitation < ActiveRecord::Base
   belongs_to :event
   belongs_to :invitee, polymorphic: true
   belongs_to :sender, polymorphic: true
-  belongs_to :vote
+  belongs_to :vote, dependent: :destroy
 
   accepts_nested_attributes_for :invitee
 
@@ -52,7 +52,27 @@ class Invitation < ActiveRecord::Base
     self.update_attributes!(reminded_at: Time.now.utc)
   end
 
+  def deletable_by?(user)
+    can_be_deleted? && controlled_by?(user)
+  end
+
   private
+
+  def controlled_by?(user)
+    owned_by?(user) || event.owned_by?(user)
+  end
+
+  def can_be_deleted?
+    event.open? && !original?
+  end
+
+  def owned_by?(user)
+    invitee == user
+  end
+
+  def original?
+    event.owned_by?(invitee)
+  end
 
   def queue_created_jobs
     send_invitation_created_message

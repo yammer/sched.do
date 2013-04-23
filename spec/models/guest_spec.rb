@@ -165,13 +165,6 @@ describe Guest, '#yammer_group_id' do
   end
 end
 
-describe Guest, '#able_to_edit?' do
-  it 'always returns false' do
-    event = build(:event)
-    expect(build(:guest)).to_not be_able_to_edit(event)
-  end
-end
-
 describe Guest, '#votes' do
   it "returns the guest's votes if there are any" do
     guest = create(:guest)

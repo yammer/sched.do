@@ -104,3 +104,11 @@ step 'I should see :event_name in my Events list' do |event_name|
     expect(page).to have_content(event_name)
   end
 end
+
+step 'I remove :participant as a participant' do |participant|
+  if participant == 'myself'
+    click_link 'Remove user'
+  else
+    find('td', text: participant).click_link('Remove user')
+  end
+end

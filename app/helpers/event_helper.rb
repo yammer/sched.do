@@ -33,11 +33,7 @@ module EventHelper
   end
 
   def invitation_for(event, user)
-    Invitation.where(
-      event_id: event,
-      invitee_id: user,
-      invitee_type: user.class.name
-    ).first
+    user.invitations.where(event_id: event).first
   end
 
   def invitation_text_disabled?(event, user)

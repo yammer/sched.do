@@ -4,11 +4,11 @@
 <%- end -%>
 <ul class="poll-actions">
   <li title="Copy Poll URL">
-    <button id="copy-event-url" class="icon-button <% if !current_user.able_to_edit?(@event) %>single<% end %>" data-event-url="<%= event_url(@event) %>" >
+    <button id="copy-event-url" class="icon-button <% if !@event.editable_by?(current_user) %>single<% end %>" data-event-url="<%= event_url(@event) %>" >
       Copy URL
     </button>
   </li>
-  <% if current_user.able_to_edit?(@event) %>
+  <% if @event.editable_by?(current_user) %>
     <li title="Edit Poll">
       <%= link_to 'Edit Poll', edit_event_path(@event), class: "edit-button icon-button" %>
     </li>
@@ -22,7 +22,7 @@
 <% end %>
 
 <div class="event-header">
-  <div class="event-name <%= "editable" if current_user.able_to_edit?(@event) %>">
+  <div class="event-name <%= "editable" if @event.editable_by?(current_user) %>">
     <h1><%= @event.name %></h1>
     <%= text_field_tag :event_name, @event.name, maxlength: 70 %>
   </div>

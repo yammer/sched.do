@@ -201,7 +201,7 @@ describe Invitation, '.deliver_automatic_reminders' do
 
   it 'sets reminded_at on the invitation'do
     Timecop.freeze do
-      invitation = create(:invitation, created_at: 6.days.ago)
+      invitation = create(:invitation, created_at: 6.days.ago, reminded_at: nil)
       message = stub('message', deliver: true)
       UserMailer.stubs(:reminder).returns(message)
 
@@ -210,17 +210,47 @@ describe Invitation, '.deliver_automatic_reminders' do
       expect(invitation.reload.reminded_at).to be_within(1).of(Time.now)
     end
   end
+end
 
-  describe Invitation, '#remind!' do
-    it 'sets the reminded_at date' do
-      Time.freeze do
-        invitation = create(:invitatiion, reminded_at: nil)
+describe Invitation, '#deletable_by?' do
+  context 'when event is closed' do
+    it 'returns false' do
+      invitation = build(:invitation)
 
-        invitation.remind!
+      expect(invitation).to be_deletable_by(invitation.invitee)
+    end
+  end
 
-        expect(invitation.reminded_at).to eq Time.now
-      end
+  context 'when invitee is the owner' do
+    it 'returns false' do
+      invitation = build(:invitation)
+      invitation.invitee = invitation.event.owner
+
+      expect(invitation).not_to be_deletable_by(invitation.event.owner)
+    end
+  end
+
+  context 'when remover is the owner' do
+    it 'returns true' do
+      invitation = build(:invitation)
+
+      expect(invitation).to be_deletable_by(invitation.event.owner)
+    end
+  end
+
+  context 'when invitee is a user' do
+    it 'returns true' do
+      invitation = build(:invitation)
+
+      expect(invitation).to be_deletable_by(invitation.invitee)
+    end
+  end
+
+  context 'when invitee is a guest' do
+    it 'returns true' do
+      invitation = build(:invitation_with_guest)
+
+      expect(invitation).to be_deletable_by(invitation.invitee)
     end
   end
 end
-
