@@ -38,7 +38,7 @@ $(document).ready(function() {
   $(document).
     on(
       'cocoon:after-insert',
-      '#new_event, #edit_event',
+      '.new-event',
       function(event, insertedItem) {
         if(insertedItem.hasClass('primary')) {
           init();

@@ -11,7 +11,7 @@ _.extend(Scheddo.Util, (function() {
 
     datepicker: function() {
       var self = this;
-      // Displays a date picker when suggetsion field is focused
+      // Displays a date picker when suggestion field is focused
       $('.primary-suggestion').datepicker({
         nextText: '▶',
         prevText: '◀',
