@@ -16,6 +16,15 @@ class PrimarySuggestion < ActiveRecord::Base
     @suggestions ||= Sorter.new(secondary_suggestions).sort
   end
 
+  def time_based?
+    begin
+      DateTime.parse(description)
+      true
+    rescue ArgumentError
+      false
+    end
+  end
+
   private
 
   def secondary_descriptions

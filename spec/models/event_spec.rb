@@ -45,6 +45,31 @@ describe Event, 'before_validation' do
   end
 end
 
+describe Event, 'before_create' do
+  context 'when event has a time based suggestion' do
+    it 'sets time_based to true' do
+      suggestion = build(:suggestion, description: 'Monday')
+      event = build(:event, primary_suggestions: [suggestion])
+
+      event.save
+
+      expect(event).to be_time_based
+    end
+  end
+
+  context 'when event does not have all time based suggestions' do
+    it 'sets time_based to false' do
+      suggestion1 = build(:suggestion, description: 'March 31')
+      suggestion2 = build(:suggestion, description: 'Bananas')
+      event = build(:event, primary_suggestions: [suggestion1, suggestion2])
+
+      event.save
+
+      expect(event).not_to be_time_based
+    end
+  end
+end
+
 describe Event, 'validations' do
   it { expect(subject).to validate_presence_of(:name).with_message(/field is required/) }
   it { expect(subject).to ensure_length_of(:name).is_at_most(Event::NAME_MAX_LENGTH) }

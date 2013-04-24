@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130410182528) do
+ActiveRecord::Schema.define(:version => 20130424210132) do
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
@@ -30,14 +30,15 @@ ActiveRecord::Schema.define(:version => 20130410182528) do
   add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
 
   create_table "events", :force => true do |t|
-    t.string   "name",                                                   :null => false
-    t.datetime "created_at",                                             :null => false
-    t.datetime "updated_at",                                             :null => false
-    t.integer  "user_id",                                                :null => false
-    t.string   "uuid",                    :limit => 8,                   :null => false
+    t.string   "name",                                                    :null => false
+    t.datetime "created_at",                                              :null => false
+    t.datetime "updated_at",                                              :null => false
+    t.integer  "user_id",                                                 :null => false
+    t.string   "uuid",                    :limit => 8,                    :null => false
     t.boolean  "open",                                 :default => true
     t.integer  "winning_suggestion_id"
     t.string   "winning_suggestion_type"
+    t.boolean  "time_based",                           :default => false, :null => false
   end
 
   add_index "events", ["name"], :name => "index_events_on_name"

@@ -21,6 +21,7 @@ class Event < ActiveRecord::Base
   before_validation :generate_uuid, on: :create
   before_validation :set_first_suggestion
   before_create :set_owner_watermark
+  before_save :set_time_based
 
   validates :name, presence: { message: 'This field is required' }
   validates :name, length: { maximum: NAME_MAX_LENGTH }
@@ -65,15 +66,6 @@ class Event < ActiveRecord::Base
     @suggestions ||= Sorter.new(primary_suggestions).sort
   end
 
-  def time_based?
-    begin
-      DateTime.parse(winning_suggestion.full_description)
-      true
-    rescue ArgumentError
-      false
-    end
-  end
-
   def to_param
     uuid
   end
@@ -105,6 +97,11 @@ class Event < ActiveRecord::Base
     File.open(Rails.root.join('public', 'logo-high-res.png')) do |file|
       owner.watermarked_image = file
     end
+  end
+
+  def set_time_based
+    self.time_based = primary_suggestions.all?(&:time_based?)
+    true
   end
 
   def remaining_suggestions
