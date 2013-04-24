@@ -19,6 +19,10 @@ $(document).ready(function(){
     $(this).find('.groups').toggle();
   });
 
+  $('.group-list').mouseleave(function() {
+    $(this).find('.groups').toggle();
+  });
+
   $('.groups').on('click', '.group', function() {
     $('.groups:visible').toggle();
   });
