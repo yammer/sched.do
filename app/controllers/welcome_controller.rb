@@ -1,5 +1,5 @@
 class WelcomeController < ApplicationController
-  skip_before_filter :require_yammer_login, only: :index
+  skip_before_filter :require_yammer_login, only: [:index, :about]
 
   def index
     if signed_in?
@@ -7,5 +7,8 @@ class WelcomeController < ApplicationController
     else
       render :index
     end
+  end
+
+  def about
   end
 end

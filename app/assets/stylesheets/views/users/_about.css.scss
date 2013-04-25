@@ -1,0 +1,32 @@
+.welcome-about {
+
+  div.welcome.about-header {
+    margin-bottom: 4%;
+    padding: 4% 10% 4%;
+  }
+
+  .about-us {
+    margin: 0 auto;
+    width: 600px;
+
+    h1 {
+      font-size: 4em;
+      text-align: center;
+    }
+
+    small {
+      display: block;
+      opacity: .5;
+      margin-bottom: 1em;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+
+    p:first-of-type {
+      font-size: 1.2em;
+      line-height: 1.8em;
+    }
+  }
+}

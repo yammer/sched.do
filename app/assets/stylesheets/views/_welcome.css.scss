@@ -1,11 +1,11 @@
-body.welcome {
+body.welcome, body.welcome-about {
   font-smoothing:subpixel-antialiased;
 
   div.agree-to-tos {
     @extend %tos-agreement;
   }
 
-  div.welcome {
+  .welcome {
     background-color: $bg-color;
     @include background-image(linear-gradient(#fff, darken($bg-color, 2%)));
     border-bottom: 1px solid darken($bg-color, 20%);

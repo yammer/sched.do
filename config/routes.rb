@@ -5,6 +5,7 @@ SchedDo::Application.routes.draw do
   get 'polls' => 'users#show'
   get '/sign_out' => 'sessions#destroy', as: 'sign_out'
   get '/tos' => 'pages#terms_of_service'
+  get '/about' => 'welcome#about'
 
   resources :calendars, only: [:show]
   resources :events, only: [:new, :create, :show, :edit, :update], :id => /.{8}/

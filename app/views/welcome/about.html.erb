@@ -1,0 +1,36 @@
+<%= render 'shared/flashes' %>
+<div class= "welcome about-header">
+  <div class="logo">
+    <hgroup>
+      <%= link_to root_path do %>
+      <h1><img src="/assets/welcome-page/welcome-logo.svg" data-png-fallback="/assets/welcome-page/welcome-logo.png" alt="sched.do" /></h1>
+      <p class="phonetic">(we say it: Skeh-DOOOO!)</p>
+      <% end %>
+    </hgroup>
+  </div>
+</div>
+
+<section class="about-us">
+  <h1>About sched.do</h1>
+  <%= image_tag("welcome/yammer-office.jpg") %>
+  <small>Photo credit: <%= link_to "The Next Web", "http://thenextweb.com/insider/2013/01/14/yammer-opens-its-new-headquarter-office-in-san-francisco/", rel: "nofollow" %></small>
+  <p>Make scheduling simple and social with sched.do. sched.do is your personal administrative assistant here to free you from the headache of scheduling. Simply create any kind of event - a team meeting, group lunch, holiday party or coffee with friends - then invite attendees to vote on the best date and time.</p>
+  <p>The sched.do application was created by <%= link_to "Yammer", "http://yammer.com" %> in partnership with <%= link_to "thoughtbot", "http://thoughtbot.com" %>. The code is <%= link_to "open-source and available on GitHub", "https://github.com/yammer/sched.do" %>. It is tightly integrated with the <%= link_to "Yammer API", "https://developer.yammer.com/restapi/" %> and showcases Yammer integrations such as Yammer OAuth2, adding activity messages, messaging your friends, messaging groups, and open graph integration. sched.do integrates with the Yammer API using the <%= link_to "Yam gem", "https://github.com/yammer/yam" %>.</p>
+  <p>Once you <%= link_to "log in via Yammer", "https://developer.yammer.com/authentication/" %> and begin to enter text into the invitee field, sched.do uses the Yammer API's <%= link_to "autocomplete feature", "https://developer.yammer.com/restapi/#rest-autocomplete" %> to suggest group and users to invite. Groups and users are invited to the event via
+    <%= link_to "Yammer private messages", "https://developer.yammer.com/restapi/#rest-messages" %>. Invitees can also be reminded to vote on an event using private messages. Once invitees vote on an event, they are given the opportunity to share the sched.do application with their entire Yammer network or individual groups.</p>
+  <p>An <%= link_to "Open Graph", "https://developer.yammer.com/opengraph/" %> object is created for each sched.do event and an Open Graph Object Feed appears at the bottom of each sched.do event. As the Yammer documentation states, "OG feeds can effectively become a commenting system for internal blogs or any line of business application." Using the Open Graph feed, any company can have a comment thread about a sched.do event that is seamlessly integrated with its Yammer network. In addition, event creation, updates, sharing, and voting are all shared as activity stories on a user's Yammer network via Yammer's Open Graph integration.
+  </p>
+</section>
+
+<%= form_tag "/auth/yammer" do %>
+  <div class="sign-in">
+    <%= submit_tag "Sign in with Yammer", class: "sign-in footer-sign-in",  id: "sign-in" %>
+  </div>
+  <div class="agree-to-tos">
+    <label>
+      <input type="hidden" name="agree_to_tos" value="0">
+      <input type="checkbox" name="agree_to_tos" value="1" checked="checked">
+      I agree to the <%= terms_of_service_link %>
+    </label>
+  </div>
+<% end %>
