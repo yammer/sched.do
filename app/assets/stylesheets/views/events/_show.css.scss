@@ -463,10 +463,23 @@ div.show-event {
 
   .remove-user {
     @extend %close-button;
+    @include background-image(url(delete-icon.svg), linear-gradient(rgb(240, 102, 102), rgb(200,102,102)));
     display: block;
     float: right;
     position: relative;
     right: 2px;
     top: 2px;
+
+    &:hover, &.ui-state-hover {
+      @include background-image(url(delete-icon.svg), linear-gradient(rgb(250, 102, 102), rgb(230,102,102)));
+    }
+  }
+
+  .blank .remove-user {
+    display: none;
+  }
+
+  .blank td:hover .remove-user {
+    display: block;
   }
 }
