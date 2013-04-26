@@ -5,14 +5,11 @@ describe InvitationCreatedMessageJob, '.enqueue' do
     invitation = build_stubbed(:invitation)
     Invitation.stubs(find: invitation)
     Delayed::Job.stubs(:enqueue)
-    invitation_created_message_job =
-      InvitationCreatedMessageJob.new(invitation.id)
-    priority = 1
+    job = InvitationCreatedMessageJob.new(invitation.id)
 
     InvitationCreatedMessageJob.enqueue(invitation)
 
-    expect(Delayed::Job).to have_received(:enqueue).
-      with(invitation_created_message_job, priority: priority)
+    expect(Delayed::Job).to have_received(:enqueue).with(job)
   end
 end
 
@@ -39,16 +36,6 @@ describe InvitationCreatedMessageJob, '#error' do
 
     expect(Airbrake).to have_received(:notify).with(exception)
   end
-
-  it 'does not send exception to Airbrake if the job errors due to rate limit' do
-    job = ReminderCreatedJob.new
-    exception = Faraday::Error::ClientError.new('Rate limited!', status: 429)
-    Airbrake.stubs(:notify)
-
-    job.error(job, exception)
-
-    expect(Airbrake).to have_received(:notify).never
-  end
 end
 
 describe InvitationCreatedMessageJob, '#failure' do
@@ -61,5 +48,38 @@ describe InvitationCreatedMessageJob, '#failure' do
 
     expect(Airbrake).to have_received(:notify).
       with(error_message: 'Job failure: boom')
+  end
+end
+
+describe InvitationCreatedMessageJob, '#max_attempts' do
+  it 'uses the global config settings' do
+    job = InvitationCreatedMessageJob.new
+
+    expect(job.max_attempts).to eq 5
+  end
+
+  context 'when rate limit error is encountered' do
+    it 'overrides global delayed_job settings' do
+      exception = Faraday::Error::ClientError.new('Rate limited!', status: 429)
+      job = InvitationCreatedMessageJob.new
+      job.error(job, exception)
+
+      expect(job.max_attempts).to eq 50
+    end
+  end
+end
+
+describe InvitationCreatedMessageJob, '#reschedule_at' do
+  context 'when rate limit error is encountered' do
+    it 'overrides global delayed_job settings' do
+      ignored = nil
+      exception = Faraday::Error::ClientError.new('Rate limited!', status: 429)
+      job = InvitationCreatedMessageJob.new
+      job.error(job, exception)
+
+      result = job.reschedule_at(ignored, ignored)
+
+      expect(result).to be_within(1).of(30.seconds.from_now)
+    end
   end
 end

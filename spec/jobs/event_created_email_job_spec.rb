@@ -5,12 +5,10 @@ describe EventCreatedEmailJob, '.enqueue' do
     event = build_stubbed(:event)
     Delayed::Job.stubs(:enqueue)
     event_created_email_job = EventCreatedEmailJob.new(event.id)
-    priority = 1
 
     EventCreatedEmailJob.enqueue(event)
 
-    expect(Delayed::Job).to have_received(:enqueue).
-      with(event_created_email_job, priority: priority)
+    expect(Delayed::Job).to have_received(:enqueue).with(event_created_email_job)
   end
 end
 

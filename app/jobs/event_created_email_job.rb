@@ -1,9 +1,8 @@
 class EventCreatedEmailJob < Struct.new(:event_id)
-  PRIORITY = 1
-  ACTION = 'create'
-
   def self.enqueue(event)
-    Delayed::Job.enqueue(new(event.id), priority: PRIORITY)
+    job = new(event.id)
+
+    Delayed::Job.enqueue(job)
   end
 
   def error(job, exception)

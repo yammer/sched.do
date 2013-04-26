@@ -1,29 +1,15 @@
-# Delayed job for posting activity stories to the Yammer API endpoint
-
 class ActivityCreatorJob < Struct.new(:user_id, :action, :event_id)
   include Rails.application.routes.url_helpers
-
-  PRIORITY = 1
+  include YammerRateLimited
 
   def self.enqueue(user, action, event)
-    Delayed::Job.enqueue(
-      new(user.id, action, event.id),
-      priority: PRIORITY
-    )
+    job = new(user.id, action, event.id)
+
+    Delayed::Job.enqueue(job)
   end
 
   def perform
     post_yammer_activity
-  end
-
-  def error(job, exception)
-    unless ExceptionSilencer.is_rate_limit?(exception)
-      Airbrake.notify(exception)
-    end
-  end
-
-  def failure(job)
-    Airbrake.notify(error_message: "Job failure: #{job.last_error}")
   end
 
   private

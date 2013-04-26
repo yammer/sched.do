@@ -7,12 +7,10 @@ describe ActivityCreatorJob, '.enqueue' do
     event = build_stubbed(:event)
     Delayed::Job.stubs(:enqueue)
     activity_creator_job = ActivityCreatorJob.new(user.id, action, event.id)
-    priority = 1
 
     ActivityCreatorJob.enqueue(user, action, event)
 
-    expect(Delayed::Job).to have_received(:enqueue).
-      with(activity_creator_job, priority: priority)
+    expect(Delayed::Job).to have_received(:enqueue).with(activity_creator_job)
   end
 end
 

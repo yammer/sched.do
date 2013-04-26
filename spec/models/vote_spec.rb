@@ -52,10 +52,11 @@ describe Vote, '#no_votes_witin_delay_window?' do
     voter = first_vote.voter
     event = first_vote.suggestion.event
     second_suggestion = create(:suggestion, event: event)
-
-    Timecop.freeze(VoteEmailJob::DELAY.from_now)
-    second_vote = create(:vote, voter: voter, suggestion: second_suggestion)
-    Timecop.return
+    second_vote = create(:vote,
+      voter: voter,
+      suggestion: second_suggestion,
+      created_at: VoteEmailJob::DELAY.from_now
+    )
     first_vote_check = first_vote.has_no_other_votes_within_delay_window?
     second_vote_check = second_vote.has_no_other_votes_within_delay_window?
 

@@ -6,12 +6,10 @@ describe ReminderCreatedJob, '.enqueue' do
     Reminder.stubs(find: reminder)
     Delayed::Job.stubs(:enqueue)
     reminder_created_job = ReminderCreatedJob.new(reminder.id)
-    priority = 1
 
     ReminderCreatedJob.enqueue(reminder)
 
-    expect(Delayed::Job).to have_received(:enqueue).
-      with(reminder_created_job, priority: priority)
+    expect(Delayed::Job).to have_received(:enqueue).with(reminder_created_job)
   end
 end
 

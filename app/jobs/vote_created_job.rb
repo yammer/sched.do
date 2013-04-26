@@ -1,9 +1,6 @@
 class VoteCreatedJob < Struct.new(:vote_id)
-  PRIORITY = 1
-  ACTION = 'vote'
-
   def self.enqueue(vote)
-    Delayed::Job.enqueue(new(vote.id), priority: PRIORITY)
+    Delayed::Job.enqueue(new(vote.id))
   end
 
   def perform
@@ -26,7 +23,7 @@ class VoteCreatedJob < Struct.new(:vote_id)
 
   def create_activity_message
     if voter.yammer_user?
-      ActivityCreatorJob.enqueue(voter, ACTION, event)
+      ActivityCreatorJob.enqueue(voter, 'vote', event)
     end
   end
 

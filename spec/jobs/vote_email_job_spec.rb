@@ -6,13 +6,12 @@ describe VoteEmailJob, '.enqueue' do
       vote = build_stubbed(:vote)
       Delayed::Job.stubs(:enqueue)
       vote_email_job = VoteEmailJob.new(vote.id, :test_vote_email)
-      priority = 1
       delay = 3.minutes
 
       VoteEmailJob.enqueue(vote, :test_vote_email)
 
       expect(Delayed::Job).to have_received(:enqueue).
-        with(vote_email_job, priority: priority, run_at: delay.from_now)
+        with(vote_email_job, run_at: delay.from_now)
     end
   end
 end

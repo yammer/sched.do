@@ -6,12 +6,10 @@ describe VoteCreatedJob, '.enqueue' do
     Vote.stubs(find: vote)
     Delayed::Job.stubs(:enqueue)
     vote_created_job = VoteCreatedJob.new(vote.id)
-    priority = 1
 
     VoteCreatedJob.enqueue(vote)
 
-    expect(Delayed::Job).to have_received(:enqueue).
-      with(vote_created_job, priority: priority)
+    expect(Delayed::Job).to have_received(:enqueue).with(vote_created_job)
   end
 end
 
