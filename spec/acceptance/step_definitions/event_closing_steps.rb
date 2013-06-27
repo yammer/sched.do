@@ -7,6 +7,11 @@ step 'I should not be able to choose a winning option' do
   expect(page).not_to have_content('Choose Winner')
 end
 
+step 'I should see the open graph discussion feed' do
+  expect(page).to have_content('Discuss this poll')
+  expect(page).to have_css('#yammer-feed')
+end
+
 step 'I should see a closed poll' do
   expect(page).to have_content('This poll is closed.')
   expect(page).to have_content('Winner!')

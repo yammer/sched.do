@@ -50,6 +50,7 @@ Feature: Closed poll
     And I am signed in
     When I visit the event page for "Party"
     Then I should see a closed poll
+    And I should see the open graph discussion feed
 
   Scenario: User cannot vote on a closed poll
     Given someone created a closed event named "Party"
