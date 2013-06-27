@@ -1,10 +1,10 @@
 Namespaced.declare('Scheddo')
 
 $('.votable').delegate '.vote[data-role=create]', 'ajax:success', (e, data, textStatus, jqXHR) ->
-  Scheddo.voteCallback.call(this, data)
+  Scheddo.newVoteCallback.call(this, data)
 
-$('.votable').delegate '.vote[data-role=delete]', 'ajax:success', (e, data, textStatus, jqXHR) ->
-  Scheddo.unvoteCallback.call(this, data)
+$('.votable').delegate '.vote[data-role=update]', 'ajax:success', (e, data, textStatus, jqXHR) ->
+  Scheddo.changeVoteCallback.call(this, data)
 
 $('.votable').delegate '.vote', 'ajax:error', (e, data, textStatus, jqXHR) ->
   Scheddo.voteErrorCallback.call(this, data)
@@ -16,35 +16,33 @@ $('.votable').delegate '.vote', 'ajax:beforeSend', (e, data, textStatus, jqXHR) 
 
 $('.votable').on 'click', (e, data, status, jqXhr) ->
 
-
-Scheddo.voteCallback = (data) ->
+Scheddo.newVoteCallback = (data) ->
   $('body').removeClass('loading')
-  $(this).attr('data-role','delete')
+  $(this).attr('data-role','update')
   $(this).attr('action',"/votes/#{data.vote.id}")
   $(this).find('#vote_id').val(data.vote.id)
-  $(this).append($('<input name=_method type=hidden value=delete />'))
-  if($(this).data('hover'))
-    $(this).one 'mouseout', ->
-      $(this).find('input.vote').removeClass('vote').addClass('unvote')
-  else
-    $(this).find('input.vote').removeClass('vote').addClass('unvote')
+  $(this).append($('<input name=_method type=hidden value=put />'))
+  $(this).find('input.vote').attr('value', 'Unvote')
+  $(this).find('input.vote').removeClass('vote').addClass('unvote')
   id = $(this).parent().data('id')
   newVoteCount = parseInt($(".vote-count[data-id=#{id}]").text(), 10) + 1
   $(".vote-count[data-id=#{id}]").html("<span>#{newVoteCount}</span>")
 
-Scheddo.unvoteCallback = (data) ->
+Scheddo.changeVoteCallback = (data) ->
   $('body').removeClass('loading')
-  $(this).attr('data-role','create')
-  $(this).attr('action','/votes')
-  $(this).find('input[value=delete]').remove()
-  if($(this).data('hover'))
-    $(this).one 'mouseout', ->
-      $(this).find('input.unvote').removeClass('unvote').addClass('vote')
-  else
-    $(this).find('input.unvote').removeClass('unvote').addClass('vote')
+  action = $(this).find('#vote_submit_action').children().attr('value')
   id = $(this).parent().data('id')
-  newVoteCount = parseInt($(".vote-count[data-id=#{id}]").text(), 10) - 1
-  $(".vote-count[data-id=#{id}]").html("<span>#{newVoteCount}</span>")
+
+  if(action == 'Unvote')
+    newVoteCount = parseInt($(".vote-count[data-id=#{id}]").text(), 10) - 1
+    $(".vote-count[data-id=#{id}]").html("<span>#{newVoteCount}</span>")
+    $(this).find('input.unvote').attr('value', 'Vote')
+    $(this).find('input.unvote').removeClass('unvote').addClass('vote')
+  else if(action == 'Vote')
+    newVoteCount = parseInt($(".vote-count[data-id=#{id}]").text(), 10) + 1
+    $(".vote-count[data-id=#{id}]").html("<span>#{newVoteCount}</span>")
+    $(this).find('input.vote').attr('value', 'Unvote')
+    $(this).find('input.vote').removeClass('vote').addClass('unvote')
 
 Scheddo.voteErrorCallback = (data) ->
   $('body').removeClass('loading')

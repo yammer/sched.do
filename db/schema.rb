@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130424210132) do
+ActiveRecord::Schema.define(:version => 20130627210901) do
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
@@ -179,6 +179,7 @@ ActiveRecord::Schema.define(:version => 20130424210132) do
     t.integer  "suggestion_id",            :null => false
     t.string   "suggestion_type",          :null => false
     t.integer  "event_id"
+    t.datetime "deleted_at"
   end
 
   add_index "votes", ["suggestion_id_deprecated"], :name => "index_votes_on_suggestion_id"

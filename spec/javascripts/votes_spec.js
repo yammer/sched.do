@@ -1,24 +1,20 @@
 //=require votes
 
-describe ('vote callback', function(){
+describe ('new vote callback', function(){
 
   beforeEach(function(){
     loadFixtures('vote.html');
     vote_element = $('.vote').get(0)
     vote_data = {vote: {id: 1}}
-    Scheddo.voteCallback.call(vote_element, vote_data)
+    Scheddo.newVoteCallback.call(vote_element, vote_data)
   })
 
   it ('sets the data-role to delete', function(){
-    expect($('.vote').data("role")).toEqual("delete")
+    expect($('.vote').data("role")).toEqual("update")
   });
 
   it ('sets the action to /votes/:vote_id', function(){
     expect($('.vote').attr("action")).toEqual("/votes/1")
-  });
-
-  it ('appends the delete element', function(){
-    expect($('.vote input[value=delete]').length).toEqual(1)
   });
 
   it ('changes the input class to unvote when you mouse out', function(){
@@ -31,30 +27,21 @@ describe ('vote callback', function(){
   });
 });
 
-describe ('unvote callback', function(){
+describe ('change vote callback', function(){
 
   beforeEach(function(){
     loadFixtures('unvote.html');
     vote_element = $('.vote').get(0)
     vote_data = {vote: {id: 1}}
-    Scheddo.unvoteCallback.call(vote_element, vote_data)
+    Scheddo.changeVoteCallback.call(vote_element, vote_data)
   })
 
-  it ('sets the data-role to create', function(){
-    expect($('.vote').data("role")).toEqual("create")
+  it ('leaves the data-role as update', function(){
+    expect($('.vote').data("role")).toEqual("update")
   });
 
   it ('sets the action to /votes', function(){
-    expect($('.vote').attr("action")).toEqual("/votes")
-  });
-
-  it ('removes the delete element', function(){
-    expect($('#edit_vote_1 input[value=delete]').length).toEqual(0)
-  });
-
-  it ('changes the input class to vote when you mouse out', function(){
-    $('#test .vote input').mouseout()
-    expect($('.vote input').hasClass("vote")).toEqual(true)
+    expect($('.vote').attr("action")).toEqual("/votes/1")
   });
 
   it ('decrements the vote count by 1', function(){

@@ -25,6 +25,24 @@ describe Vote do
   end
 end
 
+describe Vote, '#change_deleted_status' do
+  it 'sets the deleted_at attribute when it is nil' do
+    vote = create(:vote, deleted_at: nil)
+
+    vote.change_deleted_status
+
+    expect(vote.deleted_at).to_not be_nil
+  end
+
+  it 'sets to deleted_at attribute to nil when it is present' do
+    vote = create(:vote, deleted_at: Time.zone.now)
+
+    vote.change_deleted_status
+
+    expect(vote.deleted_at).to be_nil
+  end
+end
+
 describe Vote, '#no_votes_witin_delay_window?' do
   include DelayedJobSpecHelper
 

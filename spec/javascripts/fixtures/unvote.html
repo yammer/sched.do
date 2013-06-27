@@ -3,17 +3,19 @@
     <tr class="votable">
       <td>
         <div data-id="1">
-          <form action="/votes/1" class="formtastic vote" id="edit_vote_1">
-            <input name="_method" type="hidden" value="delete" />
-            <input class="unvote" name="commit" type="submit" value="Unvote" />
+          <form action="/votes/1" class="formtastic vote" data-role="update" id="edit_vote_1">
+            <input name="_method" type="hidden" value="put" />
+            <div id="vote_submit_action">
+              <input class="unvote" name="commit" type="submit" value="Unvote" />
+            </div>
           </form>
         </div>
       </td>
 
       <td>
         <div data-id="2">
-          <form action="/votes/2" class="formtastic vote" data-role="delete" id="edit_vote_2">
-            <input name="_method" type="hidden" value="delete" />
+          <form action="/votes/2" class="formtastic vote" data-role="update" id="edit_vote_2">
+            <input name="_method" type="hidden" value="put" />
             <input class="unvote" name="commit" type="submit" value="Unvote" />
           </form>
         </div>
@@ -23,9 +25,9 @@
 
   <tfoot>
     <tr>
-      <td class="vote-count" data-id="1">1</td>
+      <td class="vote-count" data-id="1"><span>1</span></td>
 
-      <td class="vote-count" data-id="2">1</td>
+      <td class="vote-count" data-id="2"><span>1</span></td>
     </tr>
   </tfoot>
 </table>

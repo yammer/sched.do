@@ -11,6 +11,17 @@ describe VoterCalculator, '#voters' do
 
     expect(voter_calculator.voters).to eq [user, guest]
   end
+
+  it 'does not include users who voted and then unvoted for this suggestion' do
+    user = build(:user)
+    guest = build(:guest)
+    suggestion = build(:suggestion)
+    suggestion.votes << build(:vote, voter: user, deleted_at: Time.zone.now)
+    suggestion.votes << build(:vote, voter: guest)
+    voter_calculator = VoterCalculator.new(suggestion)
+
+    expect(voter_calculator.voters).to eq [guest]
+  end
 end
 
 describe VoterCalculator, '#non_voters' do
@@ -19,7 +30,7 @@ describe VoterCalculator, '#non_voters' do
     user2 = build(:user)
     guest = build(:guest)
     event = build(:event)
-    vote = stub(voter: user2)
+    vote = stub(voter: user2, deleted_at: nil)
     event.stubs(users: [user1, user2], guests: [guest])
     suggestion = build(:suggestion, event: event)
     suggestion.stubs(votes: [vote])

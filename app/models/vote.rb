@@ -11,6 +11,14 @@ class Vote < ActiveRecord::Base
 
   after_create :queue_vote_created_job, :cache_vote_on_invitation
 
+  def change_deleted_status
+    if vote_is_active
+      delete_vote
+    else
+      un_delete_vote
+    end
+  end
+
   def has_no_other_votes_within_delay_window?
     voter.
       votes.
@@ -24,16 +32,28 @@ class Vote < ActiveRecord::Base
 
   private
 
+  def cache_vote_on_invitation
+    invitation = voter.invitations.where(event_id: event.id).first!
+    invitation.update_attributes!(vote: self)
+  end
+
   def delay_window
     VoteEmailJob::DELAY
+  end
+
+  def delete_vote
+    self.update_attributes(deleted_at: Time.zone.now)
   end
 
   def queue_vote_created_job
     VoteCreatedJob.enqueue(self)
   end
 
-  def cache_vote_on_invitation
-    invitation = voter.invitations.where(event_id: event.id).first!
-    invitation.update_attributes!(vote: self)
+  def un_delete_vote
+    self.update_attributes(deleted_at: nil)
+  end
+
+  def vote_is_active
+    deleted_at == nil
   end
 end

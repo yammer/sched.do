@@ -8,6 +8,6 @@ module Votable
   end
 
   def vote_count
-    votes.count
+    votes.where(deleted_at: nil).count
   end
 end

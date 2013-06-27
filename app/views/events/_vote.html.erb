@@ -1,6 +1,13 @@
-<% if vote_for_suggestion %>
+<% if vote_for_suggestion && vote_for_suggestion.deleted_at %>
   <%= render 'vote_form',
-    input: { method: :delete, 'data-role' => :delete, 'data-type' => :json },
+    input: { 'data-role' => :update, 'data-type' => :json },
+    vote_id: { value: vote_for_suggestion.id },
+    button: { value: 'Vote', class: 'vote' },
+    suggestion: suggestion,
+    form_object: vote_for_suggestion %>
+<% elsif vote_for_suggestion %>
+  <%= render 'vote_form',
+    input: { 'data-role' => :update, 'data-type' => :json },
     vote_id: { value: vote_for_suggestion.id },
     button: { value: 'Unvote', class: 'unvote' },
     suggestion: suggestion,

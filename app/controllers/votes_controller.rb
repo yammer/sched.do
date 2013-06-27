@@ -16,9 +16,9 @@ class VotesController < ApplicationController
     end
   end
 
-  def destroy
-    vote = current_user.votes.find(params[:vote][:id])
-    vote.destroy
+  def update
+    vote = current_user.votes.unscoped.find(params[:vote][:id])
+    vote.change_deleted_status
 
     respond_to do |format|
       format.html { redirect_to vote.event }
