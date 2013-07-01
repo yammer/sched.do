@@ -1,6 +1,7 @@
 <footer>
   <div class="inner">
     <span class="copy-right">&copy;<%= Time.now.year %> sched.do</span>
+    <%= link_to 'About', about_path %>
     <% if current_user.present? %>
       <%= terms_of_service_link %>
       <%= link_to 'Sign out', sign_out_path %>
