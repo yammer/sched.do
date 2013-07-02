@@ -29,8 +29,8 @@ Scheddo.voteCallback = (data) ->
   else
     $(this).find('input.vote').removeClass('vote').addClass('unvote')
   id = $(this).parent().data('id')
-  $(".vote-count[data-id=#{id}]").text(parseInt($(".vote-count[data-id=#{id}]").text()) + 1 )
-
+  newVoteCount = parseInt($(".vote-count[data-id=#{id}]").text(), 10) + 1
+  $(".vote-count[data-id=#{id}]").html("<span>#{newVoteCount}</span>")
 
 Scheddo.unvoteCallback = (data) ->
   $('body').removeClass('loading')
@@ -43,7 +43,8 @@ Scheddo.unvoteCallback = (data) ->
   else
     $(this).find('input.unvote').removeClass('unvote').addClass('vote')
   id = $(this).parent().data('id')
-  $(".vote-count[data-id=#{id}]").text(parseInt($(".vote-count[data-id=#{id}]").text()) - 1 )
+  newVoteCount = parseInt($(".vote-count[data-id=#{id}]").text(), 10) - 1
+  $(".vote-count[data-id=#{id}]").html("<span>#{newVoteCount}</span>")
 
 Scheddo.voteErrorCallback = (data) ->
   $('body').removeClass('loading')
