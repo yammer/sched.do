@@ -21,7 +21,7 @@ module EventHelper
   end
 
   def first_invitee_with_a_name(event)
-    event.invitees.find { |i| i.name.present? }
+    event.invitees.find { |invitee| invitee.name.present? }
   end
 
   def first_invitee_name_with_commas(event)
@@ -56,7 +56,10 @@ module EventHelper
     default_text =
       t('events_show.default_custom_invitation_text', event_name: event.name)
     invitations = event.invitations
-    non_owner_invitations = invitations.select { |i| i.invitee != event.owner }
+    non_owner_invitations =
+      invitations.select do |invitation|
+        invitation.invitee != event.owner
+      end
 
     if non_owner_invitations != []
       non_owner_invitations.first.invitation_text

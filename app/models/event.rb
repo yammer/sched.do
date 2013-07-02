@@ -105,8 +105,8 @@ class Event < ActiveRecord::Base
   end
 
   def remaining_suggestions
-    primary_suggestions.reject do |s|
-      s.marked_for_destruction?
+    primary_suggestions.reject do |suggestion|
+      suggestion.marked_for_destruction?
     end
   end
 
@@ -124,7 +124,7 @@ class Event < ActiveRecord::Base
   end
 
   def invitations_without(user)
-    invitations.reject { |i| i.invitee == user }
+    invitations.reject { |invitation| invitation.invitee == user }
   end
 
   def reject_primary_suggestion?(attributes)

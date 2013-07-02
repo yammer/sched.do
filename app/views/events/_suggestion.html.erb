@@ -6,16 +6,16 @@
 
       <% if vote_for_suggestion %>
         <div class="vote undo-vote" data-id="<%= suggestion.id %>">
-          <%= semantic_form_for vote_for_suggestion, html: { method: :delete } do |f| %>
-            <%= f.input :suggestion_id, as: :hidden, input_html: { value: suggestion.id } %>
-            <%= f.action :submit, button_html: { value: "✔" } %>
+          <%= semantic_form_for vote_for_suggestion, html: { method: :delete } do |form| %>
+            <%= form.input :suggestion_id, as: :hidden, input_html: { value: suggestion.id } %>
+            <%= form.action :submit, button_html: { value: "✔" } %>
           <% end %>
         </div>
       <% else %>
         <div class="vote" data-id="<%= suggestion.id %>">
-          <%= semantic_form_for suggestion.votes.build do |f| %>
-            <%= f.input :suggestion_id, as: :hidden, input_html: { value: suggestion.id } %>
-            <%= f.action :submit, button_html: { value: "✔" } %>
+          <%= semantic_form_for suggestion.votes.build do |form| %>
+            <%= form.input :suggestion_id, as: :hidden, input_html: { value: suggestion.id } %>
+            <%= form.action :submit, button_html: { value: "✔" } %>
           <% end %>
         </div>
       <% end %>

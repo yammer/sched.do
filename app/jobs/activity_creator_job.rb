@@ -47,6 +47,8 @@ class ActivityCreatorJob < Struct.new(:user_id, :action, :event_id)
   end
 
   def invitees_for_json
-    event.invitees.map { |i| { name: i.name, email: i.email } }
+    event.invitees.map do |invitee|
+      { name: invitee.name, email: invitee.email }
+    end
   end
 end

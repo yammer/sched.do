@@ -1,14 +1,14 @@
 <td>
   <div data-id="<%= suggestion.id %>">
-    <%= semantic_form_for form_object, remote: true, html: input do |f| %>
-      <%= f.input :id, as: :hidden, input_html: vote_id  %>
-      <%= f.input :event_id, as: :hidden,
+    <%= semantic_form_for form_object, remote: true, html: input do |form| %>
+      <%= form.input :id, as: :hidden, input_html: vote_id  %>
+      <%= form.input :event_id, as: :hidden,
         input_html: { value: suggestion.event.id } %>
-      <%= f.input :suggestion_id, as: :hidden,
+      <%= form.input :suggestion_id, as: :hidden,
         input_html: { value: suggestion.id }%>
-      <%= f.input :suggestion_type, as: :hidden,
+      <%= form.input :suggestion_type, as: :hidden,
         input_html: { value: suggestion.class.name }%>
-      <%= f.action :submit,
+      <%= form.action :submit,
         button_html: button.merge(disabled: suggestion.event.closed?) %>
     <% end %>
   </div>

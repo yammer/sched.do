@@ -186,7 +186,7 @@ describe EventHelper, '#user_owner?' do
 
   it 'returns false if the user is not the owner of the event' do
     event = create(:event)
-    another_invitee = event.invitees.find { |i| i != event.owner }
+    another_invitee = event.invitees.find { |invitee| invitee != event.owner }
 
     expect(user_owner?(event, another_invitee)).to be_false
   end

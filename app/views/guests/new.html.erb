@@ -27,10 +27,10 @@
   <% if @show_guest_login %>
     <p class="sign-in-tip">Or enter your name and email.</p>
 
-    <%= semantic_form_for @guest do |f| %>
-      <%= f.inputs do %>
+    <%= semantic_form_for @guest do |form| %>
+      <%= form.inputs do %>
         <%= hidden_field_tag :event_id, params[:event_id] %>
-        <%= f.text_field :name, label: false, placeholder: 'Name' %>
+        <%= form.text_field :name, label: false, placeholder: 'Name' %>
 
         <div class="errors">
           <% @guest.errors[:name].each do |name_error| %>
@@ -40,7 +40,7 @@
           <% end %>
         </div>
 
-        <%= f.text_field :email, label: false, placeholder: 'Email' %>
+        <%= form.text_field :email, label: false, placeholder: 'Email' %>
         <div class="errors">
           <% @guest.errors[:email].each do |email_error| %>
             <div class="inline-errors">
@@ -49,8 +49,8 @@
           <% end %>
         </div>
       <% end %>
-      <%= f.actions do %>
-        <%= f.action :submit,
+      <%= form.actions do %>
+        <%= form.action :submit,
             label: t('invitee_login_flow.begin_voting_button'),
             button_html: { class: "cta" } %>
       <% end %>

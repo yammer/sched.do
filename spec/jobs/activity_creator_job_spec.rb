@@ -64,7 +64,7 @@ describe ActivityCreatorJob, '#perform' do
   end
 
   def invitees_for_json(event)
-    event.invitees.map { |i| { name: i.name, email: i.email } }
+    event.invitees.map { |invitee| { name: invitee.name, email: invitee.email } }
   end
 end
 
