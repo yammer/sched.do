@@ -56,6 +56,7 @@ class User < ActiveRecord::Base
   def vote_for_suggestion(suggestion)
     votes.
       where(
+        deleted_at: nil,
         suggestion_id: suggestion.id,
         suggestion_type: suggestion.class.name
       ).
