@@ -66,6 +66,21 @@ Feature: Users can vote on suggestions
     Then I should see that "lunch" has 0 votes
 
   @javascript
+  Scenario: User can vote for a suggestion after voting and unvoting
+    Given I am signed in
+    And I created an event named "Clown party" with a suggestion of "lunch"
+    And I visit the event page for "Clown party"
+    When I vote for "lunch"
+    And I close the share sched.do modal
+    And I unvote for "lunch"
+    And I close the share sched.do modal
+    Then I should see that "lunch" has 0 votes
+    When I visit the event page for "Clown party"
+    And I vote for "lunch"
+    And I visit the event page for "Clown party"
+    Then I should see that "lunch" has 1 vote
+
+  @javascript
   Scenario: User can vote for suggestions for different events
     Given I am signed in
     When I create an event named "Clown party" with a suggestion of "lunch"

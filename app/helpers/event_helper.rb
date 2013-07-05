@@ -45,7 +45,7 @@ module EventHelper
   end
 
   def invitees_who_have_not_voted(event)
-    event.invitees.reject { |invitee| invitee.voted_for_event?(event) }
+    event.invitees.reject { |invitee| invitee.has_voted_for_event?(event) }
   end
 
   def invitees_with_current_user_first(event, user)

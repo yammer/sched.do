@@ -20,12 +20,12 @@ describe Group, '#invite' do
   end
 end
 
-describe Group, '#voted_for_event?' do
+describe Group, '#has_voted_for_event?' do
   it 'always returns false' do
     group = build_stubbed(:group)
     event = build_stubbed(:event)
 
-    expect(group.voted_for_event?(event)).to be_false
+    expect(group.has_voted_for_event?(event)).to be_false
   end
 end
 

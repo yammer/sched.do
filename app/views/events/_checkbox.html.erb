@@ -3,7 +3,7 @@
     suggestion: suggestion,
     vote_for_suggestion: vote_for_suggestion %>
 <% else %>
-  <% if invitee.voted_for_suggestion?(suggestion) %>
+  <% if invitee.has_voted_for_suggestion?(suggestion) %>
     <td class="voted">
       <%= image_tag('checkmark.png') %>
     </td>

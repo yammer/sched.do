@@ -373,5 +373,5 @@ DEPENDENCIES
   timecop
   turnip (= 1.0)
   uglifier (>= 1.0)
-  yam
+  yam (= 0.0.6)
   zclip-rails

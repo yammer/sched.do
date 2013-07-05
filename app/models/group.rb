@@ -15,7 +15,7 @@ class Group < ActiveRecord::Base
     messenger.notify(event, message)
   end
 
-  def voted_for_event?(_)
+  def has_voted_for_event?(_)
     false
   end
 

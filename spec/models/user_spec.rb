@@ -133,32 +133,38 @@ describe User, '#vote_for_suggestion' do
   end
 end
 
-describe User, '#voted_for_suggestion?' do
+describe User, '#has_voted_for_suggestion?' do
   it 'returns true if the user voted for the suggestion' do
     user = create(:user)
     vote = create(:vote, voter: user)
-    expect(user.voted_for_suggestion?(vote.suggestion)).to be_true
+    expect(user).to have_voted_for_suggestion(vote.suggestion)
   end
 
   it 'returns false if the user did not vote for the suggestion' do
     user = create(:user)
     suggestion = create(:suggestion)
-    expect(user.voted_for_suggestion?(suggestion)).to be_false
+    expect(user).to_not have_voted_for_suggestion(suggestion)
+  end
+
+  it 'returns false if the user voted and then unvoted for the suggestion' do
+    user = create(:user)
+    vote = create(:vote, voter: user, deleted_at: Time.zone.now)
+    suggestion = create(:suggestion)
+    expect(user).to_not have_voted_for_suggestion(suggestion)
   end
 end
 
-describe User, '#voted_for_event?' do
+describe User, '#has_voted_for_event?' do
   it 'returns true if the user voted for the event' do
     user = create(:user)
     vote = create(:vote, voter: user)
-    expect(user.voted_for_event?(vote.event)).to be_true
+    expect(user).to have_voted_for_event(vote.event)
   end
 
   it 'returns false if the user did not vote for the event' do
     user = create(:user)
     event = create(:event)
-
-    expect(user.voted_for_event?(event)).to be_false
+    expect(user).to_not have_voted_for_event(event)
   end
 end
 

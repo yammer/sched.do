@@ -25,7 +25,7 @@ class Invitation < ActiveRecord::Base
   end
 
   def deliver_reminder_from(reminder_sender)
-    if not invitee.voted_for_event?(event)
+    if not invitee.has_voted_for_event?(event)
       invitee.remind(event, reminder_sender)
       set_reminded_at
     end
