@@ -24,7 +24,7 @@ gem 'strong_parameters'
 gem 'swfobject-rails'
 gem 'tddium'
 gem 'thin'
-gem 'yam'
+gem 'yam', '0.0.6'
 gem 'zclip-rails'
 
 # Gems used only for assets, not required in production environments by default.
