@@ -7,6 +7,7 @@ class Invitation < ActiveRecord::Base
   accepts_nested_attributes_for :invitee
 
   validates :event_id, presence: true
+  validates :invitation_text, presence: true
   validates :invitee_type, presence: true
   validates :invitee_id, presence: { message: 'is invalid' }
   validates :invitee_id, uniqueness: {
@@ -21,6 +22,7 @@ class Invitation < ActiveRecord::Base
   end
 
   def invite_without_notification
+    update_attributes(invitation_text: 'n/a')
     save
   end
 

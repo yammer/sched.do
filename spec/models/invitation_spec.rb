@@ -12,6 +12,7 @@ describe Invitation do
   it { expect(subject).to accept_nested_attributes_for :invitee }
 
   it { expect(subject).to validate_presence_of(:event_id) }
+  it { expect(subject).to validate_presence_of(:invitation_text) }
   it { expect(subject).to validate_presence_of(:invitee_type) }
   it { expect(subject).to validate_presence_of(:invitee_id).with_message(/is invalid/) }
 
@@ -39,11 +40,13 @@ end
 describe Invitation, '#invite' do
   context 'when the invite is valid' do
     it 'notifies the invitee with a message' do
-      invitee = create(:user)
-      sender = build_stubbed(:user)
-      event = build_stubbed(:event)
       InvitationCreatedMessageJob.stubs(:enqueue)
-      invitation = Invitation.new(event: event, invitee: invitee, sender: sender)
+      invitation = Invitation.new(
+        event: build_stubbed(:event),
+        invitation_text: 'text',
+        invitee: create(:user),
+        sender: build_stubbed(:user)
+      )
 
       invitation.invite
 
@@ -64,11 +67,15 @@ describe Invitation, '#invite' do
 
   context 'when the sender is a yammer user' do
     it 'creates an activity message for the sending user' do
-      invitee = create(:user)
       sender = build_stubbed(:user)
       event = build_stubbed(:event)
       ActivityCreatorJob.stubs(:enqueue)
-      invitation = Invitation.new(event: event, invitee: invitee, sender: sender)
+      invitation = Invitation.new(
+        event: event,
+        invitation_text: 'text',
+        invitee: create(:user),
+        sender: sender
+      )
       invitation.invite
 
       expect(ActivityCreatorJob).to have_received(:enqueue).

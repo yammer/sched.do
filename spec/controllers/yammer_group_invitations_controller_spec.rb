@@ -9,6 +9,7 @@ describe YammerGroupInvitationsController, '.create' do
 
       post :create,
         invitation: {
+          invitation_text: 'Example text',
           invitee_attributes: {
             yammer_group_id: group.yammer_group_id,
             name_or_email: group.name
@@ -27,6 +28,7 @@ describe YammerGroupInvitationsController, '.create' do
       2.times do
         post :create,
           invitation: {
+            invitation_text: 'Example text',
             invitee_attributes: {
               yammer_group_id: group.yammer_group_id,
               name_or_email: group.name

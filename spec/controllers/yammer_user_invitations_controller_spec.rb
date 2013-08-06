@@ -8,6 +8,7 @@ describe YammerUserInvitationsController, '.create' do
 
     post :create,
       invitation: {
+        invitation_text: 'Example text',
         invitee_attributes: { yammer_user_id: invitee.yammer_user_id },
         event_id: event.id
       }
@@ -23,6 +24,7 @@ describe YammerUserInvitationsController, '.create' do
     2.times do
       post :create,
         invitation: {
+          invitation_text: 'Example text',
           invitee_attributes: { yammer_user_id: invalid_invitee_id },
           event_id: event.id
         }

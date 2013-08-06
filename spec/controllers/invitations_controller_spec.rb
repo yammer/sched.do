@@ -80,7 +80,7 @@ describe InvitationsController, '#create' do
     it 'creates multiple invitations for the correct users' do
       event_creator = create_user_and_sign_in
       event = create_event_and_mock_find(event_creator)
-      invitation = stub('invitation', invite: nil, invalid?: false)
+      invitation = stub('invitation', invite: nil, valid?: true)
       emails = 'guest1@example.com, guest2@example.com'
       Invitation.stubs(new: invitation)
       invitee = stub('invitee')
