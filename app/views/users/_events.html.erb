@@ -1,0 +1,33 @@
+<div class="table-wrapper">
+  <table id="my-events">
+    <thead>
+      <tr>
+        <th>Event name</th>
+        <th>Created</th>
+        <th>Number of invitees</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @events.each do |event| %>
+        <tr>
+          <td class="event-name">
+            <%= image_tag(
+              event.owner.image,
+              class: 'show-avatar',
+              'data-toggle'=> 'tooltip',
+              title: "Created by #{event.owner.name}"
+            ) %>
+            <%= link_to event.name, event_path(event) %>
+            <span class="closed-label"><%= closed_event_text(event) %></span>
+          </td>
+          <td class="event-created">
+            <%= time_ago_in_words(event.created_at) %> ago
+          </td>
+          <td class="event-invitees">
+            <%= pluralize(event.invitees.count - 1,'invitee') %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

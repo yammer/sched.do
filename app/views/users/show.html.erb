@@ -4,31 +4,14 @@
 
 <div class="my-events">
   <h2><%= t 'events_show.my_polls' %></h2>
-  <div class="table-wrapper">
-    <table id="my-events">
-      <thead>
-        <tr>
-          <th>Event name</th>
-          <th>Created</th>
-          <th>Number of invitees</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @events.each do |event| %>
-          <tr>
-            <td class="event-name">
-              <%= image_tag(event.owner.image, class: "show-avatar", "data-toggle" => "tooltip", title: "Created by #{event.owner.name}" ) %>
-              <%= link_to event.name, event_path(event) %>
-              <span class="closed-label"><%= closed_event_text(event) %></span>
-            </td>
-            <td class="event-created"><%= distance_of_time_in_words(Time.now, event.created_at) %> ago</td>
-            <td class="event-invitees"><%= pluralize(event.invitees.count - 1,'invitee') %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
+    <% if @events.any? %>
+      <%= render 'events' %>
+    <% else %>
+      Looks like you don't have any events yet.
+      <%= link_to 'Click here', new_event_path %>
+      to create one now.
+    <% end %>
   </div>
-</div>
 <% content_for(:poll_create_button) do %>
   <%= render 'shared/create_poll' %>
 <% end %>
