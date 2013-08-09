@@ -6,8 +6,6 @@ describe SecondarySuggestion do
 
   it { expect(subject).to belong_to :primary_suggestion }
   it { expect(subject).to have_many(:votes).dependent(:destroy) }
-
-  it { expect(subject).to allow_mass_assignment_of(:description) }
 end
 
 describe SecondarySuggestion, '#vote_count' do

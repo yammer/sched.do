@@ -1,5 +1,5 @@
 step 'I choose :option as the winning option' do |option|
-  find("a[@title='#{option}']", text: 'Choose Winner').click
+  find(:xpath, "//a[@title='#{option}']").click
   click_button('Send message and close poll')
 end
 

@@ -35,7 +35,7 @@ class SessionsController < ApplicationController
   end
 
   def find_or_instantiate_user
-    user = User.find_by_yammer_user_id(omniauth[:uid])
+    user = User.find_by(yammer_user_id: omniauth[:uid])
 
     if user.nil?
       user = User.new(

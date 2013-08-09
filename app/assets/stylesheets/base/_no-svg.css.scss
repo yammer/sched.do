@@ -3,7 +3,7 @@ html.no-svg {
   // Welcome Index
   body.welcome {
     div.sign-in > input.sign-in {
-      @include background-image(url(yammer-logo.png));
+      @include background-image(image-url('yammer-logo.png'));
       background-repeat:no-repeat ;
       -ms-background-position-x: 20px left;
       -ms-background-position-y: 0 center;
@@ -12,18 +12,18 @@ html.no-svg {
 
   // Event New
   div.new-event div.nested-fields.primary a.remove_fields {
-    @include background-image(url(delete-icon.png));
+    @include background-image(image-url('delete-icon.png'));
 
     &:hover {
-      @include background-image(url(delete-icon.png));
+      @include background-image(image-url('delete-icon.png'));
     }
   }
 
   div.new-event div.nested-fields.secondary a.remove_fields {
-    @include background-image(url(delete-icon-small.png));
+    @include background-image(image-url('delete-icon-small.png'));
 
     &:hover {
-      @include background-image(url(delete-icon-small.png));
+      @include background-image(image-url('delete-icon-small.png'));
     }
   }
 
@@ -32,11 +32,11 @@ html.no-svg {
     ul.poll-actions {
       li {
         button#copy-event-url {
-          @include background-image(url(link-icon.png));
+          @include background-image(image-url('link-icon.png'));
         }
 
         a.edit-button {
-          @include background-image(url(edit-icon.png));
+          @include background-image(image-url('edit-icon.png'));
         }
       }
     }
@@ -44,27 +44,27 @@ html.no-svg {
 
   // Vote Table
   div.table-wrapper div.options table tr.votable td form.vote li.action input[type="submit"].vote {
-    background-image: url(checkmark-dimmed.png);
+    background-image: image-url('checkmark-dimmed.png');
   }
 
   div.table-wrapper div.options table tr.votable td:hover {
     form.vote li.action input[type="submit"].vote {
-      background-image: url(checkmark.png);
+      background-image: image-url('checkmark.png');
     }
   }
 
   div.table-wrapper div.options table tr.votable td form.vote li.action input[type="submit"].unvote {
-    background-image: url(checkmark.png);
+    background-image: image-url('checkmark.png');
   }
 
   div.table-wrapper div.options table tr.votable td:hover {
     form.vote li.action input[type="submit"].unvote {
-      background-image: url(cross.png);
+      background-image: image-url('cross.png');
     }
   }
 
   // Autocomplete Drop Down
   ul.ui-autocomplete li.ui-menu-item a.ui-state-hover {
-    @include background-image(url(add-sign.png));
+    @include background-image(image-url('add-sign.png'));
   }
 }

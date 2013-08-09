@@ -70,7 +70,7 @@ Feature: Multiple invitations
   Scenario: Owner adds a Yammer group to the invite list and then removes the group
     Given I sign in and create an event named "Clown party"
     When I invite the Yammer group "Scheddo-Devs" to "Clown party" from the multiple invite page
-    And I remove "Scheddo-Devs" from the list of invited users
+    And I remove "Scheddo-Devs" from the list of invited groups
     When I press the "Invite" button for the "Clown party" event
     Then I should not see "Scheddo-Devs" in the groups list
     And group "Scheddo-Devs" should not receive a private invitation message

@@ -8,8 +8,8 @@ ul.ui-autocomplete {
 
   li.ui-autocomplete-type {
     background-color: rgb(240,240,240);
-    @include background-image(url(yammer-logo.png));
-    @include background-image(url(yammer-logo.png), linear-gradient(90deg, rgb(235,235,235), rgb(245,245,245)));
+    @include background-image(image-url('yammer-logo.png'));
+    @include background-image(image-url('yammer-logo.png'), linear-gradient(90deg, rgb(235,235,235), rgb(245,245,245)));
     background-position: right center, 0 0;
     -ms-background-position-x: right;
     -ms-background-position-y: center;
@@ -33,11 +33,11 @@ ul.ui-autocomplete {
       vertical-align: middle;
 
       &.people-icon {
-        @include background-image(url(people-icon.svg));
+        @include background-image(image-url('people-icon.svg'));
       }
 
       &.groups-icon {
-        @include background-image(url(group-icon.svg));
+        @include background-image(image-url('group-icon.svg'));
         width: 36px;
       }
     }

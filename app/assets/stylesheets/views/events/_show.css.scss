@@ -36,11 +36,11 @@ div.show-event {
           margin-right: -6px;
 
           @include ie9 {
-            background-image: url('link-icon.svg');
+            background-image: image-url('link-icon.svg');
           }
 
           &:active, &.active {
-            @include background-image(url('link-icon.svg'), linear-gradient(darken($bg-color, 8%), $bg-color));
+            @include background-image(image-url('link-icon.svg'), linear-gradient(darken($bg-color, 8%), $bg-color));
           }
 
           &.single {
@@ -55,11 +55,11 @@ div.show-event {
           position: relative;
 
           @include ie9 {
-            background-image: url('edit-icon.svg');
+            background-image: image-url('edit-icon.svg');
           }
 
           &:active, &.active {
-            @include background-image(url('edit-icon.svg'), linear-gradient(darken($bg-color, 8%), $bg-color));
+            @include background-image(image-url('edit-icon.svg'), linear-gradient(darken($bg-color, 8%), $bg-color));
           }
 
           &.single {
@@ -457,7 +457,7 @@ div.show-event {
 
   .remove-user {
     @extend %close-button;
-    @include background-image(url(delete-icon.svg), linear-gradient(rgb(240, 102, 102), rgb(200,102,102)));
+    @include background-image(image-url('delete-icon.svg'), linear-gradient(rgb(240, 102, 102), rgb(200,102,102)));
     display: block;
     float: right;
     position: relative;
@@ -465,7 +465,7 @@ div.show-event {
     top: 2px;
 
     &:hover, &.ui-state-hover {
-      @include background-image(url(delete-icon.svg), linear-gradient(rgb(250, 102, 102), rgb(230,102,102)));
+      @include background-image(image-url('delete-icon.svg'), linear-gradient(rgb(250, 102, 102), rgb(230,102,102)));
     }
   }
 

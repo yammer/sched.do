@@ -62,7 +62,7 @@ describe Guest, '.find_or_initialize_by_email' do
     guest = create(:guest)
     params = { email: guest.email, name: guest.name }
 
-    initialized_guest = Guest.find_or_initialize_by_email(params)
+    initialized_guest = Guest.find_or_initialize_by(email: params[:email])
 
     expect(initialized_guest.email).to eq guest.email
     expect(initialized_guest.name).to eq guest.name
@@ -72,7 +72,7 @@ describe Guest, '.find_or_initialize_by_email' do
     guest = create(:guest)
     params = { email: guest.email, name: guest.name }
 
-    duplicate_guest = Guest.find_or_initialize_by_email(params)
+    duplicate_guest = Guest.find_or_initialize_by(email: params[:email])
 
     expect {
       duplicate_guest.save
@@ -83,7 +83,7 @@ describe Guest, '.find_or_initialize_by_email' do
     guest = create(:guest)
     params = { email: 'different@email.com', name: guest.name }
 
-    guest_with_same_name = Guest.find_or_initialize_by_email(params)
+    guest_with_same_name = Guest.find_or_initialize_by(email: params[:email])
 
     expect {
       guest_with_same_name.save

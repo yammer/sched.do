@@ -6,7 +6,7 @@ class GuestsController < ApplicationController
   before_filter :force_yammer_users_to_login_with_yammer, only: :create
 
   def new
-    @guest = Guest.find_or_initialize_by_email(session.delete(:guest_email))
+    @guest = Guest.find_or_initialize_by(email: session.delete(:guest_email))
     @event = find_event
     @show_guest_login = show_guest_login?
     session[:return_to] = event_url(@event)
@@ -71,7 +71,7 @@ class GuestsController < ApplicationController
   end
 
   def find_or_initialize_guest
-    guest = Guest.find_or_initialize_by_email(email: params[:guest][:email])
+    guest = Guest.find_or_initialize_by(email: params[:guest][:email])
     guest.update_attributes(
       name: params[:guest][:name],
       has_ever_logged_in: true

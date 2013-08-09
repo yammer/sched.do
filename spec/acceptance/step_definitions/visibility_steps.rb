@@ -19,7 +19,7 @@ step 'I should not see the :text link' do |text|
 end
 
 step 'the share modal should not be visible' do
-  expect(find(:css, '.footer-link')).to_not be_visible
+  expect(page.has_css?('.footer-link', visible: true)).to be false
 end
 
 step 'the customize message field should contain :text' do |text|

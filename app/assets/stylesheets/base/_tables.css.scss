@@ -250,7 +250,7 @@ div.table-wrapper {
                     &.vote {
                       background: rgb(247, 251, 252);
                       background-color: rgba(231, 244, 247, 0.3);
-                      background-image: url(checkmark-dimmed.svg);
+                      background-image: image-url('checkmark-dimmed.svg');
                       background-position: center center;
                       background-repeat: no-repeat;
                       background-size: 40px;
@@ -258,7 +258,7 @@ div.table-wrapper {
 
                     &.unvote {
                       background: darken($success, 25%);
-                      background-image: url(checkmark.svg);
+                      background-image: image-url('checkmark.svg');
                       background-position: center center;
                       background-repeat: no-repeat;
                       background-size: 40px;
@@ -278,7 +278,7 @@ div.table-wrapper {
                     input[type="submit"] {
                       &.vote {
                         background: darken($success, 10%);
-                        background-image: url(checkmark.svg);
+                        background-image: image-url('checkmark.svg');
                         background-position: center center;
                         background-repeat: no-repeat;
                         background-size: 40px;
@@ -291,7 +291,7 @@ div.table-wrapper {
 
                       &.unvote {
                         background: saturate(darken($failure, 30%), 20%);
-                        background-image: url(cross.svg);
+                        background-image: image-url('cross.svg');
                         background-position: center center;
                         background-repeat: no-repeat;
                         background-size: 40px;

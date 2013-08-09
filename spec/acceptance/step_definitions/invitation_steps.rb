@@ -42,16 +42,16 @@ step 'I invite :email to :event_name via the autocomplete' do |email, event_name
   choose_autocomplete('.email', email)
 end
 
-step 'I invite :emails to :event_name' do |emails, event_name|
+step 'I invite :email to :event_name' do |email, event_name|
   event = Event.find_by_name!(event_name)
   visit event_path(event)
-  first('#auto-complete').set(emails)
-  click_button 'add-invitee'
+  mock_out_yammer_api_with_no_response
+  fill_in_autocomplete(email)
+  choose_autocomplete('.email', email)
 end
 
 step 'I fill in :name in the invitation field' do |name|
   find_field_by_data_role('invitation_name').set(name)
-  click_button 'add-invitee'
 end
 
 step 'someone invites :email to :event_name' do |email, event_name|

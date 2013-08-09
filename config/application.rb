@@ -1,15 +1,9 @@
 require File.expand_path('../boot', __FILE__)
 
-# Pick the frameworks you want:
-require "active_record/railtie"
-require "action_controller/railtie"
-require "action_mailer/railtie"
-require "active_resource/railtie"
-require "sprockets/railtie"
+require 'rails/all'
 
-if defined?(Bundler)
-  Bundler.require(:default, :assets, Rails.env)
-end
+Bundler.require(:default, :assets, Rails.env)
+
 
 module SchedDo
   class Application < Rails::Application
@@ -17,8 +11,6 @@ module SchedDo
       generate.test_framework :rspec
     end
 
-    config.active_record.whitelist_attributes = false
-    config.assets.enabled = true
     config.assets.initialize_on_precompile = false
     config.assets.precompile += %w(media-queries.css ie.css *.js)
     config.assets.version = '1.4'

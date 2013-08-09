@@ -1,7 +1,7 @@
 //= require jquery
-//= require jquery-migrate-1.1.1.min
+//= require jquery-migrate-1.2.1.min
 //= require jquery_ujs
-//= require jquery-ui
+//= require jquery.ui.all
 //= require swfobject
 //= require underscore
 //= require zclip

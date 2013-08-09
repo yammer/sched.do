@@ -4,7 +4,7 @@ class Event < ActiveRecord::Base
   belongs_to :owner, foreign_key: 'user_id', class_name: 'User'
   belongs_to :winning_suggestion, polymorphic: true
 
-  has_many :primary_suggestions, order: 'created_at'
+  has_many :primary_suggestions, -> { order(:created_at) }
   has_many :votes
   has_many :invitations
   has_many :users, through: :invitations, source: :invitee, source_type: 'User'
@@ -138,7 +138,7 @@ class Event < ActiveRecord::Base
   end
 
   def is_primary_suggestion_present?(attributes)
-    attributes['description'].empty? 
+    attributes['description'].empty?
   end
 
   def is_secondary_suggestion_present?(attributes)

@@ -1,14 +1,5 @@
 require 'spec_helper'
 
-describe User, 'accessors' do
-  it { expect(subject).to allow_mass_assignment_of(:access_token) }
-  it { expect(subject).to allow_mass_assignment_of(:encrypted_access_token) }
-  it { expect(subject).to allow_mass_assignment_of(:name) }
-  it { expect(subject).to allow_mass_assignment_of(:yammer_user_id) }
-  it { expect(subject).to allow_mass_assignment_of(:yammer_staging) }
-  it { expect(subject).to allow_mass_assignment_of(:watermarked_image) }
-end
-
 describe User, 'validations' do
   it { expect(subject).to have_many(:events) }
   it { expect(subject).to have_many(:invitations) }

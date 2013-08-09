@@ -107,7 +107,7 @@
               <% end %>
               <% if invitation_for(@event, invitee).deletable_by?(current_user) %>
                 <%= link_to 'Remove user', invitation_path(invitation_for(@event, invitee)),
-                  method: :delete, class: 'remove-user', confirm: 'Remove from this event?' %>
+                  method: :delete, class: 'remove-user', data: { confirm: 'Remove from this event?' } %>
               <% end %>
             </td>
           </tr>

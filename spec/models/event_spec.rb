@@ -1,11 +1,5 @@
 require 'spec_helper'
 
-describe Event, 'accessors' do
-  it { expect(subject).to allow_mass_assignment_of(:name) }
-  it { expect(subject).to allow_mass_assignment_of(:primary_suggestions_attributes) }
-  it { expect(subject).to allow_mass_assignment_of(:uuid) }
-end
-
 describe Event, 'associations' do
   it { expect(subject).to belong_to(:owner).class_name('User') }
 end

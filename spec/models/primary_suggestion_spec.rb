@@ -6,16 +6,9 @@ describe PrimarySuggestion do
 
   it { expect(subject).to belong_to :event }
   it { expect(subject).to have_many(:votes).dependent(:destroy) }
-  it do 
-    expect(subject).to(
-      have_many(:secondary_suggestions).dependent(:destroy)
-    )
-  end
-
-  it { expect(subject).to allow_mass_assignment_of(:description) }
   it do
     expect(subject).to(
-      allow_mass_assignment_of(:secondary_suggestions_attributes)
+      have_many(:secondary_suggestions).dependent(:destroy)
     )
   end
 end

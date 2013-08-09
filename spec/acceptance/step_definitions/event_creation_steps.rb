@@ -7,6 +7,7 @@ step 'I suggest :suggestion' do |suggestion|
 end
 
 step 'I add suggestion :suggestion' do |suggestion|
+  click_link('Add Another Date')
   all('input[data-role=primary-suggestion]').last.set(suggestion)
 end
 
@@ -112,7 +113,8 @@ step 'I fill out the event form with the following suggestions:' do |table|
 end
 
 step 'I remove the first suggestion' do
-  first(:link, 'Remove Suggestion').click
+  first('div.date li').hover
+  find('.remove_fields').click
 end
 
 step 'I can remove one of the suggestions' do

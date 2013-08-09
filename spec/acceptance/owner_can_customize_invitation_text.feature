@@ -13,6 +13,7 @@ Feature: User can customize invitation text
     Given I am signed in
     And I create an event named "Clown party" with a suggestion of "tomorrow"
     When I visit the event page for "Clown party"
+    And I go to invite another person to the event
     And I fill in the Invitation text field with "I like customization"
     And I fill in "bob@example.com" in the invitation field
     Then I should see "I like customization" in the Invitation text field
@@ -25,4 +26,5 @@ Feature: User can customize invitation text
     And I invite "bob@example.com" to "Clown party" via the autocomplete from the multiple invite page
     And I press "Invite"
     When I visit the event page for "Clown party"
+    And I go to invite another person to the event
     Then I should see "I like customization" in the Invitation text field

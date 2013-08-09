@@ -1,11 +1,11 @@
 SchedDo::Application.routes.draw do
-  get '/auth/yammer/callback' => 'sessions#create'
-  get '/auth/yammer_staging/callback' => 'sessions#create'
-  get '/dashboard' => 'dashboard#active_users'
-  get 'polls' => 'users#show'
-  get '/sign_out' => 'sessions#destroy', as: 'sign_out'
-  get '/tos' => 'pages#terms_of_service'
-  get '/about' => 'welcome#about'
+  get '/auth/yammer/callback', to: 'sessions#create'
+  get '/auth/yammer_staging/callback', to: 'sessions#create'
+  get '/dashboard', to: 'dashboard#active_users'
+  get 'polls', to: 'users#show'
+  get '/sign_out', to: 'sessions#destroy', as: 'sign_out'
+  get '/tos', to: 'pages#terms_of_service'
+  get '/about', to: 'welcome#about'
 
   resources :calendars, only: [:show]
   resources :events, only: [:new, :create, :show, :edit, :update], :id => /.{8}/

@@ -1,5 +1,5 @@
 RSpec::Matchers.define :deny_access do
-  include Rails.application.routes_url_helpers
+  include Rails.application.routes.url_helpers
 
   match do |controller|
     expect(response).to redirect_to(root_path)

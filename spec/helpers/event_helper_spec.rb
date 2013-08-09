@@ -3,7 +3,7 @@ require 'event_helper'
 
 describe EventHelper, '#build_suggestions' do
   it 'builds 2 suggestions' do
-    event = build(:event)
+    event = build_stubbed(:event)
 
     build_suggestions(event)
 

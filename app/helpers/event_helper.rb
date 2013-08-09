@@ -1,9 +1,13 @@
 module EventHelper
   def build_suggestions(event)
-    event.primary_suggestions[0] ||= PrimarySuggestion.new
-    event.primary_suggestions[1] ||= PrimarySuggestion.new
-    event.primary_suggestions[0].secondary_suggestions[0] ||= SecondarySuggestion.new
-    event.primary_suggestions[1].secondary_suggestions[0] ||= SecondarySuggestion.new
+    if event.primary_suggestions.empty?
+      event.primary_suggestions.build
+      event.primary_suggestions.build
+
+      event.primary_suggestions.each do |primary_suggestion|
+        primary_suggestion.secondary_suggestions << SecondarySuggestion.new
+      end
+    end
   end
 
   def closed_event_text(event)

@@ -34,7 +34,7 @@ class YammerGroupInvitationsController < ApplicationController
   end
 
   def invitee
-    Group.find_or_create_by_yammer_group_id(
+    Group.find_or_create_by(
       yammer_group_id: yammer_group_id_param,
       name: name
     )

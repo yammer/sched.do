@@ -18,7 +18,7 @@
 /log/*.log
 /public/assets
 /tmp
-bin/
+!bin/setup
 coverage
 coverage/*
 public/system

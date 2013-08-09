@@ -1,5 +1,6 @@
 Feature: User can view an Event
 
+  @javascript
   Scenario: Owner adds suggestions and sees it in the proper place
     Given I am signed in
     And I created an event named "Clown party" with a suggestion of "lunch"

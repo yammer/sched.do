@@ -16,12 +16,12 @@ class CurrentUser
   private
 
   def user
-    User.find_by_yammer_user_id(@yammer_user_id)
+    User.find_by(yammer_user_id: @yammer_user_id)
   end
 
   def guest
     if @name && @email
-      Guest.find_or_create_by_email(@email).tap do |guest|
+      Guest.find_or_create_by(email: @email).tap do |guest|
         guest.update_attributes(name: @name)
       end
     end

@@ -2,26 +2,26 @@ source 'https://rubygems.org'
 
 ruby '2.0.0'
 
-gem 'rails', '~> 3.2.16'
+gem 'rails', '4.0.0'
 
-gem 'airbrake', '~> 3.1'
+gem 'airbrake'
 gem 'attr_encrypted'
-gem 'aws-sdk', '~> 1.3.4'
+gem 'aws-sdk', '~> 1.3.9'
 gem 'bourbon'
 gem 'cocoon'
 gem 'delayed_job_active_record'
-gem 'flutie', '= 1.3.3'
 gem 'formtastic'
-gem 'high_voltage', '~> 1.2'
+gem 'flutie'
+gem 'high_voltage'
 gem 'hirefireapp'
 gem 'jquery-rails'
+gem 'jquery-ui-rails'
 gem 'newrelic_rpm'
 gem 'omniauth-oauth2'
 gem 'paperclip'
 gem 'pg'
 gem 'sass'
-gem 'strong_parameters'
-gem 'swfobject-rails'
+gem 'swfobject-rails', github: 'SoftSwiss/swfobject-rails'
 gem 'tddium'
 gem 'thin'
 gem 'yam', '~> 2.0.0'
@@ -29,16 +29,16 @@ gem 'zclip-rails'
 
 # Gems used only for assets, not required in production environments by default.
 group :assets do
-  gem 'coffee-rails', '~> 3.2'
-  gem 'sass-rails', '~> 3.2'
-  gem 'uglifier', '>= 1.0'
+  gem 'coffee-rails'
+  gem 'sass-rails'
+  gem 'uglifier'
 end
 
 group :development do
   gem 'better_errors'                      # Must stay only in development group
   gem 'binding_of_caller'                  # Must stay only in development group
-  gem 'bundler', '>= 1.2.0.pre'
-  gem 'foreman', '~> 0.46'
+  gem 'bundler'
+  gem 'foreman'
   gem 'quiet_assets'
 end
 
@@ -54,13 +54,14 @@ group :test do
   gem 'sinatra'
   gem 'timecop'
   gem 'turnip', '1.0'
+  gem 'mocha'                              # Must be required last in this group
 end
 
 group :development, :test do
   gem 'awesome_print'
   gem 'dotenv'
   gem 'guard-jasmine', require: false
-  gem 'jasminerice'
+  gem 'jasminerice', github: 'bradphelan/jasminerice'
   gem 'mail_view'
   gem 'rspec-rails', '~> 2.14.0'
   gem 'sham_rack'

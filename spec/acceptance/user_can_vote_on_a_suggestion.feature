@@ -62,7 +62,6 @@ Feature: Users can vote on suggestions
     And I close the share sched.do modal
     Then I should see that "lunch" has 1 vote
     When I unvote for "lunch"
-    And I close the share sched.do modal
     Then I should see that "lunch" has 0 votes
 
   @javascript
@@ -73,7 +72,6 @@ Feature: Users can vote on suggestions
     When I vote for "lunch"
     And I close the share sched.do modal
     And I unvote for "lunch"
-    And I close the share sched.do modal
     Then I should see that "lunch" has 0 votes
     When I visit the event page for "Clown party"
     And I vote for "lunch"

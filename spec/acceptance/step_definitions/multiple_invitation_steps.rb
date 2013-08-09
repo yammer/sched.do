@@ -8,6 +8,12 @@ step 'I press the :button_text button for the :event_name event' do |button_text
 end
 
 step 'I remove :user_name from the list of invited users' do |user_name|
+  find('.user-label').hover
+  find('.remove').click
+end
+
+step 'I remove :group_name from the list of invited groups' do |group_name|
+  find('.group-name').hover
   find('.remove').click
 end
 

@@ -15,6 +15,7 @@ class EventsController < ApplicationController
     if @event.save
       redirect_to multiple_invitations_path(event_uuid: @event.uuid)
     else
+      add_errors_to_flash
       build_suggestions(@event)
       render :new
     end
@@ -72,7 +73,9 @@ class EventsController < ApplicationController
   def event_params
     params.require(:event).permit(
       :name,
-      :primary_suggestions_attributes,
+      {primary_suggestions_attributes: [:description, :_destroy, :id,
+        {secondary_suggestions_attributes: [:description, :_destroy, :id]}
+      ]},
       :uuid,
       :watermarked_image,
       :winning_suggestion_id,

@@ -1,10 +1,6 @@
 require 'spec_helper'
 
 describe Invitation do
-  it { expect(subject).to allow_mass_assignment_of(:event) }
-  it { expect(subject).to allow_mass_assignment_of(:invitee) }
-  it { expect(subject).to allow_mass_assignment_of(:sender) }
-
   it { expect(subject).to belong_to(:event) }
   it { expect(subject).to belong_to(:invitee) }
   it { expect(subject).to belong_to(:sender) }

@@ -31,7 +31,7 @@ describe YammerUserResponseTranslator do
       expect(user.yammer_profile_url).to eq 'http://web_url'
       expect(user.yammer_network_id).to eq 2
       expect(user.yammer_network_name).to eq 'network'
-      expect(user.extra).to eq response
+      expect(user.extra).to eq response.to_s
     end
   end
 end

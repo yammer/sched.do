@@ -8,6 +8,8 @@ SimpleCov.start do
 end
 
 ENV['RAILS_ENV'] = 'test'
+ENV['ACCESS_TOKEN_ENCRYPTION_KEY'] = 'test_key'
+ENV['HOSTNAME'] = 'test_host'
 require File.expand_path('../../config/environment', __FILE__)
 
 require 'rspec/rails'

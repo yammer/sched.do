@@ -2,7 +2,7 @@ class PrimarySuggestion < ActiveRecord::Base
   include Votable
 
   belongs_to :event
-  has_many :secondary_suggestions, order: 'created_at', dependent: :destroy
+  has_many :secondary_suggestions, -> { order(:created_at) }, dependent: :destroy
 
   accepts_nested_attributes_for :secondary_suggestions,
     reject_if: :all_blank,

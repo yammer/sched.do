@@ -23,8 +23,8 @@
 .yammer-button {
   background-color: $yammer-blue;
   @include button-color($yammer-blue);
-  @include background-image(url(yammer-logo.svg));
-  @include background-image(url(yammer-logo.svg),linear-gradient(#48AFF3, #228ed5));
+  @include background-image(image-url('yammer-logo.svg'));
+  @include background-image(image-url('yammer-logo.svg'),linear-gradient(#48AFF3, #228ed5));
   background-position: 20px center, 0 0;
   -ms-background-position-x: 20px;
   -ms-background-position-y: center;
@@ -43,7 +43,7 @@
 
   &:hover {
     background-color: lighten($yammer-blue, 5%);
-    @include background-image(url(yammer-logo.svg),linear-gradient(#48AFF3, lighten(#228ed5, 5%)));
+    @include background-image(image-url('yammer-logo.svg'),linear-gradient(#48AFF3, lighten(#228ed5, 5%)));
   }
 }
 
@@ -109,7 +109,7 @@
 
 %delete-button {
   background-color: lighten($blue, 20%);
-  @include background-image(url(delete-icon.svg));
+  @include background-image(image-url('delete-icon.svg'));
   background-position: center, left;
   -ms-background-position-x: center;
   -ms-background-position-y: center;
@@ -131,14 +131,14 @@
 
   &:hover {
     background-color: lighten($orange, 10%);
-    @include background-image(url(delete-icon.svg));
+    @include background-image(image-url('delete-icon.svg'));
   }
 }
 
 %close-button {
   background-color: rgb(220,220,220);
-  @include background-image(url(delete-icon.svg));
-  @include background-image(url(delete-icon.svg), linear-gradient(rgb(230,230,230), rgb(210,210,210)));
+  @include background-image(image-url('delete-icon.svg'));
+  @include background-image(image-url('delete-icon.svg'), linear-gradient(rgb(230,230,230), rgb(210,210,210)));
   background-position: center, left;
   -ms-background-position-x: center;
   -ms-background-position-y: center;
@@ -175,7 +175,7 @@
   $color: darken($bg-color, 45%);
   background-color: $color;
 
-  @include background-image(url(group.svg), linear-gradient(tint($color, 35%), shade($color, 10%)));
+  @include background-image(image-url('group.svg'), linear-gradient(tint($color, 35%), shade($color, 10%)));
   background-position: 10px center;
   border: 1px solid darken($color, 5%);
   border-bottom-color: darken($color, 20%);
@@ -186,7 +186,7 @@
   padding: 0.5em 1em 0.5em 30px;
   @include colorful-container-text($color);
 
-  background-image: url(group.png);
+  background-image: image-url('group.png');
   -ms-background-position-x: 5px left;
   -ms-background-position-y: center;
   background-repeat: no-repeat;
