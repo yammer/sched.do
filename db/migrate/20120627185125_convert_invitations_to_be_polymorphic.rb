@@ -4,7 +4,7 @@ class ConvertInvitationsToBePolymorphic < ActiveRecord::Migration
     add_column :invitations, :invitee_type, :string
     # For now this is just staging and development data, so say
     # 'bye bye' to invitations without user ids
-    delete("DELETE FROM invitations WHERE user_id IS NULL")
+    # delete("DELETE FROM invitations WHERE user_id IS NULL")
     update("UPDATE invitations SET invitee_type = 'User'")
     change_column_null :invitations, :invitee_type, false
     rename_column :invitations, :user_id, :invitee_id
