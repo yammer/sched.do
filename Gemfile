@@ -47,7 +47,7 @@ group :test do
   gem 'capybara-webkit', '~> 0.14.0'
   gem 'database_cleaner'
   gem 'email_spec'
-  gem 'factory_girl_rails', '~> 3.0'
+  gem 'factory_girl_rails'
   gem 'jasmine'
   gem 'launchy'
   gem 'shoulda-matchers', '1.5.2'
