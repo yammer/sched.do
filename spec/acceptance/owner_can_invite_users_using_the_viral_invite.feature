@@ -63,7 +63,7 @@ Feature: Multiple invitations
     And I invite the Yammer user "Joe Smith" to "Clown party" from the multiple invite page
     And I remove "Joe Smith" from the list of invited users
     When I press the "Invite" button for the "Clown party" event
-    Then "Joe Smith" should receive 0 private message
+    Then "Joe Smith" should receive 0 private messages
     And I should not see "Joe Smith" in the list of invitees
 
   @javascript

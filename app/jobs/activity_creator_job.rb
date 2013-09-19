@@ -19,7 +19,7 @@ class ActivityCreatorJob < Struct.new(:user_id, :action, :event_id)
   end
 
   def post_yammer_activity
-    user.yammer_client.post('/activity', json_payload)
+    user.yammer_client.create_activity(json_payload)
   end
 
   def json_payload

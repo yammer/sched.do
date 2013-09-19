@@ -35,7 +35,7 @@ class YammerMessenger
   private
 
   def deliver
-    @sender.yammer_client.post('/messages', request_params)
+    @sender.yammer_client.create_message(message_body, request_params)
   end
 
   def request_params

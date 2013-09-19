@@ -1,3 +1,5 @@
+require 'yammer'
+
 class User < ActiveRecord::Base
   attr_encrypted :access_token, key: ENV['ACCESS_TOKEN_ENCRYPTION_KEY']
 
@@ -90,7 +92,7 @@ class User < ActiveRecord::Base
       raise 'Yammer client requires an access_token!'
     end
 
-    @yam ||= Yam.new(access_token, yammer_endpoint)
+    @yam ||= Yammer::Client.new(access_token: access_token)
   end
 
   private
@@ -104,18 +106,6 @@ class User < ActiveRecord::Base
       YammerMessenger.new(self)
     else
       Messenger.new(self)
-    end
-  end
-
-  def yammer_endpoint
-    "#{yammer_host}/api/v1/"
-  end
-
-  def yammer_host
-    if yammer_staging
-      Rails.configuration.yammer_staging_host
-    else
-      Rails.configuration.yammer_host
     end
   end
 

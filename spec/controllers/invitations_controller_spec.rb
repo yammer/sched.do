@@ -80,7 +80,7 @@ describe InvitationsController, '#create' do
     it 'creates multiple invitations for the correct users' do
       event_creator = create_user_and_sign_in
       event = create(:event, owner: event_creator)
-      invitation = double(invite: nil, valid?: true)
+      invitation = double(invite: nil, invite: nil, valid?: true)
       emails = 'guest1@example.com, guest2@example.com'
       Invitation.stub(new: invitation)
       invitee = double

@@ -27,13 +27,13 @@ describe InviteeBuilder, '#find_user_by_email_or_create_guest' do
     it 'searches for existing Yammer users' do
       invitation = create(:invitation)
       invitee_email = 'ralph@example.com'
-      yam_client = double(get: nil)
-      Yam.stub(new: yam_client)
+      yam_client = double(get_user_by_email: nil)
+      Yammer::Client.stub(new: yam_client)
 
       InviteeBuilder.new(invitee_email, invitation.event).
         find_user_by_email_or_create_guest
 
-      expect(yam_client).to have_received(:get)
+      expect(yam_client).to have_received(:get_user_by_email)
     end
 
     it 'creates a User if it finds an existing Yammer user' do

@@ -49,7 +49,7 @@ class SessionsController < ApplicationController
   end
 
   def refresh_user_data_from_yammer(user)
-    yammer_user_data = user.yammer_client.get("/users/#{omniauth[:uid]}")
+    yammer_user_data = user.yammer_client.get_user(omniauth[:uid]).body
     YammerUserResponseTranslator.
       new(yammer_user_data, user).
       translate.

@@ -56,14 +56,14 @@ end
 
 step 'someone invites :email to :event_name' do |email, event_name|
   event = Event.find_by_name!(event_name)
-  invitation = Invitation.new(event: event)
-  InviteeBuilder.new.find_user_by_email_or_create_guest(email, event).save
+  user = InviteeBuilder.new(email, event).find_user_by_email_or_create_guest
+  create(:invitation, event: event, invitee: user)
 end
 
 step ':guest_email was invited to the event :event_name' do |guest_email, event_name|
   event = Event.find_by_name!(event_name)
-  invitation = Invitation.new(event: event)
-  InviteeBuilder.new(guest_email, event).find_user_by_email_or_create_guest.save
+  user = InviteeBuilder.new(guest_email, event).find_user_by_email_or_create_guest
+  create(:invitation, event: event, invitee: user)
 end
 
 # Multi-invite page
@@ -114,7 +114,7 @@ step 'I should see :name in the groups list' do |name|
 end
 
 step ':first_item should appear before :second_item' do |first_item, second_item|
-  expect(page.body).to match /#{first_item}.*#{second_item}/m
+  expect(page.body).to match(/#{first_item}.*#{second_item}/m)
 end
 
 step ':name should receive a private message' do |name|

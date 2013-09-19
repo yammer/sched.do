@@ -31,10 +31,7 @@ class InviteeBuilder
   end
 
   def get_yammer_user_by_email
-    @event.owner.
-      yammer_client.
-      get('/users/by_email', email: @email).
-      try(:first)
+    @event.owner.yammer_client.get_user_by_email(@email).try(:body).try(:first)
   end
 
   def create_guest

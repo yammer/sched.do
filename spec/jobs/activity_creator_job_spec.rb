@@ -23,13 +23,13 @@ describe ActivityCreatorJob, '#perform' do
     event = build_stubbed(:event)
     User.stub(find: user)
     Event.stub(find: event)
-    yam_session_stub = double(post: nil)
-    Yam.stub(new: yam_session_stub)
+    yam_session = double(create_activity: nil)
+    Yammer::Client.stub(new: yam_session)
 
     ActivityCreatorJob.new(user, action, event).perform
 
-    expect(yam_session_stub).to have_received(:post).
-      with('/activity', expected_json(event))
+    expect(yam_session).to have_received(:create_activity).
+      with(expected_json(event))
   end
 
   private

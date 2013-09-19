@@ -70,7 +70,7 @@ describe VoteCreatedJob, '#perform' do
 
       VoteCreatedJob.new.perform
 
-      expect(voter.yammer_client.oauth_token).to eq voter.access_token
+      expect(voter.yammer_client.access_token).to eq voter.access_token
     end
   end
 

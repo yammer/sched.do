@@ -23,7 +23,7 @@ class YammerUserInvitationsController < ApplicationController
   end
 
   def create_user_from(invitee_id)
-    invitee_data = owner_yammer_client.get("/users/#{invitee_id}")
+    invitee_data = owner_yammer_client.get_user(invitee_id).body
     User.new.tap do |user|
       YammerUserResponseTranslator.
         new(invitee_data, user).

@@ -10,11 +10,13 @@ describe YammerUserResponseTranslator do
         web_url: 'http://web_url',
         network_id: 2,
         network_name: 'network',
-        'contact' => {
-          'email_addresses' => [{
-            'type' => 'primary',
-            'address' => 'a@b.com'
-          }]
+        contact: {
+          email_addresses: [
+            {
+              type: 'primary',
+              address: 'a@b.com'
+            }
+          ]
         }
       }
       user = User.new

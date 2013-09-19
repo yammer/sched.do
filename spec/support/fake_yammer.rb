@@ -25,7 +25,7 @@ class FakeYammer < Sinatra::Base
   end
 
   post '/api/v1/messages' do
-    self.access_token = params[:access_token]
+    self.access_token = self.request.env["HTTP_AUTHORIZATION"].split.last
     self.group_id = params[:group_id]
     self.message = params[:body]
     self.messages_endpoint_hits += 1
@@ -37,8 +37,6 @@ class FakeYammer < Sinatra::Base
 
     if params[:email] == self.yammer_email
       json_for_user_email_search
-    else
-      "[ ]"
     end
   end
 
