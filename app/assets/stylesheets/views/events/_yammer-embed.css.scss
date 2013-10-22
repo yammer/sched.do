@@ -1,6 +1,6 @@
 #yammer-feed {
   border: solid 1px #DDD;
-  @include border-radius(0 0 4px 4px);
+  border-radius: 0 0 4px 4px;
 
   a, a:link {
     color: shade($blue, 20%);
@@ -15,7 +15,7 @@
   }
 
   .yj-ft {
-    @include border-radius(0 0 4px 4px);
+    border-radius: 0 0 4px 4px;
     padding: 10px 10px 0 10px;
   }
 

@@ -5,7 +5,7 @@ div.guest-sign-in {
     background-color: #F7E98D;
     @include background-image(linear-gradient(#F9EFAF, #F7E98D));
     border: 1px solid lighten($orange, 26%);
-    @include border-radius(3px);
+    border-radius: 3px;
     @include box-shadow(0 2px 3px darken($bg-color, 6%));
     @include box-sizing(border-box);
     margin: 10px auto 30px;

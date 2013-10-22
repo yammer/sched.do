@@ -26,7 +26,7 @@ div.new-event {
   a.add_fields {
     background: $success;
     border: 1px dashed darken($success, 50%);
-    @include border-radius(5px);
+    border-radius: 5px;
     color: desaturate(darken($success, 50%), 15%);
     display: block;
     @include fill-parent();
@@ -37,7 +37,7 @@ div.new-event {
 
     &:before {
       background: desaturate(darken($success, 50%), 15%);
-      @include border-radius(3px);
+      border-radius: 3px;
       color: #fff;
       content: "+";
       display: block;
@@ -66,7 +66,7 @@ div.new-event {
       background-color: $bg-color;
       @include background-image(linear-gradient(lighten($bg-color, 0.5%), darken($bg-color, 0.5%) 20%));
       border: 1px solid darken($bg-color, 10%);
-      @include border-radius(4px);
+      border-radius: 4px;
       @include box-shadow(inset 0 1px 0 #fff);
       @include box-sizing(border-box);
       margin-bottom: 20px;
@@ -105,7 +105,7 @@ div.new-event {
         -ms-background-position-y: center;
         background-repeat: no-repeat;
         border: 1px solid rgb(190,190,190);
-        @include border-radius(20px);
+        border-radius: 20px;
         @include box-shadow(inset 0 1px 0 rgb(240,240,240), 0 1px 3px darken($bg-color, 15%));
         color: #fff;
         display: none;

@@ -1,5 +1,5 @@
 @mixin button($weight: normal) {
-  @include border-radius(3px);
+  border-radius: 3px;
   font-family: $bariol;
   padding: 0.5em 1.2em;
   text-decoration: none;
@@ -79,7 +79,7 @@
 
 @mixin invitation-text {
   @include background-image(none);
-  @include border-radius(4px);
+  border-radius: 4px;
   border: 1px solid #a7d8f8;
   font-size: 0.8em;
   height: 34px;

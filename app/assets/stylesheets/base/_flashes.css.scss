@@ -11,7 +11,7 @@ div.flash {
 div.error, div.notice, div.success {
   @include animation(slide-down 3s 0s 1 ease forwards);
   border: 1px solid #ddd;
-  @include border-radius(0 0 3px 3px);
+  border-radius: 0 0 3px 3px;
   border-top: none;
   @include box-shadow(0 1px 3px rgba(0,0,0,0.15));
   @include box-sizing(border-box);
