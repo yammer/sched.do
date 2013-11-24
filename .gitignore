@@ -4,28 +4,25 @@
 # or operating system, you probably want to add a global ignore instead:
 #   git config --global core.excludesfile ~/.gitignore_global
 
-# Ignore bundler config
-/.bundle
 
-# Ignore the default SQLite database.
-/db/*.sqlite3
 
-# Ignore all logfiles and tempfiles.
-/log/*.log
-/tmp
-public/system
+!.keep
+!bin/setup
 *.DS_Store
-coverage/*
 *.swp
+.env
+.foreman
+.tddium*
+/.bundle
+/db/*.sqlite3
+/log/*.log
+/public/assets
+/tmp
+bin/
+coverage
+coverage/*
+public/system
 rerun.txt
 tags
-!.keep
 vendor/bundler_gems
-.env
-/public/assets
-bin/
-!bin/setup
-coverage
-.tddium*
 vendor/cache
-.foreman
