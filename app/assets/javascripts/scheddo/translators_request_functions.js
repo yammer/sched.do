@@ -15,7 +15,7 @@ Scheddo.Translators.Requests.Async = {
     var self = this;
     $.ajax({
       type: 'POST',
-      url: '<%= Rails.application.routes.url_helpers.yammer_user_invitations_path %>',
+      url: '/yammer_user_invitations',
       data: {
         invitation: {
           event_id: eventId,
@@ -35,7 +35,7 @@ Scheddo.Translators.Requests.Async = {
     var self = this;
     $.ajax({
       type: 'POST',
-      url: '<%= Rails.application.routes.url_helpers.yammer_group_invitations_path %>',
+      url: '/yammer_group_invitations',
       data: {
         invitation: {
           event_id: eventId,
@@ -56,7 +56,7 @@ Scheddo.Translators.Requests.Async = {
     var self = this;
     $.ajax({
       type: 'POST',
-      url: '<%= Rails.application.routes.url_helpers.invitations_path %>',
+      url: '/invitations',
       data: {
         invitation: {
           event_id: eventId,
@@ -75,7 +75,7 @@ Scheddo.Translators.Requests.Async = {
 
 Scheddo.Translators.Requests.Sync = {
   userSync: function(event, form, userObject){
-    var inviteeFormAction = '<%= Rails.application.routes.url_helpers.yammer_user_invitations_path %>';
+    var inviteeFormAction = '/yammer_user_invitations';
     form.attr('action', inviteeFormAction);
     Scheddo.Util.dataRoleUpdater(userObject.id, event.target, 'yammer_user_id');
     form.submit();
@@ -83,7 +83,7 @@ Scheddo.Translators.Requests.Sync = {
 
   groupSync: function(event, form, groupObject){
     form.find('#auto-complete').val(groupObject.fullName);
-    var inviteeFormAction = '<%= Rails.application.routes.url_helpers.yammer_group_invitations_path %>';
+    var inviteeFormAction = '/yammer_group_invitations';
     form.attr('action', inviteeFormAction);
     Scheddo.Util.dataRoleUpdater(groupObject.id, event.target, 'yammer_group_id');
     form.submit();
