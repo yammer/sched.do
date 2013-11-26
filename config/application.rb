@@ -19,7 +19,6 @@ module SchedDo
 
     config.active_record.whitelist_attributes = false
     config.assets.enabled = true
-    config.assets.initialize_on_precompile = false
     config.assets.precompile += %w(media-queries.css ie.css)
     config.assets.version = '1.3'
     config.autoload_paths += %W(#{config.root}/lib)
