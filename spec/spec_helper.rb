@@ -16,15 +16,12 @@ require 'turnip/capybara'
 require 'shoulda-matchers'
 require 'paperclip/matchers'
 require 'email_spec'
-require 'bourne'
 
 Dir[Rails.root.join('spec/support/**/*.rb')].each {|f| require f}
 
 Capybara.javascript_driver = :webkit
 
 RSpec.configure do |config|
-  config.mock_with :mocha
-
   config.include ActionView::Helpers::TextHelper
   config.include Capybara::DSL, type: :request
   config.include EmailSpec::Helpers
@@ -32,10 +29,8 @@ RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Default
   config.include Paperclip::Shoulda::Matchers
   config.include DelayedJobSpecHelper
-
   config.use_transactional_fixtures = false
   config.infer_base_class_for_anonymous_controllers = false
-
   Delayed::Worker.delay_jobs = true
 
   config.before(:suite) do

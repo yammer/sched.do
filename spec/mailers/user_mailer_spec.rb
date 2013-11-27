@@ -22,7 +22,6 @@ describe UserMailer, '.event_created_confirmation' do
 
   it 'sends the email with the correct subject' do
     event = build_stubbed(:event)
-    creator = event.owner
 
     mail = UserMailer.event_created_confirmation(event)
 
@@ -43,7 +42,6 @@ end
 describe UserMailer, '.invitation' do
   it 'sends the email from the correct sender' do
     invitation = create(:invitation_with_guest)
-    guest = invitation.invitee
     event = invitation.event
 
     mail = UserMailer.invitation(invitation)
@@ -56,7 +54,6 @@ describe UserMailer, '.invitation' do
   it 'sends the email to the correct recipient' do
     invitation = create(:invitation_with_guest)
     guest = invitation.invitee
-    event = invitation.event
 
     mail = UserMailer.invitation(invitation)
 
@@ -65,7 +62,6 @@ describe UserMailer, '.invitation' do
 
   it 'sends the email with the correct subject' do
     invitation = create(:invitation_with_guest)
-    guest = invitation.invitee
     event = invitation.event
 
     mail = UserMailer.invitation(invitation)
@@ -101,7 +97,6 @@ describe UserMailer, '.vote_confirmation' do
     vote = build_stubbed(:vote)
     suggestion = vote.suggestion
     event = suggestion.event
-    user_name = vote.voter.name
     mail = UserMailer.vote_confirmation(vote)
 
     expect(mail.subject).to eq (
@@ -224,7 +219,7 @@ describe UserMailer, '.closed_event_notification' do
   end
 
   it 'generates a calendar' do
-    Calendar.stubs(:generate)
+    Calendar.stub(:generate)
 
     UserMailer.closed_event_notification(event)
 

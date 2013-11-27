@@ -14,7 +14,7 @@ end
 
 describe PrivateMessageTemplate, '#body' do
   it 'renders the erb template using provided class binding' do
-    File.stubs(:read).returns('<%= @test_ivar %>')
+    File.stub(read: '<%= @test_ivar %>')
     ivar_container = IvarContainer.new
 
     rendered_erb = PrivateMessageTemplate.new('dummy file path', ivar_container.get_binding).body
@@ -23,7 +23,7 @@ describe PrivateMessageTemplate, '#body' do
   end
 
   it 'reads the file at the path provided' do
-    File.stubs(:read).returns('test erb')
+    File.stub(read: 'test erb')
 
     PrivateMessageTemplate.new('dummy file path', nil).body
 

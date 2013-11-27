@@ -4,7 +4,7 @@ describe VoteEmailJob, '.enqueue' do
   it 'enqueues the job' do
     Timecop.freeze do
       vote = build_stubbed(:vote)
-      Delayed::Job.stubs(:enqueue)
+      Delayed::Job.stub(:enqueue)
       vote_email_job = VoteEmailJob.new(vote.id, :test_vote_email)
       delay = 3.minutes
 
@@ -19,7 +19,7 @@ end
 describe VoteEmailJob, '#error' do
   it 'sends Airbrake an exception if the job fails' do
     vote = build_stubbed(:vote)
-    Airbrake.stubs(:notify)
+    Airbrake.stub(:notify)
     exception = 'Hey! you did something wrong!'
 
     job = VoteEmailJob.new(vote.id, :test_message)
@@ -31,11 +31,11 @@ end
 
 describe VoteEmailJob, '#perform' do
   it 'sends an email if the vote exists and there is not another vote within the time window' do
-    message = stub(deliver: nil)
-    UserMailer.stubs(test_vote_email: message)
-    Vote.any_instance.stubs(:has_no_other_votes_within_delay_window?).returns(true)
+    message = double(deliver: nil)
+    UserMailer.stub(test_vote_email: message)
+    vote = double(id: 123, has_no_other_votes_within_delay_window?: true)
+    Vote.stub(find_by_id: vote)
     vote = create(:vote)
-    Vote.stubs(find_by_id: vote)
 
     VoteEmailJob.new(vote.id, :test_vote_email).perform
 
@@ -44,27 +44,26 @@ describe VoteEmailJob, '#perform' do
   end
 
   it 'quietly fails and logs the error if the Vote is destroyed before the job runs' do
-    UserMailer.stubs(test_vote_email: nil)
-    fake_logger = stub(error: 'blah')
-    Rails.stubs(logger: fake_logger)
-    Vote.stubs(find_by_id: nil)
+    UserMailer.stub(test_vote_email: nil)
+    logger = double(error: 'blah')
+    Rails.stub(logger: logger)
+    Vote.stub(find_by_id: nil)
     vote_id = 0
 
     VoteEmailJob.new(vote_id, :test_vote_email).perform
 
-    expect(fake_logger).to have_received(:error).
+    expect(logger).to have_received(:error).
       with("NOTE: VoteEmailJob cannot find Vote id=#{vote_id}")
-    expect(UserMailer).to have_received(:test_vote_email).never
+    expect(UserMailer).not_to have_received(:test_vote_email)
   end
 
   it 'does not send an email if there is a new vote by the same user for the event in the time window' do
-    UserMailer.stubs(test_vote_email: nil)
-    Vote.any_instance.stubs(:has_no_other_votes_within_delay_window?).returns(false)
-    vote = create(:vote)
-    Vote.stubs(find_by_id: vote)
+    UserMailer.stub(test_vote_email: nil)
+    vote = double(id: 123, has_no_other_votes_within_delay_window?: false)
+    Vote.stub(find_by_id: vote)
 
     VoteEmailJob.new(vote.id, :test_vote_email).perform
 
-    expect(UserMailer).to have_received(:test_vote_email).never
+    expect(UserMailer).not_to have_received(:test_vote_email)
   end
 end

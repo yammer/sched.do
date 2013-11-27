@@ -5,7 +5,7 @@ describe ActivityCreatorJob, '.enqueue' do
     user = build_stubbed(:user)
     action = 'vote'
     event = build_stubbed(:event)
-    Delayed::Job.stubs(:enqueue)
+    Delayed::Job.stub(:enqueue)
     activity_creator_job = ActivityCreatorJob.new(user.id, action, event.id)
 
     ActivityCreatorJob.enqueue(user, action, event)
@@ -21,10 +21,10 @@ describe ActivityCreatorJob, '#perform' do
     user = build_user
     action = 'vote'
     event = build_stubbed(:event)
-    User.stubs(find: user)
-    Event.stubs(find: event)
-    yam_session_stub = mock('yam session', :post)
-    Yam.stubs(:new).returns(yam_session_stub)
+    User.stub(find: user)
+    Event.stub(find: event)
+    yam_session_stub = double(post: nil)
+    Yam.stub(new: yam_session_stub)
 
     ActivityCreatorJob.new(user, action, event).perform
 
@@ -35,8 +35,7 @@ describe ActivityCreatorJob, '#perform' do
   private
 
   def build_user(token = 'ABC123')
-    user = create(
-      :user,
+    create(:user,
       email: 'fred@example.com',
       access_token: token,
       name: 'Fred Jones'
@@ -72,7 +71,7 @@ describe ActivityCreatorJob, '#error' do
   it 'sends Airbrake an exception if the job errors' do
     job = ActivityCreatorJob.new
     exception = 'Hey! you did something wrong!'
-    Airbrake.stubs(:notify)
+    Airbrake.stub(:notify)
 
     job.error(job, exception)
 
@@ -82,19 +81,19 @@ describe ActivityCreatorJob, '#error' do
   it 'does not send exception to Airbrake if the job errors due to rate limit' do
     job = ActivityCreatorJob.new
     exception = Faraday::Error::ClientError.new('Rate limited!', status: 429)
-    Airbrake.stubs(:notify)
+    Airbrake.stub(:notify)
 
     job.error(job, exception)
 
-    expect(Airbrake).to have_received(:notify).never
+    expect(Airbrake).not_to have_received(:notify)
   end
 end
 
 describe ActivityCreatorJob, '#failure' do
   it 'sends Airbrake an exception if the job fails' do
     job = ActivityCreatorJob.new
-    job_record = stub(last_error: 'boom')
-    Airbrake.stubs(:notify)
+    job_record = double(last_error: 'boom')
+    Airbrake.stub(:notify)
 
     job.failure(job_record)
 

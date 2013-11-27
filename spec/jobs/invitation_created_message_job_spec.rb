@@ -3,8 +3,8 @@ require 'spec_helper'
 describe InvitationCreatedMessageJob, '.enqueue' do
   it 'enqueues the job' do
     invitation = build_stubbed(:invitation)
-    Invitation.stubs(find: invitation)
-    Delayed::Job.stubs(:enqueue)
+    Invitation.stub(find: invitation)
+    Delayed::Job.stub(:enqueue)
     job = InvitationCreatedMessageJob.new(invitation.id)
 
     InvitationCreatedMessageJob.enqueue(invitation)
@@ -16,9 +16,9 @@ end
 describe InvitationCreatedMessageJob, '#perform' do
   it 'sends the invitation message to the invitee' do
     invitation = build_stubbed(:invitation)
-    Invitation.stubs(find: invitation)
+    Invitation.stub(find: invitation)
     invitee = invitation.invitee
-    invitee.stubs(:invite)
+    invitee.stub(:invite)
 
     InvitationCreatedMessageJob.new(invitation.id).perform
 
@@ -30,7 +30,7 @@ describe InvitationCreatedMessageJob, '#error' do
   it 'sends Airbrake an exception if the job errors' do
     job = InvitationCreatedMessageJob.new
     exception = 'Hey! you did something wrong!'
-    Airbrake.stubs(:notify)
+    Airbrake.stub(:notify)
 
     job.error(job, exception)
 
@@ -41,8 +41,8 @@ end
 describe InvitationCreatedMessageJob, '#failure' do
   it 'sends Airbrake an exception if the job fails' do
     job = InvitationCreatedMessageJob.new
-    job_record = stub(last_error: 'boom')
-    Airbrake.stubs(:notify)
+    job_record = double(last_error: 'boom')
+    Airbrake.stub(:notify)
 
     job.failure(job_record)
 

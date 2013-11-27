@@ -7,7 +7,7 @@ end
 
 describe Reminder do
   it 'creates a delayed job after create' do
-    ReminderCreatedJob.stubs(:enqueue)
+    ReminderCreatedJob.stub(:enqueue)
 
     create(:reminder)
 
@@ -19,10 +19,10 @@ describe Reminder, '#deliver' do
   it 'delivers the reminders' do
     event = create(:event)
     reminder = create(:reminder, receiver: event)
-    Event.any_instance.stubs(:deliver_reminder_from)
+    event.stub(:deliver_reminder_from)
 
     reminder.deliver
 
-    expect(Event.any_instance).to have_received(:deliver_reminder_from)
+    expect(event).to have_received(:deliver_reminder_from)
   end
 end

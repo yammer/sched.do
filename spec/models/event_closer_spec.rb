@@ -5,49 +5,52 @@ describe EventCloser, '#process' do
     it 'does not send out notifications' do
       event = build(:closed_event)
       event_closer = EventCloser.new(event, message: 'hello')
-      event_closer.stubs(:send_notifications)
+      event_closer.stub(:send_notifications)
 
       event_closer.process
 
-      expect(event_closer).to have_received(:send_notifications).never
+      expect(event_closer).not_to have_received(:send_notifications)
     end
   end
 
   context 'with an open poll' do
     it 'sends a group notification' do
       invitation = create(:invitation_with_group)
-      GroupYammerMessenger.any_instance.stubs(:deliver)
+      group_yammer_messenger = double(notify: nil)
+      GroupYammerMessenger.stub(new: group_yammer_messenger)
 
       event_closer(invitation.event).process
       work_off_delayed_jobs
 
-      expect(GroupYammerMessenger.any_instance).to have_received(:deliver)
+      expect(group_yammer_messenger).to have_received(:notify)
     end
 
     it 'sends a personal notification' do
       event = create(:event)
-      YammerMessenger.any_instance.stubs(:deliver)
+      yammer_messenger = double(notify: nil)
+      YammerMessenger.stub(new: yammer_messenger)
 
       event_closer(event).process
       work_off_delayed_jobs
 
-      expect(YammerMessenger.any_instance).to have_received(:deliver)
+      expect(yammer_messenger).to have_received(:notify)
     end
 
     it 'sends an email' do
       invitation = create(:invitation_with_guest)
-      Messenger.any_instance.stubs(:notify)
+      messenger = double(notify: nil)
+      Messenger.stub(new: messenger)
 
       event_closer(invitation.event).process
       work_off_delayed_jobs
 
-      expect(Messenger.any_instance).to have_received(:notify)
+      expect(messenger).to have_received(:notify)
     end
 
     it 'sends an email to the owner' do
       event = create(:event)
-      fake_email = stub(:deliver)
-      UserMailer.stubs(:closed_event_notification).returns(fake_email)
+      fake_email = double(deliver: nil)
+      UserMailer.stub(closed_event_notification: fake_email)
 
       event_closer(event).process
       work_off_delayed_jobs

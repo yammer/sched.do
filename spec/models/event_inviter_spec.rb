@@ -21,7 +21,6 @@ describe EventInviter, '#valid?' do
   it 'returns false if all invitations are not valid' do
     current_user = build_stubbed(:user)
     event = build_stubbed(:event)
-    invitation_text = 'Example text'
     invitee_emails = ['example1@example.com', 'example@example.com']
     options = {
       current_user: current_user,
@@ -37,8 +36,8 @@ end
 
 describe EventInviter, '#send_invitations' do
   it 'calls invite on each invitation' do
-    invitation_stub = stub('invitation', :invite)
-    Invitation.stubs(:new).returns(invitation_stub)
+    invitation = double(invite: nil)
+    Invitation.stub(new: invitation)
     current_user = build_stubbed(:user)
     event = build_stubbed(:event)
     invitation_text = 'Example text'
@@ -53,7 +52,7 @@ describe EventInviter, '#send_invitations' do
     EventInviter.new(options).send_invitations
 
     expect(Invitation).to have_received(:new).twice
-    expect(invitation_stub).to have_received(:invite).twice
+    expect(invitation).to have_received(:invite).twice
   end
 end
 

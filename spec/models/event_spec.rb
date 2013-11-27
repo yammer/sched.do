@@ -119,7 +119,7 @@ describe Event, 'after_create callbacks' do
 
   context '#enqueue_event_created_job' do
     it 'enqueues an EventCreatedEmailJob' do
-      EventCreatedEmailJob.stubs(:enqueue)
+      EventCreatedEmailJob.stub(:enqueue)
 
       event = create(:event)
 
@@ -127,7 +127,7 @@ describe Event, 'after_create callbacks' do
     end
 
     it 'enqueues a ActivityCreatorJob' do
-      ActivityCreatorJob.stubs(:enqueue)
+      ActivityCreatorJob.stub(:enqueue)
       action = 'create'
 
       event = create(:event)
@@ -140,7 +140,7 @@ end
 
 describe Event, 'after_update callbacks' do
   it 'enqueues an ActivityCreatorJob' do
-    ActivityCreatorJob.stubs(:enqueue)
+    ActivityCreatorJob.stub(:enqueue)
     action = 'update'
     event = create(:event, name: 'event')
     user = event.owner
@@ -159,8 +159,8 @@ describe Event, '#deliver_reminder_from' do
     user = create(:user)
     user_invitation = create(:invitation, event: event, invitee: user)
     user_invitations = [user_invitation]
-    event.stubs(:invitations_without).returns(user_invitations)
-    user_invitation.stubs(:deliver_reminder_from)
+    event.stub(invitations_without: user_invitations)
+    user_invitation.stub(:deliver_reminder_from)
 
     event.deliver_reminder_from(sender)
 

@@ -45,15 +45,13 @@ describe DashboardController, '#invitee_conversion' do
   it 'renders the weekly and monthly polls created reports' do
     user = create(:admin)
     sign_in_as(user)
-    WeeklyReport.
-      any_instance.
-      stubs(:get_data_clip).
-      returns('the weekly data')
+    weekly_report = double(get_data_clip: 'the weekly data')
+    WeeklyReport.stub(new: weekly_report)
 
     get :invitee_conversion
 
     expect(assigns(:weekly)).to eq 'the weekly data'
-    expect(WeeklyReport.any_instance).to have_received(:get_data_clip)
+    expect(weekly_report).to have_received(:get_data_clip)
     expect(assigns(:weekly_uri)).
       to eq 'https://dataclips.heroku.com/rsqhikhvkgrhhlbcitzcvxukmucu'
   end
@@ -62,22 +60,17 @@ end
 def weekly_monthly_report_spec_helper(weekly, monthly, action)
   user = create(:admin)
   sign_in_as(user)
-  WeeklyReport.
-    any_instance.
-    stubs(:get_data_clip).
-    returns('the weekly data')
-
-  MonthlyReport.
-    any_instance.
-    stubs(:get_data_clip).
-    returns('the monthly data')
+  weekly_report = double(get_data_clip: 'the weekly data')
+  WeeklyReport.stub(new: weekly_report)
+  monthly_report = double(get_data_clip: 'the monthly data')
+  MonthlyReport.stub(new: monthly_report)
 
   get action
 
   expect(assigns(:weekly)).to eq 'the weekly data'
   expect(assigns(:monthly)).to eq 'the monthly data'
-  expect(WeeklyReport.any_instance).to have_received(:get_data_clip)
-  expect(MonthlyReport.any_instance).to have_received(:get_data_clip)
+  expect(weekly_report).to have_received(:get_data_clip)
+  expect(monthly_report).to have_received(:get_data_clip)
   expect(assigns(:weekly_uri)).to eq weekly
   expect(assigns(:monthly_uri)).to eq monthly
 end

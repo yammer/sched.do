@@ -148,7 +148,7 @@ describe User, '#has_voted_for_suggestion?' do
 
   it 'returns false if the user voted and then unvoted for the suggestion' do
     user = create(:user)
-    vote = create(:vote, voter: user, deleted_at: Time.zone.now)
+    create(:vote, voter: user, deleted_at: Time.zone.now)
     suggestion = create(:suggestion)
     expect(user).to_not have_voted_for_suggestion(suggestion)
   end
@@ -178,15 +178,15 @@ describe User, '#invite' do
   it 'if the user is out-network, it sends an email notification' do
     invitee = create(:out_network_user)
     invitation = build(:invitation_with_user, invitee: invitee)
-    messenger_instance = mock('messenger instance', :invite)
+    messenger = double(invite: nil)
     organizer = invitation.sender
-    Messenger.expects(:new).with(invitee).returns(messenger_instance)
+    Messenger.stub(:new).with(invitee).and_return(messenger)
 
     invitee.invite(invitation)
     work_off_delayed_jobs
 
     expect(organizer).to_not be_in_network(invitee)
-    expect(messenger_instance).to have_received(:invite)
+    expect(messenger).to have_received(:invite)
   end
 
   it 'sends a private message notification, if the user is in-network' do

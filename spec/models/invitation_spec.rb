@@ -28,19 +28,18 @@ describe Invitation do
     event = build_stubbed(:event)
     invitee = create(:user)
 
-    first_invitation = create(:invitation, event: event, invitee: invitee)
-    second_invitation = build_stubbed(
-      :invitation, event: event, invitee: invitee
-    )
+    create(:invitation, event: event, invitee: invitee)
+    invitation = build_stubbed(:invitation, event: event, invitee: invitee)
 
-    expect(second_invitation).to be_invalid
+    expect(invitation).to be_invalid
   end
 end
 
 describe Invitation, '#invite' do
   context 'when the invite is valid' do
     it 'notifies the invitee with a message' do
-      InvitationCreatedMessageJob.stubs(:enqueue)
+      ActivityCreatorJob.stub(:enqueue)
+      InvitationCreatedMessageJob.stub(:enqueue)
       invitation = Invitation.new(
         event: build_stubbed(:event),
         invitation_text: 'text',
@@ -56,20 +55,21 @@ describe Invitation, '#invite' do
 
   context 'when the invite is invalid' do
     it 'does not notify the invitee with a message' do
-      InvitationCreatedMessageJob.stubs(:enqueue)
+      InvitationCreatedMessageJob.stub(:enqueue)
       invitation = Invitation.new
 
       invitation.invite
 
-      expect(InvitationCreatedMessageJob).to have_received(:enqueue).never
+      expect(InvitationCreatedMessageJob).not_to have_received(:enqueue)
     end
   end
 
   context 'when the sender is a yammer user' do
     it 'creates an activity message for the sending user' do
-      sender = build_stubbed(:user)
+      sender = create(:user)
       event = build_stubbed(:event)
-      ActivityCreatorJob.stubs(:enqueue)
+      InvitationCreatedMessageJob.stub(:enqueue)
+      ActivityCreatorJob.stub(:enqueue)
       invitation = Invitation.new(
         event: event,
         invitation_text: 'text',
@@ -88,25 +88,23 @@ describe Invitation, '#invite' do
       invitee = create(:user)
       sender = build_stubbed(:guest)
       event = build_stubbed(:event)
-      ActivityCreatorJob.stubs(:enqueue)
+      ActivityCreatorJob.stub(:enqueue)
       invitation = Invitation.new(event: event, invitee: invitee, sender: sender)
       invitation.invite
 
-      expect(ActivityCreatorJob).to have_received(:enqueue).never
+      expect(ActivityCreatorJob).not_to have_received(:enqueue)
     end
   end
 end
 
 describe Invitation, '#invite_without_notification' do
   it 'does not notify the invitee' do
-    user = create(:user)
-    event = create(:event)
-    InvitationCreatedMessageJob.stubs(:enqueue)
-    invitation = Invitation.new(event: event, invitee: user)
+    InvitationCreatedMessageJob.stub(:enqueue)
+    invitation = build(:invitation, event: create(:event), invitee: create(:user))
 
     invitation.invite_without_notification
 
-    expect(InvitationCreatedMessageJob).to have_received(:enqueue).never
+    expect(InvitationCreatedMessageJob).not_to have_received(:enqueue)
   end
 end
 
@@ -115,7 +113,7 @@ describe Invitation, '#deliver_reminder_from' do
     Timecop.freeze do
       invitation = create(:invitation)
       invitee = invitation.invitee
-      invitee.stubs(:remind)
+      invitee.stub(:remind)
       sender = create(:user)
 
       invitation.deliver_reminder_from(sender)
@@ -132,8 +130,8 @@ describe Invitation, '.deliver_automatic_reminders' do
       create(:invitation, created_at: 6.days.ago),
       create(:invitation, created_at: 6.days.ago)
     ]
-    message = stub('message', deliver: true)
-    UserMailer.stubs(:reminder).returns(message)
+    message = double(deliver: true)
+    UserMailer.stub(reminder: message)
 
     Invitation.deliver_automatic_reminders
 
@@ -141,76 +139,67 @@ describe Invitation, '.deliver_automatic_reminders' do
       expect(UserMailer).to have_received(:reminder).
         with(invitation.invitee, invitation.sender, invitation.event)
     end
-    expect(message).to have_received(:deliver).at_least_once
+
+    expect(message).to have_received(:deliver).twice
   end
 
   it 'does not send an automatic reminder to the event creator' do
-    invitation = create(:invitation, sender: nil, created_at: 6.days.ago)
-    message = stub('message', deliver: true)
-    UserMailer.stubs(:reminder).returns(message)
+    create(:invitation, sender: nil, created_at: 6.days.ago)
+    message = double(deliver: true)
+    UserMailer.stub(reminder: message)
 
     Invitation.deliver_automatic_reminders
 
-    expect(message).to have_received(:deliver).never
+    expect(message).not_to have_received(:deliver)
   end
 
   it 'does not send an automatic reminder before the invitation is five days old' do
     Timecop.freeze do
-      invitation = create(:invitation, created_at: Time.now)
-      message = stub('message', delive: true)
-      UserMailer.stubs(:reminder).returns(message)
+      create(:invitation, created_at: Time.now)
+      message = double(deliver: true)
+      UserMailer.stub(reminder: message)
 
       Invitation.deliver_automatic_reminders
 
-      expect(message).to have_received(:deliver).never
+      expect(message).not_to have_received(:deliver)
     end
   end
 
   it 'does not send an automatic reminder when the invitee has voted' do
-    vote = create(:vote)
-    invitation = create(:invitation, created_at: 6.days.ago, vote: vote)
-    message = stub('message', deliver: true)
-    UserMailer.stubs(:reminder).returns(message)
+    create(:invitation, created_at: 6.days.ago, vote: create(:vote))
+    message = double(deliver: true)
+    UserMailer.stub(reminder: message)
 
     Invitation.deliver_automatic_reminders
 
-    expect(message).to have_received(:deliver).never
+    expect(message).not_to have_received(:deliver)
   end
 
   it 'does not send an automatic reminder when the invitee has already been reminded' do
-    invitation = create(
-      :invitation,
-      created_at: 6.days.ago,
-      reminded_at: 1.day.ago
-    )
-    message = stub('message', deliver: true)
-    UserMailer.stubs(:reminder).returns(message)
+    create(:invitation, created_at: 6.days.ago, reminded_at: 1.day.ago)
+    message = double(deliver: true)
+    UserMailer.stub(reminder: message)
 
     Invitation.deliver_automatic_reminders
 
-    expect(message).to have_received(:deliver).never
+    expect(message).not_to have_received(:deliver)
   end
 
   it 'does not send automatic reminders to groups' do
-    group = create(:group)
-    invitation = create(
-      :invitation,
-      created_at: 6.days.ago,
-      invitee: group
-    )
-    message = stub('message', deliver: true)
-    UserMailer.stubs(:reminder).returns(message)
+    create(:invitation, created_at: 6.days.ago, invitee: create(:group))
+    message = double(deliver: true)
+    UserMailer.stub(reminder: message)
 
     Invitation.deliver_automatic_reminders
 
-    expect(message).to have_received(:deliver).never
+    expect(message).not_to have_received(:deliver)
   end
 
   it 'sets reminded_at on the invitation'do
     Timecop.freeze do
       invitation = create(:invitation, created_at: 6.days.ago, reminded_at: nil)
-      message = stub('message', deliver: true)
-      UserMailer.stubs(:reminder).returns(message)
+      message = double(deliver: true)
+      UserMailer.stub(reminder: message)
 
       Invitation.deliver_automatic_reminders
 

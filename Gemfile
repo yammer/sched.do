@@ -43,19 +43,17 @@ group :development do
 end
 
 group :test do
-  gem 'bourne', require: false
   gem 'capybara-webkit', '~> 0.14.0'
   gem 'database_cleaner'
   gem 'email_spec'
   gem 'factory_girl_rails'
   gem 'jasmine'
   gem 'launchy'
-  gem 'shoulda-matchers', '1.5.2'
+  gem 'shoulda-matchers'
   gem 'simplecov', require: false
   gem 'sinatra'
   gem 'timecop'
   gem 'turnip', '1.0'
-  gem 'mocha'                              # Must be required last in this group
 end
 
 group :development, :test do
@@ -64,7 +62,7 @@ group :development, :test do
   gem 'guard-jasmine', require: false
   gem 'jasminerice'
   gem 'mail_view'
-  gem 'rspec-rails'
+  gem 'rspec-rails', '~> 2.14.0'
   gem 'sham_rack'
 end
 

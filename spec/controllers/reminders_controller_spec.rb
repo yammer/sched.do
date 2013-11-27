@@ -5,42 +5,39 @@ describe RemindersController, '#create' do
     user = create(:user)
     event = create(:event)
     sign_in_as(user)
-    reminder = Reminder.new
-    Reminder.stubs(new: reminder)
-    Reminder.any_instance.stubs(:save)
+    reminder = double(save: true, 'sender=' => user)
+    Reminder.stub(new: reminder)
 
     post :create, reminder: { receiver_id: '123' }, event_id: event
 
     expect(Reminder).to have_received(:new)
-    expect(Reminder.any_instance).to have_received(:save)
+    expect(reminder).to have_received(:save)
   end
 
   it 'sets the Reminder sender to current_user' do
+    ReminderCreatedJob.stub(:enqueue)
     user = create(:user)
     event = create(:event)
     sign_in_as(user)
-    reminder = Reminder.new
-    Reminder.stubs(new: reminder)
-    Reminder.any_instance.stubs(:save)
 
-    post :create, reminder: { receiver_id: '123' }, event_id: event
+    post :create,
+      reminder: { receiver_id: '123', receiver_type: 'Guest' }, event_id: event
 
+    reminder = Reminder.last
     expect(reminder.sender).to eq user
-    expect(Reminder.any_instance).to have_received(:save)
   end
 
   context 'the Reminder is successfully saved' do
     it 'adds a message to flash[:notice]' do
+      ReminderCreatedJob.stub(:enqueue)
       user = create(:user)
       event = create(:event)
       sign_in_as(user)
-      reminder = Reminder.new
-      Reminder.stubs(create: reminder)
-      Reminder.any_instance.stubs(:save).returns true
 
-      post :create, reminder: { receiver_id: '123' }, event_id: event
+      post :create,
+        reminder: { receiver_id: '123', receiver_type: 'Guest' }, event_id: event
 
-      expect(flash[:notice]).to match /sent/
+      expect(flash[:notice]).to match(/sent/)
     end
   end
 
@@ -50,13 +47,12 @@ describe RemindersController, '#create' do
       event = create(:event)
       sign_in_as(user)
       reminder = Reminder.new
-      Reminder.stubs(create: reminder)
-
-      Reminder.any_instance.stubs(:save)
+      Reminder.stub(create: reminder)
+      Reminder.any_instance.stub(:save)
 
       post :create, reminder: { receiver_id: '123' }, event_id: event
 
-      expect(flash[:error]).to match /error/
+      expect(flash[:error]).to match(/error/)
     end
   end
 end

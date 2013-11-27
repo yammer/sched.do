@@ -30,10 +30,10 @@ describe VoterCalculator, '#non_voters' do
     user2 = build(:user)
     guest = build(:guest)
     event = build(:event)
-    vote = stub(voter: user2, deleted_at: nil)
-    event.stubs(users: [user1, user2], guests: [guest])
+    vote = double(voter: user2, deleted_at: nil)
+    event.stub(users: [user1, user2], guests: [guest])
     suggestion = build(:suggestion, event: event)
-    suggestion.stubs(votes: [vote])
+    suggestion.stub(votes: [vote])
     voter_calculator = VoterCalculator.new(suggestion)
 
     expect(voter_calculator.non_voters).to eq [user1, guest]

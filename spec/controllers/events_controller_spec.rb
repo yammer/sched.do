@@ -47,8 +47,8 @@ describe EventsController, '#create' do
   it 'redirects to MultipleInvitationsController#new' do
     sign_in_as(create(:user))
     event = build_stubbed(:event)
-    event.stubs(save: true)
-    Event.stubs(new: event)
+    event.stub(save: true)
+    Event.stub(new: event)
 
     post :create, event: { name: event.name }
 
@@ -112,7 +112,6 @@ describe EventsController, '#show' do
   context 'use an invalid uuid as the user who created the event' do
     it 'raises a RecordNotFound error' do
       user = create(:user)
-      event = create(:event, owner: user)
       fake_uuid = 'fakefake'
 
       sign_in_as(user)
@@ -125,7 +124,7 @@ describe EventsController, '#show' do
   context 'use an invalid uuid as a user who did not create the event' do
     it 'should raise ActiveRecord::RecordNotFound' do
       user = create(:user)
-      event = create(:event, owner: user)
+      create(:event, owner: user)
       sign_in_as(create(:user))
       fake_uuid = 'fakefake'
 

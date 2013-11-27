@@ -12,7 +12,7 @@ describe InvitationsController, '#create' do
   context 'signed in as a user' do
     it 'redirects to the event page' do
       event_creator = create_user_and_sign_in
-      event = create_event_and_mock_find(event_creator)
+      event = create(:event, owner: event_creator)
 
       post :create,
         invitation: {
@@ -26,7 +26,7 @@ describe InvitationsController, '#create' do
 
     it 'displays flash errors if the invitation does not save' do
       event_creator = create_user_and_sign_in
-      event = create_event_and_mock_find(event_creator)
+      event = create(:event, owner: event_creator)
       expected_errors = 'Invitee email is not an email, Invitee is invalid'
 
       post :create,
@@ -41,7 +41,7 @@ describe InvitationsController, '#create' do
 
     it 'creates the appropriate invitation' do
       event_creator = create_user_and_sign_in
-      event = create_event_and_mock_find(event_creator)
+      event = create(:event, owner: event_creator)
       invitee = create(:user)
       invitation_text = 'invitation text'
 
@@ -64,7 +64,7 @@ describe InvitationsController, '#create' do
 
     it 'creates multiple invitations when multiple guests are invited' do
       event_creator = create_user_and_sign_in
-      event = create_event_and_mock_find(event_creator)
+      event = create(:event, owner: event_creator)
       emails = 'guest1@example.com, guest2@example.com'
 
       post :create,
@@ -74,16 +74,16 @@ describe InvitationsController, '#create' do
           event_id: event.id
         }
 
-      expect(Invitation.count).to eq 2
+      expect(Invitation.count).to eq 3
     end
 
     it 'creates multiple invitations for the correct users' do
       event_creator = create_user_and_sign_in
-      event = create_event_and_mock_find(event_creator)
-      invitation = stub('invitation', invite: nil, valid?: true)
+      event = create(:event, owner: event_creator)
+      invitation = double(invite: nil, valid?: true)
       emails = 'guest1@example.com, guest2@example.com'
-      Invitation.stubs(new: invitation)
-      invitee = stub('invitee')
+      Invitation.stub(new: invitation)
+      invitee = double
       mock_invitee_builder(invitee)
       invitation_text = 'invitation text'
 
@@ -114,15 +114,9 @@ describe InvitationsController, '#create' do
       user
     end
 
-    def create_event_and_mock_find(user)
-      event = build_stubbed(:event, owner: user)
-      Event.expects(:find).with(event.id.to_s).returns(event)
-      event
-    end
-
     def mock_invitee_builder(invitee)
-      builder = stub('builder', find_user_by_email_or_create_guest: invitee)
-      InviteeBuilder.stubs(new: builder)
+      builder = double(find_user_by_email_or_create_guest: invitee)
+      InviteeBuilder.stub(new: builder)
     end
   end
 end

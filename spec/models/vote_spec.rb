@@ -16,9 +16,9 @@ describe Vote do
   it 'is not valid if the user has already voted for the suggestion' do
     vote = create(:vote)
     duplicated_vote = build(
-        :vote,
-        suggestion: vote.suggestion,
-        voter: vote.voter
+      :vote,
+      suggestion: vote.suggestion,
+      voter: vote.voter
     )
 
     expect(duplicated_vote).to be_invalid
@@ -70,7 +70,8 @@ describe Vote, '#no_votes_witin_delay_window?' do
     voter = first_vote.voter
     event = first_vote.suggestion.event
     second_suggestion = create(:suggestion, event: event)
-    second_vote = create(:vote,
+    second_vote = create(
+      :vote,
       voter: voter,
       suggestion: second_suggestion,
       created_at: VoteEmailJob::DELAY.from_now
@@ -85,7 +86,7 @@ end
 
 describe Vote, '#create' do
   it 'creates a delayed job' do
-    VoteCreatedJob.stubs(:enqueue)
+    VoteCreatedJob.stub(:enqueue)
 
     vote = create(:vote)
 
@@ -97,9 +98,9 @@ describe Vote, '#create' do
     suggestion = create(:suggestion, event: event)
     invitation = create(:invitation, event: event)
     vote = build(
-      :vote, 
-      event: event, 
-      voter: invitation.invitee, 
+      :vote,
+      event: event,
+      voter: invitation.invitee,
       suggestion: suggestion
     )
 

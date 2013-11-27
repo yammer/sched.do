@@ -3,8 +3,8 @@ require 'spec_helper'
 describe VoteCreatedJob, '.enqueue' do
   it 'enqueues the job' do
     vote = build_stubbed(:vote)
-    Vote.stubs(find: vote)
-    Delayed::Job.stubs(:enqueue)
+    Vote.stub(find: vote)
+    Delayed::Job.stub(:enqueue)
     vote_created_job = VoteCreatedJob.new(vote.id)
 
     VoteCreatedJob.enqueue(vote)
@@ -17,11 +17,11 @@ describe VoteCreatedJob, '#perform' do
   context 'when the vote exists' do
     it 'enqueues an ActivityCreatorJob for Yammer users' do
       vote = build_stubbed(:vote)
-      Vote.stubs(find_by_id: vote)
+      Vote.stub(find_by_id: vote)
       user = vote.voter
       action = 'vote'
       event = vote.event
-      ActivityCreatorJob.stubs(:enqueue)
+      ActivityCreatorJob.stub(:enqueue)
 
       VoteCreatedJob.new(vote.id).perform
 
@@ -31,22 +31,22 @@ describe VoteCreatedJob, '#perform' do
 
     it 'does not enqueue an ActivityCreatorJob for guests' do
       vote = build_stubbed(:guest_vote)
-      Vote.stubs(find: vote)
+      Vote.stub(find: vote)
       user = vote.voter
       action = 'vote'
       event = vote.event
-      ActivityCreatorJob.stubs(:enqueue)
+      ActivityCreatorJob.stub(:enqueue)
 
       VoteCreatedJob.new(vote.id).perform
 
-      expect(ActivityCreatorJob).to have_received(:enqueue).
-        with(user, action, event).never
+      expect(ActivityCreatorJob).not_to have_received(:enqueue).
+        with(user, action, event)
     end
 
     it 'enqueues a VoteEmailJob that sends the vote confirmation email' do
       vote = create(:vote)
-      Vote.stubs(find_by_id: vote)
-      VoteEmailJob.stubs(:enqueue)
+      Vote.stub(find_by_id: vote)
+      VoteEmailJob.stub(:enqueue)
 
       VoteCreatedJob.new(vote.id).perform
 
@@ -55,8 +55,8 @@ describe VoteCreatedJob, '#perform' do
 
     it 'enqueues a VoteEmailJob that sends the vote notification email' do
       vote = create(:vote)
-      Vote.stubs(find_by_id: vote)
-      VoteEmailJob.stubs(:enqueue)
+      Vote.stub(find_by_id: vote)
+      VoteEmailJob.stub(:enqueue)
 
       VoteCreatedJob.new(vote.id).perform
 
@@ -66,7 +66,7 @@ describe VoteCreatedJob, '#perform' do
     it 'configures Yammer' do
       voter = build_stubbed(:user)
       vote = build_stubbed(:vote, voter: voter)
-      Vote.stubs(find: vote)
+      Vote.stub(find: vote)
 
       VoteCreatedJob.new.perform
 
@@ -77,20 +77,20 @@ describe VoteCreatedJob, '#perform' do
   context 'when the vote does not exist' do
     it 'does not enqueue an ActivityCreatorJob for Yammer users' do
       vote_id = nil
-      ActivityCreatorJob.stubs(:enqueue)
+      ActivityCreatorJob.stub(:enqueue)
 
       VoteCreatedJob.new(vote_id).perform
 
-      expect(ActivityCreatorJob).to have_received(:enqueue).never
+      expect(ActivityCreatorJob).not_to have_received(:enqueue)
     end
 
     it 'does not enqueue a vote email job' do
       vote_id = nil
-      VoteEmailJob.stubs(:enqueue)
+      VoteEmailJob.stub(:enqueue)
 
       VoteCreatedJob.new(vote_id).perform
 
-      expect(VoteEmailJob).to have_received(:enqueue).never
+      expect(VoteEmailJob).not_to have_received(:enqueue)
     end
   end
 end
@@ -98,7 +98,7 @@ end
 describe VoteCreatedJob, '.error' do
   it 'sends Airbrake an exception if the job fails' do
     vote = build_stubbed(:vote)
-    Airbrake.stubs(:notify)
+    Airbrake.stub(:notify)
     exception = 'Hey! You did something wrong!'
 
     job = VoteCreatedJob.new(vote.id)

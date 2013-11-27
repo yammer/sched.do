@@ -3,7 +3,7 @@ require 'spec_helper'
 describe EventCreatedEmailJob, '.enqueue' do
   it 'enqueues the job' do
     event = build_stubbed(:event)
-    Delayed::Job.stubs(:enqueue)
+    Delayed::Job.stub(:enqueue)
     event_created_email_job = EventCreatedEmailJob.new(event.id)
 
     EventCreatedEmailJob.enqueue(event)
@@ -15,7 +15,7 @@ end
 describe EventCreatedEmailJob, '.error' do
   it 'sends Airbrake an exception if the job fails' do
     event = build_stubbed(:event)
-    Airbrake.stubs(:notify)
+    Airbrake.stub(:notify)
     exception = 'Hey! you did something wrong!'
 
     job = EventCreatedEmailJob.new(event.id)
@@ -27,10 +27,10 @@ end
 
 describe EventCreatedEmailJob, '#perform' do
   it 'emails a confirmation message to the event creator' do
-    mailer = stub('mailer', deliver: true)
-    UserMailer.stubs(event_created_confirmation: mailer)
+    mailer = double(deliver: true)
+    UserMailer.stub(event_created_confirmation: mailer)
     event = build_stubbed(:event)
-    Event.stubs(find: event)
+    Event.stub(find: event)
 
     EventCreatedEmailJob.new(event.id).perform
 

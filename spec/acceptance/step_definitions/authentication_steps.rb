@@ -63,6 +63,7 @@ step 'I view the login form for the :event event' do |event_name|
 end
 
 step 'I have a Yammer account with name :name' do |name|
+  mock_yammer_oauth
   named_fake_yammer(name)
   sign_in
 end

@@ -3,8 +3,8 @@ require 'spec_helper'
 describe Messenger, '#invite' do
   it 'send an invitation email' do
     invitation = build_stubbed(:invitation)
-    invitation_email = mock('invitation email', :deliver)
-    UserMailer.stubs(:invitation).returns(invitation_email)
+    invitation_email = double(deliver: nil)
+    UserMailer.stub(invitation: invitation_email)
 
     Messenger.new(invitation.invitee).invite(invitation)
 
@@ -16,8 +16,8 @@ describe Messenger, '#remind' do
   it 'sends a reminder email' do
     event = build(:event)
     recipient = build(:user)
-    reminder_email = mock('reminder email', :deliver)
-    UserMailer.stubs(:reminder).returns(reminder_email)
+    reminder_email = double(deliver: nil)
+    UserMailer.stub(reminder: reminder_email)
 
     Messenger.new(recipient).remind(event, event.owner)
 
@@ -31,8 +31,8 @@ describe Messenger, '#notify' do
     event = build(:event)
     recipient = build(:user)
     message = 'Hello world'
-    notification_email = mock('winner notification email', :deliver)
-    UserMailer.stubs(:winner_notification).returns(notification_email)
+    notification_email = double(deliver: nil)
+    UserMailer.stub(winner_notification: notification_email)
 
     Messenger.new(recipient).notify(event, message)
 

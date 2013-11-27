@@ -4,19 +4,18 @@ describe InviteeBuilder, '#find_user_by_email_or_create_guest' do
   it 'searches for a user by email' do
     invitation = create(:invitation)
     user = build_stubbed(:user)
-    User.stubs(:find_by_email)
+    User.stub(:find_by_email)
 
     InviteeBuilder.new(user.email, invitation.event).
       find_user_by_email_or_create_guest
 
     expect(User).to have_received(:find_by_email).with(user.email)
-    expect(Guest).to have_received(:find_by_email).with(user.email).never
   end
 
   it 'searches for a Guest by email if no User exists' do
     invitation = create(:invitation)
     guest = build_stubbed(:guest)
-    Guest.stubs(:find_by_email)
+    Guest.stub(:find_by_email)
 
     InviteeBuilder.new(guest.email, invitation.event).
       find_user_by_email_or_create_guest
@@ -27,23 +26,22 @@ describe InviteeBuilder, '#find_user_by_email_or_create_guest' do
   context 'if no User or Guest is found' do
     it 'searches for existing Yammer users' do
       invitation = create(:invitation)
-      access_token = invitation.sender.access_token
       invitee_email = 'ralph@example.com'
-      yam_client_stub = mock('yam session', :get)
-      Yam.stubs(:new).returns(yam_client_stub)
+      yam_client = double(get: nil)
+      Yam.stub(new: yam_client)
 
       InviteeBuilder.new(invitee_email, invitation.event).
         find_user_by_email_or_create_guest
 
-      expect(yam_client_stub).to have_received(:get)
+      expect(yam_client).to have_received(:get)
     end
 
     it 'creates a User if it finds an existing Yammer user' do
       invitation = create(:invitation)
       invitee_email = 'ralph@example.com'
-      user = mock(:save!)
-      translator = mock(translate: user)
-      YammerUserResponseTranslator.stubs(new: translator)
+      user = double(save!: nil)
+      translator = double(translate: user)
+      YammerUserResponseTranslator.stub(new: translator)
 
       InviteeBuilder.new(invitee_email, invitation.event).
         find_user_by_email_or_create_guest
@@ -58,7 +56,7 @@ describe InviteeBuilder, '#find_user_by_email_or_create_guest' do
       event = invitation.event
       email = 'george@example.com'
       params = { email: email }
-      Guest.stubs(:create)
+      Guest.stub(:create)
 
       InviteeBuilder.new(email, event).find_user_by_email_or_create_guest
 

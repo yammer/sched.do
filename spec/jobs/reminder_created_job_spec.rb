@@ -3,8 +3,8 @@ require 'spec_helper'
 describe ReminderCreatedJob, '.enqueue' do
   it 'enqueues the job' do
     reminder = build_stubbed(:reminder)
-    Reminder.stubs(find: reminder)
-    Delayed::Job.stubs(:enqueue)
+    Reminder.stub(find: reminder)
+    Delayed::Job.stub(:enqueue)
     reminder_created_job = ReminderCreatedJob.new(reminder.id)
 
     ReminderCreatedJob.enqueue(reminder)
@@ -16,8 +16,8 @@ end
 describe ReminderCreatedJob, '#perform' do
   it 'creates a Yammer activity message' do
     reminder = build_stubbed(:reminder)
-    Reminder.stubs(find: reminder)
-    reminder.stubs(:deliver)
+    Reminder.stub(find: reminder)
+    reminder.stub(:deliver)
 
     ReminderCreatedJob.new(reminder.id).perform
 
@@ -29,7 +29,7 @@ describe ReminderCreatedJob, '#error' do
   it 'sends Airbrake an exception if the job errors' do
     job = ReminderCreatedJob.new
     exception = 'Hey! you did something wrong!'
-    Airbrake.stubs(:notify)
+    Airbrake.stub(:notify)
 
     job.error(job, exception)
 
@@ -39,19 +39,19 @@ describe ReminderCreatedJob, '#error' do
   it 'does not send exception to Airbrake if the job errors due to rate limit' do
     job = ReminderCreatedJob.new
     exception = Faraday::Error::ClientError.new('Rate limited!', status: 429)
-    Airbrake.stubs(:notify)
+    Airbrake.stub(:notify)
 
     job.error(job, exception)
 
-    expect(Airbrake).to have_received(:notify).never
+    expect(Airbrake).not_to have_received(:notify)
   end
 end
 
 describe ReminderCreatedJob, '#failure' do
   it 'sends Airbrake an exception if the job fails' do
     job = ReminderCreatedJob.new
-    job_record = stub(last_error: 'boom')
-    Airbrake.stubs(:notify)
+    job_record = double(last_error: 'boom')
+    Airbrake.stub(:notify)
 
     job.failure(job_record)
 

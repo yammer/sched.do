@@ -3,10 +3,9 @@ load "#{Rails.root}/lib/paperclip_processors/watermark.rb"
 
 describe Paperclip::Watermark, '#new' do
   it 'sets format and basename based on the file passed in' do
-    file = mock
-    file.stubs(path: 'logo.png')
+    file = double(path: 'logo.png')
     user = build_stubbed(:user)
-    attachment = mock(instance: user)
+    attachment = double(instance: user)
 
     paperclip_watermark = Paperclip::Watermark.new(file, {}, attachment)
 
@@ -15,10 +14,9 @@ describe Paperclip::Watermark, '#new' do
   end
 
   it 'assigns watermark to the watermark of the attachment passed in' do
-    file = mock
-    file.stubs(path: 'logo.png')
-    instance = mock(watermark: 'watermark string')
-    attachment = mock(instance: instance)
+    file = double(path: 'logo.png')
+    watermark = double(watermark: 'watermark string')
+    attachment = double(instance: watermark)
 
     paperclip_watermark = Paperclip::Watermark.new(file, {}, attachment)
 
@@ -28,10 +26,9 @@ end
 
 describe Paperclip::Watermark, '#make' do
   it 'returns a Tempfile' do
-    file = mock
-    file.stubs(path: 'logo.png')
+    file = double(path: 'logo.png')
     user = build_stubbed(:user)
-    attachment = mock(instance: user)
+    attachment = double(instance: user)
 
     paperclip_watermark = Paperclip::Watermark.new(file, {}, attachment).make
 
