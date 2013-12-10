@@ -43,7 +43,7 @@ group :development do
 end
 
 group :test do
-  gem 'capybara-webkit', '~> 0.14.0'
+  gem 'capybara-webkit'
   gem 'database_cleaner'
   gem 'email_spec'
   gem 'factory_girl_rails'

@@ -13,20 +13,11 @@ class YammerUserResponseTranslator
     @user.yammer_profile_url = @response[:web_url]
     @user.yammer_network_id = @response[:network_id]
     @user.yammer_network_name = @response[:network_name]
-    @user.extra = @response
+    @user.extra = @response.to_s
     @user
   end
 
   private
-
-  # def parse_email_from_response
-  #   if @response && @response[:contact] && @response[:contact][:email_addresses]
-  #     primary_email = @response[:contact][:email_addresses].
-  #       detect{ |address| address[:type] == 'primary' }
-  #     primary_email && primary_email[:address]
-  #   end
-  # end
-
 
   def parse_email_from_response
     if valid_response?
