@@ -13,7 +13,7 @@ class YammerUserResponseTranslator
     @user.yammer_profile_url = @response[:web_url]
     @user.yammer_network_id = @response[:network_id]
     @user.yammer_network_name = @response[:network_name]
-    @user.extra = @response.to_s
+    @user.extra = @response
     @user
   end
 

@@ -25,7 +25,7 @@ gem 'swfobject-rails', github: 'SoftSwiss/swfobject-rails'
 gem 'tddium'
 gem 'thin'
 gem 'yam', '~> 2.0.0'
-gem 'zclip-rails'
+gem 'zclip-rails', github: 'mindstems/zclip-rails'
 
 # Gems used only for assets, not required in production environments by default.
 group :assets do
@@ -54,7 +54,6 @@ group :test do
   gem 'sinatra'
   gem 'timecop'
   gem 'turnip', '1.0'
-  gem 'mocha'                              # Must be required last in this group
 end
 
 group :development, :test do
