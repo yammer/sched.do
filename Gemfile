@@ -43,7 +43,6 @@ group :development do
 end
 
 group :test do
-  gem 'capybara', '2.0.2'
   gem 'capybara-webkit'
   gem 'database_cleaner'
   gem 'email_spec'
