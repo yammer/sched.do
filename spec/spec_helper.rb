@@ -20,6 +20,9 @@ require 'email_spec'
 Dir[Rails.root.join('spec/support/**/*.rb')].each {|f| require f}
 
 Capybara.javascript_driver = :webkit
+Capybara.add_selector(:css) do
+    xpath { |css| XPath.css(css) }
+end
 
 RSpec.configure do |config|
   config.fail_fast = true

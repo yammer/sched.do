@@ -8,7 +8,7 @@ step 'I press the :button_text button for the :event_name event' do |button_text
 end
 
 step 'I remove :user_name from the list of invited users' do |user_name|
-  find('.remove').click
+  find('.remove').trigger('click')
 end
 
 step 'I should not see :message' do |message|
