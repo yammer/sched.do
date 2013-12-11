@@ -1,3 +1,11 @@
+GIT
+  remote: git://github.com/thoughtbot/capybara-webkit.git
+  revision: fa8e377784ef1a44ae2c59b436625ccb750ba9f8
+  specs:
+    capybara-webkit (1.1.0)
+      capybara (~> 2.0, >= 2.0.2)
+      json
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -57,9 +65,6 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
-    capybara-webkit (1.1.0)
-      capybara (~> 2.0, >= 2.0.2)
-      json
     childprocess (0.3.9)
       ffi (~> 1.0, >= 1.0.11)
     cocaine (0.4.2)
@@ -328,7 +333,7 @@ DEPENDENCIES
   binding_of_caller
   bourbon
   bundler (>= 1.2.0.pre)
-  capybara-webkit
+  capybara-webkit!
   cocoon
   coffee-rails (~> 3.2)
   database_cleaner

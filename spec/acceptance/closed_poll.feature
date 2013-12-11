@@ -9,7 +9,7 @@ Feature: Closed poll
       | Tuesday |
     And I invite the Yammer user "Jane Doe" to "Fun Event"
     And I invite the Yammer group "Developers" to "Fun Event"
-    And I invite "guest@example.com" to "Fun Event"
+    And I invite "guest@example.com" to "Fun Event" via the autocomplete
     And I reset Yammer endpoint stats
     When I visit the event page for "Fun Event"
     And I choose "Tuesday" as the winning option

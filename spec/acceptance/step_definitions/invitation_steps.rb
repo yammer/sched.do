@@ -46,7 +46,7 @@ step 'I invite :emails to :event_name' do |emails, event_name|
   event = Event.find_by_name!(event_name)
   visit event_path(event)
   first('#auto-complete').set(emails)
-  find('#add-invitee', visible: false).trigger('click')
+  find('#add-invitee', visible: false).click
 end
 
 step 'I fill in :name in the invitation field' do |name|
