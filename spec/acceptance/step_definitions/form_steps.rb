@@ -24,7 +24,7 @@ step 'I fill in the Invitation text field with :text' do |text|
 end
 
 step 'I should see :text in the Invitation text field' do |text|
-  expect(find_field('invitation[invitation_text]').value).to eq text
+  expect(find_field('invitation[invitation_text]', visible: false).value).to eq text
 end
 
 step 'I should see :error under the title' do |error|
