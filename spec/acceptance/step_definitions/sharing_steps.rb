@@ -9,7 +9,7 @@ step 'I share the sched.do app and get an error from the Yammer API' do
 end
 
 step 'I close the share sched.do modal' do
-  first(:css, '.ui-dialog-titlebar-close').click
+  first(:css, '.ui-dialog-titlebar-close', visible: false).trigger('click')
 end
 
 step 'I choose to share sched.do with the Yammer group :group_name' do |group_name|

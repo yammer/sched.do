@@ -1,11 +1,17 @@
 step 'the OpenGraph image should contain :image' do |image|
-  expect(find('meta[property="og:image"]')['content']).to include(image)
+  expect(
+    find(:css, 'meta[property="og:image"]', visible: false)['content']
+  ).to include(image)
 end
 
 step 'there is an OpenGraph description' do
-  expect(find('meta[property="og:description"]')['content']).to be_present
+  expect(
+    find(:css, 'meta[property="og:description"]', visible: false)['content']
+  ).to be_present
 end
 
 step 'the OpenGraph title should be :title' do |title|
-  expect(find('meta[property="og:title"]')['content']).to eq title
+  expect(
+    find(:css, 'meta[property="og:title"]', visible: false)['content']
+  ).to eq title
 end

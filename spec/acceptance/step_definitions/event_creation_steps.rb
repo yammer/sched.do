@@ -112,7 +112,7 @@ step 'I fill out the event form with the following suggestions:' do |table|
 end
 
 step 'I remove the first suggestion' do
-  first(:link, 'Remove Suggestion').click
+  first(:link, 'Remove Suggestion', visible: false).trigger('click')
 end
 
 step 'I can remove one of the suggestions' do
