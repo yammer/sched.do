@@ -20,7 +20,7 @@ Scheddo.YammerApi = {
     };
 
     var options = {
-      url: '/api/v1/messages.json',
+      url: 'messages.json',
       method: 'POST',
       data: {
         body: message,
@@ -41,7 +41,7 @@ Scheddo.YammerApi = {
     };
 
     var options = {
-      url: '/api/v1/messages.json',
+      url: 'messages.json',
       method: 'POST',
       data: { body: message },
       success: flashMessage('flash-notice', 'Thank you for sharing sched.do!'),
@@ -53,7 +53,7 @@ Scheddo.YammerApi = {
 
   getGroups: function(callback){
     var options = {
-      url: '/api/v1/groups.json',
+      url: 'groups.json',
       method: 'GET',
       success: function(yammerData){
         groups = _.map(
@@ -76,7 +76,7 @@ Scheddo.YammerApi = {
         };
 
         var options = {
-          url: '/api/v1/autocomplete/ranked',
+          url: 'autocomplete/ranked',
           method: 'GET',
           data: {
             prefix: term,
