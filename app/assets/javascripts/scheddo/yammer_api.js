@@ -30,7 +30,7 @@ Scheddo.YammerApi = {
       error: flashMessage('flash-error', 'There was an error with the request')
     };
 
-    yam.request(options);
+    yam.platform.request(options);
   },
 
   publicMessage: function(message){
@@ -48,7 +48,7 @@ Scheddo.YammerApi = {
       error: flashMessage('flash-error', 'There was an error with the request')
     };
 
-    yam.request(options);
+    yam.platform.request(options);
   },
 
   getGroups: function(callback){
@@ -64,7 +64,7 @@ Scheddo.YammerApi = {
       }
     };
 
-    yam.request(options);
+    yam.platform.request(options);
   },
 
   autocomplete: function(translator){
@@ -84,7 +84,7 @@ Scheddo.YammerApi = {
           success: translator.normalizeTranslatedResponse(term, response)
         };
 
-        yam.request(options);
+        yam.platform.request(options);
       }
     }
   }
