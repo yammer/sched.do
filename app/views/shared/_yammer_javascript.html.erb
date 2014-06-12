@@ -1,4 +1,4 @@
-<script type="text/javascript" src="<%= yammer_assets_host %>/platform/yam.js"></script>
+<script type="text/javascript" src="<%= yammer_assets_host %>/assets/platform_js_sdk.js"></script>
 <script type="text/javascript">
   <% if current_user && current_user.yammer_staging %>
     yam.config({appId: '<%= ENV['YAMMER_STAGING_CONSUMER_KEY'] %>'});

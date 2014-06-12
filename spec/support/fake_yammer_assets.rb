@@ -4,9 +4,9 @@ class FakeYammerAssets < Sinatra::Base
     Capybara::Server.new(instance).tap { |server| server.boot }
   end
 
-  get '/platform/yam.js' do
+  get '/assets/platform_js_sdk.js' do
     content_type 'application/x-javascript'
-    IO.read("#{Rails.root}/spec/support/fake_yammer_assets/yam.js")
+    IO.read("#{Rails.root}/spec/support/fake_yammer_assets/platform_js_sdk.js")
   end
 end
 
