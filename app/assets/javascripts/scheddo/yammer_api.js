@@ -20,7 +20,7 @@ Scheddo.YammerApi = {
     };
 
     var options = {
-      url: 'messages.json',
+      url: 'https://api.yammer.com/api/v1/messages.json',
       method: 'POST',
       data: {
         body: message,
@@ -30,7 +30,7 @@ Scheddo.YammerApi = {
       error: flashMessage('flash-error', 'There was an error with the request')
     };
 
-    yam.platform.request(options);
+    yam.request(options);
   },
 
   publicMessage: function(message){
@@ -41,14 +41,14 @@ Scheddo.YammerApi = {
     };
 
     var options = {
-      url: 'messages.json',
+      url: 'https://api.yammer.com/api/v1/messages.json',
       method: 'POST',
       data: { body: message },
       success: flashMessage('flash-notice', 'Thank you for sharing sched.do!'),
       error: flashMessage('flash-error', 'There was an error with the request')
     };
 
-    yam.platform.request(options);
+    yam.request(options);
   },
 
   getGroups: function(callback){
@@ -76,7 +76,7 @@ Scheddo.YammerApi = {
         };
 
         var options = {
-          url: 'autocomplete/ranked',
+          url: 'https://api.yammer.com/api/v1/autocomplete/ranked',
           method: 'GET',
           data: {
             prefix: term,
@@ -84,7 +84,7 @@ Scheddo.YammerApi = {
           success: translator.normalizeTranslatedResponse(term, response)
         };
 
-        yam.platform.request(options);
+        yam.request(options);
       }
     }
   }
