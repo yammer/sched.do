@@ -1,6 +1,6 @@
 development: &default
   adapter: postgresql
-  database: sched-do_development
+  database: sched_do_development
   pool: 5
   timeout: 5000
 

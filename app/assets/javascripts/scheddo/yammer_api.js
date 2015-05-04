@@ -8,8 +8,7 @@ Scheddo.YammerApi = {
   },
 
   setAccessToken: function(token){
-    yam.request.setAuthenticator('oauth2');
-    yam.request.getAuthenticator({ auth: 'oauth2' }).setAuthToken(token);
+    yam.platform.setAuthToken(token);
   },
 
   groupMessage: function(message, group_id){
@@ -30,7 +29,7 @@ Scheddo.YammerApi = {
       error: flashMessage('flash-error', 'There was an error with the request')
     };
 
-    yam.request(options);
+    yam.platform.request(options);
   },
 
   publicMessage: function(message){
@@ -48,7 +47,7 @@ Scheddo.YammerApi = {
       error: flashMessage('flash-error', 'There was an error with the request')
     };
 
-    yam.request(options);
+    yam.platform.request(options);
   },
 
   getGroups: function(callback){
@@ -84,7 +83,7 @@ Scheddo.YammerApi = {
           success: translator.normalizeTranslatedResponse(term, response)
         };
 
-        yam.request(options);
+        yam.platform.request(options);
       }
     }
   }
