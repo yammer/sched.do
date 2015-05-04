@@ -43,7 +43,7 @@ module FakeYammerApi
     def mock_yam_request(response_json='{ user: [], group: [] }')
       <<-eos
         var request = _.clone(yam.request);
-        yam.request = function(options){
+        yam.platform.request = function(options){
           options['success'](#{response_json});
         };
 
@@ -54,11 +54,11 @@ module FakeYammerApi
     def mock_failed_yammer_api_response
       <<-eos
         var request = _.clone(yam.request);
-        yam.request = function(options){
+        yam.platform.request = function(options){
           options['error']();
         };
 
-        _.extend(yam.request, request);
+        _.extend(yam.platform.request, request);
       eos
     end
 
