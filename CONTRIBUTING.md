@@ -41,7 +41,7 @@ taken straight from the Ruby on Rails guide:
 Requirements
 --------------
 
-This is a Rails 3.2 application running on Ruby 1.9.3 and deployed to Heroku's
+This is a Rails 3.2 application running on Ruby 2.0.0 and deployed to Heroku's
 Cedar stack. It has an RSpec and Turnip test suite which should be run before
 committing to the master branch.
 
